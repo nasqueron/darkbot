@@ -10,6 +10,9 @@
 # To compile in debug mode, type 'make debug'      #
 # To compile and have all data be logged to        #
 # ..darkbot_debug.log, 'make debug2'               #
+#						   #
+# To compile the database conversion utility, 	   #
+# type 'make convertdb'				   #
 # ------------------------------------------------ #
 
 CC = gcc
@@ -17,7 +20,6 @@ CFLAGS = -DFORK -Wall -O3
 DFLAGS = -dm -pg -g -DDEBUG
 D2FLAG = -DDEBUG2 -DFORK
 EXE_NAME = darkbot
-
 LIBS = -lcrypt
 
 # If you're using Solaris, you'll need to uncomment this next line.
@@ -40,7 +42,7 @@ all : ${OBJECTS}
 	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
 
 clean :
-	rm -f ${EXE_NAME} ${OBJECTS}
+	rm -f ${EXE_NAME} ${OBJECTS} convertdb.o
 
 win : ${ALL_SRC}
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
@@ -61,3 +63,8 @@ debug : ${OBJECTS}
 debug2 : ${OBJECTS}
 	${CC} ${LIBS} ${D2FLAGS} ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
 	cat ../.debug2;  cp -f ${EXE_NAME} ..;
+
+convertdb : convertdb.o
+	${CC} convertdb.c ${LIBS} -o convertdb
+	cp -f convertdb ..;
+

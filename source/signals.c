@@ -46,7 +46,6 @@ sig_alrm (int notUsed)
 #ifdef	WIN32
 		printf ("\nNo response from %s in 5 mins, reconnecting...\n", BS);
 #endif
-		gs26 ();
 		prepare_bot ();
 		register_bot ();
 #endif

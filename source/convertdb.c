@@ -22,13 +22,11 @@ char *crypt (const char *key, const char *salt);
 int main(int argc, char *argv[]){    FILE *in, *out;
     char *ptr = NULL;
 	char *salt = "8fei3k";
-    char str[1024] = { 0 };
     char channel[1024] = { 0 };
     char uh[1024] = { 0 };
     char level[10] = { 0 };
     char joins[10] = { 0 };
     char pass[1024] = { 0 };
-    char newpass[1024] = { 0 };
     char setinfo[1024] = { 0 };
 
     printf("\nDarkbot USERLIST.DB < 7f0 conversion utility.\n");
@@ -42,7 +40,7 @@ int main(int argc, char *argv[]){    FILE *in, *out;
 
     if(argc < 2)
     {
-        printf("Syntax: convertdb -convert\n\n");
+        printf("Syntax: %s -convert\n\n", argv[0]);
         return 0;
     }
 
@@ -50,7 +48,7 @@ int main(int argc, char *argv[]){    FILE *in, *out;
     {
         if(strcmp(argv[1], "-convert") != 0)
         {
-            printf("Syntax: convert -convert\n\n");
+            printf("Syntax: %s -convert\n\n", argv[0]);
             return 0;
         }
     }
@@ -86,7 +84,7 @@ int main(int argc, char *argv[]){    FILE *in, *out;
     fclose(in);
     fclose(out);
 
-    unlink(USERFILE);
+    remove(USERFILE);
     rename(TMPFILE, USERFILE);
 
     printf("Conversion Complete.\n");

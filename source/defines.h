@@ -10,7 +10,7 @@
  *	 		http://darkbot.sourceforge.net
  * 
  ***	For any questions, suggestions, malfunctions, etc
- *	Use our support forum at http://www.darkbot.org/forum
+ *	Use our support forum at http://forum.darkbot.org
  *
  * 	*******************************---******************************* */
 /*

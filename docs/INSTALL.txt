@@ -25,7 +25,7 @@
 	Irc: Servers irc.darkbot.org, eu.undernet.org, us.undernet.org
 	Channel: #darkbot
 
-	Web page: www.darkbot.org Forum: www.darkbot.org/forum
+	Web page: http://www.darkbot.org Forum: http://forum.darkbot.org
 
 	We do not support any Darkbot code that has been downloaded from any site other 
 	then the official one.  Any code that has been modified by anyone other than an 

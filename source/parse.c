@@ -39,19 +39,16 @@ parse (char *line)
 			}
 			else if (strstr (s1, "throttled") != NULL)
 			{
-				gs26 ();
 				prepare_bot ();
 				register_bot ();
 			}
 			else if (strstr (s1, "oo many c") != NULL)
 			{
-				gs26 ();
 				prepare_bot ();
 				register_bot ();
 			}
 			else if (strstr (s1, "o more c") != NULL)
 			{
-				gs26 ();
 				prepare_bot ();
 				register_bot ();
 			}
@@ -59,7 +56,6 @@ parse (char *line)
 			{
 				S ("QUIT :Caught ERROR from %s :(\n", BS);
 				db_sleep (5);
-				gs26 ();
 				prepare_bot ();
 				register_bot ();
 			}
@@ -245,7 +241,7 @@ parse (char *line)
 			if (stricmp (s1, Mynick) == 0)
 			{
 				do_quit (s1, 3);	/* delete all users from ram since I'm gone */
-				gs26 ();
+
 				prepare_bot ();
 				register_bot ();
 			}

@@ -1,10 +1,30 @@
 
     *******************************************************
     Warnings, errors, malfunctions, code patches, suggestions
-    Support Forum: http://www.darkbot.org/forum
+    Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 7f1: Feb 19th, 2004
+Darkbot 7f1: Feb 28th, 2004
+
+	- Added "make convertdb", which will compile the database
+	  conversion utility, which encrypts the passwords in your
+	  userlist.db file.
+
+	- Removed two unused variables in convertdb.c.  I also changed
+	  'unlink' to 'remove', to comply with the ANSI standard.
+
+	- Changed forum URL to http://forum.darkbot.org, since that
+          works too, looks cooler, and is shorter. :)
+
+	- Fixed a bug that caused the bot to never respond to anything
+	  after being killed.  The same problem was also fixed in a 
+	  number of other situations that it was popping up. gs26() 
+ 	  was being called both before, and during prepare_bot(), so 
+          I made the call happen only during prepare_bot().  
+
+	- Fixed a minor flaw in convertdb.c.  It said the syntax was
+	  "convertdb -convert", even if the executable wasn't named
+	  convertdb.
 
 	- Taiwanish file got dumped somehow, it's back now.
 
@@ -32,7 +52,7 @@ Darkbot 7f1: Feb 19th, 2004
 
 	- darkbot.info isn't resolving anymore, so references to this
 	  site have been removed.  I left the support emails, until 
-	  updated email addresses are supplied.  If your email needs
+	  updated email addresses are known of.  If your email needs
 	  to be updated anywhere in the code, and I didn't realize it,
 	  let me know. 
 

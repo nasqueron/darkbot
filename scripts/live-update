@@ -23,7 +23,7 @@ USAGE () {
       receive live updates from Darkbot's site.
   * - Settings for verbose: 0=stealth/silent; 1=minimal messages (default,
       no prompts if no updates present); 2=all available messages\n
-  Support: http://www.darkbot.org/forum\n"
+  Support: http://forum.darkbot.org\n"
 exit 1
 }
 

@@ -1,14 +1,18 @@
 ----------------------------------------------------------
 The TO-DO List For Darkbot
 ----------------------------------------------------------
-This is just a small file I made to help me remember what 
-needs to be done, or is being suggested.  It may also be
-useful to any other developers interested in contributing
-to the Darkbot project. Many of these things are very 
-simple, I just write them down, because as some of you
-may know, I forget easily. And i don't always have time  
-to work on the code right as things are suggested. (ron)
+These are features that are in the planning stages, or 
+that haven't been completely worked out, yet.  Also, any
+suggestions that people have made, that are planning to 
+be added, will be listed here.
 ----------------------------------------------------------
+
+- Finish the autoconf/automake scripts that I started on.
+
+- Add some kind of escape sequence or special parsing 
+  for topics that start with key words like "WHAT", these
+  words are also recognized internally by the bot for 
+  answering questions.  
 
 - chansrv.c badly needs to be revamped. needs a command
   structure that allows easy modification and addition,
@@ -21,5 +25,3 @@ to work on the code right as things are suggested. (ron)
   their own randomstuff timers that output randomstuffs
   according to the action going on, for each specific 
   channel.
-
-- Allow comments in perform.ini and other data files.
