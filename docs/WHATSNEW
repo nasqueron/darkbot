@@ -6,8 +6,11 @@
     *******************************************************
 
 
-Darkbot 7.0-RC7: Mar 13th, 2003
+Darkbot 7.0-RC7: June 2nd, 2003
 	
+	- Updated the INSTALL.txt file to reflect some support
+	  changes.
+
 	- Fix for possible problems with counting in datasearch
 	  algorithm.  long was changed to size_t.
 

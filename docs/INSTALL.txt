@@ -2,38 +2,40 @@
 
 	Darkbot, Talking Robot - Copyright (c) 2003 Darkbot Project
 
-	Welcome to the first Darkbot install file. This will be a step by step guide to 
-	installing your Darkbot so read it all before you do anything. 
+	Welcome to the Darkbot install file. This will be a step by step guide to 
+	installing your Darkbot, so read it all, before you do anything. 
 
-	If you have not read this file and come into the Darkbot help channel on 
-	Undernet we will know and it might mean you will be helped last. 
+	If you have not read this file and come into the help channel on the  Darkbot
+	Network, we will know, and it might mean you will be helped last. 
 
 	With that out of the way, if you have done every thing in this file and still 
-	can not get your Darkbot running feel free to join #Darkbot on Undernet and we 
-	will do our best to help you. Keep in mind that we are not there to set up and 
-	run your bot for you. One or two questions about commands are ok, but if you 
-	have to ask about every command then maybe you shouldn't be running a bot. 
+	can not get your Darkbot running, feel free to join #Darkbot on the Darkbot
+	Network, and we will do our best to help you.  Keep in mind that we are not 
+	there to set up and run your bot for you.  One or two questions about commands 
+	are okay, but if you have to ask about every command, then maybe you shouldn't 
+	be running a bot. 
 
 	Note: There are many builds of Linux out in the world today. The coders try and 
 	build Darkbot to be run on as many as possible but some times it doesn't work 
-	out that way.  If there is a problem with compiling Darkbot on your Linux build 
+	out that way.  If there is a problem with compiling Darkbot on your Linux build,
 	please let us know. 
 
-	Help can be found for Darkbot either by irc or from our web page. 
+	Help can be found for Darkbot either by irc, or from our web page. 
 
-	Irc: servers eu.undernet.org, us.undernet.org - Channel: #Darkbot
+	Irc: Servers irc.darkbot.org, eu.undernet.org, us.undernet.org
+	Channel: #darkbot
 
 	Web page: www.darkbot.org Forum: www.darkbot.org/forum
 
 	We do not support any Darkbot code that has been downloaded from any site other 
-	then the official one.  Any code that has been modified by anyone other then an 
-	official Darkbot coder will also not be supported. (If you have a good idea 
-	for a modification please share it with us and if it makes the final code you 
+	then the official one.  Any code that has been modified by anyone other than an 
+	official Darkbot coder, will also not be supported. (If you have a good idea 
+	for a modification, please share it with us. If it makes the final code, you 
 	will be given credit.)
 
 	###############################################################
 
-	Follow the order of events described here and you'll have your Darkbot up and 
+	Follow the order of events described here, and you'll have your Darkbot up and 
 	running!
 
 	DOWNLOAD
@@ -47,7 +49,7 @@
 
 	- Change to the newly created directory
 
-	Note: For older Darkbots this dir will be (darkbot6f6), for new or beta builds 
+	Note: For older Darkbots, this dir will be (darkbot6f6), for new or beta builds,
 	it will be (darkbot)
 
 	cd darkbot6f6 or cd darkbot
@@ -60,14 +62,14 @@
 	You do need to run ./configure - Darkbot does not build itself into your system 
 	without that step. 
 	We are not going into detail and repeating the instructions shown when you run 
-	./configure because they are self-explanatory. 
-	Most of the doubts and frequently asked questions on that only resides on linux 
-	and not Darkbot matters. For instance, the default text editor is pico but you 
+	./configure, because they are self-explanatory. 
+	Most of the doubts and frequently asked questions on that, only rely on Linux, 
+	and not Darkbot matters. For instance, the default text editor is pico, but you 
 	can use any other text-mode editor that comes with your distribution, like vi, 
 	less, Emacs, XEmacs, NEdit or others. "That stripping thing" on the end of 
-	compilation process - it shrinks a little bit the size of the executable because 
+	compilation process - it shrinks a little bit the size of the executable, and 
 	some extra and non necessary codes are removed; makes no difference on Darkbot's 
-	performance so do whatever you want with it.
+	performance, so do whatever you want with it.
 
 	At any point during the configuration process you can abort (by pressing CTRL + 
 	C or other way your system or editor allows) and start again. 
