@@ -704,7 +704,6 @@ echo "
     http://www.darkbot.org/forum   providing detailed information.
                                
           Linux/BSD/Unix users type:    make
-          Cygwin users type:            make cygwin
           Windows users type:           make win
           "	
 	        sleep 1
