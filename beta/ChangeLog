@@ -4,7 +4,10 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 7f3: April 15, 2004
+
+Darkbot 7f3: Dec 5, 2004
+ 	- configure now automatically checks for snprintf, and 
+	  uses a replacement if it's not found.
 
 	- docs/INSTALL.txt is now INSTALL in the toplevel dir.
 	  Another thing for automake to stop complaining about.

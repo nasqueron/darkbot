@@ -28,16 +28,17 @@ AC_HEADER_STDC
 
 AC_CHECK_HEADERS(fcntl.h sys/time.h unistd.h)
 AC_CHECK_HEADER([windows.h],AC_DEFINE([WIN32],,[windows.h]))
-AC_CHECK_TYPES
+
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
+AC_CHECK_TYPES
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 
 dnl Checks for library functions.
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(select socket strspn strstr strtol)
+AC_CHECK_FUNCS(select socket strspn strstr strtol snprintf)
 
 AC_SUBST(CFLAGS)
 AC_SUBST(PACKAGE)

@@ -418,7 +418,7 @@ check_dbtimers (void)
 	closedir (dp);
 }
 
-#if SNPRINTF_SUPPORT == 1
+#ifndef	HAVE_SNPRINTF
 int
 snprintf (char *buff, size_t size, const char *fmt, ...)
 {

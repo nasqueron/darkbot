@@ -44,7 +44,7 @@ AUTOHEADER = ${SHELL} /home/ron/darkbot/beta/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/ron/darkbot/beta/missing --run automake-1.7
 AWK = gawk
 CC = gcc
-CCDEPMODE = depmode=none
+CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CP = /usr/bin/cp
 CPP = gcc -E
@@ -76,13 +76,13 @@ PACKAGE_VERSION =
 PATH_SEPARATOR = :
 RM = /usr/bin/rm
 SET_MAKE = 
-SHELL = /bin/bash
+SHELL = /bin/sh
 STRIP = 
 VERSION = 7f3
 ac_ct_CC = gcc
 ac_ct_STRIP = 
-am__fastdepCC_FALSE = 
-am__fastdepCC_TRUE = #
+am__fastdepCC_FALSE = #
+am__fastdepCC_TRUE = 
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -256,26 +256,26 @@ include ./$(DEPDIR)/vars.Po
 include ./$(DEPDIR)/web.Po
 
 .c.o:
-#	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
-#	  -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<; \
-#	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
-#	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
-#	fi
-	source='$<' object='$@' libtool=no \
-	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
-	$(CCDEPMODE) $(depcomp) \
-	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
+	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
+	  -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<; \
+	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
+	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
+	fi
+#	source='$<' object='$@' libtool=no \
+#	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
+#	$(CCDEPMODE) $(depcomp) \
+#	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
 
 .c.obj:
-#	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
-#	  -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`; \
-#	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
-#	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
-#	fi
-	source='$<' object='$@' libtool=no \
-	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
-	$(CCDEPMODE) $(depcomp) \
-	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
+	  -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`; \
+	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
+	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
+	fi
+#	source='$<' object='$@' libtool=no \
+#	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
+#	$(CCDEPMODE) $(depcomp) \
+#	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
 uninstall-info-am:
 
 ETAGS = etags

@@ -44,7 +44,7 @@ AUTOHEADER = ${SHELL} /home/ron/darkbot/beta/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/ron/darkbot/beta/missing --run automake-1.7
 AWK = gawk
 CC = gcc
-CCDEPMODE = depmode=none
+CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CP = /usr/bin/cp
 CPP = gcc -E
@@ -76,13 +76,13 @@ PACKAGE_VERSION =
 PATH_SEPARATOR = :
 RM = /usr/bin/rm
 SET_MAKE = 
-SHELL = /bin/bash
+SHELL = /bin/sh
 STRIP = 
 VERSION = 7f3
 ac_ct_CC = gcc
 ac_ct_STRIP = 
-am__fastdepCC_FALSE = 
-am__fastdepCC_TRUE = #
+am__fastdepCC_FALSE = #
+am__fastdepCC_TRUE = 
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -123,8 +123,8 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive pdf-recursive \
 	check-recursive installcheck-recursive
 DIST_COMMON = README $(srcdir)/Makefile.in $(srcdir)/configure AUTHORS \
 	COPYING ChangeLog INSTALL Makefile.am NEWS aclocal.m4 \
-	config.guess config.sub configure configure.ac install-sh \
-	missing mkinstalldirs
+	config.guess config.sub configure configure.ac depcomp \
+	install-sh missing mkinstalldirs
 all: all-recursive
 
 .SUFFIXES:

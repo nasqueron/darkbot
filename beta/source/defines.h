@@ -44,17 +44,11 @@
 #include <signal.h>
 
 /*
- * If your compiler does not support snprintf() turn this
- * option ON. (default = OFF)
- */
-#define SNPRINTF_SUPPORT OFF
-
-/*
- * If you have an OS like Linux, you -may- need this ON.
  * Most BSD systems will not need this. If your bot will
  * connect but don't react at all try turning this ON.
  * (default = OFF)
  */
+
 #define NEED_LIBC5 OFF
 
 /*

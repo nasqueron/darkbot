@@ -1,4 +1,4 @@
-## Top level Makefile.am for Darkbot
+## Top level Makefile.am
 ## by ron <ron@darkbot.org>
 
 EXTRA_DIST = scripts/* docs/* dat/* source/langs/* Makefile source/Makefile
@@ -17,4 +17,5 @@ install-exec-local:
 	@echo 
 	@echo darkbot-`cat VERSION` has been installed to $(prefix)
 	@echo
+
 

@@ -32,6 +32,9 @@
 /* Define to 1 if you have the `select' function. */
 #define HAVE_SELECT 1
 
+/* Define to 1 if you have the `snprintf' function. */
+#define HAVE_SNPRINTF 1
+
 /* Define to 1 if you have the `socket' function. */
 #define HAVE_SOCKET 1
 
