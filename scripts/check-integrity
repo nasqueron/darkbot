@@ -27,7 +27,7 @@ exs:
 $0 all               Starts utility in full mode
 $0 info2             Checks info2.db in normal operation
 $0 userlist -quick   Checks userlist.db bypassing pauses\n
-   Contact: develop@darkbot.info    Support: http://www.darkbot.org/forum\n"
+   Support: http://www.darkbot.org/forum\n"
 exit 1
 }
 
@@ -437,7 +437,7 @@ echo -e "##### WARNING #####\nWrong result: Removed \
 "$duptopics_uniques" topics.
  Check the corresponding section  of  this file  and compare the results  with
  your $ORIG_FILE file. Data with unpredictable characters might be causing
- the difference. If you discover the cause please contact develop@darkbot.info
+ the difference. If you discover the cause please contact us at the forum
  and if possible attach the file."
 fi >> $TMP-DUP_TOPICS.rep.head
 echo -e "===== Removed DUPLICATE TOPICS from "$ORIG_FILE"" > \
@@ -1200,7 +1200,7 @@ grep 'CHAN' $TMP-DB.WORK.FILE | tr -d ' ' > $TMP-DB.WORK.FILE.chan
 fi >> $TMP-DB.WORK.FILE.tmp
 	
 if [ ! "`grep 'REALNAME=' $TMP-DB.WORK.FILE | cut -d= -f2`" ]; then
-echo "REALNAME=Download me from http://darkbot.info"
+echo "REALNAME=Download me from http://www.darkbot.org"
 Missing_Parm="$Missing_Parm""REALNAME "
 else
 grep 'REALNAME' $TMP-DB.WORK.FILE

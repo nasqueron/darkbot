@@ -72,7 +72,7 @@
 #define Lbadtopic2(a,b) S("NOTICE %s :Assif %s, Lakena Daa3ma Li dalika al Mawdou3 9ad Ozile.\n",a,b);
 #define	L065n(a,b) S("NOTICE %s :Idafate Mada, %s?\n",a,b);
 #define	L066n(a,b,c)	S("NOTICE %s :%s: Ayate ma3loumate yajibe an todafa %s?\n",a,b,c)
-#define	L067(a,b) S("NOTICE %s :7assanan, %s :)\n",a,b)
+#define	L067n(a,b) S("NOTICE %s :7assanan, %s :)\n",a,b)
 #define	L068(a,b) S("PRIVMSG %s :Astabdile Mada, %s?\n",a,b)
 #define	L069(a,b,c) S("PRIVMSG %s :%s: Ayate ma3loumate yajibe an astabdile %s?\n",a,b,c)
 #define	L070(a,b,c) S("PRIVMSG %s :%s, %s 9ad Joddida.\n",a,b,c)

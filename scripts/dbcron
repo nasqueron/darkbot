@@ -120,7 +120,7 @@ DBPIDFILE=$DBBIN.pid
 # vars are done so let's tell crontab how we want it setup
 # check every 10 minutes; send messages to null
 # echo '0,10,20,30,40,50 * * * *' "$DBPATH/scripts/dbcron" > crontable.$$ #debug only
-echo '0,10,20,30,40,50 * * * *' "$DBPATH/scripts/dbcron >/dev/null 2>&1" > crontable.$$
+echo '0,10,20,30,40,50 * * * *' "$DBPATH/scripts/dbcron >/dev/null 2>&1" >> crontable.$$
 crontab crontable.$$; rm -f crontable.$$
 
 # transfer crontab engine file with new vars on top to a new file with same
@@ -130,8 +130,8 @@ crontab crontable.$$; rm -f crontable.$$
 echo -e "\n\nDarkbot crontab utility\n\nCrontab job created successfully!
 To check if everything is okay, kill your bot if it is connected to IRC.
 It should automatically restart in 10 minutes.\n
-Suggestions, improvements... contact
-develop@darkbot.info\n\n"
+Suggestions, improvements?
+Support: http://www.darkbot.org/forum\n\n"
 else
 echo -e "\nDarkbot's Crontab Utility.
 WARNING!!!!\nDarkbot's binary not found.

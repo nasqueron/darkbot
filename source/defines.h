@@ -658,6 +658,14 @@
  */
 #define	HELP_GREET OFF
 
+/* 
+ * This define just sends a message to the channel, whenever a "Guest"
+ * user joins, asking the user if they need any help. This is useful 
+ * for help channels.
+ */
+
+#define	AUTOHELP_GUESTS OFF
+
 /*
  * If you change anything on the next 5 directives be careful not to
  * remove or change the position of '%s' nor anything outside quotes.

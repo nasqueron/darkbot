@@ -88,7 +88,8 @@ On  all  lists PgUp/Down or arrow keys scrolls the text; Q quits from the list.
 CTRL+C aborts at all times.
 To launch the utility write $0. For a quick server entry write: 
 $0 server port (ex:  $0 irc.server.here 6667 )\n
-Comments, suggestions, email: develop@darkbot.info\n"
+Comments, suggestions?
+Support: http://www.darkbot.org/forum\n"
 if [ -n "$insider" ]; then echo "[ Hit ENTER to continue ]"; read PTR; fi
 }
 

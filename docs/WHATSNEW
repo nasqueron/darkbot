@@ -6,6 +6,24 @@
 
 Darkbot 7f1: Feb 19th, 2004
 
+	- New setting in defines.h, AUTOHELP_GUESTS, makes the bot send
+	  a message to the channel, whenever a user with the word "Guest"
+	  in their nickname joins, asking them if they need help.  This 
+	  can be used in help channels, to avoid Guest users just joining
+          the channel, and moving on because nobody is talking.
+
+	- I'm fairly sure I have dbcron fixed now.  I can't test it, 
+	  because I don't have a system with crond, but the fix was 
+          made using basic shell syntax. >> instead of >. :)
+
+	- Please remember to include which operating system you're using
+	  when reporting bugs.  This information is crucial because (all?)
+	  operating systems have subtle differences that can cause any 
+          number of problems in various situations.  It's impossible to 
+ 	  keep all of these conditions in mind when writing code, because
+	  there's just so many of them.	Any other information that you can 
+	  provide will, more than likely, be greatly appreciated.
+
 	- I don't see why this is a development version anymore, so 
 	  I've moved it to final. As always, any malfunctions or 
 	  problems may be reported via the forum.
@@ -383,7 +401,7 @@ Darkbot 7.0-RC4: Jun 24th, 2002
 
 Darkbot 7.0-RC3: May 22nd, 2002
 
-    Ron @ darkbot.info has worked on the following 4 issues:
+    ron@darkbot.org has worked on the following 4 issues:
     - Fixed a bug that caused crashes if the bot responds to a
     topic containing R~ in private message.
 

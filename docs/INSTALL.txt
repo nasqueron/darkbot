@@ -289,7 +289,7 @@
 	Set auto topic
 	Auto-topic function makes Darkbot repeat channel's topic you specify every 30 
 	seconds (default). To do so type, for example,
-	!AUTOTOPIC Visit http://darkbot.net for complete Darkbot information.
+	!AUTOTOPIC Visit http://www.darkbot.org for complete Darkbot information.
 
 	Set virtual host
 	If you want to set a virtual host to Darkbot type (must be a registered domain 

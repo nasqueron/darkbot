@@ -332,6 +332,12 @@ parse (char *line)
 				if (check_permban (ptr, s1, s) == 1)
 					return;
 				add_user (s1, s, ptr, 1);
+				
+#if AUTOHELP_GUESTS == 1
+				if (strstr (s, "Guest") != NULL)
+					S ("PRIVMSG %s :hello %s. need any help?\n", s);
+#endif			
+
 #if DO_WHOIS == 1
 				strncpy (g_chan, s1, sizeof (g_chan));
 				S ("WHOIS %s\n", s);

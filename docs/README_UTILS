@@ -5,9 +5,8 @@
 All shell utilities mentioned here with exception to 'configure' must be
 in /scripts directory.
 
-For support, malfunctions, suggestions, use only http://www.darkbot.org/forum
-For script patches, correction of bugs, improvements you can also use e-mail
-develop@darkbot.info
+For support, malfunctions, suggestions, visit our forum. 
+http://www.darkbot.org/forum
 
 ----------------------------------------------------------------------
 
@@ -361,9 +360,7 @@ utility will not work. There is no reason to waste time and bandwidth
 on an adultered program.  The same will happen if you move or  remove
 source files from their original locations.
 
-Any comments/suggestions email with subject - updater - to
-develop@darkbot.info
-For support use the forum at http://www.darkbot.org/forum
+For support, use the forum at http://www.darkbot.org/forum
 
 
 ----------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 		**** Darkbot Contributors ****
 [The following is a list of people who have contributed to Darkbot]
-( If I'm missing anyone please email LuizCB@darkbot.info
+( If I'm missing anyone please email juice@darkbot.org
 Hopefully this list will be complete by release 7. )
 		
 Author/creator   -  Jason Hamilton (play) Jason @ superlink.net
@@ -15,7 +15,7 @@ Thanks to all for the collaboration!
 
 **** Coders ****
 
-Ron (`ron, ronner) Ron @ darkbot.info - several features, changes and code
+Ron (`ron, ronner) Ron @ darkbot.org - several features, changes and code
           fixes on 6f5,6 and RCs for release 7 
 Paul (reet2) Paul @ darkbot.info - several major changes on 6f6 for release 7
 Neil Darlow - code optimization patches on info and check_permban
@@ -72,7 +72,7 @@ ROMANIAN   - Radu <radu.negoescu@sante.univ-nantes.fr>
 ARABIC	   - MrSiMo <mrsimo7@yahoo.fr>
 
 Other Darkbot related projects
-Darkbot Commander - Alex99 Alex99@darkbot.info
+Darkbot Commander - Alex99 <Alex99@darkbot.info>
 
 **** Helpers ****
 These are people who acknowledgedly colaborate with Darkbot Project
@@ -99,7 +99,7 @@ Will (xiaodown) for providing the darkbot.org domain.
 
 **** " ****
 
-(PLEASE help reconstruct this list by e-mailing LuizCB@darkbot.info .
+(PLEASE help reconstruct this list by e-mailing juice@darkbot.org)
 Is my intention not having MIA people. Without the due and full
 acknowledgment to whom is being cooperating with Darkbot Project
 this program would never be what it is.)
