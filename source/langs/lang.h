@@ -52,6 +52,10 @@
 #if LANG == 18
 #include "arabic.h"
 #endif
+#if LANG == 19
+#include "taiwanish.h"
+#endif
+
 #ifndef L091
 #define L091(a) S("NOTICE %s :Syntax: SETVHOST <new Vhost> (requires a restart)\n",a)
 #endif

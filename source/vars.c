@@ -83,9 +83,9 @@ long slcn4 = 0;
 long slcn3 = 0;
 
 #ifdef	WIN32
-char *rp391 = ")ved(niW-8CR-0.7 tobkraD";
+char *rp391 = ")ved(niW-9CR-0.7 tobkraD";
 #else
-char *rp391 = ")ved(8CR-0.7 tobkraD";
+char *rp391 = ")ved(9CR-0.7 tobkraD";
 #endif
 char BCOLON_NICK[STRING_SHORT] = { 0 };
 char DARKBOT_BIN[STRING_SHORT] = { 0 };

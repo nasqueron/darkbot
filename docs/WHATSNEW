@@ -5,6 +5,10 @@
     Support (only): http://forum.darkbot.info
     *******************************************************
 
+Darkbot 7.0-RC9: Oct 5th, 2003
+	- Fixed Ebonic language file.
+
+	- Added Taiwanish language option.
 
 Darkbot 7.0-RC8: June 20th, 2003
 	- I screwed up the Makefile by accident, adding some

@@ -109,7 +109,6 @@ hints)\n",a,b,c,d,e)
 #define	L088(a) S("QUIT :%s is stoned more than i am!\n",a)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION wakes up from a drunken haze...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Iz bein flooded. Dumpin output Que. %d items wuz deleted.\n",a,b)
-#define Lbadtopic(a,b) S("PRIVMSG %s :Sorry %s, but support for that topic has been removed.\n",a,b);
-#define Lbadtopic2(a,b) S("PRIVMSG %s :Sorry %s, but support for that topic has been removed.\n",a,b);
 #define Lbadtopic(a,b) S("PRIVMSG %s :Damn nigs %s, we did done took out dat topic.\n",a,b);
 #define Lbadtopic2(a,b) S("NOTICE %s :Damn nigs %s, we did done took out dat topic.\n",a,b);
+
