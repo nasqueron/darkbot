@@ -12,6 +12,7 @@ AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR(source/defines.h)
 AC_CONFIG_HEADER(source/config.h)
 AC_PREFIX_DEFAULT([\${HOME}/darkbot])
+AM_MAINTAINER_MODE
 
 dnl config.h stuff
 AH_TOP([#ifndef _DARKBOT_CONFIG_H

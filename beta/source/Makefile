@@ -65,6 +65,9 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = -luser32 -lcrypt 
 LTLIBOBJS = 
+MAINT = #
+MAINTAINER_MODE_FALSE = 
+MAINTAINER_MODE_TRUE = #
 MAKEINFO = ${SHELL} /home/ron/darkbot/beta/missing --run makeinfo
 OBJEXT = o
 PACKAGE = darkbot
@@ -76,9 +79,9 @@ PACKAGE_VERSION = 7f3(dev)
 PATH_SEPARATOR = :
 RM = /usr/bin/rm
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = 
-VERSION = 7f3
+VERSION = 7f3(dev)
 ac_ct_CC = gcc
 ac_ct_STRIP = 
 am__fastdepCC_FALSE = #
@@ -172,10 +175,10 @@ all: config.h
 
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: # Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  source/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: # $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
 config.h: stamp-h1
@@ -188,7 +191,7 @@ stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status source/config.h
 
-$(srcdir)/config.h.in:  $(top_srcdir)/configure.ac $(ACLOCAL_M4) 
+$(srcdir)/config.h.in: # $(top_srcdir)/configure.ac $(ACLOCAL_M4) 
 	cd $(top_srcdir) && $(AUTOHEADER)
 	touch $(srcdir)/config.h.in
 

@@ -110,7 +110,7 @@
 #define TIME_WITH_SYS_TIME 1
 
 /* Version number of package */
-#define VERSION "7f3"
+#define VERSION "7f3(dev)"
 
 /* windows.h */
 #define WIN32 
