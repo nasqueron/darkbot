@@ -8,6 +8,13 @@
 
 Darkbot 7.0-RC7: Mar 13th, 2003
 	
+	- Suppressed more warnings when compiling on Solaris
+	  from chan.c, in the do_math function. 
+
+	- Removed another unused variable from url.c
+
+	- Removed an unused variable from random.c
+
 	- Removed the .runonce script from executing during the
 	  "make" process. The funcionality this script produced
 	  is depricated. Also removed this file from the distro.

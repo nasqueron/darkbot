@@ -502,7 +502,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 	FILE		*fp = 0;
 	size_t		nLine = 0, length = 0, nNumMatches = 0,
 				nIndex2 = 0, nIndex3 = 0;
-	int			nIsAction = 0, errno;
+	int			nIsAction = 0;
 	char		*b2 = NULL;
 	char		temp	[STRING_SHORT] = { 0 };
 	char		szBuffer[STRING_LONG] = { 0 };

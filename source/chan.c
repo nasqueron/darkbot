@@ -3,12 +3,17 @@
 #include "prototypes.h"
 
 #ifdef	DO_MATH_STUFF
+
+/* Changed input to be unsigned instead of signed. This
+ * suppressed warning messages when compiling on Solaris.
+ */
+
 void
 do_math (const char *who, char *target, char *math)
 {
-	char input[STRING_SHORT] = { 0 };
 	char number_string[STRING_SHORT] = { 0 };
 	char op = 0;
+	unsigned char input[STRING_SHORT] = { 0 };
 	unsigned int index = 0;
 	unsigned int to = 0;
 	unsigned int input_length = 0;

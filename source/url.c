@@ -130,7 +130,6 @@ delete_url (const char *nick, char *topic, char *target)
 	char DATA	[STRING_SHORT] = { 0 };
 	char *subj = NULL;
 	char *ptr = NULL;
-	int  errno;
 
 	if (*topic == '~')
 	{
