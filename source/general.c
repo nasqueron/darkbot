@@ -72,6 +72,11 @@ char	*db_stristr		(char *pHaystack, char *pNeedle)
 }
 
 
+/* 
+ * Added cast to str[i -1] to prevent warnings on Solaris.
+ * -ron
+ */
+
 void
 trailing_blanks (char *str)
 {
@@ -81,7 +86,7 @@ trailing_blanks (char *str)
 		return;
 	for (i = strlen (str); i > 0; i--)
 	{
-		if (isspace (str[i - 1]))
+		if (isspace ( (int) str[i - 1]))
 			str[i - 1] = '\0';
 		else
 			return;
