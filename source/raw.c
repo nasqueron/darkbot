@@ -132,7 +132,7 @@ raw_now (char *type)
 
 				/* Allow comments */
 
-				if (*str != '#')
+				if (*str == '#')
 			        	continue;
 
 				tmp1 = strtok (str, " ");
