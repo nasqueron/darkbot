@@ -21,7 +21,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 	n = malloc (sizeof (struct permbanlist));
 	if (n == NULL)
 	{
-		log ("error.log", "AHHH! no ram left! in add_permban!\n");
+		db_log ("error.log", "AHHH! no ram left! in add_permban!\n");
 		return;
 	}
 
@@ -29,7 +29,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 	n->uh = db_strndup (uh, STRING_SHORT);
 	if (NULL == n->uh)
 	{
-		log ("error.log", "add_permban> Memory allocation failure\n");
+		db_log ("error.log", "add_permban> Memory allocation failure\n");
 		/* Prevent memory leaks */
 		free (n);
 		return;
@@ -38,7 +38,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 	n->reason = db_strndup (reason, STRING_SHORT);
 	if (NULL == n->reason)
 	{
-		log ("error.log", "add_permban> Memory allocation failure\n");
+		db_log ("error.log", "add_permban> Memory allocation failure\n");
 		/* Prevent memory leaks */
 		free (n->uh);
 		free (n);
@@ -161,7 +161,7 @@ save_permbans (void)
 
 	for (; c != NULL; c = c->next)
 	{
-		log (TMP_FILE, "%s %d %s\n", c->uh, c->counter, c->reason);
+		db_log (TMP_FILE, "%s %d %s\n", c->uh, c->counter, c->reason);
 	}
 	rename (TMP_FILE, PERMBAN);
 

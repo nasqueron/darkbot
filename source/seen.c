@@ -107,7 +107,7 @@ save_seen (char *nick, char *uh, char *chan)
 	
 	if ((fp = fopen (SEEN_FILE, "r")) == NULL)
 	{
-		log (SEEN_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
+		db_log (SEEN_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
 		return (-1);
 	}
 	
@@ -118,7 +118,7 @@ save_seen (char *nick, char *uh, char *chan)
 		if (stricmp (nick, r_nick) == 0)
 		{
 			toggle = 1;
-			log (TMP_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
+			db_log (TMP_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
 		}
 		else
 		{
@@ -132,13 +132,13 @@ save_seen (char *nick, char *uh, char *chan)
 			unixtime = (time_t) time (NULL) - (time_t) atoi (r_time);
 			
 			if (unixtime < MAX_LASTSEEN)
-				log (TMP_FILE, "%s %s %s %s\n", r_nick, r_uh, r_chan, r_time);
+				db_log (TMP_FILE, "%s %s %s %s\n", r_nick, r_uh, r_chan, r_time);
 		}
 	}
 	fclose (fp);
 	if (toggle == 0)
 	{
-		log (TMP_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
+		db_log (TMP_FILE, "%s %s %s %d\n", nick, uh, chan, (time_t) time (NULL));
 	}
 
 	rename (TMP_FILE, SEEN_FILE);

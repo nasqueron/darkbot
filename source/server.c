@@ -32,7 +32,7 @@ void	add_s25			(char *server, long port, char *pass)
 	n = malloc (sizeof (struct sl124));
 	if (n == NULL)
 	{
-		log ("error.log", "AHHH! No ram left! in add_s25!\n");
+		db_log ("error.log", "AHHH! No ram left! in add_s25!\n");
 		return;
 	}
 	memset (n, 0, sizeof (struct sl124));

@@ -220,12 +220,12 @@ info (const char *source, char *target)
 		{
 			dup++;
 #ifdef	SAVE_DUPS
-			log (BACKUP_DUP, "%s %s\n", subj, ptr);
+			db_log (BACKUP_DUP, "%s %s\n", subj, ptr);
 #endif
 		}
 		else
 		{
-			log (TMP_URL, "%s %s\n", subj, ptr);
+			db_log (TMP_URL, "%s %s\n", subj, ptr);
 		}
 		strncpy (last, subj, sizeof (last));
 		last[sizeof (last) - 1] = '\0';

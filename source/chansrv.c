@@ -195,7 +195,7 @@ chanserv (char *source, char *target, char *buf)
 				if (strlen (s2) > MAX_TOPIC_SIZE)
 					s2[MAX_TOPIC_SIZE] = '\0';
 #ifdef	LOG_ADD_DELETES
-				log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, s2);
+				db_log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, s2);
 #endif
 				if (*s2 == '~')
 				{				/* need level 2 to delete .rdb files */
@@ -298,15 +298,15 @@ chanserv (char *source, char *target, char *buf)
 					return;
 				}
 #ifdef	LOG_ADD_DELETES
-				log (ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date (), source, userhost, s2, s3);
+				db_log (ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date (), source, userhost, s2, s3);
 #endif
 				ADDITIONS++;
 				if (s2[0] == 'i' && s2[1] == 'l' && s2[2] == 'c')
 				{
-					log (URL2, "%s ([%s] %s!%s): %s\n", s2, date (), source, userhost, s3);
+					db_log (URL2, "%s ([%s] %s!%s): %s\n", s2, date (), source, userhost, s3);
 				}
 				else
-					log (URL2, "%s %s\n", s2, s3);
+					db_log (URL2, "%s %s\n", s2, s3);
 				L067n (source, source);
 #ifdef	REQ_ACCESS_ADD
 			}
@@ -1144,7 +1144,7 @@ chanserv (char *source, char *target, char *buf)
 				}
 				i = (atoi (s) * sn) + time (NULL);
 				snprintf (temp, sizeof (temp), "%s/%ld", DBTIMERS_PATH, i);
-				log (temp,
+				db_log (temp,
 					 "PRIVMSG %s :\2ALARMCLOCK\2 by %s!%s: %s\n", target, source, userhost, s2);
 				unixtime = atoi (s) * sn;
 				if (unixtime > 86400)
@@ -1357,15 +1357,15 @@ chanserv (char *source, char *target, char *buf)
 						return;
 					}
 #ifdef	LOG_ADD_DELETES
-					log (ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date (), source, userhost, s2, s3);
+					db_log (ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date (), source, userhost, s2, s3);
 #endif
 					ADDITIONS++;
 					if (s2[0] == 'i' && s2[1] == 'l' && s2[2] == 'c')
 					{
-						log (URL2, "%s ([%s] %s!%s): %s\n", s2, date (), source, userhost, s3);
+						db_log (URL2, "%s ([%s] %s!%s): %s\n", s2, date (), source, userhost, s3);
 					}
 					else
-						log (URL2, "%s %s\n", s2, s3);
+						db_log (URL2, "%s %s\n", s2, s3);
 					L067 (target, source);
 #ifdef	REQ_ACCESS_ADD
 				}
@@ -1405,11 +1405,11 @@ chanserv (char *source, char *target, char *buf)
 					}
 					delete_url (source, s2, target);
 #ifdef	LOG_ADD_DELETES
-					log (ADD_DELETES,
+					db_log (ADD_DELETES,
 						 "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, s2, s3);
 #endif
 					ADDITIONS++;
-					log (URL2, "%s %s\n", s2, s3);
+					db_log (URL2, "%s %s\n", s2, s3);
 					L070 (target, source, s2);
 #ifdef	REQ_ACCESS_ADD
 				}
@@ -1774,7 +1774,7 @@ chanserv (char *source, char *target, char *buf)
 					if (strlen (s2) > MAX_TOPIC_SIZE)
 						s2[MAX_TOPIC_SIZE] = '\0';
 #ifdef	LOG_ADD_DELETES
-					log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, s2);
+					db_log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, s2);
 #endif
 					if (*s2 == '~')
 					{			/* need level 2 to delete .rdb files */

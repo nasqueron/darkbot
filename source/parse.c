@@ -18,7 +18,7 @@ parse (char *line)
 	if (DebuG == 1)
 		printf ("IN :%s\n", line);
 #ifdef	DEBUG2
-	log ("darkbot_debug.log", "IN :%s\n", line);
+	db_log ("darkbot_debug.log", "IN :%s\n", line);
 #endif
 	stripline (line);
 	s = strtok (line, " ");
@@ -227,7 +227,7 @@ parse (char *line)
 #if	LOG_PRIVMSG == 1
 			if (*s1 != '#' && *s1 != '&')
 			{
-				log (privmsg_log, "[%s] %s %s %s\n", date (), s, s1, s2);
+				db_log (privmsg_log, "[%s] %s %s %s\n", date (), s, s1, s2);
 			}
 #endif
 			if (*s1 == '#' || *s1 == '&' || *s1 == '+')
@@ -471,9 +471,9 @@ parse_255 (char *s)
 	else
 		S ("PRIVMSG %s :!SENDQ %d srvs, %d ops, %d users [%c%2d] (%s%% of %d, %ld avg)\37\n", PBOT,
 		   NUM_SERV, IRCOPS, L_CLIENTS, Stat[0], pre_CLIENTS, tmp, G_USERS, G_USERS / NUM_SERV);
-	log (".ubcount", "%d\n%d\n0\n0\n", L_CLIENTS, L_CLIENTS);
+	db_log (".ubcount", "%d\n%d\n0\n0\n", L_CLIENTS, L_CLIENTS);
 	rename (".ubcount", "/usr/local/apache/htdocs/usage/userbase/userbase.dat");
-	log (".glcount", "%d\n%d\n0\n0\n", G_USERS, G_USERS);
+	db_log (".glcount", "%d\n%d\n0\n0\n", G_USERS, G_USERS);
 	rename (".glcount", "/usr/local/apache/htdocs/usage/global/global.dat");
 #else
 	if (pre_CLIENTS == 0 || pre_CLIENTS == L_CLIENTS)

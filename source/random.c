@@ -44,7 +44,7 @@ void		add_randomstuff		(char *source, char *target, char *data)
 		nRandStuffs++;
 	}
 
-	log(file, "%s\n", data);
+	db_log(file, "%s\n", data);
 
 	nLines = count_lines(file);
 
@@ -375,7 +375,7 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 						{
 							S ("mode %s +b *%s\n", target, mask_from_nick (nick, target));
 							snprintf (temp, sizeof (temp), "%s/%ld", DBTIMERS_PATH, (long) time (NULL) + 60);
-							log (temp, "MODE %s -b *%s\n", target, mask_from_nick (nick, target));
+							db_log (temp, "MODE %s -b *%s\n", target, mask_from_nick (nick, target));
 			
 						}
 						else
@@ -586,7 +586,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 				if (strstr(szBuffer, text))
 				{
 					nNumMatches++;
-					log(RANDQ_TEMPFILE, "%s\n", szBuffer);
+					db_log(RANDQ_TEMPFILE, "%s\n", szBuffer);
 				}
 			}
 			else /* if (type == RANDQ_NORMAL) */
@@ -594,7 +594,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 				if (db_stristr(szBuffer, text) != 0)
 				{
 					nNumMatches++;
-					log(RANDQ_TEMPFILE, "%s\n", szBuffer);
+					db_log(RANDQ_TEMPFILE, "%s\n", szBuffer);
 				}
 			}
 		}

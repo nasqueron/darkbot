@@ -76,7 +76,7 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 	n = malloc (sizeof (struct statslist));
 	if (n == NULL)
 	{
-		log ("error.log", "AHHH! No ram left! in add_stats!\n");
+		db_log ("error.log", "AHHH! No ram left! in add_stats!\n");
 		return;
 	}
 	NUM_USER++;

@@ -63,7 +63,7 @@ S (const char *format, ...)
 	n = malloc (sizeof (struct sendq));
 	if (n == NULL)
 	{
-		log ("error.log", "AHH! no ram left! in S!\n");
+		db_log ("error.log", "AHH! no ram left! in S!\n");
 		return;
 	}
 
@@ -115,7 +115,7 @@ Send ()
 	if (DebuG == 1)
 		printf ("OUT: %s\n", c->data);
 #ifdef	DEBUG2
-	log ("darkbot_debug.log", "OUT: %s\n", c->data);
+	db_log ("darkbot_debug.log", "OUT: %s\n", c->data);
 #endif
 	strncpy (output, c->data, sizeof (output));
 	del_sendq (0);

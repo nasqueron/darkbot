@@ -22,7 +22,7 @@ stripline (char *ptr)
 }
 
 void
-log (const char *filename, const char *format,...)
+db_log (const char *filename, const char *format,...)
 {
 	va_list arglist;
 	FILE *fp;
@@ -133,7 +133,7 @@ save_changes (void)
 	while (c != NULL)
 	{
 		i++;
-		log (TMP_FILE, "%s %s %d %d %s %s\n",
+		db_log (TMP_FILE, "%s %s %d %d %s %s\n",
 			 c->chan, c->uh, c->level, c->num_join, c->pass, c->greetz);
 		c = c->next;
 	}
@@ -142,7 +142,7 @@ save_changes (void)
 	while (d != NULL)
 	{
 		i++;
-		log (TMP_FILE, "%s %s %ld %ld %ld\n",
+		db_log (TMP_FILE, "%s %s %ld %ld %ld\n",
 			 d->nick, d->uh, d->total, d->added_time, d->last_time);
 		d = d->next;
 	}
@@ -156,13 +156,13 @@ save_setup (void)
 	printf ("*** Writing setup file: %s (%s)\n", SETUP, date ());
 #endif
 	unlink (TMP_FILE);
-	log (TMP_FILE, "NICK=%s\n", s_Mynick);
-	log (TMP_FILE, "USERID=%s\n", UID);
-	log (TMP_FILE, "CHAN=%s\n", CHAN);
-	log (TMP_FILE, "VHOST=%s\n", VHOST);
-	log (TMP_FILE, "REALNAME=%s\n", REALNAME);
-	log (TMP_FILE, "CMDCHAR=%c\n", *CMDCHAR);
-	log (TMP_FILE, "SEEN=%d\n", SeeN);
+	db_log (TMP_FILE, "NICK=%s\n", s_Mynick);
+	db_log (TMP_FILE, "USERID=%s\n", UID);
+	db_log (TMP_FILE, "CHAN=%s\n", CHAN);
+	db_log (TMP_FILE, "VHOST=%s\n", VHOST);
+	db_log (TMP_FILE, "REALNAME=%s\n", REALNAME);
+	db_log (TMP_FILE, "CMDCHAR=%c\n", *CMDCHAR);
+	db_log (TMP_FILE, "SEEN=%d\n", SeeN);
 	rename (TMP_FILE, SETUP);
 }
 
@@ -453,7 +453,7 @@ add_ignore_user_ram (char *nick)
 	
     if ( ( n = malloc (sizeof (struct ignorelist))) == NULL )
 	{
-		log ("error.log", "AHHH! No ram left! in add_ignore_user!\n");
+		db_log ("error.log", "AHHH! No ram left! in add_ignore_user!\n");
 		return 0;
 	}
 	
@@ -525,7 +525,7 @@ size_t			count_lines	(char *filename)
 	
 	if((fp = fopen(filename, "r")) == NULL)
 	{
-		log("error.log", "Failed to open %s in count_lines()", 
+		db_log("error.log", "Failed to open %s in count_lines()", 
 			filename);
 		return (-1);
 	}

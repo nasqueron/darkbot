@@ -195,7 +195,7 @@ delete_url (const char *nick, char *topic, char *target)
 				L029 (target, nick, i, topic);
 		}
 		else if (strstr (subj, " ") == NULL)
-			log (TMP_URL, "%s %s\n", subj, ptr);
+			db_log (TMP_URL, "%s %s\n", subj, ptr);
 	}
 
 	fclose (fp);
@@ -427,7 +427,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 					{			/* temp ban user for 60 sec */
 						S ("MODE %s +b *%s\n", target, uh);
 						snprintf (temp, sizeof (temp), "%s/%ld", DBTIMERS_PATH, (long)time (NULL) + 60);
-						log (temp, "MODE %s -b *%s\n", target, uh);
+						db_log (temp, "MODE %s -b *%s\n", target, uh);
 					}
 					ptr8[0] = tolower (ptr8[0]);
 					ptr8[1] = tolower (ptr8[1]);

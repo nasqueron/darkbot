@@ -6,6 +6,10 @@
 
 Darkbot 7f1: Feb 28th, 2004
 
+	- Renamed the log() function db_log() to avoid a conflict
+	  with a function internal with gcc.  Apparently this only
+	  affects newer versions of gcc.  
+
 	- Added "make convertdb", which will compile the database
 	  conversion utility, which encrypts the passwords in your
 	  userlist.db file.

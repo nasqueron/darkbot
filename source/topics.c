@@ -41,7 +41,7 @@ del_autotopic (const char *chan)
 		}
 		else
 		{
-			log (TMP_FILE, "%s %s\n", r_chan, r_data);
+			db_log (TMP_FILE, "%s %s\n", r_chan, r_data);
 		}
 	}
 
@@ -138,14 +138,14 @@ set_autotopic (char *source, char *target, char *topic)
 	if (exist == 0)
 	{							/* no such autotopic, so add it */
 		L009 (source, target, topic);
-		log (AUTOTOPIC_F, "%s %s\n", target, topic);
+		db_log (AUTOTOPIC_F, "%s %s\n", target, topic);
 		return;
 	}
 	/* only thing left is if topic exists and you want to update it */
 	del_autotopic (target);
 	L010 (source, target, topic);
 	S ("TOPIC %s :%s\n", target, topic);
-	log (AUTOTOPIC_F, "%s %s\n", target, topic);
+	db_log (AUTOTOPIC_F, "%s %s\n", target, topic);
 }
 
 char *

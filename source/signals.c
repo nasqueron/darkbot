@@ -157,7 +157,7 @@ sig_segv (int notUsed)
 	p = getpid ();
 	if (fork () > 0)
 	{
-		log ("error.log", "Caught SIGSEGV.. Sent kill -3 and kill -9...\n");
+		db_log ("error.log", "Caught SIGSEGV.. Sent kill -3 and kill -9...\n");
 		kill (p, 3);
 		kill (p, 9);
 	}

@@ -32,7 +32,7 @@ add_helper (const char *chan,
 	n = malloc (sizeof (struct helperlist));
 	if (n == NULL)
 	{
-		log ("error.log", "AHHH! No ram left! in add_helper!\n");
+		db_log ("error.log", "AHHH! No ram left! in add_helper!\n");
 		return;
 	}
 

@@ -106,7 +106,7 @@ add_user (char *chan, char *nick, char *uh, long tog)
 	n = malloc (sizeof (struct userlist));
 	if (n == NULL)
 	{
-		log ("error.log", "AHHH! No ram left! in add_user!\n");
+		db_log ("error.log", "AHHH! No ram left! in add_user!\n");
 		return;
 	}
 	memset (n, 0, sizeof (struct userlist));
