@@ -117,3 +117,5 @@ l'aide sur la syntaxe)\n",a,b,c,d,e)
 d'être envoyée). %d objets.\n",a,b)
 #define Lbadtopic(a,b) S("PRIVMSG %s :Désolé %s, le support pour ce sujet à été enlevé.\n",a,b);
 #define Lbadtopic2(a,b) S("NOTICE %s :Désolé %s, le support pour ce sujet à été enlevé.\n",a,b);
+#define Lbadtopic(a,b) S("PRIVMSG %s :Désolé %s, mais soutien de cette matière a été enlevé.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Désolé %s, mais soutien de cette matière a été enlevé.\n",a,b);

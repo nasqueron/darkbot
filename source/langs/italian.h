@@ -111,3 +111,5 @@ suggerimenti sulla sintassi)\n",a,b,c,d,e)
 #define L089(a) S("PRIVMSG %s :\1ACTION si sveglia da un brutto sogno...\1\n",a)
 #define L090(a,b) S("PRIVMSG %s :Sono sotto flood. Sputo fuori tutta la queue. \
 %d oggetti eliminati.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Spiacente %s, ma sostegno quel soggetto è stato rimosso.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Spiacente %s, ma sostegno quel soggetto è stato rimosso.\n",a,b);

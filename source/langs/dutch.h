@@ -116,3 +116,5 @@ momenteel op server #%d.\n",a,b,c,d,e)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION wordt wakker...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Ik wordt geflood. Output-rij gedumpt (data dat klaarstond om \
 verzonden te worden). %d opdrachten.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Helaas %s, ondersteuning voor dat onderwerp is verwijderd.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Helaas %s, ondersteuning voor dat onderwerp is verwijderd.\n",a,b);

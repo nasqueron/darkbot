@@ -113,3 +113,5 @@ gia thn syntaxi tou)\n",a,b,c,d,e)
 #define	L088(a) S("QUIT :%s eine stoned!\n",a)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION xipna...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Exo gini flood. %d items.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Signomi %s, ala den iparhi boithia gia afto to thema pia.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Signomi %s, ala den iparhi boithia gia afto to thema pia.\n",a,b);

@@ -115,3 +115,5 @@ syntax)\n",a,b,c,d,e)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION se despierta...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Estoy siendo flooded. Vaciando output Que (data que esta esperando \
 para ser mandado). %d itemes.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Apesadumbrado %s, pero ayuda para ese asunto se ha quitado.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Apesadumbrado %s, pero ayuda para ese asunto se ha quitado.\n",a,b);

@@ -112,3 +112,5 @@ hints)\n",a,b,c,d,e)
 %d itens removidos.\n",a,b)
 #define L091(a) S("NOTICE %s :Sintaxe: SETVHOST <Vhost novo> (requer que se reinicie)\n",a)
 #define L092(a,b) S("NOTICE %s :Vhost está agora configurado para: %s\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Pesaroso %s, mas sustentação para esse tópico foi removido.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Pesaroso %s, mas sustentação para esse tópico foi removido.\n",a,b);

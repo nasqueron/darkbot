@@ -110,3 +110,5 @@ Hinweise)\n",a,b,c,d,e)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION erwacht...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Ich wurde geflutet. Gebe Ausgabeschlange aus. \
 %d Eintraege geloescht.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Leider %s, wurde die Unterstützung für dieses thema entfernt.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Leider %s, wurde die Unterstützung für dieses thema entfernt.\n",a,b);
