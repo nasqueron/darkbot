@@ -67,6 +67,7 @@ int		del_permban				(const char *, const char *);
 
 int		check_existing_url		(const char *, char *, char *);
 void	show_helper_list		(const char *, long),
+		set_paths			(void),
 		show_banlist			(const char *), 
 		chanserv				(char *, char *, char *),
 		raw_now					(char *), 

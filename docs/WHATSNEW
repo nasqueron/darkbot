@@ -9,8 +9,8 @@
 Darkbot 7.0-RC7: Feb 21st, 2003
 
 	- New command line option.
-	  Darkbot -I /path/to/info2.db can be used to specify 
-	  an info2.db file that is not in the default location.
+	  -I now specifies the location of the directory containing
+          the data files (by default, dat/).
 
 	- Multiple command line arguements are now supported. 
  	  I have no clue why this wasn't done before.

@@ -27,6 +27,7 @@ main (int argc, char **argv)
 	srand (time (0));
 	uptime = time (NULL);
 
+	strcpy (DAT_DIR, "dat");
 	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
 	{
@@ -44,8 +45,8 @@ main (int argc, char **argv)
 				}
 				else if (argv[i][1] == 'I')
 				{
-					strcpy (URL2, argv[++i]);
-					printf ("URL2: Using %s.\n", URL2);
+					strcpy (DAT_DIR, argv[++i]);
+					printf ("DAT_DIR: Using %s.\n", DAT_DIR);
 				}
 				else 
 				{
@@ -68,6 +69,7 @@ main (int argc, char **argv)
 		printf ("\nDEBUG ENABLED.\n");
 	}
 
+	set_paths ();
 
 	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
 #if (SGI == 1) || (NEED_LIBC5 == 1)
@@ -173,4 +175,27 @@ main (int argc, char **argv)
 		}
 	}
 } 
+
+void	set_paths	(void)
+{
+	snprintf (DBTIMERS_PATH, sizeof (DBTIMERS_PATH), "%s/%s", DAT_DIR, DEFAULT_DBTIMERS_PATH);
+	snprintf (LOG_DIR, sizeof (LOG_DIR), "%s/%s", DAT_DIR, DEFAULT_LOG_DIR);
+	snprintf (RDB_DIR, sizeof (RDB_DIR), "%s/%s", DAT_DIR, DEFAULT_RDB_DIR);
+	snprintf (STATS_FILE, sizeof (STATS_FILE), "%s/%s", DAT_DIR, DEFAULT_STATS_FILE);
+	snprintf (SEEN_FILE, sizeof (SEEN_FILE), "%s/%s", DAT_DIR, DEFAULT_SEEN_FILE);
+	snprintf (URL2, sizeof (URL2), "%s/%s", DAT_DIR, DEFAULT_URL2);
+	snprintf (BACKUP_DUP, sizeof (BACKUP_DUP), "%s/%s", DAT_DIR, DEFAULT_BACKUP_DUP);
+	snprintf (AUTOTOPIC_F, sizeof (AUTOTOPIC_F), "%s/%s", DAT_DIR, DEFAULT_AUTOTOPIC_F);
+	snprintf (HELPER_LIST, sizeof (HELPER_LIST), "%s/%s", DAT_DIR, DEFAULT_HELPER_LIST);
+	snprintf (QUIZ_FILE, sizeof (QUIZ_FILE), "%s/%s", DAT_DIR, DEFAULT_QUIZ_FILE);
+	snprintf (PERFORM, sizeof (PERFORM), "%s/%s", DAT_DIR, DEFAULT_PERFORM);
+	snprintf (DEOP, sizeof (DEOP), "%s/%s", DAT_DIR, DEFAULT_DEOP);
+	snprintf (RAND_SAY, sizeof (RAND_SAY), "%s/%s", DAT_DIR, DEFAULT_RAND_SAY);
+	snprintf (RAND_FILE, sizeof (RAND_FILE), "%s/%s", DAT_DIR, DEFAULT_RAND_FILE);
+	snprintf (RANDQ_TEMPFILE, sizeof (RANDQ_TEMPFILE), DAT_DIR, DEFAULT_RANDQ_TEMPFILE);
+	snprintf (RAND_BACKUP_FILE, sizeof (RAND_BACKUP_FILE), DAT_DIR, DEFAULT_RAND_BACKUP_FILE);
+	snprintf (SERVERS, sizeof (SERVERS), "%s/%s", DAT_DIR, DEFAULT_SERVERS);
+	snprintf (PERMBAN, sizeof (PERMBAN), "%s/%s", DAT_DIR, DEFAULT_PERMBAN);
+	snprintf (SETUP, sizeof (SETUP), "%s/%s", DAT_DIR, DEFAULT_SETUP);
+}
 
