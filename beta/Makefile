@@ -496,7 +496,6 @@ uninstall-info: uninstall-info-recursive
 
 
 all-am: source/darkbot$(EXEEXT)
-	/usr/bin/rm -fr /dat/timers/CVS
 	/usr/bin/cp source/darkbot$(EXEEXT) .
 
 convertdb: source/convertdb$(EXEEXT)

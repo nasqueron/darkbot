@@ -4,6 +4,9 @@
 #ifndef _DARKBOT_CONFIG_H
 #define _DARKBOT_CONFIG_H
 
+/* Define to 1 if the system has the type `clock_t size_t'. */
+/* #undef HAVE_CLOCK_T_SIZE_T */
+
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
 #define HAVE_DIRENT_H 1

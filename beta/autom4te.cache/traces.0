@@ -1,5 +1,5 @@
 m4trace:aclocal.m4:126: -1- m4_pattern_allow([^AM_[A-Z]+FLAGS$])
-m4trace:configure.ac:9: -1- AC_INIT([Darkbot], [7f3(dev)], [ron@darkbot.org])
+m4trace:configure.ac:9: -1- AC_INIT([Darkbot], [8rc1], [ron@darkbot.org])
 m4trace:configure.ac:9: -1- m4_pattern_forbid([^_?A[CHUM]_])
 m4trace:configure.ac:9: -1- m4_pattern_forbid([_AC_])
 m4trace:configure.ac:9: -1- m4_pattern_forbid([^LIBOBJS$], [do not use LIBOBJS directly, use AC_LIBOBJ (see section `AC_LIBOBJ vs LIBOBJS'])
@@ -134,6 +134,7 @@ m4trace:configure.ac:35: -1- AC_CHECK_LIB([user32], [main])
 m4trace:configure.ac:35: -1- AH_OUTPUT([HAVE_LIBUSER32], [/* Define to 1 if you have the `user32\' library (-luser32). */
 #undef HAVE_LIBUSER32])
 m4trace:configure.ac:35: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBUSER32])
+m4trace:configure.ac:37: -1- AC_CHECK_TYPES([clock_t size_t])
 m4trace:configure.ac:37: -1- AC_HEADER_STDC
 m4trace:configure.ac:37: -1- AC_PROG_CPP
 m4trace:configure.ac:37: -1- AC_SUBST([CPP])
@@ -163,6 +164,9 @@ m4trace:configure.ac:37: -1- AH_OUTPUT([HAVE_STDINT_H], [/* Define to 1 if you h
 #undef HAVE_STDINT_H])
 m4trace:configure.ac:37: -1- AH_OUTPUT([HAVE_UNISTD_H], [/* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H])
+m4trace:configure.ac:37: -1- AC_DEFINE_TRACE_LITERAL([HAVE_CLOCK_T_SIZE_T])
+m4trace:configure.ac:37: -1- AH_OUTPUT([HAVE_CLOCK_T_SIZE_T], [/* Define to 1 if the system has the type `clock_t size_t\'. */
+#undef HAVE_CLOCK_T_SIZE_T])
 m4trace:configure.ac:40: -1- AC_HEADER_DIRENT
 m4trace:configure.ac:40: -1- AH_OUTPUT([HAVE_DIRENT_H], [/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR\'.
    */
