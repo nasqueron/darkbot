@@ -8,6 +8,12 @@
 
 Darkbot 7.0-RC7: Mar 13th, 2003
 	
+	- On startup, we now run_performs() BEFORE we join our home
+	  channel. This fixes an issue that happened chiefly on 
+	  Undernet, and allows the bot to authenticate and set 
+	  umode +x, before it joins any channels.  I hope to fix 
+	  this in a better way, but for now it's driving me nuts.
+
 	- The startup screen now actually reflects what version this
 	  is. Sorry, I forgot all about that startup screen, because
 	  it's hard coded. hehe.

@@ -76,8 +76,6 @@ parse (char *line)
 			snprintf (NICK_COMMA, sizeof (NICK_COMMA), "%s,", Mynick);
 			snprintf (COLON_NICK, sizeof (COLON_NICK), "%s:", Mynick);
 			snprintf (BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", Mynick);
-			S ("JOIN %s\n", CHAN);
-			db_sleep (2);
 			s2 = strtok (NULL, " ");	/* Got server name */
 		}
 		else if (stricmp (cmd, "315") == 0)
@@ -136,8 +134,8 @@ parse (char *line)
 		{
 			/* Set default umodes */
 			S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
-
 			run_perform (); /* Run performs */
+			S ("JOIN %s\n", CHAN);
 		}
 		else if (stricmp (cmd, "482") == 0)
 		{
