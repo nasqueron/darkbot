@@ -1727,8 +1727,11 @@ chanserv (char *source, char *target, char *buf)
 			}
 			else if (stricmp (s, "MEM") == 0 || stricmp (s, "RAM") == 0)
 			{
-				snprintf (temp, sizeof (temp), "ps -u -p %d\n", getpid ());
-				S ("PRIVMSG %s :ps: %s\n", target, run_program (temp));
+				if (check_access (userhost, target, 0, source) >= 3)
+				{
+					snprintf (temp, sizeof (temp), "ps -u -p %d\n", getpid ());
+					S ("PRIVMSG %s :ps: %s\n", target, run_program (temp));
+				}
 			}
 			else if (stricmp (s, "RDB") == 0)
 			{
