@@ -27,7 +27,8 @@ main (int argc, char **argv)
 	srand (time (0));
 	uptime = time (NULL);
 
-	strcpy (DAT_DIR, "dat");
+	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
+
 	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
 	{

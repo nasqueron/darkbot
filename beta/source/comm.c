@@ -248,7 +248,7 @@ prepare_bot (void)
 	while (!esc)
 	{
 		gs26 ();
-		printf (".: Connecting to %s:%ld                             \r", BS, BP);
+		printf (".: Connecting to %s:%ld\t\r", BS, BP);
 		fflush (stdout);
 		sleep (2);
 
@@ -258,13 +258,13 @@ prepare_bot (void)
 		{
 
 			case ERR_TIMED_OUT:
-				printf (".: Connection to %s:%ld timed out!                       \r", BS, BP);
+				printf (".: Connection to %s:%ld timed out!\t\r", BS, BP);
 				fflush (stdout);
 				sleep (2);
 				break;
 
 			case ERR_CONN_REFUSED:
-				printf (".: Connection to %s:%ld was refused!                     \r", BS, BP);
+				printf (".: Connection to %s:%ld was refused!\t\r", BS, BP);
 				fflush (stdout);
 				sleep (2);
 				break;
@@ -280,10 +280,10 @@ prepare_bot (void)
 			default:
 				esc = 1;
 				printf
-					(".: Connected to %s:%ld! [%ld]                  \r", BS, BP, (long) getpid ());
+					(".: Connected to %s:%ld! [%ld]\t\r", BS, BP, (long) getpid ());
 
-				sleep (5);
 				fflush (stdout);
+				sleep (5);
 				break;
 		}
 	}
