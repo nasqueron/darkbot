@@ -5,8 +5,17 @@ dnl ---------------------------------
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(source/defines.h)
+AC_INIT([Darkbot],[7f3(dev)],[ron@darkbot.org])
+AC_COPYRIGHT([Copyright (C) 2004 Darkbot Development Team])
+AC_REVISION($Revision$)
+AC_CONFIG_SRCDIR(source/defines.h)
 AC_CONFIG_HEADER(source/config.h)
+AC_PREFIX_DEFAULT([\${HOME}/darkbot])
+
+dnl config.h stuff
+AH_TOP([#ifndef _DARKBOT_CONFIG_H
+#define _DARKBOT_CONFIG_H])
+AH_BOTTOM([#endif /* !_DARKBOT_CONFIG_H */])
 
 AM_INIT_AUTOMAKE(darkbot, `cat VERSION`)
 
@@ -22,6 +31,8 @@ AC_CHECK_LIB(crypt, main)
 dnl Replace `main' with a function in -luser32:
 AC_CHECK_LIB(user32, main)
 
+AC_CHECK_TYPE(clock_t)
+
 dnl Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
@@ -31,9 +42,7 @@ AC_CHECK_HEADER([windows.h],AC_DEFINE([WIN32],,[windows.h]))
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
-AC_CHECK_TYPES(clock_t)
 
-AC_TYPE_SIZE_T
 AC_HEADER_TIME
 
 dnl Checks for library functions.

@@ -6,6 +6,9 @@ EXTRA_PROGRAMS = convertdb
 
 AM_CFLAGS = -DFORK
 
+## Uncomment this line for  no-console mode on Windows.
+## AM_LDFLAGS = -Wl,--subsystem,windows
+
 ## Uncomment this line to compile on Solaris.
 ## AM_LIBS = -lcrypt -lsocket -lnsl -lresolv
 
