@@ -4,6 +4,8 @@ Darkbot Configuration Utility
 <************_~_************>
 "
 PID=0624022000
+lparen='('
+rparen=')'
 # Configures Darkbot
 # to do: correcting user entry errors on the fly
 
@@ -355,8 +357,8 @@ $PNCFG
      Select one of the following 4 options:
 1) - Write only one server or use the default [eu.undernet.org] `if [ ! -z \
 "$srv_num_entries" ] && [ "$srv_num_entries" != "0" ]; then \
-echo "\n     (This option will overwrite \
-the existent "$entry_s" on your servers file)"; fi`
+echo -e "\n     ${lparen}This option will overwrite \
+the existent "$entry_s" on your servers file${rparen}"; fi`
 2) - Use AddServer utility which gives you many options to manage \
 your servers
 3) - Import a servers.ini file from another location
@@ -501,8 +503,8 @@ $PNCFG
      Select one of the following 4 options:
 1) - Add yourself or someone else as administrator `if [ ! -z \
 "$usr_num_entries" ] && [ "$usr_num_entries" != "0" ]; then \
-echo "\n     (This option will overwrite \
-the existent "$entry_s" on your user list file)"; fi`
+echo "\n     ${lparen}This option will overwrite \
+the existent "$entry_s" on your user list file${rparen}"; fi`
 2) - Use AddUser utility with several options to manage "$NICK"'s users
 3) - Import a userlist.db file from another location
 4) - or hit ENTER to proceed with no changes."
