@@ -549,15 +549,23 @@ get_multiword_topic (char *first)
 void
 datasearch (const char *nick, char *topic, char *target)
 {
-	FILE *fp;
-	long i = 0, FOUND = 0, x = 0;
+	FILE *fp = NULL;
+	size_t i = 0, FOUND = 0, x = 0;
 	char b[STRING_LONG] = { 0 }, *dorf = NULL, *subj = NULL, *ptr2 = NULL, DATA[STRING_SHORT] =
 	{
 	0};
 
+	/* Make sure topic is not NULL.*/
+	if (topic == NULL)
+	{
+		return;
+	}
+
 	if (strlen (topic) > MAX_TOPIC_SIZE)
 		topic[MAX_TOPIC_SIZE] = '\0';
+	
 	strlwr (topic);
+	
 	if ((fp = fopen (URL2, "r")) == NULL)
 	{
 		L003 (nick, URL2);
