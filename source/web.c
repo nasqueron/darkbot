@@ -317,7 +317,7 @@ google_parse_query(char *source, char *uh, char *target, char *data)
         return ERR_NO_DOCUMENTS;
     }
 
-    if(((s1 = strstr(data, "Searched the web for")) != NULL) || ((s1 = strstr(data, "Searched pages from")) != NULL))
+    if((s1 = strstr(data, "Google Search:")) != NULL)
     {
         if((s2 = strstr(s1, sub1)) != NULL)
         {
