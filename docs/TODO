@@ -16,5 +16,5 @@ to the Darkbot project.
   for every channel specified in setup.ini as the home 
   channel, in the case of multiple home channels, has
   their own randomstuff timers that output randomstuffs
-  according to the action going on, on each specific 
+  according to the action going on, for each specific 
   channel.
