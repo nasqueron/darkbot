@@ -4,7 +4,10 @@ The TO-DO List For Darkbot
 This is just a small file I made to help me remember what 
 needs to be done, or is being suggested.  It may also be
 useful to any other developers interested in contributing
-to the Darkbot project.
+to the Darkbot project. Many of these things are very 
+simple, I just write them down, because as some of you
+may know, I forget easily. And i don't always have time  
+to work on the code right as things are suggested.
 ----------------------------------------------------------
 
 - chansrv.c badly needs to be revamped. needs a command
@@ -18,3 +21,5 @@ to the Darkbot project.
   their own randomstuff timers that output randomstuffs
   according to the action going on, for each specific 
   channel.
+
+- Allow comments in perform.ini and other data files.
