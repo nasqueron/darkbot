@@ -142,7 +142,7 @@ parse (char *line)
 			s2 = strtok (NULL, " ");	/* mynick */
 			strncpy (Mynick, s2, sizeof (Mynick));
 			s2 = strtok (NULL, " ");	/* chan */
-			raw_now ("DEOP");	/* Deoped, run list of
+			run_deop (chan)	/* Deoped, run list of
 								   * commands.. */
 #endif
 		}
