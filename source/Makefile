@@ -22,7 +22,7 @@ EXE_NAME = darkbot
 
 LIBS = -lcrypt
 
-# If you're using Solaris, you'll need to uncomment this line.
+# If you're using Solaris, you'll need to uncomment this next line.
 # LIBS = -lcrypt -lsocket -lnsl -lresolv
 
 ####################################################
@@ -37,7 +37,7 @@ ALL_SRC = main.c vars.c chansrv.c permbans.c helpers.c users.c general.c \
 
 all : ${OBJECTS}
 	${CC} ${CFLAGS} ${OBJECTS} ${LIBS} -o ${EXE_NAME}
-	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
+	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb; ../scripts/.Stripdb;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
 
@@ -46,19 +46,19 @@ clean :
 
 win : ${ALL_SRC}
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
+	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME} ..;
 
 cygwin : ${OBJECTS}
 	${CC} ${CFLAGS} -DWIN32 -DCYGWIN ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
+	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME}.exe ..;
 
 win2 : ${OBJECTS}
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o darkbot-noconsole -luser32
-	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
+	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
 

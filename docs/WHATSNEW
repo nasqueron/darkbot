@@ -8,6 +8,10 @@
 
 Darkbot 7.0-RC7: Mar 13th, 2003
 	
+	- Removed the .runonce script from executing during the
+	  "make" process. The funcionality this script produced
+	  is depricated. Also removed this file from the distro.
+
 	- Darkbot will now properly compile on Solaris. To make
 	  this happen, you need to manually edit source/Makefile,
 	  and remove a comment symbol before the word "LIBS".
