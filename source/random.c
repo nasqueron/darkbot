@@ -436,6 +436,7 @@ char	*rand_reply	(const char *nick)
 	size_t		nIndex = 0, nRandTopics = 0, nLine = 0,
 				nLength = 0;
 
+
 	// Count how many lines are in the RAND_SAY file, if can't be
 	// counted, just return.
 	if((nRandTopics = count_lines(RAND_SAY)) < 1)

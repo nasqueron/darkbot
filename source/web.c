@@ -365,8 +365,8 @@ metar_parse_query(char *source, char *uh, char *target, char *data)
  
     if((s1 = strstr(data, "The observation is:")) != NULL)
     {
-	/* skip the next 4 html tags */
-	while(i<4)
+	/* skip the next 3 html tags */
+	while(i<3)
 	{
 	    while(*s1 != '>')
 	    {
@@ -413,7 +413,7 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
     char tafdata[STRING_LONG] = { 0 };
     int i = 0;
  
-    if((s1 = strstr(data, "The forecast is:")) != NULL)
+    if((s1 = strstr(data, "The observation is:")) != NULL)
     {
 	/* skip the next 4 html tags */
 	while(i<4)
