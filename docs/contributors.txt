@@ -82,6 +82,7 @@ BLightnin @ undernet #darkbot
 juice @ undernet #darkbot
 Shaky @ undernet #darkbot
 TuEuR @ undernet #darkbot
+{SID_V} @ undernet #darkbot
 
 **** Special Donnations ****
 Andre (Syntax6) Syntax6@darkbot.info - has hosted Darkbot Web pages 
