@@ -108,3 +108,5 @@
 #define L089(a) S("PRIVMSG %s :\1ACTION просныпается...\1\n",a)
 #define L090(a,b) S("PRIVMSG %s :Меня флудят. Очищаю выходную очередь. \
 %d записей удалено.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Izveni  %s, nu poderjka dla etoy temi bil udalen.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Izveni  %s, nu poderjka dla etoy temi bil udalen.\n",a,b);

@@ -110,3 +110,5 @@
 %d записей удалено.\n",a,b)
 #define L091(a) S("NOTICE %s :Синтаксис: SETVHOST <новый Vhost> (нужен рестарт)\n",a)
 #define L092(a,b) S("NOTICE %s :Vhost по умолчанию теперь: %s\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Izveni  %s, nu poderjka dla etoy temi bil udalen.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Izveni  %s, nu poderjka dla etoy temi bil udalen.\n",a,b);
