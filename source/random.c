@@ -219,13 +219,29 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 			nIndex = 0;
 			pBuffer = szBuffer2;
 			
-			if ((*pBuffer == '+') || (*pBuffer == '-'))
+			/* if ((*pBuffer == '+') || (*pBuffer == '-'))
 			{
 				pBuffer++;
 				nType = ((*pBuffer == '+') ? RDB_ACTION : RDB_RAW);
 			}
 			else
 				nType = RDB_NORMAL;
+			*/
+
+			if (*pBuffer == '+')
+			{
+				pBuffer++; 
+				nType = RDB_ACTION;
+			}
+			else if (*pBuffer == '-')
+			{
+				pBuffer++;
+				nType = RDB_RAW;
+			}
+			else
+			{
+				nType = RDB_NORMAL;
+			}
 
 			nLength = (size_t) strlen(pBuffer);
 			
