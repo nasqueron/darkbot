@@ -509,6 +509,10 @@ chanserv (char *source, char *target, char *buf)
 			s2 = strtok (NULL, "");
 			do_randq (s2, RANDQ_NORMAL, target, source);
 		}
+		else if ((stricmp (cmd, "QUOTE") == 0))
+		{
+			do_randq (s2, RANDQ_RAND, target, source);
+		}
 		else if ((stricmp (cmd, "RANDQ2") == 0) ||
 			(stricmp (cmd, "RANDQUOTE2") == 0))
 		{		// RANDQ_CASE

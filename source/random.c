@@ -69,7 +69,8 @@ void		do_random_stuff					(void)
 	char			*b2 = NULL;
 	
 	// Count the randomstuffs.
-	nRandStuffs = count_lines(RAND_FILE);
+	if ((nRandStuffs = count_lines(RAND_FILE)) < 1)
+		return;
 
 	// Get a random line number to display. If nLine is more than the number of RandStuffs,
 	// nLine becomes equal to the number of RandStuffs.
@@ -456,7 +457,7 @@ char	*rand_reply	(const char *nick)
 			nIndex++;
 		else
 			continue;
-
+ 
 		stripline(r_reply);
 
 		if(nIndex != nLine)
@@ -511,7 +512,7 @@ char	*rand_reply	(const char *nick)
 /* 
  * do_randq():
  *
- *  Types = RANDQ_NORMAL, RANDQ_CASE
+ *  Types = RANDQ_NORMAL, RANDQ_CASE, RANDQ_RAND
  */
 
 void		do_randq		(char *text, const int type, const char *target, const char *nick)
@@ -524,7 +525,16 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 	char		temp	[STRING_SHORT] = { 0 };
 	char		szBuffer[STRING_LONG] = { 0 };
 
-	if (text == NULL)
+    /* 
+	 * Check for RANDQ_RAND, and just do_random_stuff() if it's specified.
+	 */
+	if (type == RANDQ_RAND)
+	{
+		do_random_stuff ();
+		return;
+	}
+
+    if (text == NULL)
 	{
 		if(((nNumMatches = count_lines(RAND_FILE)) == -1) || 
 			(nNumMatches == 0))
@@ -546,6 +556,8 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 		return;
 	}
 
+	/* Unlink the temporary file! */
+
 	unlink(RANDQ_TEMPFILE);
 
 	if((fp = fopen(RAND_FILE, "r")) == NULL)
@@ -554,7 +566,6 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 			target, nick, RAND_FILE);
 		return;
 	}
-
 
 	while(!feof(fp))
 	{
@@ -565,14 +576,14 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 	
 			stripline(szBuffer);
 
-		    /*
+			/*
 			 * If type is specified as being case sensitive, use strstr,
 			 * otherwise, use db_stristr
 			 */
 
-			if(type == RANDQ_CASE)
+			if (type == RANDQ_CASE) 
 			{
-				if(strstr(szBuffer, text))
+				if (strstr(szBuffer, text))
 				{
 					nNumMatches++;
 					log(RANDQ_TEMPFILE, "%s\n", szBuffer);
@@ -580,7 +591,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 			}
 			else /* if (type == RANDQ_NORMAL) */
 			{
-				if(db_stristr(szBuffer, text) != 0)
+				if (db_stristr(szBuffer, text) != 0)
 				{
 					nNumMatches++;
 					log(RANDQ_TEMPFILE, "%s\n", szBuffer);

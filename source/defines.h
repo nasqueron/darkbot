@@ -801,7 +801,8 @@ bool;
 #define ERR_NO_DOCUMENTS    -6
 
 #define RANDQ_NORMAL            0
-#define RANDQ_CASE                      1
+#define RANDQ_CASE              1
+#define	RANDQ_RAND				2
 
 #define	RDB_NORMAL				0
 #define	RDB_ACTION				1

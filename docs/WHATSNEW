@@ -5,6 +5,11 @@
     Support (only): http://forum.darkbot.info
     *******************************************************
 
+Darkbot 7.0-RC9: Oct 19th, 2003
+	- Added new channel command, "QUOTE".  All this does right
+	  now is display a random line from randomstuff.ini on  
+	  command.
+
 Darkbot 7.0-RC9: Oct 5th, 2003
 	- This feature was already added, but I never documented it...
 	  The R~ variable (random nickname) now works in RDB topic
