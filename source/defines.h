@@ -8,7 +8,7 @@
  *	 		http://darkbot.sourceforge.net
  * 
  ***	For any questions, suggestions, malfunctions,
- *	use only the forum at http://forum.darkbot.info
+ *	use only the forum at http://www.darkbot.org/forum
  *
  * 	*******************************---******************************* */
 /*

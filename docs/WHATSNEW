@@ -7,6 +7,8 @@
 
 
 Darkbot 7.0-RC8: June 20th, 2003
+	- Support forum URL is now http://www.darkbot.org/forum
+
 	- Updated the default servers.ini file to reflect the
 	  changes.
 

@@ -27,7 +27,7 @@ exs:
 $0 all               Starts utility in full mode
 $0 info2             Checks info2.db in normal operation
 $0 userlist -quick   Checks userlist.db bypassing pauses\n
-   Contact: develop@darkbot.info    Support: http://forum.darkbot.info\n"
+   Contact: develop@darkbot.info    Support: http://www.darkbot.org/forum\n"
 exit 1
 }
 

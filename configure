@@ -701,7 +701,7 @@ echo "
     type  'backtrace'  to  find  out  exactly  why it happened.
     
     If you need further assistance  use  the  support forum  at
-    http://forum.darkbot.info   providing detailed information.
+    http://www.darkbot.org/forum   providing detailed information.
                                
           Linux/BSD/Unix users type:    make
           Cygwin users type:            make cygwin
