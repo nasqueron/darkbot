@@ -110,3 +110,5 @@ Timp de procesare: %1.4lf sec%s\n",a,b,c,d,e,f,g,h,i,j,k,l)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION se trezeste...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Ma flood-eaza. Renunt la coada de comenzi. \
 %d comenzi sterse.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Ne pare rau  %s, dar suportul pentru acel topic a fost anulat.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Ne pare rau  %s, dar suportul pentru acel topic a fost anulat.\n",a,b); 
