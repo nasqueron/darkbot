@@ -110,3 +110,5 @@ hints)\n",a,b,c,d,e)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION akesway upway...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Iway'may eingbay oodedflay. Umpingday outputway Que. \
 %d itemsway eletedday.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Orrysay  %s, utbay upportsay orfay atthay opictay ashay eenbay emovedray.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Orrysay  %s, utbay upportsay orfay atthay opictay ashay eenbay emovedray.\n",a,b);
