@@ -507,6 +507,12 @@ chanserv (char *source, char *target, char *buf)
 			(stricmp (cmd, "RANDQUOTE") == 0))
 		{		// RANDQ_NORMAL
 			s2 = strtok (NULL, "");
+			if (strspn(s2, "*?") == strlen(s2)) 
+			{
+				S ("NOTICE %s :Invalid request!\n", 
+					source);
+				return;
+			}
 			do_randq (s2, RANDQ_NORMAL, target, source);
 		}
 		else if ((stricmp (cmd, "QUOTE") == 0))
@@ -517,6 +523,12 @@ chanserv (char *source, char *target, char *buf)
 			(stricmp (cmd, "RANDQUOTE2") == 0))
 		{		// RANDQ_CASE
 			s2 = strtok (NULL, "");
+			if (strspn(s2, "*?") == strlen(s2)) 
+			{
+				S ("NOTICE %s :Invalid request!\n", 
+					source);
+				return;
+			}
 			do_randq(s2, RANDQ_CASE, target, source);
 		}
 #endif
@@ -1435,12 +1447,25 @@ chanserv (char *source, char *target, char *buf)
 					 (stricmp (s, "RANDQUOTE") == 0))
 			{		// RANDQ_NORMAL
 				s2 = strtok (NULL, "");
+				if (strspn(s2, "*?") == strlen(s2)) 
+			{
+				S ("NOTICE %s :Invalid request!\n", 
+					source);
+				return;
+			}
+
 				do_randq (s2, RANDQ_NORMAL, target, source);
 			}
 			else if ((stricmp (s, "RANDQ2") == 0) ||
 					 (stricmp (s, "RANDQUOTE2") == 0))
 			{		// RANDQ_CASE
 				s2 = strtok (NULL, "");
+				if (strspn(s2, "*?") == strlen(s2)) 
+				{
+					S ("NOTICE %s :Invalid request!\n", 
+						source);
+					return;
+				}
 				do_randq(s2, RANDQ_CASE, target, source);
 			}
 #endif
