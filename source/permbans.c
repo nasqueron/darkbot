@@ -153,7 +153,8 @@ save_permbans (void)
 {
 	const struct permbanlist *c = permbanhead;
 
-	unlink (TMP_FILE);
+	remove (TMP_FILE);
+	remove (PERMBAN);
 
 #ifdef	WIN32
 	printf ("*** Writing permbans: %s (%s)\n", PERMBAN, date ());
@@ -163,10 +164,11 @@ save_permbans (void)
 	{
 		db_log (TMP_FILE, "%s %d %s\n", c->uh, c->counter, c->reason);
 	}
+
 	rename (TMP_FILE, PERMBAN);
 
 	if (PERMBAN_counter == 0)
-		unlink (PERMBAN);
+		remove (PERMBAN);
 }
 #endif
 
