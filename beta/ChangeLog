@@ -4,7 +4,9 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 8rc1: Dec 28, 2004
+Darkbot 8rc1: Mar 04, 2005
+	- Removed an unneeded line in main.c, that was used to "hide"
+	  warnings on WIN32, which is a very bad idea.
 	- Changed check_dbtimers() so it ignores the CVS directory,
 	  which contains information for the CVS server.  This
 	  fixes a situation that seems to have only presented itself

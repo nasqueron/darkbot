@@ -21,8 +21,6 @@ main (int argc, char **argv)
 	DebuG = 1;
 #endif
 
-	temp[0] = temp[0];			/* hide warning for WIN32 compile */
-
 	get_s ();
 	srand (time (0));
 	uptime = time (NULL);
