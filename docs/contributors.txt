@@ -8,15 +8,14 @@ Author/creator   -  Jason Hamilton (play) Jason @ superlink.net
 Project Administrator - LuizCB (Pincel) - LuizCB @ darkbot.info
 
 A big portion of Darkbot's code,  although primarily and mainly done
-by
- Jason Hamilton, is also done with the expertise and donnation from
+by Jason Hamilton, is also done with the expertise and donnation from
 several people.
 
 Thanks to all for the collaboration!
 
 **** Coders ****
 
-Ron (ronner) Ron @ darkbot.info - several features, changes and code
+Ron (`ron, ronner) Ron @ darkbot.info - several features, changes and code
           fixes on 6f5,6 and RCs for release 7 
 Paul (reet2) Paul @ darkbot.info - several major changes on 6f6 for release 7
 Neil Darlow - code optimization patches on info and check_permban
@@ -88,6 +87,10 @@ TuEuR @ undernet #darkbot
 Andre (Syntax6) Syntax6@darkbot.info - has hosted Darkbot Web pages 
 	on his servers. 
 	Has also donated DNS hosting for Darkbot domains.
+SourceForge, for hosting one of our mirrors, and giving us nifty
+stats and ratings about the project, that we can gawk at and admire.
+www.chatcircuit.net for providing another one of our mirrors.
+Will (xiaodown) for providing the darkbot.org domain.
 
 **** " ****
 
