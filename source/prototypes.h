@@ -115,7 +115,7 @@ void	stripline				(char *),
 		sig_alrm				(int);
 void	parse_server_msg		(fd_set *);
 void	trailing_blanks			(char *),
-		log						(const char *, const char *, ...),
+		log						(const char *, const char *,...),
 		gs26					(void), 
 		add_s25					(char *, long, char *),
 		add_banned_server		(char *, char *), 
