@@ -6,8 +6,6 @@
 # To compile for Win32 (95/98/NT) 'make win'       #
 # To compile for Win32 with no console, type       #
 # 'make win2'                                      #
-# To compile for Win32 with cygwin, type           #
-# 'make cygwin'                                    #
 #                                                  #
 # To compile in debug mode, type 'make debug'      #
 # To compile and have all data be logged to        #
@@ -24,9 +22,6 @@ win:
 
 win2:
 	@cd ${SOURCE_DIR}; make win2; cd ..;
-
-cygwin:
-	@cd ${SOURCE_DIR}; make cygwin; cd ..;
 
 debug:
 	@cd ${SOURCE_DIR}; make debug; cd ..;

@@ -8,6 +8,6 @@ begin program, type: "run"
 If program dies, you can type "backtrace" and
 "where" to check where/why.
 
-darkbot@darkbot.net
+juice@darkbot.org
 --------------------------------------------------
 
