@@ -89,7 +89,7 @@ Andre (Syntax6) Syntax6@darkbot.info - has hosted Darkbot Web pages
 	Has also donated DNS hosting for Darkbot domains.
 SourceForge, for hosting one of our mirrors, and giving us nifty
 stats and ratings about the project, that we can gawk at and admire.
-www.chatcircuit.net for providing another one of our mirrors.
+LaZZ from www.chatcircuit.net for providing another one of our mirrors.
 Will (xiaodown) for providing the darkbot.org domain.
 
 **** " ****
