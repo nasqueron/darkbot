@@ -394,10 +394,18 @@ check_dbtimers (void)
 	while ((entry = readdir (dp)) != NULL)
 	{
 		stat (entry->d_name, &statbuf);
+
 		if (S_ISDIR (statbuf.st_mode) && *entry->d_name == '.')
 		{
 			continue;			/* it's a dir, ignore it */
 		}
+		
+		if (S_ISDIR (statbuf.st_mode) && stricmp (entry->d_name, "CVS") == 0)
+		{
+			/* Ignore the CVS directory. */
+			continue;
+		}
+
 		i = time (NULL);
 		if (i >= atoi (entry->d_name))
 		{

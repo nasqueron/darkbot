@@ -397,6 +397,11 @@ check_dbtimers (void)
 		{
 			continue;			/* it's a dir, ignore it */
 		}
+		if (S_ISDIR (statbuf.st_mode) && stricmp(entry->d_name, "CVS") == 0)
+		{
+			/* Ignore the CVS directory */
+			continue;
+		}
 		i = time (NULL);
 		if (i >= atoi (entry->d_name))
 		{

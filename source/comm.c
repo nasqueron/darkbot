@@ -361,10 +361,14 @@ create_connection (char *server, char *virtualhost, long port)
 
 	if (fcntl (sock, F_SETFL, O_NONBLOCK) < 0)
 	{
-		printf ("\n");
-		perror ("fcntl");
-		exit (EXIT_FAILURE);
+		if ((errno != EINPROGRESS) && (errno != ENOENT))
+		{
+			printf ("\n");
+			perror ("fcntl");
+			exit (EXIT_FAILURE);
+		}
 	}
+
 	
 	if (connect (sock, (struct sockaddr *) &name, sizeof (name)) < 0)
 	{

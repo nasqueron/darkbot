@@ -5,7 +5,10 @@
     *******************************************************
 
 
-Darkbot 7f3: Dec 5, 2004
+Darkbot 7f3: Dec 28, 2004
+	- Changed check_dbtimers() so it ignores the CVS directory,
+	  which contains information for the CVS server.  this
+	  fixed a bug that happened (so far) only on FreeBSD 5.2.1
 	
 	- configure.ac and source/Makefile.am; very minor updates.
 
