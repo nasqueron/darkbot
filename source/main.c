@@ -42,6 +42,11 @@ main (int argc, char **argv)
 				{
 					DebuG = 1;
 				}
+				else if (argv[i][1] == 'I')
+				{
+					strcpy (URL2, argv[++i]);
+					printf ("URL2: Using %s.\n", URL2);
+				}
 				else 
 				{
 					printf ("\n\n%s HELP:\n\n", dbVersion);

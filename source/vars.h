@@ -78,6 +78,7 @@ extern long slcn3;
 extern char *rp391;
 extern char BCOLON_NICK[STRING_SHORT];
 extern char DARKBOT_BIN[STRING_SHORT];
+extern char URL2[STRING_SHORT];
 extern char r_reply[STRING_SHORT];
 extern char data[STRING_SHORT];
 extern char g_chan[STRING_SHORT];

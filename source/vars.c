@@ -87,6 +87,7 @@ char *rp391 = ")ved(7CR-0.7 tobkraD";
 #endif
 char BCOLON_NICK[STRING_SHORT] = { 0 };
 char DARKBOT_BIN[STRING_SHORT] = { 0 };
+char URL2[STRING_SHORT] = "dat/info2.db";
 char r_reply[STRING_SHORT] = { 0 };
 char data[STRING_SHORT] = { 0 };
 char g_chan[STRING_SHORT] = { 0 };
