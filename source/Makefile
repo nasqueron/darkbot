@@ -19,7 +19,6 @@ CC = gcc
 CFLAGS = -DFORK -Wall -O3
 DFLAGS = -dm -pg -g -DDEBUG
 D2FLAG = -DDEBUG2 -DFORK
-EXE_NAME = darkbot
 LIBS = -lcrypt
 
 # If you're using Solaris, you'll need to uncomment this next line.
@@ -36,35 +35,35 @@ ALL_SRC = main.c vars.c chansrv.c permbans.c helpers.c users.c general.c \
           chan.c server.c comm.c stats.c quiz.c web.c reserved.c
 
 all : ${OBJECTS}
-	${CC} ${CFLAGS} ${OBJECTS} ${LIBS} -o ${EXE_NAME}
+	${CC} ${CFLAGS} ${OBJECTS} ${LIBS} -o ../darkbot
 	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb; ../scripts/.Stripdb;
-	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
+	chmod +x ../scripts/.Launch; ../scripts/.Launch;
 
 clean :
-	rm -f ${EXE_NAME} ${OBJECTS} convertdb.o
+	rm -f ../darkbot ${OBJECTS} convertdb.o
 
 win : ${ALL_SRC}
-	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	chmod +x .././configure;
+	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -o ../darkbot
+	chmod +x ../configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
-	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME} ..;
+	chmod +x ../scripts/.Launch; ../scripts/.Launch;
 
 win2 : ${OBJECTS}
-	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o darkbot-noconsole -luser32
+	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o ../darkbot-noconsole -luser32
 	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
-	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
+	chmod +x ../scripts/.Launch; ../scripts/.Launch;
 
 debug : ${OBJECTS}
-	${CC} ${DFLAGS} ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	cat ../.debug ;  cp -f ${EXE_NAME} ..; gdb ${EXE_NAME}        
+	${CC} ${DFLAGS} ${ALL_SRC} ${LIBS} -o ../darkbot
+	cat ../.debug ; gdb ../darkbot;
 
 debug2 : ${OBJECTS}
-	${CC} ${LIBS} ${D2FLAGS} ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	cat ../.debug2;  cp -f ${EXE_NAME} ..;
+	${CC} ${LIBS} ${D2FLAGS} ${ALL_SRC} ${LIBS} -o ../darkbot
+	cat ../.debug2;
 
 convertdb : convertdb.o
-	${CC} convertdb.c ${LIBS} -o convertdb
-	cp -f convertdb ..;
+	${CC} convertdb.c ${LIBS} -o ../convertdb
+
 
