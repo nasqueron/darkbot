@@ -5,6 +5,7 @@ dnl ---------------------------------
 
 dnl Process this file with autoconf to produce a configure script.
 
+AC_PREREQ(2.59)
 AC_INIT([Darkbot],[7f3(dev)],[ron@darkbot.org])
 AC_COPYRIGHT([Copyright (C) 2004 Darkbot Development Team])
 AC_REVISION($Revision$)
@@ -21,6 +22,7 @@ AM_INIT_AUTOMAKE(darkbot, `cat VERSION`)
 
 dnl Checks for programs.
 AC_PROG_CC
+AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PATH_PROG(RM,rm)
 AC_PATH_PROG(CP,cp)

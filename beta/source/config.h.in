@@ -1,7 +1,7 @@
 /* source/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if the system has the type `clock_t'. */
-#undef HAVE_CLOCK_T
+#ifndef _DARKBOT_CONFIG_H
+#define _DARKBOT_CONFIG_H
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -117,5 +117,4 @@
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const
 
-/* Define to `unsigned' if <sys/types.h> does not define. */
-#undef size_t
+#endif /* !_DARKBOT_CONFIG_H */
