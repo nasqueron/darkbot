@@ -117,7 +117,7 @@ void	parse_server_msg		(fd_set *);
 void	trailing_blanks			(char *),
 		log						(const char *, const char *, ...),
 		gs26					(void), 
-		add_s25					(char *, long),
+		add_s25					(char *, long, char *),
 		add_banned_server		(char *, char *), 
 		S						(const char *,...), 
 		del_sendq				(long), 

@@ -65,6 +65,7 @@ char lc1[STRING_SHORT] = "0";
 char lc2[STRING_SHORT] = "0";
 char lc4[STRING_SHORT] = "0";
 char lc3[STRING_SHORT] = "0";
+char BPASS[STRING_SHORT] = "0";
 char mask_tmp[STRING_LONG] = "0";
 long lcn1 = 0;
 long lcn2 = 0;
@@ -203,6 +204,7 @@ struct sl124
 {
 	char name[STRING_SHORT];
 	long port;
+	char pass[STRING_SHORT];
 	struct sl124 *next;
 }
  *sh124 = NULL;

@@ -164,7 +164,9 @@ raw_now (char *type)
 					printf ("%s has no matching port in %s!\n", tmp1, SERVERS);
 					exit (0);
 				}
-				add_s25 (tmp1, atoi (tmp2));
+				
+				tmp3 = strtok (NULL, "");
+				add_s25 (tmp1, atoi (tmp2), tmp3);
 			}
 			printf ("done(%d).\n", (int) i);
 		}

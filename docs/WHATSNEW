@@ -6,7 +6,10 @@
     *******************************************************
 
 
-Darkbot 7.0-RC8: June 3rd, 2003
+Darkbot 7.0-RC8: June 20th, 2003
+	- Updated the default servers.ini file to reflect the
+	  changes.
+
 	- You can now use Darkbot on servers which require a 
 	  connection password. Check servers.ini for an 
 	  example.

@@ -59,6 +59,7 @@ extern bool quiz_halt;
 extern long recent_questions[10];
 extern char NICK_COMMA[32];
 extern char COLON_NICK[33];
+extern char BPASS[32];
 extern char pass_data[512];
 extern char pass_pass[STRING_SHORT];
 extern char rword[STRING_SHORT];
@@ -190,6 +191,7 @@ extern struct sl124
 {
 	char name[STRING_SHORT];
 	long port;
+	char pass[STRING_SHORT];
 	struct sl124 *next;
 }
  *sh124;

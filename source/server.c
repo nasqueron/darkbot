@@ -19,12 +19,13 @@ gs26 (void)
 		{
 			strncpy (BS, c->name, sizeof (BS));
 			BP = c->port;
+			strncpy (BPASS, c->pass, sizeof (BPASS));			
 		}
 		c = c->next;
 	}
 }
 
-void	add_s25			(char *server, long port)
+void	add_s25			(char *server, long port, char *pass)
 {
 	struct sl124 *n;
 
@@ -40,6 +41,8 @@ void	add_s25			(char *server, long port)
 	{
 		strncpy (n->name, server, sizeof (n->name));
 		n->port = port;
+		if (pass != NULL)
+		strncpy (n->pass, pass, sizeof (n->pass));
 		n->next = sh124;
 		sh124 = n;
 	}
