@@ -125,7 +125,8 @@ main (int argc, char **argv)
 	snprintf (temp, sizeof (temp), "lynx -source http://darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 #endif
-	sprintf (temp, "echo \"%d\" > %s.pid", getpid (), DARKBOT_BIN);
+	/* Added the cast to getpid() to remove warnings on Solaris */
+	sprintf (temp, "echo \"%d\" > %s.pid", (int) getpid (), DARKBOT_BIN);
 	system (temp);
 #endif
 #ifndef	WIN32
