@@ -110,7 +110,7 @@ main (int argc, char **argv)
 	printf ("  *      Please check docs/contributors for a list of  colaborators       *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *        Eventual malfunction,  suggestions or patches use only         *  \n");
-	printf ("  *              Support Forum @  http://forum.darkbot.info               *  \n");
+	printf ("  *              Support Forum @  http://www.darkbot.org/forum            *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  * By running this installation  you agree that this program is provided *  \n");
 	printf ("  * free for non-commercial use only;  -  Distribution of modified source *  \n");
