@@ -556,9 +556,9 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 		return;
 	}
 
-	/* Unlink the temporary file! */
+	/* Remove the temporary file. */
 
-	unlink(RANDQ_TEMPFILE);
+	remove(RANDQ_TEMPFILE);
 
 	if((fp = fopen(RAND_FILE, "r")) == NULL)
 	{

@@ -6,6 +6,8 @@
 
 Darkbot 7f1: Feb 28th, 2004
 
+	- Made a quick fix to a bug which caused crashing in randq.
+
 	- Private message responses no longer have that "sent by" 
 	  thing on them.  It was annoying, and pointless.
 
