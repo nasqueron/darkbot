@@ -227,12 +227,359 @@ configure:3643: $? = 0
 configure:3654: result: yes
 configure:3608: checking for sys/stat.h
 configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for stdlib.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for string.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for memory.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for strings.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for inttypes.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for stdint.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3608: checking for unistd.h
+configure:3624: gcc -c -g -O2  conftest.c >&5
+configure:3630: $? = 0
+configure:3634: test -z 
+			 || test ! -s conftest.err
+configure:3637: $? = 0
+configure:3640: test -s conftest.o
+configure:3643: $? = 0
+configure:3654: result: yes
+configure:3666: checking for clock_t
+configure:3690: gcc -c -g -O2  conftest.c >&5
+configure:3696: $? = 0
+configure:3700: test -z 
+			 || test ! -s conftest.err
+configure:3703: $? = 0
+configure:3706: test -s conftest.o
+configure:3709: $? = 0
+configure:3720: result: yes
+configure:3732: checking for dirent.h that defines DIR
+configure:3756: gcc -c -g -O2  conftest.c >&5
+configure:3762: $? = 0
+configure:3766: test -z 
+			 || test ! -s conftest.err
+configure:3769: $? = 0
+configure:3772: test -s conftest.o
+configure:3775: $? = 0
+configure:3786: result: yes
+configure:3799: checking for library containing opendir
+configure:3829: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:3835: $? = 0
+configure:3839: test -z 
+			 || test ! -s conftest.err
+configure:3842: $? = 0
+configure:3845: test -s conftest.exe
+configure:3848: $? = 0
+configure:3918: result: none required
+configure:4054: checking for ANSI C header files
+configure:4207: result: yes
+configure:4234: checking fcntl.h usability
+configure:4246: gcc -c -g -O2  conftest.c >&5
+configure:4252: $? = 0
+configure:4256: test -z 
+			 || test ! -s conftest.err
+configure:4259: $? = 0
+configure:4262: test -s conftest.o
+configure:4265: $? = 0
+configure:4275: result: yes
+configure:4279: checking fcntl.h presence
+configure:4289: gcc -E  conftest.c
+configure:4295: $? = 0
+configure:4315: result: yes
+configure:4350: checking for fcntl.h
+configure:4357: result: yes
+configure:4234: checking sys/time.h usability
+configure:4246: gcc -c -g -O2  conftest.c >&5
+configure:4252: $? = 0
+configure:4256: test -z 
+			 || test ! -s conftest.err
+configure:4259: $? = 0
+configure:4262: test -s conftest.o
+configure:4265: $? = 0
+configure:4275: result: yes
+configure:4279: checking sys/time.h presence
+configure:4289: gcc -E  conftest.c
+configure:4295: $? = 0
+configure:4315: result: yes
+configure:4350: checking for sys/time.h
+configure:4357: result: yes
+configure:4225: checking for unistd.h
+configure:4230: result: yes
+configure:4380: checking windows.h usability
+configure:4392: gcc -c -g -O2  conftest.c >&5
+configure:4398: $? = 0
+configure:4402: test -z 
+			 || test ! -s conftest.err
+configure:4405: $? = 0
+configure:4408: test -s conftest.o
+configure:4411: $? = 0
+configure:4421: result: yes
+configure:4425: checking windows.h presence
+configure:4435: gcc -E  conftest.c
+configure:4441: $? = 0
+configure:4461: result: yes
+configure:4496: checking for windows.h
+configure:4503: result: yes
+configure:4517: checking for an ANSI C-conforming const
+configure:4584: gcc -c -g -O2  conftest.c >&5
+configure:4590: $? = 0
+configure:4594: test -z 
+			 || test ! -s conftest.err
+configure:4597: $? = 0
+configure:4600: test -s conftest.o
+configure:4603: $? = 0
+configure:4614: result: yes
+configure:4625: checking whether time.h and sys/time.h may both be included
+configure:4650: gcc -c -g -O2  conftest.c >&5
+configure:4656: $? = 0
+configure:4660: test -z 
+			 || test ! -s conftest.err
+configure:4663: $? = 0
+configure:4666: test -s conftest.o
+configure:4669: $? = 0
+configure:4680: result: yes
+configure:4691: checking return type of signal handlers
+configure:4722: gcc -c -g -O2  conftest.c >&5
+configure:4728: $? = 0
+configure:4732: test -z 
+			 || test ! -s conftest.err
+configure:4735: $? = 0
+configure:4738: test -s conftest.o
+configure:4741: $? = 0
+configure:4752: result: void
+configure:4764: checking for vprintf
+configure:4821: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:55: warning: conflicting types for built-in function `vprintf'
+configure:4827: $? = 0
+configure:4831: test -z 
+			 || test ! -s conftest.err
+configure:4834: $? = 0
+configure:4837: test -s conftest.exe
+configure:4840: $? = 0
+configure:4852: result: yes
+configure:4859: checking for _doprnt
+configure:4916: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/ccTTp0Hi.o(.text+0x1d): In function `main':
+/home/ron/darkbot/beta/conftest.c:72: undefined reference to `__doprnt'
+/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/ccTTp0Hi.o(.data+0x0):/home/ron/darkbot/beta/conftest.c:71: undefined reference to `__doprnt'
+collect2: ld returned 1 exit status
+configure:4922: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| 
+| #define PACKAGE_NAME "Darkbot"
+| #define PACKAGE_TARNAME "darkbot"
+| #define PACKAGE_VERSION "7f3(dev)"
+| #define PACKAGE_STRING "Darkbot 7f3(dev)"
+| #define PACKAGE_BUGREPORT "ron@darkbot.org"
+| #define PACKAGE "darkbot"
+| #define VERSION "7f3(dev)"
+| #define HAVE_LIBCRYPT 1
+| #define HAVE_LIBUSER32 1
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DIRENT_H 1
+| #define STDC_HEADERS 1
+| #define HAVE_FCNTL_H 1
+| #define HAVE_SYS_TIME_H 1
+| #define HAVE_UNISTD_H 1
+| #define WIN32
+| #define TIME_WITH_SYS_TIME 1
+| #define RETSIGTYPE void
+| #define HAVE_VPRINTF 1
+| /* end confdefs.h.  */
+| /* Define _doprnt to an innocuous variant, in case <limits.h> declares _doprnt.
+|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+| #define _doprnt innocuous__doprnt
+| 
+| /* System header to define __stub macros and hopefully few prototypes,
+|     which can conflict with char _doprnt (); below.
+|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+|     <limits.h> exists even on freestanding compilers.  */
+| 
+| #ifdef __STDC__
+| # include <limits.h>
+| #else
+| # include <assert.h>
+| #endif
+| 
+| #undef _doprnt
+| 
+| /* Override any gcc2 internal prototype to avoid an error.  */
+| #ifdef __cplusplus
+| extern "C"
+| {
+| #endif
+| /* We use char because int might match the return type of a gcc2
+|    builtin and then its argument prototype would still apply.  */
+| char _doprnt ();
+| /* The GNU C library defines this for functions which it implements
+|     to always fail with ENOSYS.  Some functions are actually named
+|     something starting with __ and the normal name is an alias.  */
+| #if defined (__stub__doprnt) || defined (__stub____doprnt)
+| choke me
+| #else
+| char (*f) () = _doprnt;
+| #endif
+| #ifdef __cplusplus
+| }
+| #endif
+| 
+| int
+| main ()
+| {
+| return f != _doprnt;
+|   ;
+|   return 0;
+| }
+configure:4947: result: no
+configure:4970: checking for select
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:4970: checking for socket
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:4970: checking for strspn
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:58: warning: conflicting types for built-in function `strspn'
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:4970: checking for strstr
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:59: warning: conflicting types for built-in function `strstr'
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:4970: checking for strtol
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:4970: checking for snprintf
+configure:5027: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:61: warning: conflicting types for built-in function `snprintf'
+configure:5033: $? = 0
+configure:5037: test -z 
+			 || test ! -s conftest.err
+configure:5040: $? = 0
+configure:5043: test -s conftest.exe
+configure:5046: $? = 0
+configure:5058: result: yes
+configure:5191: creating ./config.status
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by Darkbot config.status 7f3(dev), which was
+generated by GNU Autoconf 2.59.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status 
+
+on robbins
+
+config.status:692: creating source/Makefile
+config.status:692: creating Makefile
+config.status:796: creating source/config.h
+config.status:936: source/config.h is unchanged
+config.status:1116: executing depfiles commands
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
 ac_cv_c_compiler_gnu=yes
+ac_cv_c_const=yes
 ac_cv_env_CC_set=
 ac_cv_env_CC_value=
 ac_cv_env_CFLAGS_set=
@@ -250,8 +597,29 @@ ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
 ac_cv_exeext=.exe
+ac_cv_func__doprnt=no
+ac_cv_func_select=yes
+ac_cv_func_snprintf=yes
+ac_cv_func_socket=yes
+ac_cv_func_strspn=yes
+ac_cv_func_strstr=yes
+ac_cv_func_strtol=yes
+ac_cv_func_vprintf=yes
+ac_cv_header_dirent_dirent_h=yes
+ac_cv_header_fcntl_h=yes
+ac_cv_header_inttypes_h=yes
+ac_cv_header_memory_h=yes
 ac_cv_header_stdc=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_time_h=yes
 ac_cv_header_sys_types_h=yes
+ac_cv_header_time=yes
+ac_cv_header_unistd_h=yes
+ac_cv_header_windows_h=yes
 ac_cv_lib_crypt_main=yes
 ac_cv_lib_user32_main=yes
 ac_cv_objext=o
@@ -265,43 +633,127 @@ ac_cv_prog_cc_g=yes
 ac_cv_prog_cc_stdc=
 ac_cv_prog_egrep='grep -E'
 ac_cv_prog_make_make_set=yes
+ac_cv_search_opendir='none required'
+ac_cv_type_clock_t=yes
+ac_cv_type_signal=void
 am_cv_CC_dependencies_compiler_type=gcc3
 
 ## ----------------- ##
 ## Output variables. ##
 ## ----------------- ##
 
-
-## ----------- ##
-## confdefs.h. ##
-## ----------- ##
-
-#define HAVE_LIBCRYPT 1
-#define HAVE_LIBUSER32 1
-#define HAVE_SYS_TYPES_H 1
-#define PACKAGE "darkbot"
-#define PACKAGE_BUGREPORT "ron@darkbot.org"
-#define PACKAGE_NAME "Darkbot"
-#define PACKAGE_STRING "Darkbot 7f3(dev)"
-#define PACKAGE_TARNAME "darkbot"
-#define PACKAGE_VERSION "7f3(dev)"
-#define STDC_HEADERS 1
-#define VERSION "7f3(dev)"
-
-configure: caught signal 2
-configure: exit 1
+ACLOCAL='${SHELL} /home/ron/darkbot/beta/missing --run aclocal-1.7'
+AMDEPBACKSLASH='\'
+AMDEP_FALSE='#'
+AMDEP_TRUE=''
+AMTAR='${SHELL} /home/ron/darkbot/beta/missing --run tar'
+AUTOCONF='${SHELL} /home/ron/darkbot/beta/missing --run autoconf'
+AUTOHEADER='${SHELL} /home/ron/darkbot/beta/missing --run autoheader'
+AUTOMAKE='${SHELL} /home/ron/darkbot/beta/missing --run automake-1.7'
+AWK='gawk'
+CC='gcc'
+CCDEPMODE='depmode=gcc3'
+CFLAGS='-g -O2'
+CP='/usr/bin/cp'
+CPP='gcc -E'
+CPPFLAGS=''
+CYGPATH_W='cygpath -w'
+DEFS='-DHAVE_CONFIG_H'
+DEPDIR='.deps'
+ECHO_C=''
+ECHO_N='-n'
+ECHO_T=''
+EGREP='grep -E'
+EXEEXT='.exe'
+INSTALL_DATA='${INSTALL} -m 644'
+INSTALL_PROGRAM='${INSTALL}'
+INSTALL_SCRIPT='${INSTALL}'
+INSTALL_STRIP_PROGRAM='${SHELL} $(install_sh) -c -s'
+LDFLAGS=''
+LIBOBJS=''
+LIBS='-luser32 -lcrypt '
+LTLIBOBJS=''
+MAINT='#'
+MAINTAINER_MODE_FALSE=''
+MAINTAINER_MODE_TRUE='#'
+MAKEINFO='${SHELL} /home/ron/darkbot/beta/missing --run makeinfo'
+OBJEXT='o'
+PACKAGE='darkbot'
 PACKAGE_BUGREPORT='ron@darkbot.org'
 PACKAGE_NAME='Darkbot'
 PACKAGE_STRING='Darkbot 7f3(dev)'
 PACKAGE_TARNAME='darkbot'
 PACKAGE_VERSION='7f3(dev)'
 PATH_SEPARATOR=':'
+RM='/usr/bin/rm'
+SET_MAKE=''
 SHELL='/bin/bash'
+STRIP=''
+VERSION='7f3(dev)'
+ac_ct_CC='gcc'
+ac_ct_STRIP=''
+am__fastdepCC_FALSE='#'
+am__fastdepCC_TRUE=''
+am__include='include'
+am__leading_dot='.'
+am__quote=''
 bindir='${exec_prefix}/bin'
+build_alias=''
 datadir='${prefix}/share'
-exec_prefix='NONE'
+exec_prefix='${prefix}'
+host_alias=''
+includedir='${prefix}/include'
+infodir='${prefix}/info'
+install_sh='/home/ron/darkbot/beta/install-sh'
+libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
-prefix='NONE'
+localstatedir='${prefix}/var'
+mandir='${prefix}/man'
+oldincludedir='/usr/include'
+prefix='${HOME}/darkbot'
 program_transform_name='s,x,x,'
 sbindir='${exec_prefix}/sbin'
+sharedstatedir='${prefix}/com'
 sysconfdir='${prefix}/etc'
+target_alias=''
+
+## ----------- ##
+## confdefs.h. ##
+## ----------- ##
+
+#define HAVE_DIRENT_H 1
+#define HAVE_FCNTL_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_LIBCRYPT 1
+#define HAVE_LIBUSER32 1
+#define HAVE_MEMORY_H 1
+#define HAVE_SELECT 1
+#define HAVE_SNPRINTF 1
+#define HAVE_SOCKET 1
+#define HAVE_STDINT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_STRING_H 1
+#define HAVE_STRSPN 1
+#define HAVE_STRSTR 1
+#define HAVE_STRTOL 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_VPRINTF 1
+#define PACKAGE "darkbot"
+#define PACKAGE_BUGREPORT "ron@darkbot.org"
+#define PACKAGE_NAME "Darkbot"
+#define PACKAGE_STRING "Darkbot 7f3(dev)"
+#define PACKAGE_TARNAME "darkbot"
+#define PACKAGE_VERSION "7f3(dev)"
+#define RETSIGTYPE void
+#define STDC_HEADERS 1
+#define STDC_HEADERS 1
+#define TIME_WITH_SYS_TIME 1
+#define VERSION "7f3(dev)"
+#define WIN32
+
+configure: exit 0

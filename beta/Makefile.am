@@ -6,7 +6,6 @@ SUBDIRS = source
 DIST_SUBDIRS = source 
 
 all-am: source/darkbot$(EXEEXT)
-	@RM@ -fr /dat/timers/CVS
 	@CP@ source/darkbot$(EXEEXT) .
 	
 convertdb: source/convertdb$(EXEEXT)

@@ -102,7 +102,7 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * * * Darkbot, (c) 2004  ver. 7 final 2 * * * * * * * * * *  \n");
+	printf ("  * * * * * * * * * * Darkbot, (c) 2004  ver. 7 final 3 * * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");

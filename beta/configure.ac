@@ -6,7 +6,7 @@ dnl ---------------------------------
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([Darkbot],[7f3(dev)],[ron@darkbot.org])
+AC_INIT([Darkbot],[8rc1],[ron@darkbot.org])
 AC_COPYRIGHT([Copyright (C) 2004 Darkbot Development Team])
 AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR(source/defines.h)
@@ -34,7 +34,7 @@ AC_CHECK_LIB(crypt, main)
 dnl Replace `main' with a function in -luser32:
 AC_CHECK_LIB(user32, main)
 
-AC_CHECK_TYPE(clock_t)
+AC_CHECK_TYPES(clock_t size_t)
 
 dnl Checks for header files.
 AC_HEADER_DIRENT
