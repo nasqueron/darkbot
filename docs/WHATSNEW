@@ -8,6 +8,9 @@
 
 Darkbot 7.0-RC7: Mar 13th, 2003
 
+	- The sleep command now accepts an arguement for the number
+ 	  of seconds you want the bot to sleep for.
+
 	- DEFAULT_UMODE is now set immediately upon connection. 
  	  Several users said this was not being done, it was. It was
  	  just waiting >300 seconds, for whatever reason. Also, the

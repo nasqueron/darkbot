@@ -41,6 +41,7 @@ long Rand_Idle = 0;
 #endif
 long AIL4 = 0;
 long Sleep_Toggle = 0;
+long Sleep_Time = 0;
 long AIL3 = 0;
 long AIL2 = 0;
 long AIL5 = 0;

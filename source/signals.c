@@ -84,7 +84,7 @@ sig_alrm (int notUsed)
 	if (Sleep_Toggle == 1)
 	{
 		AIL4 += AIL;
-		if (AIL4 >= SLEEP_TIME)
+		if (AIL4 >= Sleep_Time)
 		{
 			Sleep_Toggle = 0;
 			AIL4 = 0;

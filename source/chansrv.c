@@ -1641,6 +1641,19 @@ chanserv (char *source, char *target, char *buf)
 				if (check_access (userhost, target, 0, source) >= SLEEP_LEVEL)
 				{
 					Sleep_Toggle = 1;
+					
+					if ((s2 = strtok (NULL, " ")) == NULL)
+					{
+						Sleep_Time = SLEEP_TIME;
+					}
+					else
+					{
+						if ((Sleep_Time = atol (s2)) < 1)
+						{
+							Sleep_Time = SLEEP_TIME;
+						}
+					}
+
 					S ("PRIVMSG %s :%s\n", target, GOSLEEP_ACTION);
 					strncpy (sleep_chan, target, sizeof (sleep_chan));
 				}

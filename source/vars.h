@@ -30,6 +30,7 @@ extern long Rand_Stuff;
 extern long Rand_Idle;
 extern long AIL4;
 extern long Sleep_Toggle;
+extern long Sleep_Time;
 extern long AIL3;
 extern long AIL2;
 extern long AIL5;
