@@ -11,6 +11,7 @@ main (int argc, char **argv)
 {
 	char temp[STRING_SHORT] = { 0 };
 	struct timeval timeout;
+	int		i = 0;
 	fd_set fdvar;
 
 #if (SGI == 1) || (NEED_LIBC5 == 1)
@@ -25,29 +26,45 @@ main (int argc, char **argv)
 	get_s ();
 	srand (time (0));
 	uptime = time (NULL);
+
+	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
 	{
-		if (stricmp (argv[1], "-SEEN") == 0)
+		for (i = 1; i < argc; i++)
 		{
-			SeeN = 1;
-			printf ("\nSEEN ENABLED.\n\n");
-		}
-		else if (stricmp (argv[1], "-DEBUG") == 0)
-		{
-			DebuG = 1;
-			printf ("\nDEBUG ENABLED.\n\n");
-		}
-		else
-		{
-			printf ("\n\n%s HELP:\n\n", dbVersion);
-			printf ("%s          (Launches Darkbot to IRC)\n", argv[0]);
-			printf ("%s -SEEN    (Enables SEEN [Even if SEEN is undefined])\n", argv[0]);
-			printf ("%s -DEBUG   (Launch in debug mode)\n", argv[0]);
-			exit (0);
+			if (argv[i][0] == '-')
+			{
+				if (argv[i][1] == 'S')
+				{
+					SeeN = 1;
+				}
+				else if (argv[i][1] == 'D')
+				{
+					DebuG = 1;
+				}
+				else 
+				{
+					printf ("\n\n%s HELP:\n\n", dbVersion);
+					printf ("%s          (Launches Darkbot to IRC)\n", argv[0]);
+					printf ("%s -SEEN    (Enables SEEN [Even if SEEN is undefined])\n", argv[0]);
+					printf ("%s -DEBUG   (Launch in debug mode)\n", argv[0]);
+					exit (0);
+				}
+			}
 		}
 	}
+	
+	if (SeeN == 1)
+	{
+		printf ("\nSEEN ENABLED.\n");
+	}
+	if (DebuG == 1)
+	{
+		printf ("\nDEBUG ENABLED.\n");
+	}
 
-    strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
+
+	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
 #if (SGI == 1) || (NEED_LIBC5 == 1)
 	newact.sa_handler = sig_alrm;
 	sigemptyset (&newact.sa_mask);
@@ -150,4 +167,5 @@ main (int argc, char **argv)
 				break;
 		}
 	}
-}
+} 
+

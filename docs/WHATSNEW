@@ -8,6 +8,9 @@
 
 Darkbot 7.0-RC7: Feb 21st, 2003
 
+	- Multiple command line arguements are now supported. 
+ 	  I have no clue why this wasn't done before.
+
 	- The .debug and .debug2 scripts were missing from the
  	  distribution. They're back now.
 
