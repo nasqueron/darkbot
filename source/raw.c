@@ -48,6 +48,9 @@ raw_now (char *type)
 	if (stricmp (type, "DEOP") == 0)
 		if ((fp = fopen (DEOP, "r")) == NULL)
 			return;
+	if (stricmp (type, "PERMBAN") == 0)
+		if ((fp = fopen (PERMBAN, "r")) == NULL)
+			return;
 	if (stricmp (type, "SERVERS") == 0)
 		if ((fp = fopen (SERVERS, "r")) == NULL)
 		{
