@@ -1642,20 +1642,42 @@ chanserv (char *source, char *target, char *buf)
 				{
 					Sleep_Toggle = 1;
 					
-					if ((s2 = strtok (NULL, " ")) == NULL)
-					{
+					if ((s2 = strtok (NULL, "")) == NULL)
 						Sleep_Time = SLEEP_TIME;
-					}
 					else
-					{
-						if ((Sleep_Time = atol (s2)) < 1)
-						{
+						if ((Sleep_Time = strtol (s2, (char **) NULL, Sleep_Time)) < 1)
 							Sleep_Time = SLEEP_TIME;
-						}
-					}
-
+				
 					S ("PRIVMSG %s :%s\n", target, GOSLEEP_ACTION);
 					strncpy (sleep_chan, target, sizeof (sleep_chan));
+
+					/* If the user has specified a custom length of time to sleep for, send
+					 * a notice reminding the user how long the bot will be asleep, in a 
+					 * more readible format.
+					 */
+
+					if (Sleep_Time != SLEEP_TIME)
+					{
+						if (Sleep_Time > 86400)
+							S ("NOTICE %s :Sleeping for %ld day%s, %02ld:%02ld.\n",
+								source, Sleep_Time / 86400, 
+								(Sleep_Time / 86400 == 1) ? "" : "s",
+								(Sleep_Time / 3600) % 24, 
+								(Sleep_Time / 60) % 60);
+						else if (Sleep_Time > 3600)
+							S ("NOTICE %s :Sleeping for %ld hour%s, %ld min%s.\n",
+								source, Sleep_Time / 3600, 
+								Sleep_Time / 3600 == 1 ? "" : "s",
+								(Sleep_Time / 60) % 60, 
+								(Sleep_Time/ 60) % 60 == 1 ? "" : "s");
+						else
+							S ("NOTICE %s :Sleeping for %ld minute%s, %ld sec%s.\n",
+								source, Sleep_Time / 60,
+								Sleep_Time / 60 == 1 ? "" : "s",
+								Sleep_Time % 60,
+								Sleep_Time % 60 == 1 ? "" : "s");
+					}
+
 				}
 			}
 			else if (stricmp (s, "UNIXTIME") == 0)
