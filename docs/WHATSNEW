@@ -4,6 +4,14 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 7f3: August 18, 2004 
+	- Added a new beta version to the beta subdirectory in the
+	  repository.  This should work pretty good for most people,
+	  but if there are any problems, report them.  A lot of the 
+	  source/config.h defines aren't implemented yet, but as my
+ 	  ability to fill that part increases, they will also be
+	  implemented.
+
 Darbkot 7f2: April 05, 2004
 
 	- Fixed a possible crash scenario in do_random_stuff().
