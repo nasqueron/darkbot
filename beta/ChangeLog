@@ -6,6 +6,9 @@
 
 
 Darkbot 7f3: Dec 5, 2004
+	- Fixed randq, which I accidentally broke when adding the
+	  -I switch.
+
 	- Fixed a warning that came up in permbans.c about mixing 
 	  types when compiling on OS X.  I changed %d on line 198 
 	  to %ud.

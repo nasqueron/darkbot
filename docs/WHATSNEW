@@ -5,6 +5,7 @@
     *******************************************************
 
 Darkbot 7f3: August 18, 2004 
+	- Fixed randq.  I broke it when I added the -I switch.
 	- If the beta doesn't work on your system, run "autoreconf"
  	  if you have the autotools distribution.  Then, run "make".
 

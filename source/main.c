@@ -192,8 +192,8 @@ void	set_paths	(void)
 	snprintf (DEOP, sizeof (DEOP), "%s/%s", DAT_DIR, DEFAULT_DEOP);
 	snprintf (RAND_SAY, sizeof (RAND_SAY), "%s/%s", DAT_DIR, DEFAULT_RAND_SAY);
 	snprintf (RAND_FILE, sizeof (RAND_FILE), "%s/%s", DAT_DIR, DEFAULT_RAND_FILE);
-	snprintf (RANDQ_TEMPFILE, sizeof (RANDQ_TEMPFILE), DAT_DIR, DEFAULT_RANDQ_TEMPFILE);
-	snprintf (RAND_BACKUP_FILE, sizeof (RAND_BACKUP_FILE), DAT_DIR, DEFAULT_RAND_BACKUP_FILE);
+	snprintf (RANDQ_TEMPFILE, sizeof (RANDQ_TEMPFILE), "%s/%s", DAT_DIR, DEFAULT_RANDQ_TEMPFILE);
+	snprintf (RAND_BACKUP_FILE, sizeof (RAND_BACKUP_FILE), "%s/%s", DAT_DIR, DEFAULT_RAND_BACKUP_FILE);
 	snprintf (SERVERS, sizeof (SERVERS), "%s/%s", DAT_DIR, DEFAULT_SERVERS);
 	snprintf (PERMBAN, sizeof (PERMBAN), "%s/%s", DAT_DIR, DEFAULT_PERMBAN);
 	snprintf (SETUP, sizeof (SETUP), "%s/%s", DAT_DIR, DEFAULT_SETUP);
