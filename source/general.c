@@ -22,7 +22,7 @@ stripline (char *ptr)
 }
 
 void
-log (const char *filename, const char *format, ...)
+log (const char *filename, const char *format,...)
 {
 	va_list arglist;
 	FILE *fp;
