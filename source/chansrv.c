@@ -472,7 +472,7 @@ chanserv (char *source, char *target, char *buf)
 			return;
 		}
 #if GOOGLE == 1
-        else if (stricmp (s, "GOOGLE") == 0)
+        else if (stricmp (cmd, "GOOGLE") == 0)
         {
             s2 = strtok (NULL, "");
             if(s2 == NULL)
