@@ -83,9 +83,9 @@ long slcn4 = 0;
 long slcn3 = 0;
 
 #ifdef	WIN32
-char *rp391 = "niW-2f7 tobkraD";
+char *rp391 = "niW-3f7 tobkraD";
 #else
-char *rp391 = "2f7 tobkraD";
+char *rp391 = "3f7 tobkraD";
 #endif
 char BCOLON_NICK[STRING_SHORT] = { 0 };
 char DARKBOT_BIN[STRING_SHORT] = { 0 };
