@@ -27,7 +27,6 @@ main (int argc, char **argv)
 	srand (time (0));
 	uptime = time (NULL);
 
-	strcpy (DAT_DIR, "dat");
 	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
 	{
@@ -69,9 +68,11 @@ main (int argc, char **argv)
 		printf ("\nDEBUG ENABLED.\n");
 	}
 
+	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
+	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
+
 	set_paths ();
 
-	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
 #if (SGI == 1) || (NEED_LIBC5 == 1)
 	newact.sa_handler = sig_alrm;
 	sigemptyset (&newact.sa_mask);

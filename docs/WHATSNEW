@@ -6,6 +6,9 @@
 
 Darbkot 7f2: April 05, 2004
 
+	- Hopefully fixed a bug that happened on BSD machines causing 
+	  weirdness.  Changed a strcpy to strncpy.
+
 	- Fixed the google function.  Google changed some text that 
 	  the bot was using to tell if the search was successful. 
 	 
