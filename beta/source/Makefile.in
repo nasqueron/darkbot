@@ -164,7 +164,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DIST_SOURCES = $(convertdb_SOURCES) $(darkbot_SOURCES)
-DIST_COMMON = $(srcdir)/Makefile.in Makefile.am config.h.in
+DIST_COMMON = $(srcdir)/Makefile.in Makefile.am config.h.in depcomp
 SOURCES = $(convertdb_SOURCES) $(darkbot_SOURCES)
 
 all: config.h
