@@ -1,5 +1,5 @@
 /* defines.h
- ***	Darkbot (c) 2002
+ ***	Darkbot (c) 2004
  *	The Internet Relay Chat Talking Robot
  * 
  ***	Darkbot Creator  -   Jason Hamilton (play) Jason@superlink.net
