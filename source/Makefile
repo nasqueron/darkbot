@@ -37,7 +37,6 @@ ALL_SRC = main.c vars.c chansrv.c permbans.c helpers.c users.c general.c \
 LIBS = -lcrypt
 
 all : ${OBJECTS}
-
 	${CC} ${CFLAGS} ${OBJECTS} ${LIBS} -o ${EXE_NAME}
 	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
 	chmod +x ../scripts/.Stripdb; ../scripts/.Stripdb;
@@ -47,32 +46,27 @@ clean :
 	rm -f ${EXE_NAME} ${OBJECTS}
 
 win : ${ALL_SRC}
-
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
 	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME} ..;
 
 cygwin : ${OBJECTS}
-
 	${CC} ${CFLAGS} -DWIN32 -DCYGWIN ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
 	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME}.exe ..;
 
 win2 : ${OBJECTS}
-
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o darkbot-noconsole -luser32
 	chmod +x .././configure; chmod +x ../scripts/.runonce; ../scripts/.runonce;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch;  cp -f ${EXE_NAME} ..;
 
 debug : ${OBJECTS}
-
 	${CC} ${DFLAGS} ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
 	cat ../.debug ;  cp -f ${EXE_NAME} ..; gdb ${EXE_NAME}        
 
 debug2 : ${OBJECTS}
-
 	${CC} ${LIBS} ${D2FLAGS} ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
 	cat ../.debug2;  cp -f ${EXE_NAME} ..;

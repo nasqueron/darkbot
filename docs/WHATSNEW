@@ -8,6 +8,8 @@
 
 Darkbot 7.0-RC7: Mar 13th, 2003
 	
+	- Makefile now works correctly on Solaris.
+
 	- The MEM command is now limited to only users with admin
 	  (level 3) access on the bot.
 
