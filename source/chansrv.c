@@ -473,7 +473,32 @@ chanserv (char *source, char *target, char *buf)
 		}
 		else if (stricmp (cmd, "CHANINFO") == 0)
 		{
-			show_chaninfo (source, target);
+			if ((s2 = strtok (NULL, " ")) == NULL)
+			{
+				show_chaninfo (source, target, target);
+				return;
+			}
+			else
+			{
+				/* If s2 is not a valid channel name, just use the current channel */
+				show_chaninfo (source, ((*s2 == '#' || *s2 == '&' || *s2 == '+') ? s2 : target), target);
+				return;
+			}
+
+		}
+		else if (stricmp (cmd, "CHANUSERS") == 0)
+		{
+			if ((s2 = strtok (NULL, " ")) == NULL)
+			{
+				show_chanusers (source, target);
+				return;
+			}
+			else
+			{
+				/* If s2 is not a valid channel name, just use the current channel. */
+				show_chanusers (source, ((*s2 == '#' || *s2 == '&' || *s2 == '+') ? s2 : target));
+				return;
+			}
 		}
 // --------------------- RANDQ STUFF --------------------- //
 

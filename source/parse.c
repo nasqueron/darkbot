@@ -276,7 +276,11 @@ parse (char *line)
 		}
 		else if (stricmp (cmd, "PART") == 0)
 		{
-			// Target.
+
+                        if ((ptr = strchr (s, '!')) != NULL)
+    	                       *ptr++ = '\0';			
+			
+			// Channel
 			s1 = strtok (NULL, " ");
 			
 			// Make sure the first character in the target operative is not a :.
@@ -288,6 +292,7 @@ parse (char *line)
 			 * If we are parting the channel, remove all users in that channel from 
 			 * memory. If someone else is parting, only remove them from memory.
 			 */
+			
 			if (stricmp (s, Mynick) != 0)
 				delete_user (s, s1);
 			else			

@@ -350,7 +350,7 @@ process_nick (char *nick, char *newnick)
  * - A for loop is now used instead of a while loop
  */
 void
-show_chaninfo (const char *nick, const char *chan)
+show_chaninfo (const char *nick, const char *chan, const char *target)
 {
 	size_t totalUsers = 0, foundUsers = 0;
 	const struct userlist *c = userhead;
@@ -362,7 +362,70 @@ show_chaninfo (const char *nick, const char *chan)
 			++foundUsers;
 	}
 	S ("PRIVMSG %s :%s, I see %d users in %s (%d users total in ram)\n",
-	   chan, nick, foundUsers, chan, totalUsers);
+	   	target, nick, foundUsers, chan, totalUsers);
+}
+
+/* 
+ * This function displays a list of users that are listed in the bot's internal user
+ * list as being on the channel pointed to by chan, to the nick pointed to by nick.
+ * Each message sent to the target should be no more than 200 characters in length.
+ */
+
+void    show_chanusers  (const char *nick, const char *chan)
+{
+	const   struct  userlist        *c = userhead;
+    char    DATA    [STRING_SHORT * 7] = {0},
+            tmp     [STRING_SHORT] = {0};
+    size_t  foundUsers = 0, len = 0;
+        
+    for (; c != NULL; c = c->next)
+    {
+		if (stricmp (chan, c->chan) == 0)
+        {
+			++foundUsers;
+			
+
+			snprintf (tmp, sizeof (tmp), "%s", DATA);
+			
+			/* The check for DATA being NULL is done to prevent ugly looking spaces
+			 * at the beginning of the line when it's outputted.
+			 */
+			snprintf (DATA, (sizeof (DATA) + sizeof (tmp)), 
+							"%s%s%s", 
+							tmp, 
+							(DATA == NULL ? "" : " "), 
+							c->nick);
+
+			/* Add the length of the new nick and room for a space to the length
+			 * of the current buffer.
+			 */
+
+			len += (strlen (c->nick) + 1);
+
+       		memset (tmp, 0, sizeof (tmp));
+
+	        if (len >= 200)
+		    {
+				S ("NOTICE %s :%s\n", nick, DATA);
+				len = 0;
+				memset (DATA, 0, sizeof (DATA));
+				db_sleep (2);
+			}
+		}
+	}
+
+	/* If there's any leftover data in our buffer after we've reached the end of the list,
+	 * send that as well.
+	 */
+
+    if (len > 0)
+		S ("NOTICE %s :%s\n", nick, DATA);
+
+	/* Even if no users were found... */
+
+	S ("NOTICE %s :End of CHANUSERS list; %d user%s found.\n",
+					          nick, foundUsers, (foundUsers == 1 ? "" : "s"));
+	
 }
 
 void

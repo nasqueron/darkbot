@@ -6,7 +6,25 @@
     *******************************************************
 
 
-Darkbot 7.0-RC7: Jan 27th, 2003
+Darkbot 7.0-RC7: Feb 21st, 2003
+
+	- Found another place where the bot wasn't deleting old
+	  userlist entries. This has been fixed.
+
+	- Added the CHANUSERS command. All this does is return
+	  a list of users on either the specified channel, or 
+	  the current channel, if none is specified. I may 
+	  remove this eventually, as i'm just using it for 
+ 	  debugging purposes right now.
+
+	- CHANINFO command will output to whatever channel it
+	  received the command from now, instead of the channel
+	  it's showing data about.
+
+	- The CHANINFO command now supports a channel name
+ 	  parameter. Dunno why it didn't have that before...
+
+	- Darkbot is on CVS now at SourceForge!
 
 	- Soapta revamped the google module.
 

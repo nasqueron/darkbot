@@ -140,7 +140,8 @@ void	register_bot			(void);
 void	prepare_bot				(void);
 int		create_connection		(char *, char *, long);
 int		Snow					(const char *, ...);
-void	show_chaninfo			(const char *, const char *);
+void	show_chaninfo			(const char *, const char *, const char *);
+void	show_chanusers			(const char *, const char *);
 const char	*run_program		(const char *);
 
 #if SNPRINTF_SUPPORT == 1
