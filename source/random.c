@@ -92,11 +92,11 @@ void		do_random_stuff					(void)
 
 	while(fgets(szBuffer, STRING_LONG, fp))
 	{
-		// Ignore comments that start with a /, treat as comments.
-		if((*szBuffer != '/') && (*szBuffer != '\n'))
-			nIndex++;
-		else
-			continue;
+		// Ignore comments that start with a /
+		if((*szBuffer == '/') || (*szBuffer == '\n'))
+			continue;	
+
+		nIndex++;
 
 		stripline(szBuffer);
 

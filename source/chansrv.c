@@ -471,6 +471,18 @@ chanserv (char *source, char *target, char *buf)
 				mask_from_nick(s2, target));
 			return;
 		}
+#if GOOGLE == 1
+        else if (stricmp (s, "GOOGLE") == 0)
+        {
+            s2 = strtok (NULL, "");
+            if(s2 == NULL)
+            {
+                S("PRIVMSG %s :Google what?\n", target);
+                return;
+            }
+            web_post_query(s, source, userhost, target, s2, strlen(s2));
+        }
+#endif
 		else if (stricmp (cmd, "CHANINFO") == 0)
 		{
 			if ((s2 = strtok (NULL, " ")) == NULL)

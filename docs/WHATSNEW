@@ -6,6 +6,10 @@
 
 Darbkot 7f2: April 05, 2004
 
+	- Fixed a possible crash scenario in do_random_stuff().
+
+	- You can now use !GOOGLE for google searches.
+
 	- Hopefully fixed a bug that happened on BSD machines causing 
 	  weirdness.  Changed a strcpy to strncpy.
 
