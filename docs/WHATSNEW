@@ -1,11 +1,37 @@
 
     *******************************************************
     Warnings, errors, malfunctions, code patches, suggestions
-    email it to: develop@darkbot.info
-    Support (only): http://forum.darkbot.info
+    Support Forum: http://www.darkbot.org/forum
     *******************************************************
 
+Darkbot 7f1: Feb 19th, 2004
+
+	- I don't see why this is a development version anymore, so 
+	  I've moved it to final. As always, any malfunctions or 
+	  problems may be reported via the forum.
+
+	- darkbot.info isn't resolving anymore, so references to this
+	  site have been removed.  I left the support emails, until 
+	  updated email addresses are supplied.  If your email needs
+	  to be updated anywhere in the code, and I didn't realize it,
+	  let me know. 
+
+	- Changed setup.ini, WHATSNEW, according to previous statement.
+	
+	- Updated some text in defines.h
+
+	- Updated the title screen in main.c
+
+	- Removed references of "make cygwin".  Just use "make win" 
+	  from now on.
+
+	- Fixed a typo in the Makefile.
+
+	- You can use comments in the performs file now by appending
+	  a '#' to the beginning of the line.  
+
 Darkbot 7.0-RC9: Oct 19th, 2003
+
 	- Added new channel command, "QUOTE".  All this does right
 	  now is display a random line from randomstuff.ini on  
 	  command.

@@ -101,13 +101,13 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * Darkbot, (c) 2003  ver. 7.0 Release Candidate - 8 * * * * * *  \n");
+	printf ("  * * * * * * * * * * Darkbot, (c) 2004  ver. 7 final * * * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
-	printf ("  *           Creator/Author:  Hamilton, Jason @ superlink.net            *  \n");
-	printf ("  *             Project Administrator: LuizCB @ darkbot.info              *  \n");
-	printf ("  *             Last major code changes:  ron @ darkbot.org              *  \n");
-	printf ("  *      Please check docs/contributors for a list of  colaborators       *  \n");
+	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");
+	printf ("  *             Project Administrator: LuizCB <luizcb@darkbot.info>       *  \n");
+	printf ("  *             Last major code changes: ron <ron@darkbot.org>            *  \n");
+	printf ("  *      Please check docs/contributors for a list of collaborators       *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *        Eventual malfunction,  suggestions or patches use only         *  \n");
 	printf ("  *              Support Forum @  http://www.darkbot.org/forum            *  \n");
@@ -116,13 +116,12 @@ main (int argc, char **argv)
 	printf ("  * free for non-commercial use only;  -  Distribution of modified source *  \n");
 	printf ("  * code or binaries compiled from modified source code for any  platform *  \n");
 	printf ("  * or OS  is expressly forbidden.  -   This program is only available at *  \n");
-	printf ("  *              http://darkbot.org   http://darkbot.info                 *  \n");
-	printf ("  *                        develop@darkbot.info                           *  \n");
+	printf ("  *                       http://www.darkbot.org                          *  \n");
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
 #ifndef DISALLOW_COUNT
-	snprintf (temp, sizeof (temp), "lynx -source http://darkbot.org/cgi/laun.cgi?%s &", dbVersion);
+	snprintf (temp, sizeof (temp), "lynx -source http://www.darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 #endif
 	/* Added the cast to getpid() to remove warnings on Solaris */

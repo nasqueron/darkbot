@@ -7,7 +7,7 @@ useful to any other developers interested in contributing
 to the Darkbot project. Many of these things are very 
 simple, I just write them down, because as some of you
 may know, I forget easily. And i don't always have time  
-to work on the code right as things are suggested.
+to work on the code right as things are suggested. (ron)
 ----------------------------------------------------------
 
 - chansrv.c badly needs to be revamped. needs a command

@@ -4,11 +4,13 @@
  * 
  ***	Darkbot Creator  -   Jason Hamilton (play) Jason@superlink.net
  *	Project Administrator  -   LuizCB (Pincel) LuizCB@darkbot.info
- *	Official Sites: http://www.darkbot.org - http://darkbot.info
+ *      Recent Code Modifications -     Ron (`ron) ron@darkbot.org
+ *
+ *	Official Sites: http://www.darkbot.org 
  *	 		http://darkbot.sourceforge.net
  * 
- ***	For any questions, suggestions, malfunctions,
- *	use only the forum at http://www.darkbot.org/forum
+ ***	For any questions, suggestions, malfunctions, etc
+ *	Use our support forum at http://www.darkbot.org/forum
  *
  * 	*******************************---******************************* */
 /*
@@ -97,7 +99,7 @@
  * 18= ARABIC   - MrSiMo <mrsimo7@yahoo.fr>
 
  * ------------------------------------------------------------------
- * ? = Email LuizCB@darkbot.info if you want to help add other langs!
+ * ? = Email juice@darkbot.org if you want to help add other langs!
  * ------------------------------------------------------------------
  */
 #define	LANG 1

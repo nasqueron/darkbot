@@ -1,13 +1,11 @@
 # ------------------------------------------------ #
 # Darkbot Makefile (c) Jason Hamilton 07.06.98     #
-# several ongoing modificationss by develop team   #
+# several ongoing modifications by develop team    #
 # ------------------------------------------------ #
 # To compile Darkbot, just type 'make'             #
-# To compile for Win32 (95/98/NT) 'make win'       #
+# To compile for Win32 (9x/NT/XP) 'make win'       #
 # To compile for Win32 with no console, type       #
 # 'make win2'                                      #
-# To compile for Win32 with cygwin, type           #
-# 'make cygwin'                                    #
 #                                                  #
 # To compile in debug mode, type 'make debug'      #
 # To compile and have all data be logged to        #
@@ -49,12 +47,6 @@ win : ${ALL_SRC}
 	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME} ..;
-
-cygwin : ${OBJECTS}
-	${CC} ${CFLAGS} -DWIN32 -DCYGWIN ${ALL_SRC} ${LIBS} -o ${EXE_NAME}
-	chmod +x .././configure;
-	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
-	chmod +x ../scripts/.Launch; ../scripts/.Launch; cp -f ${EXE_NAME}.exe ..;
 
 win2 : ${OBJECTS}
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o darkbot-noconsole -luser32

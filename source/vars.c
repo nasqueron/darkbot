@@ -83,9 +83,9 @@ long slcn4 = 0;
 long slcn3 = 0;
 
 #ifdef	WIN32
-char *rp391 = ")ved(niW-9CR-0.7 tobkraD";
+char *rp391 = "niW-1f7 tobkraD";
 #else
-char *rp391 = ")ved(9CR-0.7 tobkraD";
+char *rp391 = "1f7 tobkraD";
 #endif
 char BCOLON_NICK[STRING_SHORT] = { 0 };
 char DARKBOT_BIN[STRING_SHORT] = { 0 };
@@ -117,9 +117,9 @@ char dbVersion[STRING_SHORT] = { 0 };
 char strbuff[STRING_SHORT] = { 0 };
 char f_tmp[STRING_LONG] = { 0 };
 char UID[STRING_SHORT] = "database";
-char BS[STRING_SHORT] = "us.undernet.org";
+char BS[STRING_SHORT] = "irc.undernet.org";
 char CMDCHAR[2] = "!";
-char CHAN[STRING_SHORT] = "#irc_help";
+char CHAN[STRING_SHORT] = "#darkbot";
 char s_Mynick[STRING_SHORT] = "darkbot";
 char g_host[STRING_SHORT] = { 0 };
 char Mynick[STRING_SHORT] = "darkbot";

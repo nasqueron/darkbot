@@ -71,9 +71,12 @@ raw_now (char *type)
 			SeeN = 1;
 			while (fgets (str, STRING_LONG, fp))
 			{
-				if (*str == '/')
-					continue;
 				stripline (str);
+
+				/* Allow comments */
+				if (*str == '#') 
+					continue;
+
 				dat = strtok (str, "");
 				if ((ptr = strchr (dat, '=')) != NULL)
 					*ptr++ = '\0';
@@ -126,6 +129,12 @@ raw_now (char *type)
 			while (fgets (str, STRING_LONG, fp))
 			{
 				stripline (str);
+
+				/* Allow comments */
+
+				if (*str != '#')
+			        	continue;
+
 				tmp1 = strtok (str, " ");
 				if (tmp1 == NULL)
 					continue;
@@ -147,6 +156,11 @@ raw_now (char *type)
 #endif
 			while (fgets (str, STRING_LONG, fp))
 			{
+				/* Allow comments */
+
+				if (*str == '#')
+					continue;
+
 				i++;
 				printf (".");
 				fflush (stdout);
@@ -187,6 +201,11 @@ run_perform (void)
 
 	while (fgets (str, sizeof (str), fp))
 	{
+		/* Allow comments */
+
+		if (*str == '#') 
+			continue;
+
 		S ("%s\n", str);
 	}
 	fclose (fp);
