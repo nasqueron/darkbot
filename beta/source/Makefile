@@ -35,16 +35,16 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-ACLOCAL = ${SHELL} /home/ron/darkbot2/missing --run aclocal-1.7
+ACLOCAL = ${SHELL} /home/ron/darkbot/beta/missing --run aclocal-1.7
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/ron/darkbot2/missing --run tar
-AUTOCONF = ${SHELL} /home/ron/darkbot2/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/ron/darkbot2/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/ron/darkbot2/missing --run automake-1.7
+AMTAR = ${SHELL} /home/ron/darkbot/beta/missing --run tar
+AUTOCONF = ${SHELL} /home/ron/darkbot/beta/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/ron/darkbot/beta/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/ron/darkbot/beta/missing --run automake-1.7
 AWK = gawk
 CC = gcc
-CCDEPMODE = depmode=gcc3
+CCDEPMODE = depmode=none
 CFLAGS = -g -O2
 CP = /usr/bin/cp
 CPP = gcc -E
@@ -65,7 +65,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = -luser32 -lcrypt 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/ron/darkbot2/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/ron/darkbot/beta/missing --run makeinfo
 OBJEXT = o
 PACKAGE = darkbot
 PACKAGE_BUGREPORT = 
@@ -81,8 +81,8 @@ STRIP =
 VERSION = 7f3
 ac_ct_CC = gcc
 ac_ct_STRIP = 
-am__fastdepCC_FALSE = #
-am__fastdepCC_TRUE = 
+am__fastdepCC_FALSE = 
+am__fastdepCC_TRUE = #
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -93,7 +93,7 @@ exec_prefix = ${prefix}
 host_alias = 
 includedir = ${prefix}/include
 infodir = ${prefix}/info
-install_sh = /home/ron/darkbot2/install-sh
+install_sh = /home/ron/darkbot/beta/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localstatedir = ${prefix}/var
@@ -164,7 +164,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DIST_SOURCES = $(convertdb_SOURCES) $(darkbot_SOURCES)
-DIST_COMMON = $(srcdir)/Makefile.in Makefile.am config.h.in
+DIST_COMMON = $(srcdir)/Makefile.in Makefile.am config.h.in depcomp
 SOURCES = $(convertdb_SOURCES) $(darkbot_SOURCES)
 
 all: config.h
@@ -256,26 +256,26 @@ include ./$(DEPDIR)/vars.Po
 include ./$(DEPDIR)/web.Po
 
 .c.o:
-	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
-	  -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<; \
-	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
-	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
-	fi
-#	source='$<' object='$@' libtool=no \
-#	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
-#	$(CCDEPMODE) $(depcomp) \
-#	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
+#	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
+#	  -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<; \
+#	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
+#	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
+#	fi
+	source='$<' object='$@' libtool=no \
+	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
+	$(CCDEPMODE) $(depcomp) \
+	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
 
 .c.obj:
-	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
-	  -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`; \
-	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
-	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
-	fi
-#	source='$<' object='$@' libtool=no \
-#	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
-#	$(CCDEPMODE) $(depcomp) \
-#	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+#	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
+#	  -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`; \
+#	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; \
+#	else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; \
+#	fi
+	source='$<' object='$@' libtool=no \
+	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' \
+	$(CCDEPMODE) $(depcomp) \
+	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
 uninstall-info-am:
 
 ETAGS = etags
