@@ -106,7 +106,7 @@ main (int argc, char **argv)
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author:  Hamilton, Jason @ superlink.net            *  \n");
 	printf ("  *             Project Administrator: LuizCB @ darkbot.info              *  \n");
-	printf ("  *             Last major code changes:  Ron @ darkbot.info              *  \n");
+	printf ("  *             Last major code changes:  ron @ darkbot.org              *  \n");
 	printf ("  *      Please check docs/contributors for a list of  colaborators       *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *        Eventual malfunction,  suggestions or patches use only         *  \n");
