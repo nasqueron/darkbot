@@ -414,13 +414,7 @@
  */
 #define RANDOM_DUNNO	ON
 
-/*
- * This define toggles the use of random prefixes from 
- * dat/random.ini on replies.  Note that these lines will only
- * prefix a response if it does not contain any variables. 
-#define	PREFIX_REPLIES 	ON
-
-// ======== RANDOM STUFF =========
+/* ======== RANDOM STUFF ========= */
 /*
  * Will read from a random line in dat/randomstuff.ini and say
  * something random in the home channel. ALSO if nothing is said
