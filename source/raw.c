@@ -45,12 +45,12 @@ raw_now (char *type)
 	char str[STRING_LONG] = { 0 }, *dat = NULL, *ptr = NULL, *tmp1 =
 		NULL, *tmp2 = NULL, *tmp3 = NULL;
 
+	if (stricmp (type, "PERMBAN") == 0)
+		if ((fp = fopen (PERMBAN, "r")) == NULL)
+			return;
 	if (stricmp (type, "DEOP") == 0)
 		if ((fp = fopen (DEOP, "r")) == NULL)
 			return;
-	if (stricmp (type, "PERMBAN") == 0)
-		if ((fp = fopen (PERMBAN, "r")) == NULL)
-
 	if (stricmp (type, "SERVERS") == 0)
 		if ((fp = fopen (SERVERS, "r")) == NULL)
 		{
@@ -132,7 +132,7 @@ raw_now (char *type)
 
 				/* Allow comments */
 
-				if (*str == '#')
+				if (*str != '#')
 			        	continue;
 
 				tmp1 = strtok (str, " ");
