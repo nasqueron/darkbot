@@ -97,7 +97,7 @@
  * 16= NORWEGIAN- [SoHo] <soho@int19h.com>
  * 17= ROMANIAN - Radu <radu.negoescu@sante.univ-nantes.fr>
  * 18= ARABIC   - MrSiMo <mrsimo7@yahoo.fr>
-
+ * 19= TAIWANISH- ?
  * ------------------------------------------------------------------
  * ? = Email juice@darkbot.org if you want to help add other langs!
  * ------------------------------------------------------------------
