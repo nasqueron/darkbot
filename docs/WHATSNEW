@@ -4,11 +4,13 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 7f1: March 30, 2004
+Darbkot 7f2: April 05, 2004
 
 	- Fixed the google function.  Google changed some text that 
 	  the bot was using to tell if the search was successful. 
 	 
+Darkbot 7f1: March 30, 2004
+
 	- Fixed a bug that happened while make tried to cp the binary
 	  to the toplevel distribution directory.  It now compiles the
 	  binary directory to the toplevel, and no longer needs to use
