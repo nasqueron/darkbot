@@ -134,7 +134,10 @@ parse (char *line)
 		}
 		else if ((stricmp (cmd, "376") == 0) || (stricmp(cmd, "422") == 0))
 		{
-			run_perform (); /* raw_now ("PERFORM"); */
+			/* Set default umodes */
+			S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
+
+			run_perform (); /* Run performs */
 		}
 		else if (stricmp (cmd, "482") == 0)
 		{

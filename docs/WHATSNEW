@@ -6,7 +6,13 @@
     *******************************************************
 
 
-Darkbot 7.0-RC7: Feb 21st, 2003
+Darkbot 7.0-RC7: Mar 13th, 2003
+
+	- DEFAULT_UMODE is now set immediately upon connection. 
+ 	  Several users said this was not being done, it was. It was
+ 	  just waiting >300 seconds, for whatever reason. Also, the
+	  bot command PERFORMS now sets DEFAULT_UMODE in addition
+  	  to running the the performs file.
 
 	- New command line option.
 	  -I now specifies the location of the directory containing

@@ -985,7 +985,11 @@ chanserv (char *source, char *target, char *buf)
 		{
 			if (check_access (userhost, target, 0, source) >= 3)
 			{
-				run_perform (); /* raw_now ("PERFORM"); */
+				/* Set the default umodes */
+				S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
+
+				/* Run performs */
+				run_perform ();
 				S ("privmsg %s :%s, performs have been executed.\n",
 					target, source);
 				return;

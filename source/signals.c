@@ -128,8 +128,8 @@ sig_alrm (int notUsed)
 #if STATUS == 1
 		S ("LUSERS\n");
 #endif
-		S ("JOIN %s\n", CHAN);
 		S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
+		S ("JOIN %s\n", CHAN);
 		reset_ ();
 		save_changes ();
 
