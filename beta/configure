@@ -4268,9 +4268,9 @@ _ACEOF
 
 fi
 
-echo "$as_me:$LINENO: checking for " >&5
-echo $ECHO_N "checking for ... $ECHO_C" >&6
-if test "${ac_cv_type_+set}" = set; then
+echo "$as_me:$LINENO: checking for clock_t" >&5
+echo $ECHO_N "checking for clock_t... $ECHO_C" >&6
+if test "${ac_cv_type_clock_t+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -4283,9 +4283,9 @@ $ac_includes_default
 int
 main ()
 {
-if (( *) 0)
+if ((clock_t *) 0)
   return 0;
-if (sizeof ())
+if (sizeof (clock_t))
   return 0;
   ;
   return 0;
@@ -4313,25 +4313,26 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_type_=yes
+  ac_cv_type_clock_t=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_type_=no
+ac_cv_type_clock_t=no
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_type_" >&5
-echo "${ECHO_T}$ac_cv_type_" >&6
-if test $ac_cv_type_ = yes; then
+echo "$as_me:$LINENO: result: $ac_cv_type_clock_t" >&5
+echo "${ECHO_T}$ac_cv_type_clock_t" >&6
+if test $ac_cv_type_clock_t = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_ 1
+#define HAVE_CLOCK_T 1
 _ACEOF
 
 
 fi
+
 
 echo "$as_me:$LINENO: checking for size_t" >&5
 echo $ECHO_N "checking for size_t... $ECHO_C" >&6

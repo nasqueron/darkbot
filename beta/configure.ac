@@ -31,7 +31,8 @@ AC_CHECK_HEADER([windows.h],AC_DEFINE([WIN32],,[windows.h]))
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
-AC_CHECK_TYPES
+AC_CHECK_TYPES(clock_t)
+
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 

@@ -761,7 +761,7 @@ for 60 sec)"
 #include "langs/lang.h"
 #include <ctype.h>
 #include <stdio.h>
-#if     NEED_CLOCK_T == ON
+#ifndef     HAVE_CLOCK_T
 #include <time.h>
 #endif
 #include <sys/time.h>

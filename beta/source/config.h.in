@@ -1,7 +1,7 @@
 /* source/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if the system has the type `'. */
-#undef HAVE_
+/* Define to 1 if the system has the type `clock_t'. */
+#undef HAVE_CLOCK_T
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */

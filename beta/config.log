@@ -227,271 +227,201 @@ configure:3661: test -z
 configure:3664: $? = 0
 configure:3667: test -s conftest.o
 configure:3670: $? = 0
-configure:3756: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-configure:3759: $? = 0
-configure:3761: ./conftest.exe
-configure:3764: $? = 0
-configure:3779: result: yes
-configure:3804: checking for sys/types.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3759: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:3762: $? = 0
+configure:3764: ./conftest.exe
+configure:3767: $? = 0
+configure:3782: result: yes
+configure:3807: checking for sys/types.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for sys/stat.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for sys/stat.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for stdlib.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for stdlib.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for string.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for string.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for memory.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for memory.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for strings.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for strings.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for inttypes.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for inttypes.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for stdint.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for stdint.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3804: checking for unistd.h
-configure:3820: gcc -c -g -O2  conftest.c >&5
-configure:3826: $? = 0
-configure:3830: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3807: checking for unistd.h
+configure:3823: gcc -c -g -O2  conftest.c >&5
+configure:3829: $? = 0
+configure:3833: test -z 
 			 || test ! -s conftest.err
-configure:3833: $? = 0
-configure:3836: test -s conftest.o
-configure:3839: $? = 0
-configure:3850: result: yes
-configure:3878: checking fcntl.h usability
-configure:3890: gcc -c -g -O2  conftest.c >&5
-configure:3896: $? = 0
-configure:3900: test -z 
+configure:3836: $? = 0
+configure:3839: test -s conftest.o
+configure:3842: $? = 0
+configure:3853: result: yes
+configure:3881: checking fcntl.h usability
+configure:3893: gcc -c -g -O2  conftest.c >&5
+configure:3899: $? = 0
+configure:3903: test -z 
 			 || test ! -s conftest.err
-configure:3903: $? = 0
-configure:3906: test -s conftest.o
-configure:3909: $? = 0
-configure:3919: result: yes
-configure:3923: checking fcntl.h presence
-configure:3933: gcc -E  conftest.c
-configure:3939: $? = 0
-configure:3959: result: yes
-configure:3994: checking for fcntl.h
-configure:4001: result: yes
-configure:3878: checking sys/time.h usability
-configure:3890: gcc -c -g -O2  conftest.c >&5
-configure:3896: $? = 0
-configure:3900: test -z 
+configure:3906: $? = 0
+configure:3909: test -s conftest.o
+configure:3912: $? = 0
+configure:3922: result: yes
+configure:3926: checking fcntl.h presence
+configure:3936: gcc -E  conftest.c
+configure:3942: $? = 0
+configure:3962: result: yes
+configure:3997: checking for fcntl.h
+configure:4004: result: yes
+configure:3881: checking sys/time.h usability
+configure:3893: gcc -c -g -O2  conftest.c >&5
+configure:3899: $? = 0
+configure:3903: test -z 
 			 || test ! -s conftest.err
-configure:3903: $? = 0
-configure:3906: test -s conftest.o
-configure:3909: $? = 0
-configure:3919: result: yes
-configure:3923: checking sys/time.h presence
-configure:3933: gcc -E  conftest.c
-configure:3939: $? = 0
-configure:3959: result: yes
-configure:3994: checking for sys/time.h
-configure:4001: result: yes
-configure:3869: checking for unistd.h
-configure:3874: result: yes
-configure:4024: checking windows.h usability
-configure:4036: gcc -c -g -O2  conftest.c >&5
-configure:4042: $? = 0
-configure:4046: test -z 
+configure:3906: $? = 0
+configure:3909: test -s conftest.o
+configure:3912: $? = 0
+configure:3922: result: yes
+configure:3926: checking sys/time.h presence
+configure:3936: gcc -E  conftest.c
+configure:3942: $? = 0
+configure:3962: result: yes
+configure:3997: checking for sys/time.h
+configure:4004: result: yes
+configure:3872: checking for unistd.h
+configure:3877: result: yes
+configure:4027: checking windows.h usability
+configure:4039: gcc -c -g -O2  conftest.c >&5
+configure:4045: $? = 0
+configure:4049: test -z 
 			 || test ! -s conftest.err
-configure:4049: $? = 0
-configure:4052: test -s conftest.o
-configure:4055: $? = 0
-configure:4065: result: yes
-configure:4069: checking windows.h presence
-configure:4079: gcc -E  conftest.c
-configure:4085: $? = 0
-configure:4105: result: yes
-configure:4140: checking for windows.h
-configure:4147: result: yes
-configure:4161: checking for an ANSI C-conforming const
-configure:4228: gcc -c -g -O2  conftest.c >&5
-configure:4234: $? = 0
-configure:4238: test -z 
+configure:4052: $? = 0
+configure:4055: test -s conftest.o
+configure:4058: $? = 0
+configure:4068: result: yes
+configure:4072: checking windows.h presence
+configure:4082: gcc -E  conftest.c
+configure:4088: $? = 0
+configure:4108: result: yes
+configure:4143: checking for windows.h
+configure:4150: result: yes
+configure:4164: checking for an ANSI C-conforming const
+configure:4231: gcc -c -g -O2  conftest.c >&5
+configure:4237: $? = 0
+configure:4241: test -z 
 			 || test ! -s conftest.err
-configure:4241: $? = 0
-configure:4244: test -s conftest.o
-configure:4247: $? = 0
-configure:4258: result: yes
-configure:4268: checking for 
-configure:4292: gcc -c -g -O2  conftest.c >&5
-conftest.c: In function `main':
-conftest.c:65: error: syntax error before ')' token
-conftest.c:67: error: syntax error before ')' token
-configure:4298: $? = 1
-configure: failed program was:
-| /* confdefs.h.  */
-| 
-| #define PACKAGE_NAME ""
-| #define PACKAGE_TARNAME ""
-| #define PACKAGE_VERSION ""
-| #define PACKAGE_STRING ""
-| #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "darkbot"
-| #define VERSION "7f3"
-| #define HAVE_LIBCRYPT 1
-| #define HAVE_LIBUSER32 1
-| #define HAVE_DIRENT_H 1
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_FCNTL_H 1
-| #define HAVE_SYS_TIME_H 1
-| #define HAVE_UNISTD_H 1
-| #define WIN32
-| /* end confdefs.h.  */
-| #include <stdio.h>
-| #if HAVE_SYS_TYPES_H
-| # include <sys/types.h>
-| #endif
-| #if HAVE_SYS_STAT_H
-| # include <sys/stat.h>
-| #endif
-| #if STDC_HEADERS
-| # include <stdlib.h>
-| # include <stddef.h>
-| #else
-| # if HAVE_STDLIB_H
-| #  include <stdlib.h>
-| # endif
-| #endif
-| #if HAVE_STRING_H
-| # if !STDC_HEADERS && HAVE_MEMORY_H
-| #  include <memory.h>
-| # endif
-| # include <string.h>
-| #endif
-| #if HAVE_STRINGS_H
-| # include <strings.h>
-| #endif
-| #if HAVE_INTTYPES_H
-| # include <inttypes.h>
-| #else
-| # if HAVE_STDINT_H
-| #  include <stdint.h>
-| # endif
-| #endif
-| #if HAVE_UNISTD_H
-| # include <unistd.h>
-| #endif
-| int
-| main ()
-| {
-| if (( *) 0)
-|   return 0;
-| if (sizeof ())
-|   return 0;
-|   ;
-|   return 0;
-| }
-configure:4322: result: no
-configure:4333: checking for size_t
-configure:4357: gcc -c -g -O2  conftest.c >&5
-configure:4363: $? = 0
-configure:4367: test -z 
+configure:4244: $? = 0
+configure:4247: test -s conftest.o
+configure:4250: $? = 0
+configure:4261: result: yes
+configure:4271: checking for clock_t
+configure:4295: gcc -c -g -O2  conftest.c >&5
+configure:4301: $? = 0
+configure:4305: test -z 
 			 || test ! -s conftest.err
-configure:4370: $? = 0
-configure:4373: test -s conftest.o
-configure:4376: $? = 0
-configure:4387: result: yes
-configure:4399: checking whether time.h and sys/time.h may both be included
-configure:4424: gcc -c -g -O2  conftest.c >&5
-configure:4430: $? = 0
-configure:4434: test -z 
+configure:4308: $? = 0
+configure:4311: test -s conftest.o
+configure:4314: $? = 0
+configure:4325: result: yes
+configure:4337: checking for size_t
+configure:4361: gcc -c -g -O2  conftest.c >&5
+configure:4367: $? = 0
+configure:4371: test -z 
 			 || test ! -s conftest.err
-configure:4437: $? = 0
-configure:4440: test -s conftest.o
-configure:4443: $? = 0
-configure:4454: result: yes
-configure:4465: checking return type of signal handlers
-configure:4496: gcc -c -g -O2  conftest.c >&5
-configure:4502: $? = 0
-configure:4506: test -z 
+configure:4374: $? = 0
+configure:4377: test -s conftest.o
+configure:4380: $? = 0
+configure:4391: result: yes
+configure:4403: checking whether time.h and sys/time.h may both be included
+configure:4428: gcc -c -g -O2  conftest.c >&5
+configure:4434: $? = 0
+configure:4438: test -z 
 			 || test ! -s conftest.err
-configure:4509: $? = 0
-configure:4512: test -s conftest.o
-configure:4515: $? = 0
-configure:4526: result: void
-configure:4538: checking for vprintf
-configure:4595: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-conftest.c:54: warning: conflicting types for built-in function `vprintf'
-configure:4601: $? = 0
-configure:4605: test -z 
+configure:4441: $? = 0
+configure:4444: test -s conftest.o
+configure:4447: $? = 0
+configure:4458: result: yes
+configure:4469: checking return type of signal handlers
+configure:4500: gcc -c -g -O2  conftest.c >&5
+configure:4506: $? = 0
+configure:4510: test -z 
 			 || test ! -s conftest.err
-configure:4608: $? = 0
-configure:4611: test -s conftest.exe
-configure:4614: $? = 0
-configure:4626: result: yes
-configure:4633: checking for _doprnt
-configure:4690: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/cc6cMael.o(.text+0x1d): In function `main':
-/home/ron/darkbot/beta/conftest.c:71: undefined reference to `__doprnt'
-/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/cc6cMael.o(.data+0x0):/home/ron/darkbot/beta/conftest.c:70: undefined reference to `__doprnt'
+configure:4513: $? = 0
+configure:4516: test -s conftest.o
+configure:4519: $? = 0
+configure:4530: result: void
+configure:4542: checking for vprintf
+configure:4599: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:55: warning: conflicting types for built-in function `vprintf'
+configure:4605: $? = 0
+configure:4609: test -z 
+			 || test ! -s conftest.err
+configure:4612: $? = 0
+configure:4615: test -s conftest.exe
+configure:4618: $? = 0
+configure:4630: result: yes
+configure:4637: checking for _doprnt
+configure:4694: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/ccAPuPpL.o(.text+0x1d): In function `main':
+/home/ron/darkbot/beta/conftest.c:72: undefined reference to `__doprnt'
+/cygdrive/c/DOCUME~1/ADMINI~1.ROB/LOCALS~1/Temp/ccAPuPpL.o(.data+0x0):/home/ron/darkbot/beta/conftest.c:71: undefined reference to `__doprnt'
 collect2: ld returned 1 exit status
-configure:4696: $? = 1
+configure:4700: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | 
@@ -519,6 +449,7 @@ configure: failed program was:
 | #define HAVE_SYS_TIME_H 1
 | #define HAVE_UNISTD_H 1
 | #define WIN32
+| #define HAVE_CLOCK_T 1
 | #define TIME_WITH_SYS_TIME 1
 | #define RETSIGTYPE void
 | #define HAVE_VPRINTF 1
@@ -567,130 +498,130 @@ configure: failed program was:
 |   ;
 |   return 0;
 | }
-configure:4721: result: no
-configure:4744: checking for select
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4725: result: no
+configure:4748: checking for select
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4744: checking for socket
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4748: checking for socket
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4744: checking for strspn
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-conftest.c:57: warning: conflicting types for built-in function `strspn'
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4748: checking for strspn
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:58: warning: conflicting types for built-in function `strspn'
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4744: checking for strstr
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-conftest.c:58: warning: conflicting types for built-in function `strstr'
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4748: checking for strstr
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:59: warning: conflicting types for built-in function `strstr'
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4744: checking for strtol
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4748: checking for strtol
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4744: checking for snprintf
-configure:4801: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
-conftest.c:60: warning: conflicting types for built-in function `snprintf'
-configure:4807: $? = 0
-configure:4811: test -z 
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4748: checking for snprintf
+configure:4805: gcc -o conftest.exe -g -O2   conftest.c -luser32 -lcrypt  >&5
+conftest.c:61: warning: conflicting types for built-in function `snprintf'
+configure:4811: $? = 0
+configure:4815: test -z 
 			 || test ! -s conftest.err
-configure:4814: $? = 0
-configure:4817: test -s conftest.exe
-configure:4820: $? = 0
-configure:4832: result: yes
-configure:4958: creating ./config.status
+configure:4818: $? = 0
+configure:4821: test -s conftest.exe
+configure:4824: $? = 0
+configure:4836: result: yes
+configure:4962: creating ./config.status
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
-ac_cv_c_compiler_gnu=yes
-ac_cv_c_const=yes
-ac_cv_env_CC_set=
-ac_cv_env_CC_value=
-ac_cv_env_CFLAGS_set=
-ac_cv_env_CFLAGS_value=
-ac_cv_env_CPPFLAGS_set=
-ac_cv_env_CPPFLAGS_value=
-ac_cv_env_CPP_set=
-ac_cv_env_CPP_value=
-ac_cv_env_LDFLAGS_set=
-ac_cv_env_LDFLAGS_value=
-ac_cv_env_build_alias_set=
-ac_cv_env_build_alias_value=
-ac_cv_env_host_alias_set=
-ac_cv_env_host_alias_value=
-ac_cv_env_target_alias_set=
-ac_cv_env_target_alias_value=
-ac_cv_exeext=.exe
-ac_cv_func__doprnt=no
-ac_cv_func_select=yes
-ac_cv_func_snprintf=yes
-ac_cv_func_socket=yes
-ac_cv_func_strspn=yes
-ac_cv_func_strstr=yes
-ac_cv_func_strtol=yes
-ac_cv_func_vprintf=yes
-ac_cv_header_dirent_dirent_h=yes
-ac_cv_header_fcntl_h=yes
-ac_cv_header_inttypes_h=yes
-ac_cv_header_memory_h=yes
-ac_cv_header_stdc=yes
-ac_cv_header_stdint_h=yes
-ac_cv_header_stdlib_h=yes
-ac_cv_header_string_h=yes
-ac_cv_header_strings_h=yes
-ac_cv_header_sys_stat_h=yes
-ac_cv_header_sys_time_h=yes
-ac_cv_header_sys_types_h=yes
-ac_cv_header_time=yes
-ac_cv_header_unistd_h=yes
-ac_cv_header_windows_h=yes
-ac_cv_lib_crypt_main=yes
-ac_cv_lib_user32_main=yes
-ac_cv_objext=o
-ac_cv_path_CP=/usr/bin/cp
-ac_cv_path_RM=/usr/bin/rm
-ac_cv_path_install='/usr/bin/install -c'
-ac_cv_prog_AWK=gawk
-ac_cv_prog_CPP='gcc -E'
-ac_cv_prog_ac_ct_CC=gcc
-ac_cv_prog_cc_g=yes
-ac_cv_prog_cc_stdc=
-ac_cv_prog_egrep='grep -E'
-ac_cv_prog_make_make_set=yes
+ac_cv_type_size_t='yes'
+am_cv_CC_dependencies_compiler_type='gcc3'
+ac_cv_func_select='yes'
+ac_cv_type_clock_t='yes'
+ac_cv_header_stdlib_h='yes'
+ac_cv_func_strtol='yes'
+ac_cv_func__doprnt='no'
+ac_cv_header_sys_time_h='yes'
+ac_cv_prog_cc_g='yes'
+ac_cv_env_LDFLAGS_set=''
+ac_cv_func_strspn='yes'
 ac_cv_search_opendir='none required'
-ac_cv_type_=no
-ac_cv_type_signal=void
-ac_cv_type_size_t=yes
-am_cv_CC_dependencies_compiler_type=gcc3
+ac_cv_c_compiler_gnu='yes'
+ac_cv_exeext='.exe'
+ac_cv_path_install='/usr/bin/install -c'
+ac_cv_env_CFLAGS_set=''
+ac_cv_header_dirent_dirent_h='yes'
+ac_cv_env_CPP_value=''
+ac_cv_env_CPPFLAGS_set=''
+ac_cv_func_socket='yes'
+ac_cv_lib_crypt_main='yes'
+ac_cv_func_snprintf='yes'
+ac_cv_header_fcntl_h='yes'
+ac_cv_env_host_alias_set=''
+ac_cv_func_strstr='yes'
+ac_cv_c_const='yes'
+ac_cv_header_sys_stat_h='yes'
+ac_cv_env_build_alias_set=''
+ac_cv_path_CP='/usr/bin/cp'
+ac_cv_env_LDFLAGS_value=''
+ac_cv_env_target_alias_set=''
+ac_cv_prog_cc_stdc=''
+ac_cv_env_CFLAGS_value=''
+ac_cv_env_CC_set=''
+ac_cv_header_sys_types_h='yes'
+ac_cv_header_stdc='yes'
+ac_cv_header_time='yes'
+ac_cv_header_strings_h='yes'
+ac_cv_func_vprintf='yes'
+ac_cv_type_signal='void'
+ac_cv_header_windows_h='yes'
+ac_cv_header_stdint_h='yes'
+ac_cv_header_inttypes_h='yes'
+ac_cv_prog_egrep='grep -E'
+ac_cv_prog_make_make_set='yes'
+ac_cv_header_unistd_h='yes'
+ac_cv_header_string_h='yes'
+ac_cv_env_CPPFLAGS_value=''
+ac_cv_header_memory_h='yes'
+ac_cv_env_host_alias_value=''
+ac_cv_path_RM='/usr/bin/rm'
+ac_cv_prog_CPP='gcc -E'
+ac_cv_prog_AWK='gawk'
+ac_cv_env_build_alias_value=''
+ac_cv_prog_ac_ct_CC='gcc'
+ac_cv_env_target_alias_value=''
+ac_cv_env_CC_value=''
+ac_cv_env_CPP_set=''
+ac_cv_lib_user32_main='yes'
+ac_cv_objext='o'
 
 ## ----------------- ##
 ## Output variables. ##
@@ -738,7 +669,7 @@ PACKAGE_VERSION=''
 PATH_SEPARATOR=':'
 RM='/usr/bin/rm'
 SET_MAKE=''
-SHELL='/bin/sh'
+SHELL='/bin/bash'
 STRIP=''
 VERSION='7f3'
 ac_ct_CC='gcc'
@@ -772,6 +703,7 @@ target_alias=''
 ## confdefs.h. ##
 ## ----------- ##
 
+#define HAVE_CLOCK_T 1
 #define HAVE_DIRENT_H 1
 #define HAVE_FCNTL_H 1
 #define HAVE_INTTYPES_H 1
@@ -823,7 +755,7 @@ generated by GNU Autoconf 2.59.  Invocation command line was
 
 on robbins
 
-config.status:689: creating Makefile
+config.status:5699: creating Makefile
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -840,8 +772,8 @@ generated by GNU Autoconf 2.59.  Invocation command line was
 
 on robbins
 
-config.status:689: creating source/Makefile
-config.status:1111: executing depfiles commands
+config.status:5699: creating source/Makefile
+config.status:6126: executing depfiles commands
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -858,5 +790,4 @@ generated by GNU Autoconf 2.59.  Invocation command line was
 
 on robbins
 
-config.status:793: creating source/config.h
-config.status:931: source/config.h is unchanged
+config.status:5802: creating source/config.h
