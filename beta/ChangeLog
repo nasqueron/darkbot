@@ -6,6 +6,10 @@
 
 
 Darkbot 7f3: Dec 5, 2004
+	- Fixed a warning that came up in permbans.c about mixing 
+	  types when compiling on OS X.  I changed %d on line 198 
+	  to %ud.
+
 	- configure now checks for clock_t.
 
  	- configure now automatically checks for snprintf, and 

@@ -195,7 +195,7 @@ show_banlist (const char *nick)
 		i++;
 		++x;
 		snprintf (tmp, sizeof(tmp), "%s", DATA);
-		snprintf (DATA, (sizeof(DATA) + sizeof(tmp)), "%s %s:%d", 
+		snprintf (DATA, (sizeof(DATA) + sizeof(tmp)), "%s %s:%ud", 
 			tmp, c->uh, c->counter);
 		memset (tmp, 0, sizeof(tmp));
 

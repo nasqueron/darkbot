@@ -493,14 +493,15 @@ uninstall-info: uninstall-info-recursive
 
 
 all-am: source/darkbot$(EXEEXT)
-	cp -f source/darkbot$(EXEEXT) .
+	/usr/bin/cp source/darkbot$(EXEEXT) .
 
 convertdb: source/convertdb$(EXEEXT)
-	cp -f source/convertdb$(EXEEXT) .
+	/usr/bin/cp -f source/convertdb$(EXEEXT) .
 
 install-exec-local:
-	$(INSTALL) -d -m 755 $(prefix)
-	$(INSTALL) -m 744 ./source/darkbot $(prefix)
+	@echo
+	/usr/bin/install -c -d -m 755 $(prefix)
+	/usr/bin/install -c -m 744 ./source/darkbot $(prefix)
 	@echo 
 	@echo darkbot-`cat VERSION` has been installed to $(prefix)
 	@echo
