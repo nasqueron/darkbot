@@ -154,7 +154,9 @@ revert_topic (char *input)
 	char *ptr = NULL, b[STRING_SHORT] = { 0 };
 
 	ptr = strtok (input, "+");
-	strncpy (f_tmp, ptr, sizeof (f_tmp));
+	
+	snprintf (f_tmp, sizeof (f_tmp), "%s", ptr);
+
 	if (ptr != NULL)
 	{
 		while (ptr != NULL)
@@ -163,7 +165,7 @@ revert_topic (char *input)
 			if (ptr != NULL)
 			{
 				snprintf (b, sizeof (b), "%s %s", f_tmp, ptr);
-				strncpy (f_tmp, b, sizeof (f_tmp));
+				snprintf (f_tmp, sizeof (f_tmp), "%s", b);
 			}
 		}
 		return f_tmp;
