@@ -116,13 +116,13 @@ main (int argc, char **argv)
 	printf ("  * free for non-commercial use only;  -  Distribution of modified source *  \n");
 	printf ("  * code or binaries compiled from modified source code for any  platform *  \n");
 	printf ("  * or OS  is expressly forbidden.  -   This program is only available at *  \n");
-	printf ("  *              http://darkbot.net   http://darkbot.info                 *  \n");
-        printf ("  *                        develop@darkbot.info                           *  \n");
+	printf ("  *              http://darkbot.org   http://darkbot.info                 *  \n");
+	printf ("  *                        develop@darkbot.info                           *  \n");
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
 #ifndef DISALLOW_COUNT
-	snprintf (temp, sizeof (temp), "lynx -source http://darkbot.net/cgi/laun.cgi?%s &", dbVersion);
+	snprintf (temp, sizeof (temp), "lynx -source http://darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 #endif
 	sprintf (temp, "echo \"%d\" > %s.pid", getpid (), DARKBOT_BIN);
