@@ -8,14 +8,15 @@ Author/creator   -  Jason Hamilton (play) Jason @ superlink.net
 Project Administrator - LuizCB (Pincel) - LuizCB @ darkbot.info
 
 A big portion of Darkbot's code,  although primarily and mainly done
-by Jason Hamilton, is also done with the expertise and donnation from
+by
+ Jason Hamilton, is also done with the expertise and donnation from
 several people.
 
 Thanks to all for the collaboration!
 
 **** Coders ****
 
-Ron (Ronner) Ron @ darkbot.info - several features, changes and code
+Ron (ronner) Ron @ darkbot.info - several features, changes and code
           fixes on 6f5,6 and RCs for release 7 
 Paul (reet2) Paul @ darkbot.info - several major changes on 6f6 for release 7
 Neil Darlow - code optimization patches on info and check_permban
@@ -45,26 +46,27 @@ bow @ undernet - AddServer fix - 4-Alpha2
 and several other anonymous contributors 
 
 **** Translators ****
-ENGLISH	- play <jason @ superlink.net>
-FRENCH	- Inajira <inajira @ videotron.ca>
-	- EfX <michel.efx @ globetrotter.net>
-	- eCHaLoTTe <echalotte @ cablevision.qc.ca>
-SPANISH  - speed1 <speed @ eduredes.edu.do>
-DUTCH    - Asmodai <asmodai @ wxs.nl>
-LATIN	- Otaku <otaku @ unixgeek.ml.org>
-GREEK    - Chris_CY <chriscy @ cylink.net>
-EBONICS  - rapsux <bitter @ ici.net>
-PIG LATIN- Cloud <burtner @ usa.net>
-RUSSIAN	- KOI8 encoding
-RUSSIAN	- CP1251 encoding
-	- Oleg Drokin <green @ ccssu.crimea.ua>
-PORTUGUESE- Pincel <Pincel @ darkbot.info>
-GERMAN	- C.Hoegl@gmx.net & marc @ reymann.net
-ITALIAN  - daniele nicolucci <jollino @ icemail.it>
-CHINISE  - James <jamespower @ 263.net>
-SWEDISH	- Ybznek <sunmo @ seaside.se>
-NORWEGIAN- [SoHo] <soho @ int19h.com>
-ROMANIAN - Radu <radu.negoescu @ sante.univ-nantes.fr>
+ENGLISH    - play <jason@superlink.net>
+FRENCH 	   - Inajira <inajira@videotron.ca>
+	       - EfX <michel.efx@globetrotter.net>
+	       - eCHaLoTTe <echalotte@cablevision.qc.ca>
+SPANISH    - speed1 <speed@edure des.edu.do>
+DUTCH      - Asmodai <asmodai@wxs.nl>
+LATIN	   - Otaku <otaku@unixgeek.ml.org>
+GREEK      - Chris_CY <chriscy@cylink.net>
+EBONICS    - rapsux <bitter@ici.net>
+PIG LATIN  - Cloud <burtner@usa.net>
+RUSSIAN	   - KOI8 encoding
+RUSSIAN	   - CP1251 encoding
+	       - Oleg Drokin <green@ccssu.crimea.ua>
+PORTUGUESE - Pincel <Pincel@darkbot.info>
+GERMAN	   - C.Hoegl@gmx.net & marc@reymann.net
+ITALIAN    - daniele nicolucci <jollino@icemail.it>
+CHINISE    - James <jamespower@263.net>
+SWEDISH	   - Ybznek <sunmo@seaside.se>
+NORWEGIAN  - [SoHo] <soho@int19h.com>
+ROMANIAN   - Radu <radu.negoescu@sante.univ-nantes.fr>
+ARABIC	   - MrSiMo <mrsimo7@yahoo.fr>
 
 Other Darkbot related projects
 Darkbot Commander - Alex99 Alex99@darkbot.info
@@ -73,17 +75,17 @@ Darkbot Commander - Alex99 Alex99@darkbot.info
 These are people who acknowledgedly colaborate with Darkbot Project
 	guidind and helping users trough their difficulties
 ... by alpha order...
-Alex99 Alex99 @ darkbot.info / @ undernet #darkbot
-Andre (Syntax6) Syntax6 @ darkbot.info / @ undernet #darkbot
+Alex99 Alex99@darkbot.info / @ undernet #darkbot
+Andre (Syntax6) Syntax6@darkbot.info / @ undernet #darkbot
 baphomet @ undernet #darkbot
 derv0 @ undernet #darkbot
 BLightnin @ undernet #darkbot
 juice @ undernet #darkbot
 Shaky @ undernet #darkbot
-TuEuR @ undernet  #darkbot
+TuEuR @ undernet #darkbot
 
 **** Special Donnations ****
-Andre (Syntax6) Syntax6 @ darkbot.info - hosts Darkbot Web pages on his
+Andre (Syntax6) Syntax6@darkbot.info - hosts Darkbot Web pages on his
 	servers.
 	Also donated DNS hosting for Darkbot domains which we didn't
 	have time yet to set it up. After then, a new dynamic on the
