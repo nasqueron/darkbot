@@ -115,7 +115,5 @@ l'aide sur la syntaxe)\n",a,b,c,d,e)
 #define L089(a) S("PRIVMSG %s :\1ACTION se réveille...\1\n",a)
 #define L090(a,b) S("PRIVMSG %s :Je me fais flooder. Envoie de la liste d'attente (l'information en attente \
 d'être envoyée). %d objets.\n",a,b)
-#define Lbadtopic(a,b) S("PRIVMSG %s :Désolé %s, le support pour ce sujet à été enlevé.\n",a,b);
-#define Lbadtopic2(a,b) S("NOTICE %s :Désolé %s, le support pour ce sujet à été enlevé.\n",a,b);
 #define Lbadtopic(a,b) S("PRIVMSG %s :Désolé %s, mais soutien de cette matière a été enlevé.\n",a,b);
 #define Lbadtopic2(a,b) S("NOTICE %s :Désolé %s, mais soutien de cette matière a été enlevé.\n",a,b);

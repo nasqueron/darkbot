@@ -112,3 +112,4 @@ Hinweise)\n",a,b,c,d,e)
 %d Eintraege geloescht.\n",a,b)
 #define Lbadtopic(a,b) S("PRIVMSG %s :Leider %s, wurde die Unterstützung für dieses thema entfernt.\n",a,b);
 #define Lbadtopic2(a,b) S("NOTICE %s :Leider %s, wurde die Unterstützung für dieses thema entfernt.\n",a,b);
+

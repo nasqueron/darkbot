@@ -47,19 +47,23 @@ and several other anonymous contributors
 **** Translators ****
 ENGLISH    - play <jason@superlink.net>
 FRENCH 	   - Inajira <inajira@videotron.ca>
-	       - EfX <michel.efx@globetrotter.net>
-	       - eCHaLoTTe <echalotte@cablevision.qc.ca>
+	   - EfX <michel.efx@globetrotter.net>
+	   - eCHaLoTTe <echalotte@cablevision.qc.ca>
+	   - Raider <raider@superchat.ws>
 SPANISH    - speed1 <speed@edure des.edu.do>
 DUTCH      - Asmodai <asmodai@wxs.nl>
+	   - Dan <dan@ntlbusiness.com>
 LATIN	   - Otaku <otaku@unixgeek.ml.org>
 GREEK      - Chris_CY <chriscy@cylink.net>
+	   - Raider <raider@superchat.ws>
 EBONICS    - rapsux <bitter@ici.net>
 PIG LATIN  - Cloud <burtner@usa.net>
 RUSSIAN	   - KOI8 encoding
 RUSSIAN	   - CP1251 encoding
-	       - Oleg Drokin <green@ccssu.crimea.ua>
+	   - Oleg Drokin <green@ccssu.crimea.ua>
 PORTUGUESE - Pincel <Pincel@darkbot.info>
 GERMAN	   - C.Hoegl@gmx.net & marc@reymann.net
+	   - Dan <dan@ntlbusiness.com>
 ITALIAN    - daniele nicolucci <jollino@icemail.it>
 CHINISE    - James <jamespower@263.net>
 SWEDISH	   - Ybznek <sunmo@seaside.se>
