@@ -1,0 +1,489 @@
+
+    *******************************************************
+    Warnings, errors, malfunctions, code patches, suggestions
+    email it to: develop@darkbot.info
+    Support (only): http://forum.darkbot.info
+    *******************************************************
+
+
+Darkbot 7.0-RC7: Jan 27th, 2003
+
+	- Soapta revamped the google module.
+
+	- The MEM command now displays the correct process. I removed
+	  the -x flag from the ps command it was issuing, and it fixed
+	  it. If anyone sees any reason the -x flag should be used, 
+	  let me know and i'll recode the whole thing.
+
+	- Added SETHOST alias for the VHOST command.
+
+	- Updates to the Ebonic and French languages which define
+	  Lbadtopic and Lbadtopic2 now. Other languages still need
+	  this added.
+
+	- The RDB command, which gives information about the number 
+	  of RDB files, can now be used with an arguement, to tell 
+	  how many lines are in a specific RDB file. It was supposed
+	  to do this before, but it didn't work properly. This 
+	  command is still unavailable in Windows.
+
+	- Removed a warning concerning do_randq that happened if you 
+	  compiled with RANDOM_STUFF undefined.
+
+	- Fixed another bug that was causing the bot to never remove
+	  old entries from it's internal user list. This time it wasn't
+	  parsing the channel name for PARTs correctly. I also removed
+	  some parsing being done on an unused variable whenever 
+	  someone parted a channel.
+
+	- Fix for RDB command... i forgot to change this when I moved
+	  all of the RDB files to their own directory. OOPS! :)
+
+Darkbot 7.0-RC6: Oct 30th, 2002
+
+	- Added Arabic language.
+
+	- You can now toggle the use of encrypted userlist.db passwords.
+	  Check defines.h for this.
+
+	- Fix for the bot not executing performs when it connects to 
+	  a server which does not have an MOTD. Also cleaned up a small
+	  amount of redundant code dealing with performs.
+
+	- The bot will no longer crash if it encounters blank lines in
+	  the info2.db during data searches (DSEARCH and SEARCH commands).
+
+
+Darkbot 7.0-RC5: Sep 24th, 2002
+	
+	- Fixed do_randomtopic(), so it's now possible to output the first 
+	  quote. it never did this before (oops).
+
+	- Fixed the socket connection routines for windows. 
+
+	- Fixed a rather large bug that caused the bot to never actually delete
+	  users from the internal user list when necessary.
+	  This also fixes another problem where the bot would put return a 
+	  nickname from R~ that is not actually on the channel.
+	  
+	- RDB topics now support the use of tokenized responses. This includes 
+	  the use of tokenized responses in the WHUT and DUNNO replies.
+
+	- Added timers directory to the distribution, it was missing.
+
+	- Got rid of the do_randomtopic2() function for the random dunno, and
+	  random whut replies. do_randomtopic() now handles everything. This
+	  cut down the size of the code a bit, and should have been how it was
+	  done originally, anyway. This also means variables and also raw 
+	  commands can now be used in the replies for whut, and dunno, also.
+
+	- Added a level 3 helper command, "PERFORMS", which just executes all  
+	  all commands that are in the bot's performs.ini file, at any time.
+
+	- Fixed minor oversight that I created when adding a check for illegal	
+	  characters in !nick, it now lets you use all legal characters.
+
+	- RDB topic responses can now contain raw commands.
+
+	- RDB files are now stored in their own directory. By default, this is 
+      dat/rdb.
+
+	- Changed get_word() function to make it a little more useful.
+	  
+	- Changed some error replies in the RANDQ function, and added a response 
+      for the condition of randomstuff.ini being empty.
+	  
+	- Cleaned up the prototypes.h file, it looked really ugly. :)
+	  This also reduced the total amount of code by a bit, but i'm not going
+	  to bother checking just how much. :P
+
+	- Fixed an issue in seen, that might cause the bot to improperly count
+	  the number of seens in the database.
+
+	- Fixed minor bug in add_randstuff() that caused the bot to say there was 
+	  one more randomstuff in the file it's adding to than there actually was.
+	  
+	- Fixed a bug in do_random_stuff() that prevented the bot from outputting
+	  randomstuffs, in very rare instances. This suspectedly was causing some
+	  strangeness noted in Debian, and some other OSs.
+
+	- Added a new alias for randomstuff, RS.
+
+	- Fixed a bug in !USERLIST, that caused the bot to flood itself, and not
+	  show of all of the users it was supposed to show.
+      !USERLIST now works correctly, and hopefully on ALL OS.
+
+	- Fixed a bug in !BANLIST that caused it to not output correctly on  some
+	  OS.
+
+	- Due to abuse and channel cluttering, the !VARIABLES command now messages
+	  the user with the output, instead of sending it to the current channel.
+
+    - Fixed a compilation error concerning BITCH_DEOP_REASON being undeclared.
+	  What i did is remove this, and now  if BITCH_ABOUT_DEOP is turned on, it
+	  just runs the list of commands in deop.ini. If BITCH_ABOUT_DEOP is turned
+	  off, it does nothing when the bot is deoped. Apparently, before this 
+	  version, it ALWAYS ran deop.ini, and the BITCH_ABOUT_DEOP just toggled the
+	  bot saying whatever line was defined in BITCH_DEOP_REASON. That seemed kind
+	  of pointless, to me, but i never noticed it before now.
+
+Darkbot 7.0-RC4: Jun 24th, 2002
+    Again, Ron did a couple necessary and urgent changes and fixes:
+    - Finally, the bug in windows concerning DEL and REPLACE has
+    been corrected. A function which checks readability and
+    writeability was leaving the info2.db file open at startup,
+    and causing all sorts of problems, since the new code structure
+    was implemented.
+
+    - NO NEED FOR TOP LINE WITH NUMBER ANYMORE on random phrase files.
+    ... After yet even more problems with randomstuffs being counted 
+	improperly, I've recoded the entire randomstuff routine. 
+	They no longer rely on any number at the top of the file, which 
+	means you can remove that number from your randomstuff.ini. 
+	Optimizations made to make randomstuff more random, also.
+
+    - Fixed a bug where Darkbot would crash when you use !nick
+    with illegal characters.
+
+    - Patched a socket issue in create_connection() that appeared
+    only in windows.
+
+   - Eliminated a warning dealing with the redefinition of size_t
+     when compiling the bot in windows.
+
+    - Eliminated all of the casting done on malloc in the program.
+    Casting malloc is totally unnecessary, and can mask other
+    errors.
+
+    - Improved the fix for topics that consist entirely of "*"
+    characters. It now checks for "?" also. This prevents
+    segmentation faults, and topics which are entirely wild-
+    cards are seriously annoying anyway. Sorry if it's in any
+    inconvenience to anyone.
+
+    - Minor cosmetic fix to the output of DBSIZE, it'll now say
+    that the database is "1 byte in size", instead of "1 bytes
+    in size", if it's only 1 byte. This should never happen,
+    but if it does, it'll look nice. :)
+
+    - Added #define MSG_RESPONSES to defines.h to have Darkbot
+    answering or not to private queries. Check next 2 defines.
+    (default is OFF)
+
+    - Added #define ALLOW_ADD_IN_MSG to turn ON or OFF the
+    possibility of ADDing database entries to Darkbot in
+    private message. (default = OFF)
+
+    - Added #define ALLOW_DEL_IN_MSG to turn ON or OFF the
+    possibility of DELeting database entries from Darkbot in
+    private message. (default = OFF)
+
+    - Added RANDQ function and alias RANDQUOTE, to output a random
+    line from your randomstuff.ini that contains a specified search
+    string.
+    RANDQ output returns a (11/23) type thing at the beginning of
+    the line, which tells which quote it's showing, out of how many
+    were matched in your search.
+    RANDQ can be used from any channel, and in MSG. It wont output
+	An obvious side effect to this, is that the ~ variable in 
+	randomstuffs will evaluate to a nickname, if it's used in private 
+	message (The nickname of whoever invoked it).
+	To make the function toggleable a directive with the same name
+    was made on defines.h (default = ON)
+    Try it out, !RANDQ <stuff>
+
+    - Added RANDQ2 command, which is the same as RANDQ, only it
+    matches case sensitively.
+
+    - Added BACKUP_RANDOMSTUFF define to backup randomstuff.ini
+    file every time a random phrase is added. This was done due
+    to missing contents when adding an entry on a file with a high
+    ammount of phrases. Latest fixes resolves the problem but this
+    define will stay to play on the safe side and/or if user likes
+    to backup changed files.
+
+    - Added hostmask code, where the bot converts hostmasks to
+    *jason@*.superlink.net, or *jason@203.203.203.*.
+
+    - After lots of complaints, the second line in the info reply
+    only shows up with the stats command now.
+
+    Shell utilities
+    - Adjusted check-integrity to the non necessity anymore of top
+    line with number of random entries on random phrases files.
+    - configure script now forces entering  at least one server
+    and at least one user level 3, on servers.ini and userlist.db
+    files respectively, in case those files are empty.
+    (working on checking errors on user input). 
+    - added an option on 'configure' to import servers.ini and
+    userlist.db from another location.
+    - Added BSDs compatibility to all shell scripts.
+    - Added Cygwin compatibility to AddServer, AddUser,
+    check-integrity and download-databases scripts (live-update
+    and dbcron not fully tested yet).
+
+Darkbot 7.0-RC3: May 22nd, 2002
+
+    Ron @ darkbot.info has worked on the following 4 issues:
+    - Fixed a bug that caused crashes if the bot responds to a
+    topic containing R~ in private message.
+
+    - Fixed a bug that caused excess floods if the bot were to
+    send private messages to itself.
+
+    - Fixed a bug concerning topics that consists entirely of the
+    '*' character, which caused segmentation faults. Darkbot
+    will not allow you to add a topic like this now.
+
+    - Fixed the Makefile, on my computer it kept compiling all
+    of the source files seperately and then compiling them all
+    together instead of linking the .o files it made.
+
+    - Added directory logs lost in action. It is now within dat directory
+
+    - Fixed .Stripdb and .Stripdb2 - so now points to the correct bin path
+
+    Shell utilities: (all changed/improved - read docs/README_UTILS)
+    - Added README_UTILS to docs directory with information about shell utils
+    
+    - Added compatibility to wget (besides lynx) on scripts that needs to
+    connect to internet
+
+    - All utility scripts now share working directory .scriptutils instead of
+    having dynamic files all over scripts directory
+
+    - download-databases now integrated on live-update (besides standalone)
+    (if updated on RC3 the change will take effect next time live-update
+    is executed)
+
+    - Added a couple more features and improved others for more accuracy on
+    check-integrity engine. USE IT before asking for help or going into
+    paranoia if you suspect you have data errors or even if you are not
+    sure eventual errors became from bad entries on data files.
+    
+    - Added a few features to AddUser utility
+    
+    - configure script now bypasses previously configured items. Just hit
+    ENTER key to go to the next setup. Also it gets already configured
+    parameters and use it as session defaults instead of the usual Darkbot
+    defaults. The script is now linked to AddUser and AddServer with all
+    features those utilities now have.
+    
+
+Darkbot 7.0-RC2: Apr 13th, 2002
+
+    - Windows port. Not much to do at this time. Last changes
+    on the core code made some commands not working properly.
+    Any interested coder... the affected commands
+    are DELETE, which do not delete, and REPLACE, which leaves
+    in info2.db 2 entries with the same topic. I should remind
+    all coders that the source must be sent together with it's
+    executable/bin files. Any coder willing to participate use
+    the email on top of this info or directly to me
+    at LuizCB@darkbot.info . (only development matters please)
+
+    - The following are a couple Unix scripts to help on Darkbot
+    management. Most are complete, some needs small adjustments
+    or more features. I've used basic sh technics on it's making,
+    I should say, while learning the language on the fly.
+    Please test them and send any modiffs in case you are able
+    to. The idea of these shell scripts is mainly to open a door
+    to C coders to implement them so it will be possible to port
+    it to other platforms.
+
+    - A more featured AddServer. Downloads and installs servers
+    of the network you choose. Thanks to the folks at the 
+    International Federation of IRC - http://ifirc.com
+    for a job well done on your site! The merit of that will
+    go to our web page on the credits area as soon as stable
+    version 7 is released.
+
+    - New crontab setup utility. Run dbcron on scripts dir and
+    if crontab is active on your shell the script will do
+    everything for you (10 mins interval cron job).
+
+    - Implemented a new update utility. On scripts
+    directory type ./live-update -h for help on it's
+    usage. At this stage the update engine will not 
+    transfer your previous directives on defines.h
+    or darkbot.c to the new file, so you'll have to
+    edit defines.h manually and compile Darkbot.
+    The script is compatible with all Darkbot releases
+    and can be launched standalone providing it's in
+    scripts directory. To install it ( in case you don't have
+    it with your Darkbot)  type
+    lynx -source http://live-update.darkbot.info > live-update
+    then chmod +x live-update
+    (get-latest will no longer be available)
+
+    - New download-databases utility. ( it will be integrated soon on
+    live-update engine but can also work standalone).
+
+    - New file-integrity utility ( still needs some ajustments and
+    more features but you can use it already - works with
+    download-databases utility or by itself). Type
+    ./check-integrity to check info2.db. Due to unpredictable
+    user entries on info2.db this utility could behave
+    abnormally on some special characters. Please send me all
+    info2.db file in case anything like that happens so I can
+    make exclusions on the code.
+    
+    Changes applied by reet:
+    - Fixed major bug when adding users - the password wasn't
+    encrypted, thus user could never login.
+    
+    - Added new commands IGNORE & UNIGNORE syntax is:
+    <bot> ignore <nick>
+    <bot> unignore <nick>
+    The ignore list is only stored in RAM, changing
+    nicks will get around this ignore. This is useful
+    to ignore people who query the bot too much.
+    
+    - Applied code optimization patches on info and check_permban,
+    submited by Neil Darlow
+    
+    - Preview for next full release: adjustments on shell utilities
+    and a full featured menu GUI might be finished. Minor
+    changes in meanwhile can be updated using live-update
+    engine.
+
+    
+Darkbot 7.0-RC1: Mar 2nd, 2002
+
+    - Fixed get-latest script; besides checking for code updates
+    also looks for latest news. Database files updates
+    will be also done/actualized soon. It's not linked
+    anywhere by now so if you want to use it type it's
+    name.
+
+    - Organized file structure; all scripts are now on scripts
+    directory, documents on docs except README which is
+    now on Darkbot's root dir. A new contributors file
+    was created with the list of colaborators.
+
+    - defines.h is now organized in different way and prepared
+    to a "shell GUI" to be released soon.
+
+    - Organized 'configure' in a different way. Now it starts
+    with defines.h editing and then it goes to data files.
+
+    - scripts/dbcron - a new script to execute crontab. There is
+    plenty of help how to use in it. Read it. Soon the
+    reconnection process will me automated. 
+
+    - Updated makefile to reflect the new directory tree.
+
+    - Code contributors please use this release as the base of
+    your changes.
+
+    - The next changes are code modifications also in preparation
+    for release 7, mostly adapted, updated or implemented
+    by reet, paul @ darkbot.info
+
+    - Added GOOGLE feature. Simply type:
+    <bot> google <search string>
+    The bot will then return the first URL google
+    returns.
+    #define GOOGLE ON to use this feature.
+    
+    - ********** IMPORTANT **********************************
+    - userlist.db passwords are now *ENCRYPTED*
+    If you are using an older version userlist.db
+    you MUST set all the passwords to 0 *** OR ***
+    Cygwin/Windows users run convert.exe
+    UNIX users run ./convert
+    and your userlist.db will be converted
+    *******************************************************
+    
+    - #define PERFORM_TIMER ON if you want darkbot to send its
+    PERFORM.INI to the IRC server every 60 seconds, useful
+    if your bot is banned from a channel, or couldn't
+    log in to channel services due to a net split etc.
+    It's in defines.h
+    
+
+Darkbot 7 (alpha 2.1): Dec 23rd, 2001
+
+    - Fixed 'INFO2.DB must have at least one topic' problem. Bot
+    should work normally, even if INFO2.DB is empty.
+    
+    - Added 'stats' support to darkbot, <botnick> stats will return
+    total number of questions asked since it started
+    recording. You can also do <botnick> stats <nickname> 
+    to get indivdual stats from a user. dat/stats.db holds
+    the data.
+    
+    - Added 'quiz' support to darkbot, <botnick> quiz to execute
+    the quiz, it will pick a random question/answer from
+    dat/quiz.db. The format of the question answer in the
+    file should be <question>@<answer> 
+    e.g. What is 1+1?@The answer is 2!
+    quiz is still in experimental stages, check defines.h
+    to enable/set it up.
+    
+
+Darkbot 7 (alpha 2): Dec 17th, 2001
+
+    - New define - #define VOICE_USERS_ON_JOIN [on/off]
+    
+    - New commands: /msg bot infosize or /msg bot dbsize
+    or in channel: bot infosize or bot dbsize
+    returns the file size of INFO2.DB
+    
+    - New command: bot whisper <nick> about <topic>
+    darkbot will NOTICE the user, instead of PRIVMSG
+    
+    - Moved source code and Makefile to source directory -
+    this keeps the root tree of darkbot clean, nothing
+    changes for the user, they still type make in the
+    darkbot root, and the binary will be copied there.
+    
+    - Repaired get_rand_nick() problem - bot was still returning
+    it's own nick - *should* be ok now.
+    
+    - Added Ron's random whut, and dunno function.
+    
+Darkbot 7 (alpha 2): Dec 16th, 2001
+
+    - Removed #ifdef WIN32 references for sprintf/snprintf,
+    have included the function snprintf() in general.c,
+    for older compilers - #define SNPRINTF_SUPPORT should
+    be switched OFF if your compiler supports snprintf()
+    this is quite a change.
+    
+    - Due to lots of people not reading #defines.h and complaining
+    about make error (clock_t), the configure script
+    will display an alert about this just before defines.h
+    is about to be edited.
+    
+    - New defines - #define CONNECT_WAIT_TIMEOUT [seconds]
+    #define OP_USERS_ON_LOGIN [on/off]
+    
+    - New PRIVMSG commands - OP, DEOP, VOICE/V, DEVOICE/DEV/DV/,
+    DVOICE, KICK/WACK/K, DELETE/REMOVE/
+    FORGET/DEL, TELL, ADD/REMEMBER/SAVE,
+    WHERE/WHO, ADDUSER, DIE
+    Some of them aren't new, but didn't work, and are now fixed.
+    Just /msg bot tell nick about topic, these commands
+    usually NOTICE the user, rather than PRIVMSG.
+    
+    - The connection routine to the server should be better -
+    instead of quitting after failing to connect, it
+    will constantly cycle all the servers.
+    
+    - I've added CYGWIN support in the Makefile - just to hide
+    those size_t warnings if you get them. If you use
+    CYGWIN, just use make cygwin
+    
+    - Permban bug fixed.
+    
+    - Info/Info2 bug fixed.
+    
+    - NICK bug fixed - bot will keep the new nick until it quits.
+    
+    - There is a bug/feature where if a nick has a pipe (|) and
+    requests a topic that has raw - commands, it ignores
+    them - looking in to this.
+
+
+

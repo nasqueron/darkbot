@@ -1,0 +1,101 @@
+
+		**** Darkbot Contributors ****
+[The following is a list of people who have contributed to Darkbot]
+( If I'm missing anyone please email LuizCB@darkbot.info
+Hopefully this list will be complete by release 7. )
+		
+Author/creator   -  Jason Hamilton (play) Jason @ superlink.net
+Project Administrator - LuizCB (Pincel) - LuizCB @ darkbot.info
+
+A big portion of Darkbot's code,  although primarily and mainly done
+by Jason Hamilton, is also done with the expertise and donnation from
+several people.
+
+Thanks to all for the collaboration!
+
+**** Coders ****
+
+Ron (Ronner) Ron @ darkbot.info - several features, changes and code
+          fixes on 6f5,6 and RCs for release 7 
+Paul (reet2) Paul @ darkbot.info - several major changes on 6f6 for release 7
+Neil Darlow - code optimization patches on info and check_permban
+           on prep 7 - 3/22/2002
+Bart Jansens Typo correction on Dutch language / prep 7 April 10, 2000
+Dan ripper_ @ undernet several major changes - 5f21,22,23,26
+Kosh @ superchat - implementation of WIN32 port
+s0meguy @ undernet - found a missing variable April v. 5f22 -- 16, 23, 2000
+Oleg green @ crimea.edu - "repeated server stoned" and NEED_LIB5
+	    corrections - 5f18 5f15
+Fouton c592030@everest.cclabs.missouri.edu - #define SGI -f18
+nak @ superchat - VHOST support - 5f11
+Gator @ superchat - 'fclose' issue - 5f3
+[K]aka (at?) - a buffer overflow issue - 5-Beta7
+BLightnin @ undernet - datasearch fix; save topic duplicates
+	    suggestion of log PRIVMSG - 5-Beta7 4-Alpha2
+rewpaul rew @ undernet - fixed 'pipe' on topics; Q~ variable fix
+	    suggestion on mask function; Adduser fix; wildcards on topics
+	    RANDOM_STUFF OFF on 'Sleep' ON - 5-Beta6 - 5-Beta3 4-Beta2 4-Beta1
+gavers @ undernet - found 'pipe' on topics issue' - 5-Beta6 5-Beta1
+`Nenemis (at?) suggestion on notice help join greeting info - 5-Beta3
+wx @ undernet - CTCP replies fix; suggest UP command - 5-Beta1 5-Alpha4
+Zaf @ superchat - suggestion of RANDOM_STUFF Idle - 4-Beta1
+mark @ undernet - license usage agreement update - 4-Beta1
+bow @ undernet - AddServer fix - 4-Alpha2
+
+and several other anonymous contributors 
+
+**** Translators ****
+ENGLISH	- play <jason @ superlink.net>
+FRENCH	- Inajira <inajira @ videotron.ca>
+	- EfX <michel.efx @ globetrotter.net>
+	- eCHaLoTTe <echalotte @ cablevision.qc.ca>
+SPANISH  - speed1 <speed @ eduredes.edu.do>
+DUTCH    - Asmodai <asmodai @ wxs.nl>
+LATIN	- Otaku <otaku @ unixgeek.ml.org>
+GREEK    - Chris_CY <chriscy @ cylink.net>
+EBONICS  - rapsux <bitter @ ici.net>
+PIG LATIN- Cloud <burtner @ usa.net>
+RUSSIAN	- KOI8 encoding
+RUSSIAN	- CP1251 encoding
+	- Oleg Drokin <green @ ccssu.crimea.ua>
+PORTUGUESE- Pincel <Pincel @ darkbot.info>
+GERMAN	- C.Hoegl@gmx.net & marc @ reymann.net
+ITALIAN  - daniele nicolucci <jollino @ icemail.it>
+CHINISE  - James <jamespower @ 263.net>
+SWEDISH	- Ybznek <sunmo @ seaside.se>
+NORWEGIAN- [SoHo] <soho @ int19h.com>
+ROMANIAN - Radu <radu.negoescu @ sante.univ-nantes.fr>
+
+Other Darkbot related projects
+Darkbot Commander - Alex99 Alex99@darkbot.info
+
+**** Helpers ****
+These are people who acknowledgedly colaborate with Darkbot Project
+	guidind and helping users trough their difficulties
+... by alpha order...
+Alex99 Alex99 @ darkbot.info / @ undernet #darkbot
+Andre (Syntax6) Syntax6 @ darkbot.info / @ undernet #darkbot
+baphomet @ undernet #darkbot
+derv0 @ undernet #darkbot
+BLightnin @ undernet #darkbot
+juice @ undernet #darkbot
+Shaky @ undernet #darkbot
+TuEuR @ undernet  #darkbot
+
+**** Special Donnations ****
+Andre (Syntax6) Syntax6 @ darkbot.info - hosts Darkbot Web pages on his
+	servers.
+	Also donated DNS hosting for Darkbot domains which we didn't
+	have time yet to set it up. After then, a new dynamic on the
+	URL's will be created.
+
+**** " ****
+
+(PLEASE help reconstruct this list by e-mailing LuizCB@darkbot.info .
+Is my intention not having MIA people. Without the due and full
+acknowledgment to whom is being cooperating with Darkbot Project
+this program would never be what it is.)
+
+
+
+

@@ -1,0 +1,7 @@
+Please view docs/WHATSNEW in the distribution for latest changes.
+
+Also, keep in mind that this is a BETA non-release, and there are
+probably files in the source folder that are not compiled as they
+are works in progress. In this particular instance, they are
+new.c, and newchanserv.c. These files affect nothing, and can be
+left there and ignored safely, or removed at your discretion.

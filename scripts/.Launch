@@ -1,0 +1,6 @@
+#!/bin/sh
+# simple question script.
+echo
+echo -n "Type ./darkbot to Launch Darkbot"
+echo
+echo
