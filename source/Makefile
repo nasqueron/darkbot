@@ -15,14 +15,15 @@
 # ------------------------------------------------ #
 
 CC = gcc
-
 CFLAGS = -DFORK -Wall -O3
-
 DFLAGS = -dm -pg -g -DDEBUG
-
 D2FLAG = -DDEBUG2 -DFORK
-
 EXE_NAME = darkbot
+
+LIBS = -lcrypt
+
+# If you're using Solaris, you'll need to uncomment this line.
+# LIBS = -lcrypt -lsocket -lnsl -lresolv
 
 ####################################################
 
@@ -33,8 +34,6 @@ OBJECTS = main.o vars.o chansrv.o permbans.o helpers.o users.o general.o \
 ALL_SRC = main.c vars.c chansrv.c permbans.c helpers.c users.c general.c \
           url.c seen.c topics.c random.c sockets.c raw.c signals.c parse.c \
           chan.c server.c comm.c stats.c quiz.c web.c reserved.c
-
-LIBS = -lcrypt
 
 all : ${OBJECTS}
 	${CC} ${CFLAGS} ${OBJECTS} ${LIBS} -o ${EXE_NAME}
