@@ -4,8 +4,7 @@ Darkbot, Talking Robot - Copyright (c) 2002 Darkbot Project
 - To configure on Windows edit files in dat folder.
 
 - For full  documentation  and  step  by  step configuration help,
-please check Darkbot's help page  at  http://help.darkbot.info  on
-http://darkbot.info or http://darkbot.net.
+please check Darkbot's help page  at  http://www.darkbot.org/help
 
 - Read WHATSNEW for added/latest features and changes.
 _ Read README_UTILS for info on shell utilities and all fiels in
