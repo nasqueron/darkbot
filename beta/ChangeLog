@@ -4,12 +4,11 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-
-Darkbot 7f3: Dec 28, 2004
+Darkbot 8rc1: Dec 28, 2004
 	- Changed check_dbtimers() so it ignores the CVS directory,
 	  which contains information for the CVS server.  This
 	  fixes a situation that seems to have only presented itself
-	  in FreeBSD 5.2.1, where it thinks the CVS directory is a 
+	  in FreeBSD, where it thinks the CVS directory is a 
 	  timer, and sends out random garble every few seconds.
 	
 	- configure.ac and source/Makefile.am; very minor updates.
