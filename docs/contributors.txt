@@ -85,11 +85,9 @@ Shaky @ undernet #darkbot
 TuEuR @ undernet #darkbot
 
 **** Special Donnations ****
-Andre (Syntax6) Syntax6@darkbot.info - hosts Darkbot Web pages on his
-	servers.
-	Also donated DNS hosting for Darkbot domains which we didn't
-	have time yet to set it up. After then, a new dynamic on the
-	URL's will be created.
+Andre (Syntax6) Syntax6@darkbot.info - has hosted Darkbot Web pages 
+	on his servers. 
+	Has also donated DNS hosting for Darkbot domains.
 
 **** " ****
 
