@@ -6,6 +6,8 @@
 
 Darkbot 7f1: Feb 19th, 2004
 
+	- Taiwanish file got dumped somehow, it's back now.
+
 	- New setting in defines.h, AUTOHELP_GUESTS, makes the bot send
 	  a message to the channel, whenever a user with the word "Guest"
 	  in their nickname joins, asking them if they need help.  This 
