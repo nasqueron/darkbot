@@ -103,3 +103,5 @@ ADDUSER
 #define	L089(a)	S("PRIVMSG %s :\1ACTION vaknar upp...\1\n",a)
 #define	L090(a,b) S("PRIVMSG %s :Jag blir floodad. Dumpar kön. \
 %d saker togs bort.\n",a,b)
+#define Lbadtopic(a,b) S("PRIVMSG %s :Tyvärr  %s, support för det området har tagits bort.\n",a,b);
+#define Lbadtopic2(a,b) S("NOTICE %s :Tyvärr  %s, support för det området har tagits bort.\n",a,b);
