@@ -143,8 +143,7 @@ parse (char *line)
 			s2 = strtok (NULL, " ");	/* mynick */
 			strncpy (Mynick, s2, sizeof (Mynick));
 			s2 = strtok (NULL, " ");	/* chan */
-			run_deop (chan)	/* Deoped, run list of
-								   * commands.. */
+			/* We used to run the DEOP.INI here */
 #endif
 		}
 		else if (stricmp (cmd, "352") == 0)

@@ -6,6 +6,10 @@
     *******************************************************
 
 Darkbot 7.0-RC9: Oct 5th, 2003
+	- I removed the run_deop() code.  It didn't work very 
+	  well anyway, or at all actually.  I plan on reintroducing
+	  this whenever I can get some free time.
+
 	- Fixed Ebonic language file.
 
 	- Added Taiwanish language option.
