@@ -355,7 +355,7 @@ $PNCFG
      "$srv_entry_s"
      
      Select one of the following 4 options:
-1) - Write only one server or use the default [eu.undernet.org] `if [ ! -z \
+1) - Write only one server or use the default [irc.darkbot.org] `if [ ! -z \
 "$srv_num_entries" ] && [ "$srv_num_entries" != "0" ]; then \
 echo -e "\n     ${lparen}This option will overwrite \
 the existent "$entry_s" on your servers file${rparen}"; fi`
@@ -374,14 +374,14 @@ do
 
 clear
 echo -e "\n$PNCFG\n* SERVERS *\n
-- Enter the server your Darkbot should connect to [eu.undernet.org]: "
+- Enter the server your Darkbot should connect to [irc.darkbot.org]: "
 read SERVER
 if [ -z "$SERVER" ]; then
-echo -e "    No server specified. defaulting to eu.undernet.org
+echo -e "    No server specified. defaulting to irc.darkbot.org
     You can add servers by running scripts/AddServer
     or by editing dat/servers.ini\n"
 sleep 2
-SERVER=eu.undernet.org
+SERVER=irc.darkbot.org
 PORT=6667
 fi
 done
