@@ -6,6 +6,9 @@
 
 Darkbot 7f1: Feb 28th, 2004
 
+	- Private message responses no longer have that "sent by" 
+	  thing on them.  It was annoying, and pointless.
+
 	- Renamed the log() function db_log() to avoid a conflict
 	  with a function internal with gcc.  Apparently this only
 	  affects newer versions of gcc.  

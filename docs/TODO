@@ -7,6 +7,7 @@ suggestions that people have made, that are planning to
 be added, will be listed here.
 ----------------------------------------------------------
 
+- Make darkbot respond to colors
 - Finish the autoconf/automake scripts that I started on.
 
 - Add some kind of escape sequence or special parsing 
