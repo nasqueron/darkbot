@@ -6,6 +6,15 @@
     *******************************************************
 
 Darkbot 7.0-RC9: Oct 5th, 2003
+	- This feature was already added, but I never documented it...
+	  The R~ variable (random nickname) now works in RDB topic
+	  responses.  Look for randomstuff compatibility in the near
+	  future, but first i have to rewrite do_random_stuff() to
+	  accept a channel arguement.
+
+	- I was reading through this WHATSNEW file, and corrected
+	  a few typos that were made.
+
 	- I removed the run_deop() code.  It didn't work very 
 	  well anyway, or at all actually.  I plan on reintroducing
 	  this whenever I can get some free time.
@@ -97,7 +106,7 @@ Darkbot 7.0-RC7: June 2nd, 2003
  	  Several users said this was not being done, it was. It was
  	  just waiting >300 seconds, for whatever reason. Also, the
 	  bot command PERFORMS now sets DEFAULT_UMODE in addition
-  	  to running the the performs file.
+  	  to running the performs file.
 
 	- New command line option.
 	  -I now specifies the location of the directory containing

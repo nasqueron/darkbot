@@ -150,7 +150,6 @@ int		snprintf		(char *, size_t, const char *, ...);
 #endif
 
 void	do_autotopics			(void);
-void	do_randomtopic2			(int, char *, char *);
 void	add_stats				(char *, char *, long, long, long);
 void	load_stats				(void);
 void	get_stats				(char *, char *);
