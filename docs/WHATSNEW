@@ -4,7 +4,10 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 7f3: December 28, 2004 
+Darkbot 7f3: Jun 3, 2005
+ 	- Restart and rehash commands should now work on all operating
+	  systems.
+
         - Changed check_dbtimers() so it ignores the CVS directory,
           which contains information for the CVS server.  This
           fixes a situation that seems to have only presented itself

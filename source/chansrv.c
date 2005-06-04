@@ -1208,19 +1208,18 @@ chanserv (char *source, char *target, char *buf)
 					db_sleep (sn2);
 				}
 			}
-#ifndef	WIN32
 		}
 		else if (stricmp (cmd, "REHASH") == 0 || stricmp (cmd, "RESTART") == 0)
 		{
 			if (check_access (userhost, target, 0, source) >= 3)
 			{
 				L062 (dbVersion);
-				snprintf (temp, sizeof (temp), "sleep 2; %s", DARKBOT_BIN);
+				sleep (2);
+				snprintf (temp, sizeof (temp), "%s", DARKBOT_BIN);
 				system (temp);
 				db_sleep (1);
 				exit (0);
 			}
-#endif
 		}
 		else if (stricmp (cmd, "PING") == 0)
 		{

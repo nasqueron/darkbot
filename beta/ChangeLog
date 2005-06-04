@@ -4,6 +4,10 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: Jun 03, 2005
+	- Restart and rehash commands should now work on all operating
+	  systems, including Windows.
+
 Darkbot 8rc1: Mar 04, 2005
 	- Removed an unneeded line in main.c, that was used to "hide"
 	  warnings on WIN32, which is a very bad idea.

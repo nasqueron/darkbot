@@ -49,7 +49,7 @@ win : ${ALL_SRC}
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
 	chmod +x ../scripts/.Launch; ../scripts/.Launch;
 
-win2 : ${OBJECTS}
+win2 : ${ALL_SRC}
 	${CC} ${CFLAGS} -DWIN32 ${ALL_SRC} ${LIBS} -DNOCONSOLE -Wl,--subsystem,windows -o ../darkbot-noconsole -luser32
 	chmod +x .././configure;
 	chmod +x ../scripts/.Stripdb2; ../scripts/.Stripdb2; cat ../scripts/.info;
