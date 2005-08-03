@@ -488,7 +488,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			{
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 
-				S ("NOTICE %s :[%s] %s [sent by %s]\n", target, topic, Data, nick);
+				S ("NOTICE %s :%s\n", target, Data);
 			}
 #endif
 			fclose (fp);

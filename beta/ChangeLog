@@ -4,7 +4,8 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 8rc2: Jun 03, 2005
+Darkbot 8rc2: Aug 02, 2005
+	- Changed "ugly" message responses.
 	- Restart and rehash commands should now work on all operating
 	  systems, including Windows.
 
