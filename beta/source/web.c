@@ -317,7 +317,7 @@ google_parse_query(char *source, char *uh, char *target, char *data)
         return ERR_NO_DOCUMENTS;
     }
 
-    if(((s1 = strstr(data, "Google Search:")) != NULL) || ((s1 = strstr(data, "Searched pages from")) != NULL))
+    if((s1 = strstr(data, "Results ")) != NULL)
     {
         if((s2 = strstr(s1, sub1)) != NULL)
         {
@@ -328,7 +328,7 @@ google_parse_query(char *source, char *uh, char *target, char *data)
                 S("PRIVMSG %s :Try again later.\n", target);
                 return ERR_NO_DOCUMENTS;
             }
-            if((s3 = strchr(s4, '>')) != NULL)
+            if((s3 = strchr(s4, '\"')) != NULL)
             {
                 *s3 = '\0';
             }
