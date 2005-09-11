@@ -5,6 +5,8 @@
     *******************************************************
 
 Darkbot 8rc2: Aug 02, 2005
+	- Fixed google command. A search string used to determine
+	  successful replies was changed by google.
 	- Changed "ugly" message responses.
 	- Restart and rehash commands should now work on all operating
 	  systems, including Windows.
