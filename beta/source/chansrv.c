@@ -1717,17 +1717,21 @@ chanserv (char *source, char *target, char *buf)
 				if (s2 == NULL)
 					return;
 				display_url (target, source, s2);
+			}
+			else if (stricmp (s, "OS") == 0)
+			{
+#ifdef	WIN32
+				snprintf (temp, sizeof (temp), "cmd /c ver\n");
+#else				
+				snprintf (temp, sizeof (temp), "uname\n");
+#endif
+				S ("PRIVMSG %s :I am running %s\n", target, run_program (temp));	
 #ifndef	WIN32
 			}
 			else if (stricmp (s, "UPTIME") == 0)
 			{
 				snprintf (temp, sizeof (temp), "uptime\n");
 				S ("PRIVMSG %s :Uptime: %s\n", target, run_program (temp));
-			}
-			else if (stricmp (s, "OS") == 0)
-			{
-				snprintf (temp, sizeof (temp), "uname\n");
-				S ("PRIVMSG %s :I am running %s\n", target, run_program (temp));
 			}
 			else if (stricmp (s, "MEM") == 0 || stricmp (s, "RAM") == 0)
 			{

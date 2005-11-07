@@ -4,7 +4,8 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
-Darkbot 8rc2: Aug 02, 2005
+Darkbot 8rc2: Nov 07, 2005
+	- OS command now works on windows.
 	- Fixed google command. A search string used to determine
 	  successful replies was changed by google.
 	- Changed "ugly" message responses.
