@@ -146,7 +146,7 @@ void	show_chanusers				(const char *, const char *);
 
 const 	char		*run_program		(const char *);
 
-#ifdef	HAVE_SNPRINTF
+#ifndef	HAVE_SNPRINTF
 int	snprintf				(char *, size_t, const char *, ...);
 #endif
 

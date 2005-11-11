@@ -300,7 +300,6 @@ get_s (void)
 	}
 }
 
-#ifndef WIN32
 const char *
 run_program (const char *input)
 {
@@ -320,7 +319,6 @@ run_program (const char *input)
 	}
 	return NULL;
 }
-#endif
 
 /**
  * 6/22/00 Dan

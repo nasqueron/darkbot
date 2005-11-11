@@ -5,6 +5,7 @@
     *******************************************************
 
 Darkbot 8rc2: Nov 07, 2005
+	- B~ (bot nickname) variable can now be used in perform.ini
 	- OS command now works on windows.
 	- Fixed google command. A search string used to determine
 	  successful replies was changed by google.

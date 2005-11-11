@@ -194,7 +194,9 @@ void
 run_perform (void)
 {
 	FILE *fp;
-	char str[STRING_LONG] = { 0 };
+	char str	[STRING_LONG] = {0},
+	     temp	[STRING_LONG] = {0};
+	size_t	len = 0;
 
 	if ((fp = fopen (PERFORM, "r")) == NULL)
 		return;
@@ -205,8 +207,30 @@ run_perform (void)
 
 		if (*str == '#') 
 			continue;
+		
+		len = strlen (str);
+		memset (data, 0, sizeof (data));
 
-		S ("%s\n", str);
+		while (len > 0)
+		{
+			len--;
+			if ((str[len] == '~') && (str[len-1] == 'B'))
+			{
+				len--;
+				snprintf (temp, sizeof (temp), "%s%s", Mynick, data);
+			}
+			else
+			{
+				snprintf (temp, sizeof (temp), "%c%s", str[len], data);
+			}
+
+			strncpy (data, temp, sizeof (data));
+		}
+
+		if (data != NULL)
+		{
+			S ("%s\n", data);
+		}
 	}
 	fclose (fp);
 }
