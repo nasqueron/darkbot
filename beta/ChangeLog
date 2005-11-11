@@ -5,6 +5,9 @@
     *******************************************************
 
 Darkbot 8rc2: Nov 07, 2005
+	- I apparently broke show_banlist() a few releases back 
+	  trying to eliminate a type conversion warning, so it's
+	  fixed again.
 	- B~ (bot nickname) variable can now be used in perform.ini
 	- OS command now works on windows.
 	- Fixed google command. A search string used to determine
