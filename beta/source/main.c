@@ -100,7 +100,7 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * Darkbot (c) 2004 v8 Release Candidate 2 * * * * * * * * *  \n");
+	printf ("  * * * * * * * * Darkbot (c) 2005 v8 Release Candidate 2 * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");
