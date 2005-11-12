@@ -103,6 +103,7 @@ del_permban (const char *nick, const char *uh)
 {
 	bool foundBan = false;
 	struct permbanlist *pNode = permbanhead, *pPrev = 0;
+	int	i = 0;
 
 	while (pNode)
 	{
@@ -194,21 +195,25 @@ show_banlist (const char *nick)
 	{
 		i++;
 		++x;
-		snprintf (tmp, sizeof(tmp), "%s", DATA);
-		snprintf (DATA, (sizeof(DATA) + sizeof(tmp)), "%s %s:%u", 
-			tmp, c->uh, c->counter);
-		memset (tmp, 0, sizeof(tmp));
 
-		//if (i > 8)
+		snprintf (tmp, sizeof (tmp), "%s", DATA);
+		snprintf (DATA, sizeof(DATA), "%s %s:%u", 
+			  tmp, c->uh, c->counter);
+		memset (tmp, 0, sizeof (tmp));
+
 		if (i > 6)
 		{
 			S ("NOTICE %s :%s\n", nick, DATA);
 			i = 0;
 			memset (DATA, 0, sizeof (DATA));
-			db_sleep (2);
 		}
 	}
-	S ("NOTICE %s :%s\n", nick, DATA);
+
+	if (i > 0)
+	{
+		S ("NOTICE %s :%s\n", nick, DATA);
+	}
+	
 	S ("NOTICE %s :End of PERMBAN list; %d ban%s found.\n", nick, x, (x == 1) ? "" : "s");
 }
 
