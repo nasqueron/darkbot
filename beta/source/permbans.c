@@ -187,7 +187,7 @@ void
 show_banlist (const char *nick)
 {
 	char DATA[STRING_SHORT * 7] = { 0 };
-	char tmp [STRING_SHORT] = { 0 };
+	char tmp [STRING_SHORT * 7] = { 0 };
 	size_t i = 0,	x = 0;
 	const struct permbanlist *c = 0;
 
@@ -201,13 +201,18 @@ show_banlist (const char *nick)
 			  tmp, c->uh, c->counter);
 		memset (tmp, 0, sizeof (tmp));
 
-		if (i > 6)
+		/* Only show at max 6 bans per message sent. */
+		if (i >= 6)
 		{
 			S ("NOTICE %s :%s\n", nick, DATA);
 			i = 0;
 			memset (DATA, 0, sizeof (DATA));
 		}
 	}
+
+	/* If 'i' never reaches 6 on the last pass through the while loop,
+	 * and there are bans yet to be shown, act accordingly.
+	 */
 
 	if (i > 0)
 	{
