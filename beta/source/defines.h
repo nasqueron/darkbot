@@ -305,22 +305,22 @@
 /*
  * BELOW is the output timers. Darkbot does not
  * output text without first putting it into a
- * que list. If the bot has several lines of text
+ * queue list. If the bot has several lines of text
  * waiting to be sent, it starts to delay longer
  * and longer between output, so it can't flood
  * itself off of IRC. Explanation:
  *
- * If text in que is < OUTPUT1_COUNT, output it.
- * If text in que is > OUTPUT1_COUNT, delay
- * OUTPUT1_DELAY seconds. If que is > OUTPUT2_COUNT,
+ * If text in queue is < OUTPUT1_COUNT, output it.
+ * If text in queue is > OUTPUT1_COUNT, delay
+ * OUTPUT1_DELAY seconds. If queue is > OUTPUT2_COUNT,
  * delay OUTPUT2_DELAY seconds. If number of text
- * in que is higher than OUTPUT_PURGE_COUNT, then
+ * in queue is higher than OUTPUT_PURGE_COUNT, then
  * just delete all unneeded output (ie; any text
  * and notices, but leaving in stuff like kicks
  * and modes) The defaults below are recommended,
  * as the bot isn't going to flood off. If you are
  * having the bot delete output messages and you'd
- * like to increase the que, update the 
+ * like to increase the queue, update the 
  * OUTPUT_PURGE_COUNT to a larger number. Just keep
  * in mind if someone floods your bot with a lot of
  * VERSION requests, the bot will sit there outputting

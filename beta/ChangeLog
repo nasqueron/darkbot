@@ -5,6 +5,8 @@
     *******************************************************
 
 Darkbot 8rc2: Nov 07, 2005
+	- Fixed spelling errors, the word 'queue' was mispelled
+	  throughout the code and in comments.
 	- I apparently broke show_banlist() a few releases back 
 	  trying to eliminate a type conversion warning, so it's
 	  fixed again.
