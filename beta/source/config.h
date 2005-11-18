@@ -4,8 +4,8 @@
 #ifndef _DARKBOT_CONFIG_H
 #define _DARKBOT_CONFIG_H
 
-/* Define to 1 if the system has the type `clock_t size_t'. */
-/* #undef HAVE_CLOCK_T_SIZE_T */
+/* Define to 1 if the system has the type `clock_t'. */
+/* #undef HAVE_CLOCK_T */
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -95,13 +95,13 @@
 #define PACKAGE_NAME "Darkbot"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Darkbot 7f3(dev)"
+#define PACKAGE_STRING "Darkbot 8rc2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "darkbot"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "7f3(dev)"
+#define PACKAGE_VERSION "8rc2"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -113,7 +113,7 @@
 #define TIME_WITH_SYS_TIME 1
 
 /* Version number of package */
-#define VERSION "7f3(dev)"
+#define VERSION "8rc2"
 
 /* windows.h */
 #define WIN32 
