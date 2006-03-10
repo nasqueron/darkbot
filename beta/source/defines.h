@@ -600,6 +600,11 @@
  */
 #define METAR ON
 
+/* 
+ * WEATHER search feature (default = ON)
+ */
+#define	WEATHER ON
+
 /*
  * TAF search feature (default = ON)
  */

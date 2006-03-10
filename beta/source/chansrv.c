@@ -1551,6 +1551,16 @@ chanserv (char *source, char *target, char *buf)
                 web_post_query(s, source, userhost, target, s2, strlen(s2));
             }
 #endif
+	    else if (stricmp (s, "WEATHER") == 0)
+	    {
+		s2 = strtok (NULL, "");
+		if (s2 == NULL)
+		{
+			S ("PRIVMSG %s :Show weather from where?\n", target);			
+			return;
+		}
+		web_post_query (s, source, userhost, target, s2, strlen (s2));
+	    }
 #if METAR == 1
             else if (stricmp (s, "METAR") == 0)
             {
@@ -1560,7 +1570,7 @@ chanserv (char *source, char *target, char *buf)
                     S("PRIVMSG %s :Metar what?\n", target);
                     return;
                 }
-                web_post_query(s, source, userhost, target, s2, strlen(s2));
+                web_post_query (s, source, userhost, target, s2, strlen(s2));
             }
 #endif
 #if TAF == 1

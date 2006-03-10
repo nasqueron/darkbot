@@ -4,6 +4,9 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: Mar 09, 2006
+	- Added !WEATHER <zipcode> command. 
+
 Darkbot 8rc2: Nov 07, 2005
 	- Fixed spelling errors, the word 'queue' was mispelled
 	  throughout the code and in comments.

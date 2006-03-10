@@ -229,4 +229,4 @@ extern struct webinfo
 	int port;
 	char url[STRING_SHORT];
 }
- GOOGLE_webinfo, METAR_webinfo, TAF_webinfo;
+ GOOGLE_webinfo, METAR_webinfo, TAF_webinfo, WEATHER_webinfo;

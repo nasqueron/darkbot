@@ -21,6 +21,10 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     { 
 	wi = (struct webinfo *) &TAF_webinfo;
     }
+    else if(stricmp (trigger, WEATHER_webinfo.trigger) == 0)
+    {
+        wi = (struct webinfo *) &WEATHER_webinfo;
+    }
     else
     {
 	return SUCCESS;
@@ -295,12 +299,164 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     { 
 	taf_parse_query(source, uh, target, mem);
     }
+    else if (stricmp (host, WEATHER_webinfo.trigger) == 0)
+    {
+        weather_parse_query (source, uh, target, mem);
+    }
 
     free(mem);
     
     return SUCCESS;
 }
+int
+weather_parse_query (char *source, char *uh, char *target, char *data)
+{
+	char	*s1 = NULL, *s2 = NULL;
+	char	*tmp = NULL, *temp = NULL, *city = NULL;
+	char 	*humid = NULL, *dew = NULL;
+	char 	*wind = NULL, *pres = NULL, *cond = NULL;
+	char	*vis = NULL, *cloud = NULL, *wind2 = NULL;
+	char	*sunr = NULL, *suns = NULL;
 
+	char	sub1[] = "<b>";
+	char	sub2[] = "<span class=\"nowrap\"><b>";
+
+	
+	if ((s1 = strstr (data, "Observed at")) != NULL)
+	{
+		s2 += 8;
+		if ((s2 = strstr (s1, sub1)) != NULL)
+		{
+			city = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}
+	}
+
+	if ((s1 = strstr (data, "Temperature")) != NULL)
+	{
+		if ((s2 = strstr(s1, sub1)) != NULL)
+		{
+			s2 += strlen (sub1);
+
+			temp = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}
+	}
+
+	if ((s1 = strstr (data, "Humidity")) != NULL)
+	{	
+		if ((s2 = strstr(s1, sub1)) != NULL)
+		{
+			s2 += strlen (sub1);
+			
+			humid = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}		
+	}	
+ 
+        if ((s1 = strstr (data, "Dew Point")) != NULL)
+ 	{
+        	 if ((s2 = strstr(s1, sub1)) != NULL)
+        	 {
+                	s2 += strlen (sub1);
+
+                 	dew = strtok (s2, "</b>");
+                 	data = strtok (NULL, "");
+		} 
+        }
+
+        if ((s1 = strstr (data, "Wind")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        wind = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+			
+			if ((tmp = strstr (data, sub2)) != NULL)
+			{
+			 	tmp += strlen (sub2);
+				wind2 = strtok (tmp, "</b>");
+				data = strtok (NULL, "");
+			}
+		
+                }
+        }
+        
+	if ((s1 = strstr (data, "Pressure")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        pres = strtok (s2, "</b>");
+           	
+			data = strtok (NULL, "");			
+                }
+        }
+
+        if ((s1 = strstr (data, "Conditions")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        cond = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+
+        if ((s1 = strstr (data, "Visibility")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        vis = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                 }
+        }
+        
+	if ((s1 = strstr (data, "Clouds")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        cloud = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+        
+	if ((s1 = strstr (data, "Sunrise")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        sunr = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+        
+	if ((s1 = strstr (data, "Sunset")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        suns = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+
+	/* Display stuff to target. */
+	S ("PRIVMSG %s :%s: Temperature (%s%cF) Humidity (%s) DewPoint (%s%cF) Wind (%s at %smph) Pressure (%s in) Conditions (%s) Visibility (%s miles) Clouds (%sft) Sunrise (%s) Sunset (%s)\n", 
+			target, city, temp, 176, humid, dew, 176, wind, wind2, pres, 
+			cond, vis, cloud, sunr, suns);
+
+}
 int
 google_parse_query(char *source, char *uh, char *target, char *data)
 {
