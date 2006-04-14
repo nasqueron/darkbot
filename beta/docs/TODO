@@ -25,3 +25,103 @@ be added, will be listed here.
   their own randomstuff timers that output randomstuffs
   according to the action going on, for each specific 
   channel.
+
+----------------------------------------------------------
+onefang's TO-DO List For Darkbot
+----------------------------------------------------------
+
+Make the replaceable params in responses consistant.  X~ and %X.
+
+Make multiple random responses easier to setup.
+  admin: bot add foo bar | baz | some other response
+  user: foo is also blah
+  admin: bot add foo | another answer
+
+Built in help for commands.
+
+Menu in PM.  Plain one liner, colour one liner, multiple lines, colour multiple lines.
+  user: /msg bot menu
+  >bot<: Main menu - 1) factiod comands, 2) user commands, 3) channel commands, B) backup one menu, Q) quit menu.
+  user: /msg bot menu big
+  >bot<: Main menu - 
+  >bot<:   1) factiod comands
+  >bot<:   2) user commands
+  >bot<:   3) channel commands
+  >bot<:   B) backup one menu
+  >bot<:   Q) quit menu.
+
+Don't give long answers in channel, only in PM.  Instead, give a summary
+in channel, and inform user that a longer response is available via PM.
+  bot: summary of foo bar.  (PM "foo bar" for more.)
+  luser: PM "foo bar"
+  bot: PM "foo bar" means to send me a private message you idiot.  Try this command "/msg bot foo bar".
+
+Move user definable stuff in defines.h into a proper config file.  Add a
+!setup foo=bar command to configure it all.  Remove all commands that
+twiddled with some setup param and replace them with !setup foo=bar.
+
+Make the bot gender definable, defaulting to female.  Allow users to
+register their gender.  Auto convert all relevant text to proper gender.
+
+Add memos "tell onefang that foo", as opposed to factoid telling "tell
+onefang about bah".  Allow memos to yourself.  Fix alarm and tie that in
+as well, alarms to others and to self.  Limit memos & alarms to karma
+memos & alarms per hour to limit abuse.
+
+Allow unlogged in users to create factiods, and change these factoids, plus
+make additions to factoids.
+  luser: blah is humbug.
+  user: blah?
+  bot: luser tells me that blah is humbug.  luser may have been drunk at the time.
+  luser: known fact is wrong.
+  user: what is known fact?
+  bot: Known fact is correct.  On the other hand, luser thinks that known fact is wrong. 
+
+Channel logging, and playback to PM.
+
+wtf, add a karma system.
+  use it to sort the unlogged user added factoids.
+    bot: luser tells me that blah is humbug.  Others have more to say, but I trust luser more.  (PM "blah" for more.)
+  Use it to refer people to the highest karma person.
+    bot: Dunno, ask High_Karma_Dude.
+  Use no karma and negative karma as extra security levels.  No karma = -1, negative karma = (karma / 100) - 2
+
+Keep track of how much she has been fed, deny taking food from strangers
+(low/no karama users).  This implies that botsnack become an information command.
+
+data include files.
+  Keep track of what database include files are not used for a while, and unload
+  them, keeping the questions and a pointer to the file though.
+
+Multiple server/channel support like xchat.
+  Allow different data per server/channel, using includes for common stuff.
+  Allow different setup per server/channel.
+
+Keep track of unanswered questions, for two reasons -
+  So the admin can look through it later and add factiods if needed.
+  If the user is still around (and given a suitable timeout) answer the
+  question if an answer arrives.
+
+Implement the Porter-Stemmer algorithm to improve English-language
+searching as per the drupal module of the same name.  It reduces each
+word in the index to its basic root or stem (e.g. 'blogging' to 'blog')
+so that variations on a word ('blogs', 'blogger', 'blogging', 'blog')
+are considered equivalent when searching.  This generally results in
+more relevant results.  Also, start by stripping out all punctuation. 
+On the other hand, question marks mean it is more likely to be a
+question.  Same applies to use of the W words near the beginning, they
+are more likely to be questions.
+
+Fix the google command, it returns the "feeling lucky" response.
+
+Add a locale to weather codes database or search facility.  Combine all
+the weather commands into one.  Make it return metric results.
+
+Command to guess a users timezone, and show time in that zone.
+
+Random greetings, random channel topics, etc.
+
+Interface other shell commands, but be secure.  In fact, setup a chroot
+for arbitrary shell commands.
+
+Allow DCC to and from a file server.
