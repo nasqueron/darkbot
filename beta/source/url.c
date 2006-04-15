@@ -556,9 +556,9 @@ datasearch (const char *nick, char *topic, char *target)
 
 	if (strlen (topic) > MAX_TOPIC_SIZE)
 		topic[MAX_TOPIC_SIZE] = '\0';
-	
+
 	strlwr (topic);
-	
+
 	if ((fp = fopen (URL2, "r")) == NULL)
 	{
 		L003 (nick, URL2);
