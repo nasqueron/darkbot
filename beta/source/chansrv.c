@@ -1719,7 +1719,7 @@ chanserv (char *source, char *target, char *buf)
 			{
 				getrusage (RUSAGE_SELF, &r_usage);
 				S ("PRIVMSG %s :CPU usage: %ld.%06ld, System = %ld.%06ld\n",
-				   target, r_usage.ru_utime.tv_sec, r_usage.ru_utime.tv_usec);
+				   target, r_usage.ru_utime.tv_sec, r_usage.ru_utime.tv_usec, r_usage.ru_stime.tv_sec, r_usage.ru_stime.tv_usec);
 			}
 			else if (stricmp (s, "DISPLAY") == 0)
 			{
