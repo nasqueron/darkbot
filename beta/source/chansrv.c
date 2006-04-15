@@ -745,12 +745,14 @@ struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, c
 
 struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	// FIXME: This only works for the user asking it, probably due to the use of userhost.
 	struct chanserv_output *result = NULL;
+	char *uh;
 
 	if (args[0] == NULL)
 		return result;
-	result = chanserv_asprintf(NULL, "%s is level %d in channel %s.", args[0], check_access(userhost, target, 0, args[0]), target);
+	uh = uh_from_nick(args[0], target);
+	if (uh)
+	    result = chanserv_asprintf(result, "%s is level %d in channel %s.", args[0], check_access(uh, target, 0, args[0]), target);
 
 	return result;
 }
@@ -1624,7 +1626,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,   -1, 0, chanserv_language,		{"LANG", "LANGUAGE", NULL, NULL, NULL}, NULL},
     {DANGER_COMMAND,  2, 0, chanserv_leave,		{"L", "PART", "LEAVE", "P", NULL}, "[#channel]"},
     {INFO_COMMAND,   -1, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>"},
-    {NORMAL_COMMAND, -1, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>"},
+    {INFO_COMMAND,   -1, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>"},
     {INFO_COMMAND,   -1, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL},
     {NORMAL_COMMAND, -1, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>"},
     {INFO_COMMAND,   -1, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>"},
