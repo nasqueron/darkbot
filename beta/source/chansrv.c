@@ -745,6 +745,7 @@ struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, c
 
 struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
+	// FIXME: This only works for the user asking it, probably due to the use of userhost.
 	struct chanserv_output *result = NULL;
 
 	if (args[0] == NULL)
@@ -1907,6 +1908,8 @@ void chanserv(char *source, char *target, char *buf)
 
 struct chanserv_output *chanserv_show_help(char *cmd)
 {
+	// FIXME: Add a short summary of what the command does.
+	// FIXME: Add a "list commands" help option.
 	struct chanserv_output *result = NULL;
 	int i, j, found = -1;
 
@@ -1926,6 +1929,11 @@ struct chanserv_output *chanserv_show_help(char *cmd)
 	}
 
 	if (found != -1)
-	    result = chanserv_asprintf(result, "SYNTAX - %s %s", cmd, chanserv_commands[found].syntax);
+	{
+	    if (chanserv_commands[found].syntax)
+		result = chanserv_asprintf(result, "SYNTAX - %s %s", cmd, chanserv_commands[found].syntax);
+	    else
+		result = chanserv_asprintf(result, "SYNTAX - %s", cmd);
+	}
 	return result;
 }
