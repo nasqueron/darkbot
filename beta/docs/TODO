@@ -25,6 +25,8 @@ be added, will be listed here.
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
 
+Convert to gettext.
+
 Make the replaceable params in responses consistant.  X~ and %X.
 
 Make multiple random responses easier to setup.
