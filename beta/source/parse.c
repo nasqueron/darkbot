@@ -383,7 +383,7 @@ parse (char *line)
 void
 parse_who (char *data)
 {
-	char *chan = NULL, *nick = NULL, *ptr = NULL, b[STRING_SHORT] = { 0 };
+	char *chan = NULL, *nick = NULL, *ptr = NULL, *flags = NULL, b[STRING_SHORT] = { 0 };
 
 	nick = strtok (data, " ");	/* botnick */
 	strncpy (Mynick, nick, sizeof (Mynick));
@@ -392,7 +392,11 @@ parse_who (char *data)
 	snprintf (b, sizeof (b), "%s@%s", ptr, strtok (NULL, " "));
 	nick = strtok (NULL, " ");	/* server */
 	nick = strtok (NULL, " ");
+	flags = strtok (NULL, " ");
 	add_user (chan, nick, b, 1);
+
+	if (strstr (flags, "@") != NULL)
+		do_op(nick, chan, 1);
 }
 
 #if STATUS == 1

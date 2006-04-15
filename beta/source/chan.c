@@ -457,6 +457,7 @@ do_modes (char *source, char *data)
 		if (mode[i] == 'o')
 		{
 			nick = strtok (NULL, " ");
+			do_op(nick, chan, PM);	/* flag this member as having been (De)OP'd/ */
 			continue;
 		}
 		if (mode[i] == 'v')

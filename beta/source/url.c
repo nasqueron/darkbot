@@ -433,7 +433,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 					ptr8[1] = tolower (ptr8[1]);
 					if (ptr8[0] == 'p' && ptr8[1] == 'r')
 						F = 1;
-					if (ptr8[0] == 'k' && ptr8[1] == 'i')
+					if (ptr8[0] == 'k' && ptr8[1] == 'i' && !is_op(nick, target))
 						F = 1;
 					if (ptr8[0] == 'n' && ptr8[1] == 'o')
 						F = 1;

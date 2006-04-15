@@ -588,6 +588,17 @@ struct chanserv_output *chanserv_info_size(char *source, char *target, char *cmd
 	return result;
 }
 
+struct chanserv_output *chanserv_isop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
+{
+	struct chanserv_output *result = NULL;
+
+	if (args[0] == NULL)
+		return result;
+	result = chanserv_asprintf(NULL, "%s is %san op in channel %s.", args[0], is_op(args[0], CHAN) ? "" : "not ", CHAN);
+
+	return result;
+}
+
 struct chanserv_output *chanserv_join(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -727,6 +738,17 @@ struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, c
 		return result;
 	
 	return chanserv_asprintf(NULL, "It was %d chars long.", strlen (args[0]));
+}
+
+struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
+{
+	struct chanserv_output *result = NULL;
+
+	if (args[0] == NULL)
+		return result;
+	result = chanserv_asprintf(NULL, "%s is level %d in channel %s.", args[0], check_access(userhost, CHAN, 0, args[0]), CHAN);
+
+	return result;
 }
 
 struct chanserv_output *chanserv_location_show(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -969,13 +991,11 @@ struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *
 		s = strtok (NULL, "");
 		if (s == NULL)
 			return chanserv_asprintf(NULL, "What do you want to add?");
-		add_randomstuff (source, source, s);
+		add_randomstuff(source, source, s);
 	    }
 	}
 	else
-	{
-	    add_randomstuff (source, target, args[0]);
-	}
+	    add_randomstuff(source, target, args[0]);
 
 	return result;
 }
@@ -988,9 +1008,11 @@ struct chanserv_output *chanserv_random_stuff_list(char *source, char *target, c
 struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+	char *s = NULL;
 
-	if (args[0] != NULL)
-		S("%s\n", args[0]);
+	s = strtok (NULL, "");
+	if (s != NULL)
+		S("%s\n", s);
 
 	return result;
 }
@@ -999,17 +1021,19 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 {
 	struct chanserv_output *result = NULL;
 	char temp[1024] = { 0 };
+	char *s = NULL;
 
-	if (args[0] == NULL)
+	s = strtok (NULL, " ");
+	if (s == NULL)
 	{
 		snprintf(temp, sizeof (temp), "ls %s/*.rdb | wc\n", RDB_DIR);
 		result = chanserv_asprintf(result, "RDB: %s.", run_program(temp));
 	}
 	else
 	{
-		if (strspn(args[0], SAFE_LIST) != strlen(args[0]))
+		if (strspn(s, SAFE_LIST) != strlen(s))
 			return chanserv_asprintf(NULL, "Rdb files are made up of letters and or numbers, no other text is accepted.");
-		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, args[0]);
+		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, s);
 		result = chanserv_asprintf(result, ":%s", run_program(temp));
 	}
 
@@ -1251,7 +1275,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 {
 	struct chanserv_output *result = NULL;
 
-	get_stats(target, args[0]);
+	get_stats(target, strtok (NULL, " "));
 
 	return result;
 }
@@ -1318,11 +1342,13 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_topic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+	char *s = NULL;
 
-	if (args[0] == NULL)
+	s = strtok (NULL, "");
+	if (s == NULL)
 		S ("TOPIC %s :\n", target);
 	else
-		S ("TOPIC %s :%s\n", target, args[0]);
+		S ("TOPIC %s :%s\n", target, s);
 
 	return result;
 }
@@ -1583,6 +1609,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  1, 1, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<>"},
     {INFO_COMMAND,   -1, 0, chanserv_info,		{"INFO", NULL, NULL, NULL, NULL}, NULL},
     {INFO_COMMAND,   -1, 0, chanserv_info_2,		{"INFO2", NULL, NULL, NULL, NULL}, NULL},
+    {INFO_COMMAND,   -1, 1, chanserv_isop,		{"ISOP", NULL, NULL, NULL, NULL}, "<nick>"},
     {INFO_COMMAND,    2, 0, chanserv_info_size,		{"DBSIZE", "INFOSIZE", NULL, NULL, NULL}, NULL},
     {DANGER_COMMAND,  2, 1, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>"},
     {INFO_COMMAND,   -1, 0, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL},
@@ -1593,6 +1620,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,   -1, 0, chanserv_language,		{"LANG", "LANGUAGE", NULL, NULL, NULL}, NULL},
     {DANGER_COMMAND,  2, 1, chanserv_leave,		{"L", "PART", "LEAVE", "P", NULL}, "<#channel>"},
     {INFO_COMMAND,   -1, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>"},
+    {NORMAL_COMMAND, -1, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>"},
     {INFO_COMMAND,   -1, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL},
     {NORMAL_COMMAND, -1, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>"},
     {INFO_COMMAND,   -1, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<>"},
@@ -1632,10 +1660,10 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>"},
 #ifndef	WIN32
-    {INFO_COMMAND,   -1, 1, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "<>"},
+    {INFO_COMMAND,   -1, 0, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "[rdb file]"},
 #endif
     {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>"},
-    {DANGER_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<>"},
+    {DANGER_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>"},
     {DANGER_COMMAND, -1, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>"},
     {DANGER_COMMAND, -1, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>"},
     {DANGER_COMMAND,  3, 0, chanserv_restart,		{"REHASH", "RESTART", NULL, NULL, NULL}, NULL},
@@ -1647,7 +1675,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, chanserv_setnick,		{"SETNICK", NULL, NULL, NULL, NULL}, "<new nick>"},
     {DANGER_COMMAND,  3, 1, chanserv_setuser,		{"SETUSER", NULL, NULL, NULL, NULL}, "<new userid> (requires a restart)"},
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL},
-    {INFO_COMMAND,   -1, 1, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "<>"},
+    {INFO_COMMAND,   -1, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]"},
 #if TAF == 1
     {NORMAL_COMMAND, -1, 1, chanserv_taf,		{"TAF", NULL, NULL, NULL, NULL}, "<city or code>"},
 #endif
@@ -1656,7 +1684,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {INFO_COMMAND, -1, 2, chanserv_tell,		{"TELL", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>"},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 1, chanserv_topic,		{"T", "TOPIC", NULL, NULL, NULL}, "<>"},
+    {DANGER_COMMAND,  2, 0, chanserv_topic,		{"T", "TOPIC", NULL, NULL, NULL}, "<channel topic>"},
 #endif
     {DANGER_COMMAND,  1, 1, chanserv_unignore,		{"UNIGNORE", NULL, NULL, NULL, NULL}, "<nick>"},
     {INFO_COMMAND,   -1, 1, chanserv_unixtime,		{"UNIXTIME", NULL, NULL, NULL, NULL}, "<time>"},

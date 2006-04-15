@@ -206,6 +206,36 @@ char	*mask_from_userhost (char *uh)
 	return (mask_tmp);
 }
 
+long	is_op(char *who, const char *chan)
+{
+	const struct	userlist *c = userhead;
+	for (; c != NULL; c = c->next)
+	{
+		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		{
+			return (c->flags & FLAG_CHANOP);
+		}
+	}
+	return (0);
+}
+
+void 
+do_op(char *who, const char *chan, long tog)
+{
+	struct	userlist *c = userhead;
+	for (; c != NULL; c = c->next)
+	{
+		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		{
+			if (tog == 1)
+				c->flags |= FLAG_CHANOP;
+			else
+				c->flags &= ~FLAG_CHANOP;
+		}
+	}
+	return;
+}
+
 char	*uh_from_nick (char *who, const char *chan)
 {
 	const struct	userlist *c = userhead;

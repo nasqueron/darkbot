@@ -3,6 +3,9 @@
 #define STRING_SHORT    512
 #define STRING_LONG     2048
 
+#define FLAG_CHANOP	0x0001
+#define FLAG_CHANVOICE	0x0002
+
 int wsock = 0;
 int sockerr = 0;
 int optlen = sizeof(sockerr);
@@ -149,12 +152,13 @@ struct sendq
  *sendqhead = NULL, *sendqtail = NULL;
 
 struct userlist
-{								/* internal userlist */
+{					/* internal userlist */
 	char chan[STRING_SHORT];
 	char nick[STRING_SHORT];
 	char uh[STRING_SHORT];
-	long level;					/* auth */
-	short global;				/* Global user? */
+	long flags;			/* op/voice/etc */
+	long level;			/* auth */
+	short global;			/* Global user? */
 	long idle;
 	struct userlist *next;
 }

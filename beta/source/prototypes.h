@@ -176,3 +176,5 @@ size_t	count_char				(const char *, const char);
 void	reverse					(char *);
 char	*mask_from_nick				(char *, const char *);
 char	*uh_from_nick				(char *, const char *);
+long	is_op					(char *, const char *);
+void	do_op					(char *, const char *, long);

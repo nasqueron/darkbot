@@ -7,7 +7,11 @@
 Darkbot 8rc2: Apr 16, 2006
 	- Rewrote chansrv.c to use an array of pointers instead
 	  of a huge if-else-if.
-	- Added HELP <command>. 
+	- Added patch from nak that stops ops from kicking 
+	  themselves via a topic kick.
+	- Added HELP <command>.
+	- Added isop <nick>.
+	- Added level <nick>.
 
 Darkbot 8rc2: Mar 09, 2006
 	- Added !WEATHER <zipcode> command. 
