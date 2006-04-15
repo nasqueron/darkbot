@@ -154,7 +154,7 @@ revert_topic (char *input)
 	char *ptr = NULL, b[STRING_SHORT] = { 0 };
 
 	ptr = strtok (input, "+");
-	
+
 	snprintf (f_tmp, sizeof (f_tmp), "%s", ptr);
 
 	if (ptr != NULL)
