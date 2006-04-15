@@ -14,11 +14,6 @@ be added, will be listed here.
   words are also recognized internally by the bot for 
   answering questions.  
 
-- chansrv.c badly needs to be revamped. needs a command
-  structure that allows easy modification and addition,
-  without the massive if-else-elseif structure it has
-  currently.
-
 - Multi-channel randomstuffs. I want to make it possible 
   for every channel specified in setup.ini as the home 
   channel, in the case of multiple home channels, has
@@ -36,8 +31,6 @@ Make multiple random responses easier to setup.
   admin: bot add foo bar | baz | some other response
   user: foo is also blah
   admin: bot add foo | another answer
-
-Built in help for commands.
 
 Menu in PM.  Plain one liner, colour one liner, multiple lines, colour multiple lines.
   user: /msg bot menu

@@ -56,6 +56,23 @@ strlwr (char *buf)
 	return buf;
 }
 
+/**
+ * Convert a character array to all uppercase.
+ * 6/23/00 Dan:
+ * - Rewrote to be more compact and a bit more efficient
+ */
+char *
+strupr (char *buf)
+{
+	char *ptr = buf;
+
+	for (; ptr && *ptr; ++ptr)
+	{
+		*ptr = toupper (*ptr);
+	}
+	return buf;
+}
+
 /* stristr: case insensitive strstr. */
 char	*db_stristr		(char *pHaystack, char *pNeedle)
 {
