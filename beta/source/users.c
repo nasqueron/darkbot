@@ -163,9 +163,9 @@ char	*mask_from_userhost (char *uh)
 
 	if (userhost == NULL)
 		return(" ");
-	
+
 	strcpy (userhost, mask_tmp);
-	
+
 	if ((user = strtok (userhost, "@")) == NULL)
 		return (" ");
 
@@ -175,15 +175,15 @@ char	*mask_from_userhost (char *uh)
 
 	// Hostname
 	host = strtok (NULL, " ");
-	
+
 	// If there are less than three parts to this hostname, return
 	// the full hostname.
 	if ((nParts = count_char	(host, '.')) < 3)
-	{	
+	{
 		snprintf (mask_tmp, sizeof (mask_tmp), "*%s@%s", user, host); 
 		return (mask_tmp);
 	}
-	
+
 	// If the host is composed entirely of numbers and dots, assume
 	// it is a numeric IP. Parse that accordingly (203.203.203.*)
 	if (strspn (host, "1234567890.") == strlen (host))
@@ -195,7 +195,7 @@ char	*mask_from_userhost (char *uh)
 		snprintf (mask_tmp, sizeof (mask_tmp), "*%s@%s.*", user, ptr1);
 		return (mask_tmp);
 	}
-	
+
 	// It has to be an actual hostname now, so let's parse it.
 	reverse (host);
 	ptr2 = strtok (host, ".");
@@ -228,4 +228,3 @@ char	*mask_from_nick	(char *who, const char *chan)
 		return (who);
 	return (mask_from_userhost (s));
 }
-
