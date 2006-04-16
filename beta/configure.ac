@@ -59,6 +59,12 @@ AC_SUBST(VERSION)
 
 AC_CONFIG_FILES([source/Makefile Makefile])
 AC_OUTPUT
+AC_OUTPUT([
+dat/servers.ini
+dat/setup.ini
+dat/userlist.db
+],[
+])
 
 dnl Tell the user to run the Setup utility
 
