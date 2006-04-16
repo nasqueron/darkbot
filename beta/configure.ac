@@ -9,7 +9,7 @@ AC_PREREQ(2.59)
 AC_INIT([Darkbot],[8rc2],[ron@darkbot.org])
 AC_COPYRIGHT([Copyright (C) 2004 Darkbot Development Team])
 AC_REVISION($Revision$)
-AC_CONFIG_SRCDIR([source/defines.h])
+AC_CONFIG_SRCDIR([source])
 AC_CONFIG_HEADER([source/config.h])
 AC_PREFIX_DEFAULT([\${HOME}/darkbot])
 
@@ -59,12 +59,15 @@ AC_SUBST(VERSION)
 
 AC_CONFIG_FILES([source/Makefile Makefile])
 AC_OUTPUT
+
 AC_OUTPUT([
 dat/servers.ini
 dat/setup.ini
 dat/userlist.db
+source/defines.h
 ],[
 ])
+
 
 dnl Tell the user to run the Setup utility
 
