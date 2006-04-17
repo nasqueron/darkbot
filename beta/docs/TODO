@@ -25,9 +25,23 @@ be added, will be listed here.
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
 
-Convert to gettext.
+Convert these things in defines into ./configure --enable-X 
+CTCP DO_CHANBOT_CRAP GOOGLE WEATHER METAR TAF QUIZ  
+DO_MATH_STUFF STATUS DO_WHOIS ENCRYPT_PASSWORDS
+DISALLOW_COUNT VERB CHECK_STONED
+
+Convert these things in defines into ./configure --X=Y 
+LANG REQ_ACCESS_ADD REQ_ACCESS_DEL SLEEP_LEVEL RAND_LEVEL
+MAX_DATA_SIZE MAX_TOPIC_SIZE 
+
+Move the rest of user definable stuff in defines.h into a proper config
+file.  Add a "!set foo=bar" command to configure it all.  Remove all
+commands that twiddled with some setup param and replace them with 
+"!set foo=bar".
 
 Make the replaceable params in responses consistant.  X~ and %X.
+
+Convert to gettext.
 
 Make multiple random responses easier to setup.
   admin: bot add foo bar | baz | some other response
@@ -50,10 +64,6 @@ in channel, and inform user that a longer response is available via PM.
   bot: summary of foo bar.  (PM "foo bar" for more.)
   luser: PM "foo bar"
   bot: PM "foo bar" means to send me a private message you idiot.  Try this command "/msg bot foo bar".
-
-Move user definable stuff in defines.h into a proper config file.  Add a
-!setup foo=bar command to configure it all.  Remove all commands that
-twiddled with some setup param and replace them with !setup foo=bar.
 
 Make the bot gender definable, defaulting to female.  Allow users to
 register their gender.  Auto convert all relevant text to proper gender.
