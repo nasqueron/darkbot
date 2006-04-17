@@ -57,6 +57,29 @@ AC_SUBST(CFLAGS)
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
+AC_ARG_ENABLE(math-stuff, 
+[  --enable-math-stuff              enable math stuff code], [
+  if [ test "$enableval" = "yes" ]; then  
+  AC_MSG_RESULT(Enabled math stuff code)
+    want_math_stuff="yes"
+  else
+	AC_MSG_RESULT(Disabled math stuff code)
+    want_math_stuff="no"
+  fi
+], [
+  AC_MSG_RESULT(Disabled math stuff code)
+  want_math_stuff="no"
+]
+)
+
+if test "x$want_math_stuff" = "xyes"; then
+	AC_DEFINE(DO_MATH_STUFF, 1, [Define to 1 to enable math stuff code])
+   AM_CONDITIONAL(DO_MATH_STUFF, true)
+else
+    AM_CONDITIONAL(DO_MATH_STUFF, false)
+fi
+
+
 AC_CONFIG_FILES([source/Makefile Makefile])
 AC_OUTPUT
 

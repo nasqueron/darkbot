@@ -225,6 +225,7 @@ struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd,
 	return result;
 }
 
+#ifdef	DO_MATH_STUFF
 struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -237,6 +238,7 @@ struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, cha
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_chan_info(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
