@@ -629,7 +629,7 @@
 /*
  * Do you want your bot to do math commands? (default = define)
  */
-#define	DO_MATH_STUFF
+//#define	DO_MATH_STUFF
 
 /*
  * Parse luser data? May cause SIG_SEGV on
