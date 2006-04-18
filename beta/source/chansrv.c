@@ -199,6 +199,7 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -209,7 +210,9 @@ struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd
 
 	return result;
 }
+#endif
 
+#ifndef	WIN32
 struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
@@ -219,7 +222,9 @@ struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, c
 
 	return chanserv_asprintf(NULL, "Backed up database.");
 }
+#endif
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -227,6 +232,7 @@ struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd,
 	show_banlist (source);
 	return result;
 }
+#endif
 
 #ifdef	DO_MATH_STUFF
 struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -328,6 +334,7 @@ struct chanserv_output *chanserv_date(char *source, char *target, char *cmd, cha
     return chanserv_asprintf(NULL, "%s.", date());
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_delban(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -341,6 +348,7 @@ struct chanserv_output *chanserv_delban(char *source, char *target, char *cmd, c
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_delete(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -386,6 +394,7 @@ struct chanserv_output *chanserv_deluser(char *source, char *target, char *cmd, 
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -441,6 +450,7 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -478,6 +488,7 @@ struct chanserv_output *chanserv_display(char *source, char *target, char *cmd, 
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_down(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -485,6 +496,7 @@ struct chanserv_output *chanserv_down(char *source, char *target, char *cmd, cha
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_darkbot(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -498,6 +510,7 @@ struct chanserv_output *chanserv_darkbot(char *source, char *target, char *cmd, 
 	return chanserv_asprintf(NULL, "%s reporting! My cmdchar is %c.", dbVersion, *CMDCHAR);
 }
 
+#if GOOGLE == 1
 struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -508,6 +521,7 @@ struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, c
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -654,6 +668,7 @@ struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, cha
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -721,6 +736,7 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_language(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -794,6 +810,7 @@ struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, cha
 	return chanserv_asprintf(NULL, " %s", mask_from_nick(args[0], target));
 }
 
+#ifndef	WIN32
 struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
@@ -801,7 +818,9 @@ struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, c
 	snprintf(temp, sizeof (temp), "ps -u -p %d\n", getpid());
 	return chanserv_asprintf(NULL, "ps: %s", run_program(temp));
 }
+#endif
 
+#if METAR == 1
 struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -812,6 +831,7 @@ struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, ch
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -837,6 +857,7 @@ struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, cha
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -864,6 +885,7 @@ struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char 
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_os_show(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -900,6 +922,7 @@ struct chanserv_output *chanserv_performs(char *source, char *target, char *cmd,
 	return chanserv_asprintf(NULL, "Performs have been executed.");
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_perm_ban(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -922,7 +945,9 @@ struct chanserv_output *chanserv_perm_bans_list(char *source, char *target, char
 {
 	return chanserv_asprintf(NULL, "There %s %d permban%s loaded into ram.", (PERMBAN_counter == 1) ? "is" : "are", PERMBAN_counter, (PERMBAN_counter == 1) ? "" : "s");
 }
+#endif
 
+#if CTCP == 1
 struct chanserv_output *chanserv_ping(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -940,6 +965,7 @@ struct chanserv_output *chanserv_ping(char *source, char *target, char *cmd, cha
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_ping2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -958,6 +984,7 @@ struct chanserv_output *chanserv_queue_show(char *source, char *target, char *cm
 	return chanserv_asprintf(NULL, "There is currently %d item%s in queue.", get_sendq_count(2), (get_sendq_count(2) == 1) ? "" : "s");
 }
 
+#if QUIZ == 1
 struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -967,7 +994,9 @@ struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, cha
 
 	return result;
 }
+#endif
 
+#if RANDQ == ON
 struct chanserv_output *chanserv_quote(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -996,7 +1025,9 @@ struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char
 
 	return result;
 }
+#endif
 
+#ifdef	RANDOM_STUFF
 struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1024,6 +1055,7 @@ struct chanserv_output *chanserv_random_stuff_list(char *source, char *target, c
 {
 	return chanserv_asprintf(NULL, "%d seconds left till randstuff.", Rand_Stuff);
 }
+#endif
 
 struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1037,6 +1069,7 @@ struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char
 	return result;
 }
 
+#ifndef	WIN32
 struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1059,6 +1092,7 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1300,6 +1334,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 	return result;
 }
 
+#if TAF == 1
 struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1310,7 +1345,9 @@ struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char
 
 	return result;
 }
+#endif
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1324,6 +1361,7 @@ struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, 
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1359,6 +1397,7 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_topic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1372,6 +1411,7 @@ struct chanserv_output *chanserv_topic(char *source, char *target, char *cmd, ch
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_unignore(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1413,6 +1453,7 @@ struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd,
 	return result;
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_up(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1420,7 +1461,9 @@ struct chanserv_output *chanserv_up(char *source, char *target, char *cmd, char 
 	S ("MODE %s +o %s\n", target, source);
 	return result;
 }
+#endif
 
+#ifndef	WIN32
 struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
@@ -1428,6 +1471,7 @@ struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, c
 	snprintf(temp, sizeof (temp), "uptime\n");
 	return chanserv_asprintf(NULL, "Uptime: %s.", run_program(temp));
 }
+#endif
 
 struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1442,6 +1486,7 @@ struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd
 	return result;
 }
 
+#if STATUS == 1
 struct chanserv_output *chanserv_users_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1450,12 +1495,14 @@ struct chanserv_output *chanserv_users_list(char *source, char *target, char *cm
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_variables(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	return chanserv_asprintf(NULL, "Data variables are: N~ (Nick), C~ (Chan), T~ (Time/date) B~ (Botnick), Q~ (Question asked), R~ (random nick), !~ (command char), S~ (current Server), P~ (current port) V~ (botVer), W~ (db WWW site), H~ (u@h), t~ (unixtime), BAN (sets a ban), TEMPBAN (bans for 60 sec).");
 }
 
+#if CTCP == 1
 struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1467,6 +1514,7 @@ struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, 
 
 	return chanserv_asprintf(NULL, "\1VERSION Hi, I'm a Darkbot. Download me from http://www.darkbot.org\1.");
 }
+#endif
 
 struct chanserv_output *chanserv_vhost(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1480,6 +1528,7 @@ struct chanserv_output *chanserv_vhost(char *source, char *target, char *cmd, ch
 	return chanserv_asprintf(NULL, "NOTICE %s :Default Vhost now: %s.", VHOST);
 }
 
+#if DO_CHANBOT_CRAP == 1
 struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1507,6 +1556,7 @@ struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, ch
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_wakeup(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1595,11 +1645,15 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>"},
     {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]"},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>"},
+#if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>  (set to \"0\" to turn off)"},
+#endif
 #ifndef	WIN32
     {DANGER_COMMAND,  3, 0, chanserv_backup,		{"BACKUP", NULL, NULL, NULL, NULL}, NULL},
 #endif
+#if DO_CHANBOT_CRAP == 1
     {INFO_COMMAND,    1, 0, chanserv_ban_list,		{"BANLIST", NULL, NULL, NULL, NULL}, NULL},
+#endif
 #ifdef	DO_MATH_STUFF
     {INFO_COMMAND,   -1, 1, chanserv_calc,		{"CALC", "MATH", NULL, NULL, NULL}, "<expression>"},
 #endif
