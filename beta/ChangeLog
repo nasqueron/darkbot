@@ -8,6 +8,8 @@ Darkbot 8rc2: Apr 19, 2006
 	- Fine tuned what commands can be done where.  In particular
 	  any password related commands can only be done in private 
 	  now.
+	- Made some commands behave consistantly no matter where they 
+	  are invoked from.
 
 Darkbot 8rc2: Apr 16, 2006
 	- Rewrote chansrv.c to use an array of pointers instead

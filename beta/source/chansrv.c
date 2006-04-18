@@ -2,9 +2,9 @@
 #include "vars.h"
 #include "prototypes.h"
 
-// FIXME: Double check where strtok(NULL, "") should be used instead of strok(NULL, " ")
 // FIXME: When the command is invoked in a channel, target is the channel name, otherwise target is the bots name?
 //        Due to the original nature of this code, some of these routines assume the in channel case, others assume the /msg case.
+//        Also check the commands that can have a channel argument work the same in and out of channel.
 
 enum chanserv_command_type
 {
@@ -392,12 +392,12 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 	char *s = NULL;
 
 	if (args[0] == NULL)
-	    return chanserv_asprintf(NULL, "Specify a nick!");
-	if (invoked == MSG_INVOKE)
+	    return result;
+	s = strtok (NULL, "");
+	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
 	{
 	    if (check_access (userhost, args[0], 0, source) >= 3)
 	    {
-		s = strtok (NULL, "");
 		if (s == NULL)
 			return result;
 		S ("MODE %s -oooooo %s\n", args[0], s);
@@ -405,7 +405,10 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 	}
 	else
 	{
-	    S ("MODE %s -oooooo %s\n", target, args[0]);
+	    if (s == NULL)
+		S ("MODE %s -oooooo %s\n", target, args[0]);
+	    else
+		S ("MODE %s -oooooo %s %s\n", target, args[0], s);
 	}
 
 	return result;
@@ -417,12 +420,12 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 	char *s = NULL;
 
 	if (args[0] == NULL)
-	    return chanserv_asprintf(NULL, "Specify a nick/channel!");
-	if (invoked == MSG_INVOKE)
+	    return result;
+	s = strtok (NULL, "");
+	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
 	{
 	    if (check_access (userhost, args[0], 0, source) >= 3)
 	    {
-		s = strtok (NULL, "");
 		if (s == NULL)
 			return result;
 		S ("MODE %s -vvvvvv %s\n", args[0], s);
@@ -430,7 +433,10 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 	}
 	else
 	{
-	    S ("MODE %s -vvvvvvv %s\n", target, args[0]);
+	    if (s == NULL)
+		S ("MODE %s -vvvvvvv %s\n", target, args[0]);
+	    else
+		S ("MODE %s -vvvvvvv %s %s\n", target, args[0], s);
 	}
 
 	return result;
@@ -508,7 +514,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 	char *s = NULL;
 
-	s = strtok (NULL, "");
+	s = strtok (NULL, " ");
 	if (s == NULL)
 	{
 	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s ... In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37  ... to do a search on a word, or partial text, just type:  <mynick>, search <text> ... eg; \37%s search nuke\37.", 
@@ -837,12 +843,12 @@ struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char 
 	char *s = NULL;
 
 	if (args[0] == NULL)
-	    return chanserv_asprintf(NULL, "Specify a nick!");
-	if (invoked == MSG_INVOKE)
+	    return result;
+	s = strtok (NULL, "");
+	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
 	{
 	    if (check_access (userhost, args[0], 0, source) >= 3)
 	    {
-		s = strtok (NULL, "");
 		if (s == NULL)
 			return result;
 		S ("MODE %s +oooooo %s\n", args[0], s);
@@ -850,7 +856,10 @@ struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char 
 	}
 	else
 	{
-	    S ("MODE %s +oooooo %s\n", target, args[0]);
+	    if (s == NULL)
+		S ("MODE %s +oooooo %s\n", target, args[0]);
+	    else
+		S ("MODE %s +oooooo %s %s\n", target, args[0], s);
 	}
 
 	return result;
@@ -1477,19 +1486,24 @@ struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, ch
 	char *s = NULL;
 
 	if (args[0] == NULL)
-	    return chanserv_asprintf(NULL, "Specify a nick/channel!");
-	if (invoked == MSG_INVOKE)
+	    return result;
+	s = strtok (NULL, "");
+	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
 	{
 	    if (check_access (userhost, args[0], 0, source) >= 3)
 	    {
-		s = strtok (NULL, "");
 		if (s == NULL)
-			return result;
+		    return result;
 		S ("MODE %s +vvvvvv %s\n", args[0], s);
 	    }
 	}
 	else
-	    S ("MODE %s +vvvvvvv %s\n", target, args[0]);
+	{
+	    if (s == NULL)
+		S ("MODE %s +vvvvvvv %s\n", target, args[0]);
+	    else
+		S ("MODE %s +vvvvvvv %s %s\n", target, args[0], s);
+	}
 
 	return result;
 }
@@ -1603,8 +1617,8 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>"},
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>"},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "<nick>"},
-    {DANGER_COMMAND,  3, 1, chanserv_devoice,		{"DEV", "DV", "DEVOICE", "DVOICE", NULL}, "<nick>"},
+    {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>"},
+    {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEV", "DV", "DEVOICE", "DVOICE", NULL}, "[#channel] <nicks>"},
 #endif
     {DANGER_COMMAND,  3, 0, chanserv_die,		{"DIE", "QUIT", NULL, NULL, NULL}, NULL},
     {INFO_COMMAND,   -1, 1, chanserv_display,		{"DISPLAY", NULL, NULL, NULL, NULL}, "<topic>"},
@@ -1643,7 +1657,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_nick,		{"N", "NICK", NULL, NULL, NULL}, "<newnick>"},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nick>"},
+    {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>"},
 #endif
     {INFO_COMMAND,   -1, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL},
     {PASSWORD_COMMAND, -1, 2, chanserv_password,	{"PASS", "PASSWORD", "PASSWD", NULL, NULL}, "<old password> <new password>"},
@@ -1715,7 +1729,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_vhost,		{"VHOST", "SETHOST", NULL, NULL, NULL}, "<new virtual host> (requires a restart)"},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "<nick>"},
+    {NORMAL_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "[#channel] <nicks>"},
 #endif
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL},
     {NORMAL_COMMAND, -1, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>"},
