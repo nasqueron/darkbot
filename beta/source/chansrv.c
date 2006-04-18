@@ -3,6 +3,9 @@
 #include "prototypes.h"
 
 // FIXME: Double check where strtok(NULL, "") should be used instead of strok(NULL, " ")
+// FIXME: When the command is invoked in a channel, target is the channel name, otherwise target is the bots name?
+//        Due to the original nature of this code, some of these routines assume the in channel case, others assume the /msg case.
+// FIXME: Things involving passwords really should be done privately, NOT in channel.
 
 enum chanserv_command_type
 {
@@ -1575,7 +1578,7 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 
 struct chanserv_command chanserv_commands[] =
 {
-    {DANGER_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>"},
+    {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>"},
     {DANGER_COMMAND,  3, 4, chanserv_add_user,		{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]"},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>"},
     {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>  (set to \"0\" to turn off)"},
@@ -1597,7 +1600,7 @@ struct chanserv_command chanserv_commands[] =
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>"},
 #endif
-    {DANGER_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>"},
+    {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>"},
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>"},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "<nick>"},
@@ -1671,7 +1674,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,   -1, 0, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "[topic]"},
 #endif
     {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>"},
-    {DANGER_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>"},
+    {NORMAL_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>"},
     {DANGER_COMMAND, -1, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>"},
     {DANGER_COMMAND, -1, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>"},
     {DANGER_COMMAND,  3, 0, chanserv_restart,		{"REHASH", "RESTART", NULL, NULL, NULL}, NULL},
@@ -1795,8 +1798,10 @@ void chanserv(char *source, char *target, char *buf)
 	if (found != -1)
 	{
 	    /*
+	     * Every             command can be done by /query bot  !command.
+	     * Every             command can be done by /msg   bot  !command.
+	     * Every             command can be done by        bot: !command.
 	     * Every             command can be done by             !command.
-	     * Every             command can be done by             'command.
 	     * Every normal      command can be done by /query bot   command.
 	     * Every normal      command can be done by /msg   bot   command.
 	     * Every safe        command can be done by        bot:  command.
@@ -1819,7 +1824,7 @@ void chanserv(char *source, char *target, char *buf)
 		    {
 			if (input_type == DIRECT_INVOKE)
 			    return;
-			else if (input_type == ADDRESS_INVOKE)
+			else if ((input_type == ADDRESS_INVOKE) && (command != 1))
 			    return;
 			break;
 		    }
