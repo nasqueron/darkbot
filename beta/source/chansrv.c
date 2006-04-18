@@ -12,7 +12,8 @@ enum chanserv_command_type
     INFO_COMMAND = 0,
     SAFE_COMMAND = 1,
     NORMAL_COMMAND = 2,
-    DANGER_COMMAND = 3
+    DANGER_COMMAND = 3,
+    PASSWORD_COMMAND = 4
 };
 
 enum chanserv_invoke_type
@@ -1579,7 +1580,7 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 struct chanserv_command chanserv_commands[] =
 {
     {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>"},
-    {DANGER_COMMAND,  3, 4, chanserv_add_user,		{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]"},
+    {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]"},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>"},
     {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>  (set to \"0\" to turn off)"},
 #ifndef	WIN32
@@ -1633,7 +1634,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,   -1, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>"},
     {INFO_COMMAND,   -1, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>"},
     {INFO_COMMAND,   -1, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL},
-    {NORMAL_COMMAND, -1, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>"},
+    {PASSWORD_COMMAND, -1, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>"},
     {INFO_COMMAND,   -1, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>"},
 #ifndef	WIN32
     {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL},
@@ -1646,7 +1647,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nick>"},
 #endif
     {INFO_COMMAND,   -1, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL},
-    {DANGER_COMMAND, -1, 2, chanserv_password,		{"PASS", "PASSWORD", "PASSWD", NULL, NULL}, "<old password> <new password>"},
+    {PASSWORD_COMMAND, -1, 2, chanserv_password,	{"PASS", "PASSWORD", "PASSWD", NULL, NULL}, "<old password> <new password>"},
     {DANGER_COMMAND,  3, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_perm_ban,		{"PERMBAN", "SHITLIST", NULL, NULL, NULL}, "<user@host> [reason]"},
@@ -1798,10 +1799,12 @@ void chanserv(char *source, char *target, char *buf)
 	if (found != -1)
 	{
 	    /*
+	     * password related commands can ONLY be done privately.
+	     * Every             command can be done by /msg   bot  !command.
 	     * Every             command can be done by /query bot  !command.
 	     * Every             command can be done by /msg   bot  !command.
-	     * Every             command can be done by        bot: !command.
-	     * Every             command can be done by             !command.
+	     * Every danger      command can be done by        bot: !command.
+	     * Every danger      command can be done by             !command.
 	     * Every normal      command can be done by /query bot   command.
 	     * Every normal      command can be done by /msg   bot   command.
 	     * Every safe        command can be done by        bot:  command.
@@ -1832,6 +1835,13 @@ void chanserv(char *source, char *target, char *buf)
 		case DANGER_COMMAND :
 		    {
 			if (command != 1)
+			    return;
+			break;
+		    }
+
+		case PASSWORD_COMMAND :
+		    {
+			if (input_type != MSG_INVOKE)
 			    return;
 			break;
 		    }
