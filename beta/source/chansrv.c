@@ -5,7 +5,6 @@
 // FIXME: Double check where strtok(NULL, "") should be used instead of strok(NULL, " ")
 // FIXME: When the command is invoked in a channel, target is the channel name, otherwise target is the bots name?
 //        Due to the original nature of this code, some of these routines assume the in channel case, others assume the /msg case.
-// FIXME: Things involving passwords really should be done privately, NOT in channel.
 
 enum chanserv_command_type
 {
