@@ -532,11 +532,11 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	s = strtok (NULL, " ");
 	if (s == NULL)
 	{
-	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s ... In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37  ... to do a search on a word, or partial text, just type:  <mynick>, search <text> ... eg; \37%s search nuke\37.", 
-		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA, NICK_COMMA);
+	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s .  In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37 .  To do a search on a word, or partial text, just type: search <text> or dsearch <text> , eg; \37search nuke\37.", 
+		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
 	    if (cf(userhost, source, target))
 		return result;
-	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37  .. You can also phrase it in a question: \37%s where is msie?\37 ...For more info about me, visit http://www.darkbot.org/ .",
+	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For more info about me, visit http://www.darkbot.org/ .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
 	}
 	else
@@ -970,14 +970,7 @@ struct chanserv_output *chanserv_ping(char *source, char *target, char *cmd, cha
 
 struct chanserv_output *chanserv_ping2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-
-	if (check_access (userhost, target, 0, source) == 0)
-		S ("NOTICE %s PONG!\n", source);
-	else
-		S ("PRIVMSG %s :PONG!\n", target);
-
-	return result;
+	return chanserv_asprintf(NULL, "PONG!");
 }
 
 struct chanserv_output *chanserv_queue_show(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -1641,6 +1634,9 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 	return result;
 }
 
+/* The help system uses the first alias for each command for the list of commands. 
+ * So make the first alias the most meaningful, and keep the list sorted by that first alias.
+ */
 struct chanserv_command chanserv_commands[] =
 {
     {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", ""},
@@ -1663,9 +1659,10 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_char,		{"CHAR", NULL, NULL, NULL, NULL}, "<character>", ""},
     {INFO_COMMAND,    0, 0, chanserv_char_show,		{"CMDCHAR?", NULL, NULL, NULL, NULL}, NULL, ""},
     {INFO_COMMAND,    0, 0, chanserv_cpu_show,		{"CPU?", NULL, NULL, NULL, NULL}, NULL, ""},
-    {DANGER_COMMAND,  2, 0, chanserv_cycle,		{"CYC", "CYCLE", NULL, NULL, NULL}, "[#channel]", ""},
+    {DANGER_COMMAND,  2, 0, chanserv_cycle,		{"CYCLE", "CYC", NULL, NULL, NULL}, "[#channel]", ""},
     {INFO_COMMAND,    0, 1, chanserv_data_search,	{"DATASEARCH", "DSEARCH", "DFIND", NULL, NULL}, "<topic>", ""},
     {INFO_COMMAND,    0, 0, chanserv_date,		{"DATE", "TIME", NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  0, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>", ""},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", ""},
 #endif
@@ -1673,7 +1670,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", ""},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", ""},
-    {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEV", "DV", "DEVOICE", "DVOICE", NULL}, "[#channel] <nicks>", ""},
+    {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEVOICE", "DV", "DEV", "DVOICE", NULL}, "[#channel] <nicks>", ""},
 #endif
     {DANGER_COMMAND,  3, 0, chanserv_die,		{"DIE", "QUIT", NULL, NULL, NULL}, NULL, ""},
     {INFO_COMMAND,    0, 1, chanserv_display,		{"DISPLAY", NULL, NULL, NULL, NULL}, "<topic>", ""},
@@ -1681,6 +1678,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  2, 0, chanserv_down,		{"DOWN", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_darkbot,		{"\2\2DARKBOT", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  0, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>", ""},
 #if GOOGLE == 1
     {NORMAL_COMMAND,  0, 1, chanserv_google,		{"GOOGLE", NULL, NULL, NULL, NULL}, "<text>", ""},
 #endif
@@ -1689,20 +1687,22 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  1, 1, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<nick>", ""},
     {INFO_COMMAND,    0, 0, chanserv_info,		{"INFO", NULL, NULL, NULL, NULL}, NULL, ""},
     {INFO_COMMAND,    0, 0, chanserv_info_2,		{"INFO2", NULL, NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    2, 0, chanserv_info_size,		{"INFOSIZE", "DBSIZE", NULL, NULL, NULL}, NULL, ""},
     {INFO_COMMAND,    0, 1, chanserv_isop,		{"ISOP", NULL, NULL, NULL, NULL}, "<nick>", "Is user a channel op?"},
-    {INFO_COMMAND,    2, 0, chanserv_info_size,		{"DBSIZE", "INFOSIZE", NULL, NULL, NULL}, NULL, ""},
     {DANGER_COMMAND,  2, 1, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>", ""},
     {INFO_COMMAND,    0, 0, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL, ""},
-    {DANGER_COMMAND,  3, 1, chanserv_jump,		{"JUMP", "SERVER", NULL, NULL, NULL}, "<server> [port]", ""},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_kick,		{"KICK", "WHACK", "K", "NAIL", NULL}, "[#channel] <nick> [reason]", ""},
 #endif
-    {INFO_COMMAND,    0, 0, chanserv_language,		{"LANG", "LANGUAGE", NULL, NULL, NULL}, NULL, ""},
-    {DANGER_COMMAND,  2, 0, chanserv_leave,		{"L", "PART", "LEAVE", "P", NULL}, "[#channel]", ""},
+    {INFO_COMMAND,    0, 0, chanserv_language,		{"LANGUAGE", "LANG", NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  2, 0, chanserv_leave,		{"LEAVE", "PART", "L", "P", NULL}, "[#channel]", ""},
     {INFO_COMMAND,    0, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>", ""},
     {INFO_COMMAND,    0, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>", "Show users level."},
     {INFO_COMMAND,    0, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL, ""},
     {PASSWORD_COMMAND, 0, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>", ""},
+#if STATUS == 1
+    {INFO_COMMAND,    1, 0, chanserv_users_list,	{"LUSERS", NULL, NULL, NULL, NULL}, NULL, ""},
+#endif
     {INFO_COMMAND,    0, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", ""},
 #ifndef	WIN32
     {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, ""},
@@ -1710,12 +1710,12 @@ struct chanserv_command chanserv_commands[] =
 #if METAR == 1
     {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", ""},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"N", "NICK", NULL, NULL, NULL}, "<newnick>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", ""},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", ""},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, ""},
-    {PASSWORD_COMMAND, 0, 2, chanserv_password,	{"PASS", "PASSWORD", "PASSWD", NULL, NULL}, "<old password> <new password>", ""},
+    {PASSWORD_COMMAND, 0, 2, chanserv_password,		{"PASSWORD", "PASS", "PASSWD", NULL, NULL}, "<old password> <new password>", ""},
     {DANGER_COMMAND,  3, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL, ""},
 #if DO_CHANBOT_CRAP == 1
     {DANGER_COMMAND,  3, 1, chanserv_perm_ban,		{"PERMBAN", "SHITLIST", NULL, NULL, NULL}, "<user@host> [reason]", ""},
@@ -1731,12 +1731,12 @@ struct chanserv_command chanserv_commands[] =
 #endif
 #if RANDQ == ON
     {NORMAL_COMMAND,  0, 1, chanserv_quote,		{"QUOTE", NULL, NULL, NULL, NULL}, "<>", ""},
-    {NORMAL_COMMAND,  0, 1, chanserv_random_quote,	{"RANDQ", "RANDQUOTE", NULL, NULL, NULL}, "<>", ""},
-    {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQ2", "RANDQUOTE2", NULL, NULL, NULL}, "<>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_random_quote,	{"RANDQUOTE", "RANDQ", NULL, NULL, NULL}, "<>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "<>", ""},
 #endif
 #ifdef	RANDOM_STUFF
     {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDSTUFF?", "RANDOMSTUFF?", NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, ""},
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", ""},
 #ifndef	WIN32
@@ -1744,11 +1744,10 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>", ""},
     {NORMAL_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>", ""},
-    {DANGER_COMMAND,  0, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>", ""},
-    {DANGER_COMMAND,  0, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>", ""},
-    {DANGER_COMMAND,  3, 0, chanserv_restart,		{"REHASH", "RESTART", NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  3, 0, chanserv_restart,		{"RESTART", "REHASH", NULL, NULL, NULL}, NULL, ""},
     {INFO_COMMAND,    0, 1, chanserv_search,		{"SEARCH", "LOOK", "FIND", NULL, NULL}, "<text>", ""},
     {INFO_COMMAND,    0, 1, chanserv_seen,		{"SEEN", NULL, NULL, NULL, NULL}, "<nick>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", ""},
     {DANGER_COMMAND,  3, 1, chanserv_setchan,		{"SETCHAN", NULL, NULL, NULL, NULL}, "<new #channel>", ""},
     {DANGER_COMMAND,  3, 1, chanserv_setchar,		{"SETCHAR", NULL, NULL, NULL, NULL}, "<new command char>", ""},
     {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", ""},
@@ -1764,7 +1763,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {INFO_COMMAND,    0, 2, chanserv_tell,		{"TELL", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", ""},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 0, chanserv_topic,		{"T", "TOPIC", NULL, NULL, NULL}, "<channel topic>", ""},
+    {DANGER_COMMAND,  2, 0, chanserv_topic,		{"TOPIC", "T", NULL, NULL, NULL}, "<channel topic>", ""},
 #endif
     {DANGER_COMMAND,  1, 1, chanserv_unignore,		{"UNIGNORE", NULL, NULL, NULL, NULL}, "<nick>", ""},
     {INFO_COMMAND,    0, 1, chanserv_unixtime,		{"UNIXTIME", NULL, NULL, NULL, NULL}, "<time>", ""},
@@ -1775,9 +1774,6 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 0, chanserv_uptime,		{"UPTIME", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
     {INFO_COMMAND,    1, 0, chanserv_user_list,		{"USERLIST", "HLIST", "ACCESS", NULL, NULL}, NULL, ""},
-#if STATUS == 1
-    {INFO_COMMAND,    1, 0, chanserv_users_list,	{"LUSERS", NULL, NULL, NULL, NULL}, NULL, ""},
-#endif
     {INFO_COMMAND,    0, 0, chanserv_variables,		{"VARIABLES", NULL, NULL, NULL, NULL}, NULL, ""},
 #if CTCP == 1
     {INFO_COMMAND,    0, 0, chanserv_version,		{"\1VERSION\1", NULL, NULL, NULL, NULL}, NULL, ""},
@@ -1788,7 +1784,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL, ""},
     {NORMAL_COMMAND,  0, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", ""},
-    {INFO_COMMAND,    0, 2, chanserv_where,		{"WHERE", "WHO", "WHAT", NULL, NULL}, "<IS> [A|AN] <topic>", ""},
+    {INFO_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", ""},
     {SAFE_COMMAND,    0, 2, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", ""},
     {INFO_COMMAND,    4, 0, NULL, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL}
 };
@@ -1949,32 +1945,50 @@ void chanserv(char *source, char *target, char *buf)
 		    i = 1;
 		    while (output)
 		    {
+			char *s, *s2, c;
+			int length, len;
+
+/* RFC2812 says max packet length is 512, including CR-LF at end.
+ * Also a colon and a space at the beginning.
+ */
+//#define MAX_IRC_LEN 507  // This doesn't work.
+#define MAX_IRC_LEN 475    // This works.
+
+			s = output->output;
+			length = strlen(s);
 			if (input_type == MSG_INVOKE)
 			{
-			    S("NOTICE %s :%s\n", source, output->output);
+			    len = 12 + strlen(source);
+			    while ((len + length) > MAX_IRC_LEN)
+			    {
+			        c = s[MAX_IRC_LEN - len];
+				s[MAX_IRC_LEN - len] = '\0';
+				s2 = strrchr(s, ' ');
+				*s2 = '\0';
+				S("NOTICE %s :%s\n", source, s);
+				db_sleep(2);
+				*s2 = ' ';
+				s[MAX_IRC_LEN - len] = c;
+				s = s2 + 1;
+				length = strlen(s);
+			    }
+			    S("NOTICE %s :%s\n", source, s);
 			}
 			else
 			{
-			    char *s, *s2, c;
-			    int length, len;
-
-			    s = output->output;
 			    len = 16 + strlen(target) + strlen(source);
-			    length = strlen(s);
-// FIXME: find out what the actual limit is.
-#define MAX_OUT 480
-			    while ((len + length) > MAX_OUT)
+			    while ((len + length) > MAX_IRC_LEN)
 			    {
-			        c = s[MAX_OUT - len];
-				s[MAX_OUT - len] = '\0';
-				s2 = strrchr(output->output, ' ');
+			        c = s[MAX_IRC_LEN - len];
+				s[MAX_IRC_LEN - len] = '\0';
+				s2 = strrchr(s, ' ');
 				*s2 = '\0';
 				S("PRIVMSG %s :%s: %s\n", target, source, s);
-				db_sleep(1);
+				db_sleep(2);
 				*s2 = ' ';
-				s[MAX_OUT - len] = c;
-				s = s2;
-				length = 16 + strlen(target) + strlen(source) + strlen(s);
+				s[MAX_IRC_LEN - len] = c;
+				s = s2 + 1;
+				length = strlen(s);
 			    }
 			    S("PRIVMSG %s :%s: %s\n", target, source, s);
 			}
@@ -2052,8 +2066,7 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 		    strcat(temp, " | ");
 		strcat(temp, chanserv_commands[found].command[j]);
 	    }
-	    result = chanserv_asprintf(result, "%s [%d] - %s", temp, chanserv_commands[found].access, chanserv_commands[found].summary);
-	    result = chanserv_asprintf(result, "SYNTAX - %s%s %s", cmdchar, cmd, 
+	    result = chanserv_asprintf(result, "%s [level %d] - %s  SYNTAX - %s%s %s", temp, chanserv_commands[found].access, chanserv_commands[found].summary, cmdchar, cmd, 
 		(chanserv_commands[found].syntax != NULL) ? chanserv_commands[found].syntax : "");
 	}
 	else if (strcmp(cmd, "COMMANDS") == 0)
@@ -2062,9 +2075,12 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 	    {
 		if (chanserv_commands[i].access <= user_level)
 		{
-		    if (i)
-			strcat(temp, " ");
-		    strcat(temp, chanserv_commands[i].command[0]);
+		    if (chanserv_commands[i].command[0][0] > 10)
+		    {
+			if (i)
+			    strcat(temp, " ");
+			strcat(temp, chanserv_commands[i].command[0]);
+		    }
 		}
 	    }
 	    result = chanserv_asprintf(result, "%s", temp);
