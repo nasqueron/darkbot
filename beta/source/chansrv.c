@@ -1027,6 +1027,7 @@ struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *
 	struct chanserv_output *result = NULL;
 	char *s = NULL;
 
+// FIXME: Check this, it may be wrong.  The help may not be correct either.
 	if (args[0] == NULL)
 	    return chanserv_asprintf(NULL, "What do you want to add?");
 	if (invoked == MSG_INVOKE)
@@ -1639,93 +1640,93 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
  */
 struct chanserv_command chanserv_commands[] =
 {
-    {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", ""},
-    {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]", ""},
-    {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>", ""},
+    {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
+    {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]", "Add a user to the access list."},
+    {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>", "Set some text to be said by the bot at a later time."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>  (set to \"0\" to turn off)", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>", "Refreshes the channel topic every thirty minutes (set to \"0\" to turn off)."},
 #endif
 #ifndef	WIN32
-    {DANGER_COMMAND,  3, 0, chanserv_backup,		{"BACKUP", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  3, 0, chanserv_backup,		{"BACKUP", NULL, NULL, NULL, NULL}, NULL, "Create a backup of the database."},
 #endif
 #if DO_CHANBOT_CRAP == 1
-    {INFO_COMMAND,    1, 0, chanserv_ban_list,		{"BANLIST", NULL, NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    1, 0, chanserv_ban_list,		{"BANLIST", NULL, NULL, NULL, NULL}, NULL, "Displays permanent bans."},
 #endif
 #ifdef	DO_MATH_STUFF
-    {INFO_COMMAND,    0, 1, chanserv_calc,		{"CALC", "MATH", NULL, NULL, NULL}, "<expression>", ""},
+    {INFO_COMMAND,    0, 1, chanserv_calc,		{"CALC", "MATH", NULL, NULL, NULL}, "<expression>", "Very basic calculator."},
 #endif
-    {INFO_COMMAND,    0, 1, chanserv_chan_info,		{"CHANINFO", NULL, NULL, NULL, NULL}, "<#channel>", ""},
-    {INFO_COMMAND,    0, 1, chanserv_chan_users,	{"CHANUSERS", NULL, NULL, NULL, NULL}, "<#channel>", ""},
-    {INFO_COMMAND,    0, 1, chanserv_char,		{"CHAR", NULL, NULL, NULL, NULL}, "<character>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_char_show,		{"CMDCHAR?", NULL, NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 0, chanserv_cpu_show,		{"CPU?", NULL, NULL, NULL, NULL}, NULL, ""},
-    {DANGER_COMMAND,  2, 0, chanserv_cycle,		{"CYCLE", "CYC", NULL, NULL, NULL}, "[#channel]", ""},
-    {INFO_COMMAND,    0, 1, chanserv_data_search,	{"DATASEARCH", "DSEARCH", "DFIND", NULL, NULL}, "<topic>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_date,		{"DATE", "TIME", NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 1, chanserv_chan_info,		{"CHANINFO", NULL, NULL, NULL, NULL}, "<#channel>", "Displays number of users in channel and in ram."},
+    {INFO_COMMAND,    0, 1, chanserv_chan_users,	{"CHANUSERS", NULL, NULL, NULL, NULL}, "<#channel>", "Displays names of users in channel."},
+    {INFO_COMMAND,    0, 1, chanserv_char,		{"CHAR", NULL, NULL, NULL, NULL}, "<character>", "Show the ascii code of the character."},
+    {INFO_COMMAND,    0, 0, chanserv_char_show,		{"CMDCHAR?", NULL, NULL, NULL, NULL}, NULL, "Show command character."},
+    {INFO_COMMAND,    0, 0, chanserv_cpu_show,		{"CPU?", NULL, NULL, NULL, NULL}, NULL, "Show the cpu usage of the bot."},
+    {DANGER_COMMAND,  2, 0, chanserv_cycle,		{"CYCLE", "CYC", NULL, NULL, NULL}, "[#channel]", "Leave and rejoin the channel."},
+    {INFO_COMMAND,    0, 1, chanserv_data_search,	{"DATASEARCH", "DSEARCH", "DFIND", NULL, NULL}, "<topic>", "Search in the replies."},
+    {INFO_COMMAND,    0, 0, chanserv_date,		{"DATE", "TIME", NULL, NULL, NULL}, NULL, "Show the current date and time."},
     {DANGER_COMMAND,  0, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>", ""},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the permanent ban list."},
 #endif
-    {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", ""},
+    {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
+    {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the access list."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", ""},
-    {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEVOICE", "DV", "DEV", "DVOICE", NULL}, "[#channel] <nicks>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Remove channel operator status from users."},
+    {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEVOICE", "DV", "DEV", "DVOICE", NULL}, "[#channel] <nicks>", "Remove channel voice status from users."},
 #endif
-    {DANGER_COMMAND,  3, 0, chanserv_die,		{"DIE", "QUIT", NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 1, chanserv_display,		{"DISPLAY", NULL, NULL, NULL, NULL}, "<topic>", ""},
+    {DANGER_COMMAND,  3, 0, chanserv_die,		{"DIE", "QUIT", NULL, NULL, NULL}, NULL, "Stop bot from running."},
+    {INFO_COMMAND,    0, 1, chanserv_display,		{"DISPLAY", NULL, NULL, NULL, NULL}, "<topic>", "Display the text for a topic."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 0, chanserv_down,		{"DOWN", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  2, 0, chanserv_down,		{"DOWN", NULL, NULL, NULL, NULL}, NULL, "Remove channel operator status from yourself."},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_darkbot,		{"\2\2DARKBOT", NULL, NULL, NULL, NULL}, NULL, ""},
     {DANGER_COMMAND,  0, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>", ""},
 #if GOOGLE == 1
-    {NORMAL_COMMAND,  0, 1, chanserv_google,		{"GOOGLE", NULL, NULL, NULL, NULL}, "<text>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_google,		{"GOOGLE", NULL, NULL, NULL, NULL}, "<text>", "Look up the text on google."},
 #endif
-    {INFO_COMMAND,    0, 0, chanserv_help,		{"HELP", NULL, NULL, NULL, NULL}, "[command]", ""},
-    {INFO_COMMAND,    0, 1, chanserv_idle,		{"IDLE", NULL, NULL, NULL, NULL}, "<nick>", ""},
-    {DANGER_COMMAND,  1, 1, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<nick>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_info,		{"INFO", NULL, NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 0, chanserv_info_2,		{"INFO2", NULL, NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    2, 0, chanserv_info_size,		{"INFOSIZE", "DBSIZE", NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 0, chanserv_help,		{"HELP", NULL, NULL, NULL, NULL}, "[command]", "Show some help text to the user."},
+    {INFO_COMMAND,    0, 1, chanserv_idle,		{"IDLE", NULL, NULL, NULL, NULL}, "<nick>", "Shows how long the user has been idle."},
+    {DANGER_COMMAND,  1, 1, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<nick>", "Get bot to ignore a user."},
+    {INFO_COMMAND,    0, 0, chanserv_info,		{"INFO", NULL, NULL, NULL, NULL}, NULL, "Shows some information about bot and it's activity."},
+    {INFO_COMMAND,    0, 0, chanserv_info_2,		{"INFO2", NULL, NULL, NULL, NULL}, NULL, "Shows when the bot was compiled, and lines processed since startup."},
+    {INFO_COMMAND,    2, 0, chanserv_info_size,		{"INFOSIZE", "DBSIZE", NULL, NULL, NULL}, NULL, "Show size of the database."},
     {INFO_COMMAND,    0, 1, chanserv_isop,		{"ISOP", NULL, NULL, NULL, NULL}, "<nick>", "Is user a channel op?"},
-    {DANGER_COMMAND,  2, 1, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  2, 1, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>", "Get bot to join a channel."},
+    {INFO_COMMAND,    0, 0, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL, "Shows the number of user joins bot has seen in this channel since startup."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_kick,		{"KICK", "WHACK", "K", "NAIL", NULL}, "[#channel] <nick> [reason]", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_kick,		{"KICK", "WHACK", "K", "NAIL", NULL}, "[#channel] <nick> [reason]", "Kick a user off the channel."},
 #endif
-    {INFO_COMMAND,    0, 0, chanserv_language,		{"LANGUAGE", "LANG", NULL, NULL, NULL}, NULL, ""},
-    {DANGER_COMMAND,  2, 0, chanserv_leave,		{"LEAVE", "PART", "L", "P", NULL}, "[#channel]", ""},
-    {INFO_COMMAND,    0, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>", ""},
+    {INFO_COMMAND,    0, 0, chanserv_language,		{"LANGUAGE", "LANG", NULL, NULL, NULL}, NULL, "Shows the language that bot is currently speaking."},
+    {DANGER_COMMAND,  2, 0, chanserv_leave,		{"LEAVE", "PART", "L", "P", NULL}, "[#channel]", "Get bot to leave the channel."},
+    {INFO_COMMAND,    0, 1, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>", "Show the length of the text."},
     {INFO_COMMAND,    0, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>", "Show users level."},
-    {INFO_COMMAND,    0, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL, ""},
-    {PASSWORD_COMMAND, 0, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>", ""},
+    {INFO_COMMAND,    0, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL, "Shows what servers are available and in use."},
+    {PASSWORD_COMMAND, 0, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>", "Gives you access to high level bot commands if you are on the access list."},
 #if STATUS == 1
     {INFO_COMMAND,    1, 0, chanserv_users_list,	{"LUSERS", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
-    {INFO_COMMAND,    0, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", ""},
+    {INFO_COMMAND,    0, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", "Show the users user@host mask."},
 #ifndef	WIN32
-    {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, "Shows some memory usage and process statistics."},
 #endif
 #if METAR == 1
-    {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw METAR weather data."},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", "Change bot's nickname."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel operator status to users."},
 #endif
-    {INFO_COMMAND,    0, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, ""},
-    {PASSWORD_COMMAND, 0, 2, chanserv_password,		{"PASSWORD", "PASS", "PASSWD", NULL, NULL}, "<old password> <new password>", ""},
-    {DANGER_COMMAND,  3, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, "Show the operating system that bot is running on."},
+    {PASSWORD_COMMAND, 0, 2, chanserv_password,		{"PASSWORD", "PASS", "PASSWD", NULL, NULL}, "<old password> <new password>", "Change your bot access list password."},
+    {DANGER_COMMAND,  3, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL, "Perform the tasks in the perform.ini startup script."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  3, 1, chanserv_perm_ban,		{"PERMBAN", "SHITLIST", NULL, NULL, NULL}, "<user@host> [reason]", ""},
-    {INFO_COMMAND,    0, 0, chanserv_perm_bans_list,	{"PERMBANS?", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  3, 1, chanserv_perm_ban,		{"PERMBAN", "SHITLIST", NULL, NULL, NULL}, "<user@host> [reason]", "Adds a user to the permanent ban list."},
+    {INFO_COMMAND,    0, 0, chanserv_perm_bans_list,	{"PERMBANS?", NULL, NULL, NULL, NULL}, NULL, "Shows how many permanent bans there are."},
 #endif
 #if CTCP == 1
     {INFO_COMMAND,    0, 1, chanserv_ping,		{"\1PING", NULL, NULL, NULL, NULL}, "<>", ""},
 #endif
-    {INFO_COMMAND,    0, 0, chanserv_ping2,		{"PING", NULL, NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 0, chanserv_queue_show,	{"SENDQ?", "QUE?", NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 0, chanserv_ping2,		{"PING", NULL, NULL, NULL, NULL}, NULL, "Replies with \"PONG\" to see how lagged the bot is.."},
+    {INFO_COMMAND,    0, 0, chanserv_queue_show,	{"SENDQ?", "QUE?", NULL, NULL, NULL}, NULL, "Shows how many items are ready to be displayed."},
 #if QUIZ == 1
     {SAFE_COMMAND,    0, 0, chanserv_quiz,		{"QUIZ", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
@@ -1735,57 +1736,57 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "<>", ""},
 #endif
 #ifdef	RANDOM_STUFF
-    {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", ""},
-    {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
+    {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, "Shows time until next random thing is said."},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", "Get bot to send raw IRC data."},
 #ifndef	WIN32
-    {INFO_COMMAND,    0, 0, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "[topic]", ""},
+    {INFO_COMMAND,    0, 0, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "[topic]", "Display information about the random databases."},
 #endif
-    {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>", ""},
-    {NORMAL_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>", ""},
-    {DANGER_COMMAND,  3, 0, chanserv_restart,		{"RESTART", "REHASH", NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 1, chanserv_search,		{"SEARCH", "LOOK", "FIND", NULL, NULL}, "<text>", ""},
-    {INFO_COMMAND,    0, 1, chanserv_seen,		{"SEEN", NULL, NULL, NULL, NULL}, "<nick>", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_setchan,		{"SETCHAN", NULL, NULL, NULL, NULL}, "<new #channel>", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_setchar,		{"SETCHAR", NULL, NULL, NULL, NULL}, "<new command char>", ""},
-    {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_setnick,		{"SETNICK", NULL, NULL, NULL, NULL}, "<new nick>", ""},
-    {DANGER_COMMAND,  3, 1, chanserv_setuser,		{"SETUSER", NULL, NULL, NULL, NULL}, "<new userid> (requires a restart)", ""},
-    {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", ""},
+    {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>", "Get bot to send raw IRC data a number of times."},
+    {NORMAL_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>", "Replace the text of a topic."},
+    {DANGER_COMMAND,  3, 0, chanserv_restart,		{"RESTART", "REHASH", NULL, NULL, NULL}, NULL, "Restart the bot."},
+    {INFO_COMMAND,    0, 1, chanserv_search,		{"SEARCH", "LOOK", "FIND", NULL, NULL}, "<text>", "Search in the topics."},
+    {INFO_COMMAND,    0, 1, chanserv_seen,		{"SEEN", NULL, NULL, NULL, NULL}, "<nick>", "Show the last time a user was seen."},
+    {DANGER_COMMAND,  3, 1, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", "Switch bot to a different server."},
+    {DANGER_COMMAND,  3, 1, chanserv_setchan,		{"SETCHAN", NULL, NULL, NULL, NULL}, "<new #channel>", "Set the default channel."},
+    {DANGER_COMMAND,  3, 1, chanserv_setchar,		{"SETCHAR", NULL, NULL, NULL, NULL}, "<new command char>", "Set the command character."},
+    {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
+    {DANGER_COMMAND,  3, 1, chanserv_setnick,		{"SETNICK", NULL, NULL, NULL, NULL}, "<new nick>", "Set the bot's default nick."},
+    {DANGER_COMMAND,  3, 1, chanserv_setuser,		{"SETUSER", NULL, NULL, NULL, NULL}, "<new userid>", "Set the bot's userid (requires a restart)."},
+    {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, "Deactivate bot for a period."},
+    {INFO_COMMAND,    0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
 #if TAF == 1
-    {NORMAL_COMMAND,  0, 1, chanserv_taf,		{"TAF", NULL, NULL, NULL, NULL}, "<city or code>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_taf,		{"TAF", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw TAF weather data."},
 #endif
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 1, chanserv_teaseop,		{"TEASEOP", "TO", NULL, NULL, NULL}, "<nick>", ""},
+    {DANGER_COMMAND,  2, 1, chanserv_teaseop,		{"TEASEOP", "TO", NULL, NULL, NULL}, "<nick>", "Tease a user with channel operator status."},
 #endif
-    {INFO_COMMAND,    0, 2, chanserv_tell,		{"TELL", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", ""},
+    {INFO_COMMAND,    0, 2, chanserv_tell,		{"TELL", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 0, chanserv_topic,		{"TOPIC", "T", NULL, NULL, NULL}, "<channel topic>", ""},
+    {DANGER_COMMAND,  2, 0, chanserv_topic,		{"TOPIC", "T", NULL, NULL, NULL}, "<channel topic>", "Change the channels topic."},
 #endif
-    {DANGER_COMMAND,  1, 1, chanserv_unignore,		{"UNIGNORE", NULL, NULL, NULL, NULL}, "<nick>", ""},
-    {INFO_COMMAND,    0, 1, chanserv_unixtime,		{"UNIXTIME", NULL, NULL, NULL, NULL}, "<time>", ""},
+    {DANGER_COMMAND,  1, 1, chanserv_unignore,		{"UNIGNORE", NULL, NULL, NULL, NULL}, "<nick>", "Get bot to stop ignoring a user."},
+    {INFO_COMMAND,    0, 1, chanserv_unixtime,		{"UNIXTIME", NULL, NULL, NULL, NULL}, "<time>", "Shows unixtime."},
 #if DO_CHANBOT_CRAP == 1
-    {DANGER_COMMAND,  2, 0, chanserv_up,		{"UP", NULL, NULL, NULL, NULL}, NULL, ""},
+    {DANGER_COMMAND,  2, 0, chanserv_up,		{"UP", NULL, NULL, NULL, NULL}, NULL, "Add channel operator status to yourself."},
 #endif
 #ifndef	WIN32
-    {INFO_COMMAND,    0, 0, chanserv_uptime,		{"UPTIME", NULL, NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    0, 0, chanserv_uptime,		{"UPTIME", NULL, NULL, NULL, NULL}, NULL, "Shows the uptime statistics for the computer the bot is running on."},
 #endif
-    {INFO_COMMAND,    1, 0, chanserv_user_list,		{"USERLIST", "HLIST", "ACCESS", NULL, NULL}, NULL, ""},
-    {INFO_COMMAND,    0, 0, chanserv_variables,		{"VARIABLES", NULL, NULL, NULL, NULL}, NULL, ""},
+    {INFO_COMMAND,    1, 0, chanserv_user_list,		{"USERLIST", "HLIST", "ACCESS", NULL, NULL}, NULL, "Show the bot's access list."},
+    {INFO_COMMAND,    0, 0, chanserv_variables,		{"VARIABLES", NULL, NULL, NULL, NULL}, NULL, "Displays variables you can use."},
 #if CTCP == 1
     {INFO_COMMAND,    0, 0, chanserv_version,		{"\1VERSION\1", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_vhost,		{"VHOST", "SETHOST", NULL, NULL, NULL}, "<new virtual host> (requires a restart)", ""},
+    {DANGER_COMMAND,  3, 1, chanserv_vhost,		{"VHOST", "SETHOST", NULL, NULL, NULL}, "<new virtual host>", "Set the bot's virtual host (requires a restart)."},
 #if DO_CHANBOT_CRAP == 1
-    {NORMAL_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "[#channel] <nicks>", ""},
+    {NORMAL_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel voice status to users."},
 #endif
-    {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL, ""},
-    {NORMAL_COMMAND,  0, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", ""},
-    {INFO_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", ""},
-    {SAFE_COMMAND,    0, 2, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", ""},
+    {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL, "Reactivates bot from sleep mode."},
+    {NORMAL_COMMAND,  0, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", "Get decoded weather data."},
+    {INFO_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", "Recall a topic."},
+    {SAFE_COMMAND,    0, 2, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user privately."},
     {INFO_COMMAND,    4, 0, NULL, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL}
 };
 

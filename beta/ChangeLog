@@ -4,6 +4,9 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: Apr 21, 2006
+	- Added most of the help command summaries.
+
 Darkbot 8rc2: Apr 19, 2006
 	- Fine tuned what commands can be done where.  In particular
 	  any password related commands can only be done in private 
