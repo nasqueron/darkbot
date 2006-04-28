@@ -1,6 +1,7 @@
-Darkbot, Talking Robot - Copyright (c) 2002 Darkbot Project
+Darkbot, Talking Robot - Copyright (c) 2006 Darkbot Project
 
-- To configure your Darkbot on Unixes, run ./configure script.
+- To configure your Darkbot8rc1 or older on Unixes, run ./configure script.
+- To configure your Darkbot8rc2 and newer on Unixes, run ./autogen.sh script.
 - To configure on Windows edit files in dat folder.
 
 - For full  documentation  and  step  by  step configuration help,

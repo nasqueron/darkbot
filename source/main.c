@@ -102,11 +102,11 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * * * Darkbot, (c) 2004  ver. 7 final 3 * * * * * * * * * *  \n");
+	printf ("  * * * * * * * * * * Darkbot, (c) 2006  ver. 7 final 3 * * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");
-	printf ("  *             Project Administrator: LuizCB <luizcb@darkbot.info>       *  \n");
+	printf ("  *             Project Administrator: juice <juice@darkbot.org>          *  \n");
 	printf ("  *             Last major code changes: ron <ron@darkbot.org>            *  \n");
 	printf ("  *      Please check docs/contributors for a list of collaborators       *  \n");
 	printf ("  *                                                                       *  \n");

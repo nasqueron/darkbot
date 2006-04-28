@@ -5,7 +5,7 @@
 Hopefully this list will be complete by release 7. )
 		
 Author/creator   -  Jason Hamilton (play) Jason @ superlink.net
-Project Administrator - LuizCB (Pincel) - LuizCB @ darkbot.info
+Project Administrator - juice (juice) - juice @ darkbot.org
 
 A big portion of Darkbot's code,  although primarily and mainly done
 by Jason Hamilton, is also done with the expertise and donnation from

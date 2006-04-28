@@ -1,4 +1,4 @@
-Darkbot, Talking Robot - Copyright (c) 2002 Darkbot Project
+Darkbot, Talking Robot - Copyright (c) 2006 Darkbot Project
 
 - To configure your Darkbot on Unixes, run ./configure script.
 - To configure on Windows edit files in dat folder.
@@ -34,7 +34,7 @@ warranty of any kind.  In any event shall Darkbot project or any
 of it's collaborators be liable for any damages whatsoever.
 If you do not agree with the above user disclaimer, please do not
 use the program and delete all Darkbot files.
-Contact LuizCB@darkbot.info with any questions regarding the use
+Contact juice@darkbot.org with any questions regarding the use
 of this program.
 
 Darkbot is a creation of Jason Hamilton  [ Jason@superlink.net ]
@@ -43,6 +43,6 @@ code patches to the project. Please  read  file  contributors on
 docs directory with  a list of who  makes this program possible.
 
 
-LuizCB
-Project Administrator
-( LuizCB@darkbot.info )
+juice
+ Project Administrator
+( juice@darkbot.org )
