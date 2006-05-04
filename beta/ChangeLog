@@ -4,6 +4,10 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: May 04, 2006
+	- Cleaned generated files out of cvs and updated .cvsignore 
+	  files to match.
+
 Darkbot 8rc2: Apr 21, 2006
 	- Added most of the help command summaries.
 
