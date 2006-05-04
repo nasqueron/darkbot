@@ -11,7 +11,7 @@ configure.lineno
 darkbot
 darkbot.pid
 depcomp
-install.sh
+install-sh
 ltmain.sh
 missing
 mkinstalldirs
