@@ -1,2 +1,9 @@
+.deps
+Makefile
+Makefile.in
+config.h
 darkbot
+defines.h
+depcomp
+stamp-h1
 *.o

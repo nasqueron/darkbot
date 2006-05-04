@@ -1,3 +1,17 @@
+autom4te.cache
+Makefile
+Makefile.in
+aclocal.m4
+config.guess
+config.log
+config.status
+config.sub
+configure
+configure.lineno
 darkbot
 darkbot.pid
+depcomp
+install.sh
 ltmain.sh
+missing
+mkinstalldirs
