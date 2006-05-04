@@ -2,6 +2,7 @@
 Makefile
 Makefile.in
 config.h
+config.h.in
 darkbot
 defines.h
 depcomp
