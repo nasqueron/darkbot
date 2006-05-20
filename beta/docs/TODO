@@ -21,9 +21,32 @@ be added, will be listed here.
   according to the action going on, for each specific 
   channel.
 
+- Fix broken commands.  google, calc, weather.
+
+- Make the google command (and maybe all other web 
+  lookup commands) more robust.
+
+- Add internet movie database (http://www.imdb.com) and 
+  slashdot news (http://slashdot.org) searches.
+
+- Single login, remembered across channel part/joins etc.
+
+- Make backup command work under Windows.
+
+- IPv6.
+
+- Merge acronym, 21, lurker, syndet, pantheon, and serv 
+  into darkbot.  All are linked to from the darkbot pages.
+
 ----------------------------------------------------------
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
+
+Add command character to help text of any commands that need it. Strip
+command character from "help !foo" commands before looking them up. 
+Allow multiple command characters - SETCHAR !'~
+
+Make darkbot and convertdb use all this autodetected stuff from autofoo.
 
 Convert these things in defines into ./configure --enable-X 
 CTCP DO_CHANBOT_CRAP GOOGLE WEATHER METAR TAF QUIZ  
@@ -39,9 +62,21 @@ file.  Add a "!set foo=bar" command to configure it all.  Remove all
 commands that twiddled with some setup param and replace them with 
 "!set foo=bar".
 
+Convert to gettext.
+
+LSB style init script.
+
+Properly license it under GPL2.
+
+Update the INSTALL instructions.
+
+Merge all the scripts plus convertdb into darkbot so that all admin
+stuff can be done from IRC, command line, or text UI.
+
 Make the replaceable params in responses consistant.  X~ and %X.
 
-Convert to gettext.
+Find a cross pratform Windows/unix GUI toolkit we can live with and
+create a GUI for darkbot admin.
 
 Make multiple random responses easier to setup.
   admin: bot add foo bar | baz | some other response
@@ -117,8 +152,6 @@ On the other hand, question marks mean it is more likely to be a
 question.  Same applies to use of the W words near the beginning, they
 are more likely to be questions.
 
-Fix the google command, it returns the "feeling lucky" response.
-
 Add a locale to weather codes database or search facility.  Combine all
 the weather commands into one.  Make it return metric results.
 
@@ -130,3 +163,7 @@ Interface other shell commands, but be secure.  In fact, setup a chroot
 for arbitrary shell commands.
 
 Allow DCC to and from a file server.
+
+Scripting or modules.
+
+Channel protection - mass join, mass kick.

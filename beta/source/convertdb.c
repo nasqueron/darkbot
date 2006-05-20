@@ -1,6 +1,13 @@
+#ifdef 	HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#define _XOPEN_SOURCE
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <stdlib.h>
+
 // If you are compiling this on a non cygwin environment it's bin should
 // be placed on scripts directory and being so userlist relative path
 // should be "../dat/userlist.db" and "../dat/temp.db".
@@ -17,11 +24,9 @@
 
 
 
-char *crypt (const char *key, const char *salt);
-
 int main(int argc, char *argv[]){    FILE *in, *out;
     char *ptr = NULL;
-	char *salt = "8fei3k";
+    const char *salt = "8fei3k";
     char channel[1024] = { 0 };
     char uh[1024] = { 0 };
     char level[10] = { 0 };
@@ -73,7 +78,7 @@ int main(int argc, char *argv[]){    FILE *in, *out;
     {
 	    fscanf(in, "%s %s %s %s %s %[^\n]s", channel, uh, level, joins, pass, setinfo);
 
-        if ((ptr = crypt (pass, salt)) == NULL)
+        if ((ptr = crypt(pass, salt)) == NULL)
         {
             printf("\ncrypt() error\n");
             return EXIT_FAILURE;

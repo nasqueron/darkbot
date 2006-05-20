@@ -157,7 +157,6 @@ void	get_stats				(char *, char *);
 void	run_quiz_question			(char *);
 void	run_quiz_answer				(void);
 void	check_files				(void);
-char	*crypt					(const char *, const char *);
 void	run_perform				(void);
 void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
 int 	web_post_query				(char *trigger, char *source, char *uh, char *target, char *query, int size);

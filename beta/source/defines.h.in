@@ -1,3 +1,10 @@
+/* @configure_input@ */
+
+#ifdef 	HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+
 /* defines.h
  ***	Darkbot (c) 2002
  *	The Internet Relay Chat Talking Robot
@@ -760,10 +767,8 @@ for 60 sec)"
 
 /* -------------------------------------------------- */
 
-#ifdef 	HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "langs/lang.h"
+
 #include <ctype.h>
 #include <stdio.h>
 #ifndef     HAVE_CLOCK_T

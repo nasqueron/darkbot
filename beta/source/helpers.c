@@ -1,3 +1,14 @@
+
+#ifdef 	HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#define _XOPEN_SOURCE
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
@@ -15,8 +26,8 @@ add_helper (const char *chan,
 	struct	helperlist *n = 0;
 	char	*ptr = NULL;
 #if	ENCRYPT_PASSWORDS == ON
-	char	*salt = "8fei3k";
-	
+	const char *salt = "8fei3k";
+
 	if ( mode == 0 )
     {
         if ((ptr = crypt (pass, salt)) == NULL)	/* encrypt password */
@@ -27,7 +38,7 @@ add_helper (const char *chan,
 #else
 	ptr = (char *)pass;
 #endif
-    
+
 
 	n = malloc (sizeof (struct helperlist));
 	if (n == NULL)
@@ -78,7 +89,7 @@ show_helper_list (const char *nick, long level)
 	size_t	i = 0,	x = 0;
 	const	struct	helperlist *c = NULL;
 
-	
+
 	for (c = helperhead; c != NULL; c = c->next)
 	{
 		// If we're displaying users at all levels...
@@ -105,7 +116,7 @@ show_helper_list (const char *nick, long level)
 
 	if (x != 0)
 		S ("NOTICE %s :%s\n", nick, DATA);
-	
+
 	S ("NOTICE %s :End of Helper Userlist; %d user%s found.\n", 
 		nick, x, 
 		(x == 1) ? "" : "s");

@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
+#include <libgen.h>
 
 /**
  * 6/23/00 Dan:
@@ -10,9 +11,11 @@ int
 main (int argc, char **argv)
 {
 	char temp[STRING_SHORT] = { 0 };
+	char exe[STRING_SHORT] = { 0 };
 	struct timeval timeout;
 	int		i = 0;
 	fd_set fdvar;
+	struct stat st;
 
 #if (SGI == 1) || (NEED_LIBC5 == 1)
 	struct sigaction newact;
@@ -25,7 +28,23 @@ main (int argc, char **argv)
 	srand (time (0));
 	uptime = time (NULL);
 
+	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
+	strncpy (exe, argv[0], sizeof (exe));  /* Coz basename() may modify it's argument. */
+
+#ifdef DATABASEDIR
+	strncpy (DAT_DIR, DATABASEDIR, sizeof (DAT_DIR));
+#else
 	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
+#endif
+#ifdef SOURCEDIR
+	/* Check if this is being run from the build directory before being installed. */
+	snprintf(temp, sizeof(temp), "%s/dat/setup.ini", SOURCEDIR);
+	if (stat(temp, &st) >= 0)
+	{
+	    snprintf(temp, sizeof(temp), "%s/dat", SOURCEDIR);
+	    strncpy(DAT_DIR, temp, sizeof (DAT_DIR));
+	}
+#endif
 
 	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
@@ -70,7 +89,6 @@ main (int argc, char **argv)
 
 	set_paths ();
 
-	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
 #if (SGI == 1) || (NEED_LIBC5 == 1)
 	newact.sa_handler = sig_alrm;
 	sigemptyset (&newact.sa_mask);
@@ -88,12 +106,6 @@ main (int argc, char **argv)
 	signal (SIGALRM, sig_alrm);
 	signal (SIGSEGV, sig_segv);
 	signal (SIGHUP, sig_hup);
-#endif
-#ifndef	WIN32
-#ifdef	FORK
-	if (fork ())
-		exit (0);
-#endif
 #endif
 #ifdef	RANDOM_STUFF
 	get_rand_stuff_time ();
@@ -124,9 +136,6 @@ main (int argc, char **argv)
 	snprintf (temp, sizeof (temp), "lynx -source http://www.darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 #endif
-	/* Added the cast to getpid() to remove warnings on Solaris */
-	sprintf (temp, "echo \"%d\" > %s.pid", (int) getpid (), DARKBOT_BIN);
-	system (temp);
 #endif
 #ifndef	WIN32
 	db_sleep (2);
