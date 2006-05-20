@@ -1,0 +1,62 @@
+These are some notes on how to maintain and hack the Darkbot source
+code.  Part of this is justifications and assumptions, so that if an
+assumption changes, we know what to change.
+
+
+SOFTWARE REQUIREMENTS FOR DEVELOPERS
+
+GNU M4   1.4
+autoconf 2.59
+automake 1.9
+
+
+AUTOCONF, AUTOMAKE, AND FRIENDS (AUTOFOO)
+
+I've been researching recent autofoo best practises.  Most users of
+autofoo don't really understand it and just copy someone else's autofoo,
+or follow one of several out of date tutorials.  I've attempted to
+create an up to date set of autofoo stuff that follows recent best
+practises.
+
+In an attempt to provide the autogen.sh and bootstrap.sh that are now
+outdated, but that everybody is used to, I have added other scripts in
+the top level directory.  These scripts provide an easy to use method of
+doing the usual things in the usual ways.
+
+clean.sh - cleans up after all the other scripts, this includes deleting
+the $HOME/darkbot default install directory.
+
+bootstrap.sh - Do all the autofoo magic and generate the configure
+script.
+
+dist.sh - calls bootstrap.sh to do all the autofoo magic, then builds the
+source distribution archive from scratch.
+
+autogen.sh - calls bootstrap.sh to do all the autofoo magic, then calls
+the resulting configure script.  Defaults to using $HOME/darkbot as the
+prefix.
+
+build.sh - calls autogen.sh to configure everything, then builds
+everything from scratch.
+
+One of the major things I have attempted to do is to enable building
+darkbot from "out of tree".  That means building it from anywhere
+outside of the directory that holds the source code.  In this way the
+downloaded darkbot directory can be kept pristine.  There are now
+scripts that create a directory called "build" and put generated files
+in there.
+
+I experimented a lot with clean ways of doing out of tree builds, but
+inconsistancies in the way the various autofoo programs work means that
+the only way that worked was to create a build directory, copy
+configure.ac and Makefile.am into it, then build everything from there. 
+This does mean that the top level directory doesn't got a configure or a
+Makefile.
+
+Aclocal ignores the redirection of autom4te.cache to the build
+directory.  Autoconf (when run from autoreconf) insists on putting
+configure in the same directory as configure.ac.  Automake ignores the
+redirection of aclocal.m4 to the build directory, and insists on putting
+Makefile.in in the same directory as Makefile.am.   Automake creates
+make files that don't know how to make dist properly when building out
+of tree.
