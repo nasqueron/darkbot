@@ -1,7 +1,5 @@
 #! /bin/sh
 
-./autogen.sh
-
 cd build
-make && make install
+./configure -C --prefix=$HOME/darkbot "$@" && make && make install
 cd ..

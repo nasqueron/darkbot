@@ -36,7 +36,10 @@ autogen.sh - calls bootstrap.sh to do all the autofoo magic, then calls
 the resulting configure script.  Defaults to using $HOME/darkbot as the
 prefix.
 
-build.sh - calls autogen.sh to configure everything, then builds
+build.sh - builds darkbot, but assumes that bootstrap.sh has already
+been run.
+
+rebuild_all.sh - calls autogen.sh to configure everything, then builds
 everything from scratch.
 
 One of the major things I have attempted to do is to enable building
