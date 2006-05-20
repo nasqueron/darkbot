@@ -29,18 +29,20 @@ the $HOME/darkbot default install directory.
 bootstrap.sh - Do all the autofoo magic and generate the configure
 script.
 
-dist.sh - calls bootstrap.sh to do all the autofoo magic, then builds the
-source distribution archive from scratch.
+distribute.sh - calls bootstrap.sh to do all the autofoo magic, then
+builds the source distribution archive from scratch.
 
 autogen.sh - calls bootstrap.sh to do all the autofoo magic, then calls
 the resulting configure script.  Defaults to using $HOME/darkbot as the
 prefix.
 
 build.sh - builds darkbot, but assumes that bootstrap.sh has already
-been run.
+been run.  It will run bootstrap.sh if needed. but this script is meant
+for ordinary users installing from the source distribution archive.
 
 rebuild_all.sh - calls autogen.sh to configure everything, then builds
-everything from scratch.
+everything from scratch.  This script is meant for developers installing
+from cvs.
 
 One of the major things I have attempted to do is to enable building
 darkbot from "out of tree".  That means building it from anywhere
