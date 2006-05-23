@@ -23,7 +23,7 @@ LIB_SOCKET_NSL
 # Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h fcntl.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h unistd.h])
+AC_CHECK_HEADERS([arpa/inet.h errno.h fcntl.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -37,6 +37,7 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
+# FIXME: change all select()'s to cater to the detected results of this -
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_STAT

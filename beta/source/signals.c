@@ -155,11 +155,12 @@ sig_segv (int notUsed)
 		  uptime2 / 3600 == 1 ? "" : "s", (uptime2 / 60) % 60, (uptime2 / 60) % 60 == 1 ? "" : "s");
 	db_sleep (2);
 	p = getpid ();
+        // FIXME: Not sure about this, maybe we can live without the fork, maybe without the kills.
 	if (fork () > 0)
 	{
 		db_log ("error.log", "Caught SIGSEGV.. Sent kill -3 and kill -9...\n");
-		kill (p, 3);
-		kill (p, 9);
+		kill (p, 3);  /* SIGQUIT - terminate process and dump core. */
+		kill (p, 9);  /* SIGKILL */
 	}
 	db_sleep (1);
 	exit (0);
