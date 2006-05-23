@@ -70,6 +70,10 @@ Properly license it under GPL2.
 
 Update the INSTALL instructions.
 
+We use usleep(), sleep(), and alarm().  Using any two of those at the
+same time is bad.  usleep() is obsolete, and alarm() may not be portable
+enough.
+
 Merge all the scripts plus convertdb into darkbot so that all admin
 stuff can be done from IRC, command line, or text UI.
 
