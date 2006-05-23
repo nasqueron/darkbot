@@ -45,6 +45,7 @@ AC_TYPE_SIGNAL
 AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([alarm gethostbyname memmove memset select socket strcasecmp strchr strrchr strspn strstr])
+AC_REPLACE_FUNCS([snprintf])
 
 # User enabled stuff.
 DB_ENABLE_COMMAND([math],[yes],[DO_MATH_STUFF])

@@ -6,10 +6,6 @@ void	parse_252				(char *),
 	parse_255				(char *);
 #endif
 
-#ifndef	WIN32
-	inline	size_t min			(const size_t, const size_t);
-#endif
-
 char	*db_strndup				(const char *, size_t);
 char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
@@ -145,10 +141,6 @@ void	show_chaninfo				(const char *, const char *, const char *);
 void	show_chanusers				(const char *, const char *);
 
 const 	char		*run_program		(const char *);
-
-#ifndef	HAVE_SNPRINTF
-int	snprintf				(char *, size_t, const char *, ...);
-#endif
 
 void	do_autotopics				(void);
 void	add_stats				(char *, char *, long, long, long);

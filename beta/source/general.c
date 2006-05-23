@@ -222,7 +222,7 @@ db_strndup (const char *dupMe, size_t maxBytes)
 	char *retMe = NULL;
 
 	/* Configure maxBytes to be the number of bytes to copy */
-	maxBytes = min (strlen (dupMe), maxBytes);
+	maxBytes = MIN(strlen(dupMe), maxBytes);
 	/* Allocate the return buffer. */
 	retMe = malloc (maxBytes + 1);
 	/* Was the allocation successful? */
@@ -287,14 +287,6 @@ match_wild (const char *pattern, const char *str)
 		}						/* switch */
 	}
 }
-
-#ifndef WIN32
-size_t
-min (const size_t a, const size_t b)
-{
-	return ((a < b) ? a : b);
-}
-#endif
 
 char **
 tokenize (char *theString, size_t * numTokens)
@@ -456,22 +448,6 @@ check_dbtimers (void)
         // FIXME: if CLOSEDIR_VOID is not defined, check the return value.
 	closedir (dp);
 }
-
-#ifndef	HAVE_SNPRINTF
-int
-snprintf (char *buff, size_t size, const char *fmt, ...)
-{
-	static char temp[BUFSIZ];	/* a temp (large buffer) */
-	int result;
-	va_list ap;
-	va_start (ap, fmt);
-	result = vsprintf (temp, fmt, ap);
-	strncpy (buff, temp, size - 1);	/* copy at most n */
- 	buff[size - 1] = '\0';		/* ensure \0 at end */
-	va_end (ap);
-	return result;
-}
-#endif
 
 int
 add_ignore_user_ram (char *nick)

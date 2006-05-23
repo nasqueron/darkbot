@@ -63,7 +63,7 @@ add_helper (const char *chan,
 	strncpy (n->pass, ptr, sizeof (n->pass));
 	n->num_join = num_join;
 	n->level = level;
-	strncpy (n->greetz, greetz, min (sizeof (n->greetz) - 1, strlen (greetz)));
+	strncpy (n->greetz, greetz, MIN(sizeof(n->greetz) - 1, strlen(greetz)));
 	n->next = helperhead;
 	helperhead = n;
 }

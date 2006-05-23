@@ -859,6 +859,7 @@ char *strchr (), *strrchr ();
 #endif
 
 #include "compat/stat-macros.h"
+#include "compat/minmax.h"
 
 #define db_sleep(x) usleep(x*1000)
 

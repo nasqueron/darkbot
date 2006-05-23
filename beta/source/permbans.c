@@ -66,7 +66,7 @@ check_permban (const char *uh, const char *chan, const char *nick)
 	struct permbanlist *c = permbanhead;
     size_t len = 0;
 
-    len = min ( STRING_SHORT, strlen (uh) );
+    len = MIN(STRING_SHORT, strlen(uh));
 
 	strncpy (tmpBuf, uh, len);
     tmpBuf[len] = '\0';
