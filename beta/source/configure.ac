@@ -25,7 +25,8 @@ LIB_SOCKET_NSL
 # Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h errno.h fcntl.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h unistd.h])
+AC_HEADER_STAT
+AC_CHECK_HEADERS([arpa/inet.h errno.h fcntl.h limits.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/param.h sys/socket.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -42,10 +43,12 @@ AC_FUNC_REALLOC
 # FIXME: change all select()'s to cater to the detected results of this -
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
+AC_FUNC_LSTAT
 AC_FUNC_STAT
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([alarm gethostbyname memmove memset select socket strcasecmp strchr strrchr strspn strstr])
-AC_REPLACE_FUNCS([snprintf])
+# FIXME: No idea at the moment what to do about select, socket, and strspn.
+AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr strspn])
+AC_REPLACE_FUNCS([memset snprintf strcasecmp strstr])
 
 # User enabled stuff.
 DB_ENABLE_COMMAND([math],[yes],[DO_MATH_STUFF])
