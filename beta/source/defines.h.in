@@ -858,6 +858,7 @@ char *strchr (), *strrchr ();
 # define EXIT_FAILURE 1
 #endif
 
+#include "compat/stat-macros.h"
 
 #define db_sleep(x) usleep(x*1000)
 

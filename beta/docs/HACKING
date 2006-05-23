@@ -64,4 +64,5 @@ configure in the same directory as configure.ac.  Automake ignores the
 redirection of aclocal.m4 to the build directory, and insists on putting
 Makefile.in in the same directory as Makefile.am.   Automake creates
 make files that don't know how to make dist properly when building out
-of tree.
+of tree.  Automake & autoconf can't handle having the compat sources in
+a seperate directory.

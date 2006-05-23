@@ -5,6 +5,7 @@ AC_INIT([Darkbot],[8rc2],[ron@darkbot.org])
 AC_COPYRIGHT([Copyright 2003 Darkbot Development Team])
 AC_REVISION($Revision$)
 AC_CONFIG_AUX_DIR([auxdir])
+AC_CONFIG_LIBOBJ_DIR([../source/compat])
 AC_CONFIG_MACRO_DIR([../m4])
 AC_CONFIG_SRCDIR([../source/parse.c])
 AC_CONFIG_HEADERS([config.h])
@@ -15,6 +16,7 @@ AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror])
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+AC_PROG_RANLIB
 
 # Checks for libraries.
 AC_CHECK_LIB(crypt, crypt)
