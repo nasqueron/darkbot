@@ -33,13 +33,15 @@
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
+#undef strcasecmp
+
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than, equal to or greater
    than S2.
    Note: This function may, in multibyte locales, return 0 for strings of
    different lengths!  */
 int
-strcasecmp (const char *s1, const char *s2)
+rpl_strcasecmp (const char *s1, const char *s2)
 {
   if (s1 == s2)
     return 0;
