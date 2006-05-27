@@ -156,9 +156,7 @@ save_permbans (void)
 
 	remove (TMP_FILE);
 
-#ifdef	WIN32
 	printf ("*** Writing permbans: %s (%s)\n", PERMBAN, date ());
-#endif
 
 	for (; c != NULL; c = c->next)
 	{

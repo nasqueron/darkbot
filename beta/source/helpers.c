@@ -124,9 +124,7 @@ load_helpers (void)
 		printf ("Please run ./configure to setup your darkbot.\n");
 		exit (0);
 	}
-#ifndef	WIN32
 	printf ("Loading %s file ", HELPER_LIST);
-#endif
 	while (fgets (b, STRING_LONG, fp))
 	{
 		if (b == NULL)

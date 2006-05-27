@@ -99,9 +99,7 @@ save_seen (char *nick, char *uh, char *chan)
 	long	toggle = 0;
 	time_t	unixtime = 0;
 
-#ifdef	WIN32
 	printf ("\n*** Writing seen file: %s (%s) [%s]\n", CHAN, SEEN_FILE, date ());
-#endif
 
 	unlink (TMP_FILE);
 

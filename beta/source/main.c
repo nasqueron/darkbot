@@ -132,20 +132,16 @@ main (int argc, char **argv)
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
-#ifndef DISALLOW_COUNT
+# ifndef DISALLOW_COUNT
 	snprintf (temp, sizeof (temp), "lynx -source http://www.darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
-#endif
-#endif
-#ifndef	WIN32
+# endif
 	db_sleep (2);
-#endif
-#ifndef	WIN32
-#ifdef	SORT
+# ifdef	SORT
 	printf ("Sorting database...\n");
 	snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
 	system (temp);
-#endif
+# endif
 #endif
 	load_helpers ();
 	load_stats ();
@@ -153,8 +149,6 @@ main (int argc, char **argv)
 	raw_now ("SERVERS");
 	raw_now ("SETUP");
 	raw_now ("PERMBAN");
-#ifndef	WIN32
-#endif
 	alarm (AIL);
 	prepare_bot ();
 	register_bot ();

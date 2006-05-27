@@ -145,9 +145,7 @@ save_changes (void)
 void
 save_setup (void)
 {
-#ifdef	WIN32
 	printf ("*** Writing setup file: %s (%s)\n", SETUP, date ());
-#endif
 	remove (TMP_FILE);
 	db_log (TMP_FILE, "NICK=%s\n", s_Mynick);
 	db_log (TMP_FILE, "USERID=%s\n", UID);

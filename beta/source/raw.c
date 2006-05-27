@@ -151,9 +151,7 @@ raw_now (char *type)
 		}
 		else if (strcasecmp (type, "SERVERS") == 0)
 		{
-#ifndef	WIN32
 			printf ("Loading %s file ", SERVERS);
-#endif
 			while (fgets (str, STRING_LONG, fp))
 			{
 				/* Allow comments */

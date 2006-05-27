@@ -43,9 +43,7 @@ sig_alrm (int notUsed)
 		LastInput = 0;
 #if CHECK_STONED == 1
 		L088 (BS);
-#ifdef	WIN32
 		printf ("\nNo response from %s in 5 mins, reconnecting...\n", BS);
-#endif
 		prepare_bot ();
 		register_bot ();
 #endif

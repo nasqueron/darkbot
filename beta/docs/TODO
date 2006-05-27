@@ -7,8 +7,6 @@ suggestions that people have made, that are planning to
 be added, will be listed here.
 ----------------------------------------------------------
 
-- Finish the autoconf/automake scripts that I started on.
-
 - Add some kind of escape sequence or special parsing 
   for topics that start with key words like "WHAT", these
   words are also recognized internally by the bot for 
@@ -46,8 +44,6 @@ Add command character to help text of any commands that need it. Strip
 command character from "help !foo" commands before looking them up. 
 Allow multiple command characters - SETCHAR !'~
 
-Make darkbot and convertdb use all this autodetected stuff from autofoo.
-
 Convert these things in defines into ./configure --enable-X 
 CTCP DO_CHANBOT_CRAP GOOGLE WEATHER METAR TAF QUIZ  
 DO_MATH_STUFF STATUS DO_WHOIS ENCRYPT_PASSWORDS
@@ -75,6 +71,9 @@ same time is bad.  usleep() is obsolete, and alarm() may not be portable
 enough.
 
 Convert use of the obsolete gethostbyname() to getaddrinfo().
+
+The first argument passed to the various select() calls could be better,
+it's more efficient to actually calculate that.
 
 Merge all the scripts plus convertdb into darkbot so that all admin
 stuff can be done from IRC, command line, or text UI.

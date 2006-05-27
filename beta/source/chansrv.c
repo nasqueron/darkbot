@@ -465,7 +465,6 @@ struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char
 	else
 		Snow("QUIT :K\2\2illed (%s (%s))\n", source, s);
 	db_sleep (1);
-#ifdef	WIN32
 	printf ("\n\nGood-bye! %s (c) Jason Hamilton\n\n", dbVersion);
 	uptime = time (NULL) - uptime;
 	printf("Time elapsed: %ld hour%s, %ld min%s\n\n",
@@ -473,7 +472,6 @@ struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char
 		 uptime / 3600 == 1 ? "" : "s",
 		 (uptime / 60) % 60, (uptime / 60) % 60 == 1 ? "" : "s");
 	db_sleep (5);
-#endif
 	exit (0);
 
 	return result;
