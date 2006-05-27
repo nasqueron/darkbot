@@ -105,13 +105,13 @@
  * darkbot is. If you DO NOT WANT THIS, then define this. We recommend
  * keeping this defined.
  */
-#define DISALLOW_COUNT
+//#define ENABLE_VERSION_CHECK
 
 /* ==== ON CONNECTION ==== */
 /*
  * Print out extra details while starting up?
  */
-#define	VERB
+//#define	VERB
 
 /*
  * Check if servers are not responding, is so
@@ -123,7 +123,7 @@
  * ALSO NOTE: If your bot seems to disconnect every 5 minutes, try
  * turning off the CHECK_STONED code.
  */
-#define	CHECK_STONED ON
+//#define	CHECK_STONED ON
 
 /*
  * This is the time that darkbot will wait for a connection
@@ -150,7 +150,7 @@
 /*
  * Reply to CTCP's? (PING/VERSION). 
  */
-#define	CTCP ON
+//#define	CTCP ON
 
 /*
  * Want your darkbot to always have less than
@@ -231,7 +231,7 @@
  * turn this option off, you'll need to redo your userlist.db file.
  * Note: If you're new to Darkbot, you may want to turn this option OFF.
  */
-#define ENCRYPT_PASSWORDS OFF
+//#define ENCRYPT_PASSWORDS OFF
  
 /*
  * Minimal access level required to add
@@ -494,7 +494,7 @@
  * IRCD's allows NOTICE to be sent using /notice @#chan
  * (default = OFF)
  */
-#define	DO_WHOIS OFF
+//#define	DO_WHOIS OFF
 
 /*
  * Max length in seconds to keep a lastseen
@@ -538,7 +538,7 @@
  * includes PERMBANS. On linux, without this, your darkbot
  * bin will shrink considerably. (default = ON)
  */
-#define DO_CHANBOT_CRAP ON
+//#define DO_CHANBOT_CRAP ON
 
 /*
  * Autotopic time interval in seconds
@@ -600,27 +600,27 @@
 /*
  * Google search feature (default = ON)
  */
-#define GOOGLE ON
+//#define GOOGLE ON
 
 /*
  * METAR search feature (default = ON)
  */
-#define METAR ON
+//#define METAR ON
 
 /* 
  * WEATHER search feature (default = ON)
  */
-#define	WEATHER ON
+//#define	WEATHER ON
 
 /*
  * TAF search feature (default = ON)
  */
-#define TAF ON
+//#define TAF ON
 
 /*
  * Bot's online QUIZ (default = OFF)
  */
-#define QUIZ OFF
+//#define QUIZ OFF
 
 /*
  * How long to wait before giving the answer? (default = 25)
@@ -644,7 +644,7 @@
  * is display network info like opers, servers, avg # 
  * of users on the servers, etc.
  */
-#define STATUS OFF
+//#define STATUS OFF
 
 /* ================ AID DIRECTIVES ================ */
 

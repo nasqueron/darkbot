@@ -51,7 +51,20 @@ AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr])
 AC_REPLACE_FUNCS([memset snprintf strcasecmp strcasestr strndup strspn strstr])
 
 # User enabled stuff.
-DB_ENABLE_COMMAND([math],[yes],[DO_MATH_STUFF])
+DB_ENABLE_COMMAND([math],[yes],[MATH])
+DB_ENABLE_COMMANDS([CTCP],[yes],[CTCP])
+DB_ENABLE_COMMANDS([channel],[yes],[CHANNEL])
+DB_ENABLE_COMMAND([google],[yes],[GOOGLE])
+DB_ENABLE_COMMAND([weather],[yes],[WEATHER])
+DB_ENABLE_COMMAND([METAR],[yes],[METAR])
+DB_ENABLE_COMMAND([TAF],[yes],[TAF])
+DB_ENABLE_COMMAND([quiz],[no],[QUIZ])
+DB_ENABLE_GENERIC([status],[no],[STATUS],[display of network status])
+DB_ENABLE_GENERIC([whois],[no],[WHOIS],[notification of users from questionable channels])
+DB_ENABLE_GENERIC([stoned],[yes],[STONED_CHECK],[server stoned check])
+DB_ENABLE_GENERIC([version],[no],[VERSION_CHECK],[new darkbot version check])
+DB_ENABLE_GENERIC([verbose],[yes],[VERBOSE],[verbose startup])
+DB_ENABLE_GENERIC([encrypt],[no],[ENCRYPT],[encryption of passwords])
 
 # Create output files.
 AC_CONFIG_FILES([Makefile defines.h:../source/defines.h.in])

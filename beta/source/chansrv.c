@@ -200,7 +200,7 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -225,7 +225,7 @@ struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, c
 }
 #endif
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -235,7 +235,7 @@ struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd,
 }
 #endif
 
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
 struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -335,7 +335,7 @@ struct chanserv_output *chanserv_date(char *source, char *target, char *cmd, cha
     return chanserv_asprintf(NULL, "%s.", date());
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_delban(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -395,7 +395,7 @@ struct chanserv_output *chanserv_deluser(char *source, char *target, char *cmd, 
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -487,7 +487,7 @@ struct chanserv_output *chanserv_display(char *source, char *target, char *cmd, 
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_down(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -509,7 +509,7 @@ struct chanserv_output *chanserv_darkbot(char *source, char *target, char *cmd, 
 	return chanserv_asprintf(NULL, "%s reporting! My cmdchar is %c.", dbVersion, *CMDCHAR);
 }
 
-#if GOOGLE == 1
+#ifdef ENABLE_GOOGLE
 struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -667,7 +667,7 @@ struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, cha
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -819,7 +819,7 @@ struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, c
 }
 #endif
 
-#if METAR == 1
+#ifdef ENABLE_METAR
 struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -856,7 +856,7 @@ struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, cha
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -921,7 +921,7 @@ struct chanserv_output *chanserv_performs(char *source, char *target, char *cmd,
 	return chanserv_asprintf(NULL, "Performs have been executed.");
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_perm_ban(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -946,7 +946,7 @@ struct chanserv_output *chanserv_perm_bans_list(char *source, char *target, char
 }
 #endif
 
-#if CTCP == 1
+#ifdef ENABLE_CTCP
 struct chanserv_output *chanserv_ping(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -976,7 +976,7 @@ struct chanserv_output *chanserv_queue_show(char *source, char *target, char *cm
 	return chanserv_asprintf(NULL, "There is currently %d item%s in queue.", get_sendq_count(2), (get_sendq_count(2) == 1) ? "" : "s");
 }
 
-#if QUIZ == 1
+#ifdef ENABLE_QUIZ
 struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1327,7 +1327,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 	return result;
 }
 
-#if TAF == 1
+#ifdef ENABLE_TAF
 struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1340,7 +1340,7 @@ struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char
 }
 #endif
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1390,7 +1390,7 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_topic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1446,7 +1446,7 @@ struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd,
 	return result;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_up(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1479,7 +1479,7 @@ struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd
 	return result;
 }
 
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 struct chanserv_output *chanserv_users_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1495,7 +1495,7 @@ struct chanserv_output *chanserv_variables(char *source, char *target, char *cmd
 	return chanserv_asprintf(NULL, "Data variables are: N~ (Nick), C~ (Chan), T~ (Time/date) B~ (Botnick), Q~ (Question asked), R~ (random nick), !~ (command char), S~ (current Server), P~ (current port) V~ (botVer), W~ (db WWW site), H~ (u@h), t~ (unixtime), BAN (sets a ban), TEMPBAN (bans for 60 sec).");
 }
 
-#if CTCP == 1
+#ifdef ENABLE_CTCP
 struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1521,7 +1521,7 @@ struct chanserv_output *chanserv_vhost(char *source, char *target, char *cmd, ch
 	return chanserv_asprintf(NULL, "NOTICE %s :Default Vhost now: %s.", VHOST);
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1565,6 +1565,7 @@ struct chanserv_output *chanserv_wakeup(char *source, char *target, char *cmd, c
 	return result;
 }
 
+#ifdef ENABLE_WEATHER
 struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1574,6 +1575,7 @@ struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, 
 
 	return result;
 }
+#endif
 
 struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1641,16 +1643,16 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
     {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]", "Add a user to the access list."},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>", "Set some text to be said by the bot at a later time."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>", "Refreshes the channel topic every thirty minutes (set to \"0\" to turn off)."},
 #endif
 #ifndef	WIN32
     {DANGER_COMMAND,  3, 0, chanserv_backup,		{"BACKUP", NULL, NULL, NULL, NULL}, NULL, "Create a backup of the database."},
 #endif
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {INFO_COMMAND,    1, 0, chanserv_ban_list,		{"BANLIST", NULL, NULL, NULL, NULL}, NULL, "Displays permanent bans."},
 #endif
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
     {INFO_COMMAND,    0, 1, chanserv_calc,		{"CALC", "MATH", NULL, NULL, NULL}, "<expression>", "Very basic calculator."},
 #endif
     {INFO_COMMAND,    0, 1, chanserv_chan_info,		{"CHANINFO", NULL, NULL, NULL, NULL}, "<#channel>", "Displays number of users in channel and in ram."},
@@ -1662,23 +1664,23 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_data_search,	{"DATASEARCH", "DSEARCH", "DFIND", NULL, NULL}, "<topic>", "Search in the replies."},
     {INFO_COMMAND,    0, 0, chanserv_date,		{"DATE", "TIME", NULL, NULL, NULL}, NULL, "Show the current date and time."},
     {DANGER_COMMAND,  0, 1, chanserv_reserved_2,	{RESERVED2, NULL, NULL, NULL, NULL}, "<>", ""},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the permanent ban list."},
 #endif
     {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the access list."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Remove channel operator status from users."},
     {NORMAL_COMMAND,  3, 1, chanserv_devoice,		{"DEVOICE", "DV", "DEV", "DVOICE", NULL}, "[#channel] <nicks>", "Remove channel voice status from users."},
 #endif
     {DANGER_COMMAND,  3, 0, chanserv_die,		{"DIE", "QUIT", NULL, NULL, NULL}, NULL, "Stop bot from running."},
     {INFO_COMMAND,    0, 1, chanserv_display,		{"DISPLAY", NULL, NULL, NULL, NULL}, "<topic>", "Display the text for a topic."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  2, 0, chanserv_down,		{"DOWN", NULL, NULL, NULL, NULL}, NULL, "Remove channel operator status from yourself."},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_darkbot,		{"\2\2DARKBOT", NULL, NULL, NULL, NULL}, NULL, ""},
     {DANGER_COMMAND,  0, 1, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>", ""},
-#if GOOGLE == 1
+#ifdef ENABLE_GOOGLE
     {NORMAL_COMMAND,  0, 1, chanserv_google,		{"GOOGLE", NULL, NULL, NULL, NULL}, "<text>", "Look up the text on google."},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_help,		{"HELP", NULL, NULL, NULL, NULL}, "[command]", "Show some help text to the user."},
@@ -1690,7 +1692,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_isop,		{"ISOP", NULL, NULL, NULL, NULL}, "<nick>", "Is user a channel op?"},
     {DANGER_COMMAND,  2, 1, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>", "Get bot to join a channel."},
     {INFO_COMMAND,    0, 0, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL, "Shows the number of user joins bot has seen in this channel since startup."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_kick,		{"KICK", "WHACK", "K", "NAIL", NULL}, "[#channel] <nick> [reason]", "Kick a user off the channel."},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_language,		{"LANGUAGE", "LANG", NULL, NULL, NULL}, NULL, "Shows the language that bot is currently speaking."},
@@ -1699,33 +1701,33 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>", "Show users level."},
     {INFO_COMMAND,    0, 0, chanserv_location_show,	{"LOCATION?", NULL, NULL, NULL, NULL}, NULL, "Shows what servers are available and in use."},
     {PASSWORD_COMMAND, 0, 1, chanserv_login,		{"LOGIN", NULL, NULL, NULL, NULL}, "<password>", "Gives you access to high level bot commands if you are on the access list."},
-#if STATUS == 1
+#ifdef ENABLE_STATUS
     {INFO_COMMAND,    1, 0, chanserv_users_list,	{"LUSERS", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
     {INFO_COMMAND,    0, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", "Show the users user@host mask."},
 #ifndef	WIN32
     {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, "Shows some memory usage and process statistics."},
 #endif
-#if METAR == 1
+#ifdef ENABLE_METAR
     {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw METAR weather data."},
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", "Change bot's nickname."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel operator status to users."},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, "Show the operating system that bot is running on."},
     {PASSWORD_COMMAND, 0, 2, chanserv_password,		{"PASSWORD", "PASS", "PASSWD", NULL, NULL}, "<old password> <new password>", "Change your bot access list password."},
     {DANGER_COMMAND,  3, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL, "Perform the tasks in the perform.ini startup script."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_perm_ban,		{"PERMBAN", "SHITLIST", NULL, NULL, NULL}, "<user@host> [reason]", "Adds a user to the permanent ban list."},
     {INFO_COMMAND,    0, 0, chanserv_perm_bans_list,	{"PERMBANS?", NULL, NULL, NULL, NULL}, NULL, "Shows how many permanent bans there are."},
 #endif
-#if CTCP == 1
+#ifdef ENABLE_CTCP
     {INFO_COMMAND,    0, 1, chanserv_ping,		{"\1PING", NULL, NULL, NULL, NULL}, "<>", ""},
 #endif
     {INFO_COMMAND,    0, 0, chanserv_ping2,		{"PING", NULL, NULL, NULL, NULL}, NULL, "Replies with \"PONG\" to see how lagged the bot is.."},
     {INFO_COMMAND,    0, 0, chanserv_queue_show,	{"SENDQ?", "QUE?", NULL, NULL, NULL}, NULL, "Shows how many items are ready to be displayed."},
-#if QUIZ == 1
+#ifdef ENABLE_QUIZ
     {SAFE_COMMAND,    0, 0, chanserv_quiz,		{"QUIZ", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
 #if RANDQ == ON
@@ -1754,19 +1756,19 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, chanserv_setuser,		{"SETUSER", NULL, NULL, NULL, NULL}, "<new userid>", "Set the bot's userid (requires a restart)."},
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, "Deactivate bot for a period."},
     {INFO_COMMAND,    0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
-#if TAF == 1
+#ifdef ENABLE_TAF
     {NORMAL_COMMAND,  0, 1, chanserv_taf,		{"TAF", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw TAF weather data."},
 #endif
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  2, 1, chanserv_teaseop,		{"TEASEOP", "TO", NULL, NULL, NULL}, "<nick>", "Tease a user with channel operator status."},
 #endif
     {INFO_COMMAND,    0, 2, chanserv_tell,		{"TELL", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  2, 0, chanserv_topic,		{"TOPIC", "T", NULL, NULL, NULL}, "<channel topic>", "Change the channels topic."},
 #endif
     {DANGER_COMMAND,  1, 1, chanserv_unignore,		{"UNIGNORE", NULL, NULL, NULL, NULL}, "<nick>", "Get bot to stop ignoring a user."},
     {INFO_COMMAND,    0, 1, chanserv_unixtime,		{"UNIXTIME", NULL, NULL, NULL, NULL}, "<time>", "Shows unixtime."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  2, 0, chanserv_up,		{"UP", NULL, NULL, NULL, NULL}, NULL, "Add channel operator status to yourself."},
 #endif
 #ifndef	WIN32
@@ -1774,15 +1776,17 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {INFO_COMMAND,    1, 0, chanserv_user_list,		{"USERLIST", "HLIST", "ACCESS", NULL, NULL}, NULL, "Show the bot's access list."},
     {INFO_COMMAND,    0, 0, chanserv_variables,		{"VARIABLES", NULL, NULL, NULL, NULL}, NULL, "Displays variables you can use."},
-#if CTCP == 1
+#ifdef ENABLE_CTCP
     {INFO_COMMAND,    0, 0, chanserv_version,		{"\1VERSION\1", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_vhost,		{"VHOST", "SETHOST", NULL, NULL, NULL}, "<new virtual host>", "Set the bot's virtual host (requires a restart)."},
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
     {NORMAL_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel voice status to users."},
 #endif
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL, "Reactivates bot from sleep mode."},
+#ifdef ENABLE_WEATHER
     {NORMAL_COMMAND,  0, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", "Get decoded weather data."},
+#endif
     {INFO_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", "Recall a topic."},
     {SAFE_COMMAND,    0, 2, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user privately."},
     {INFO_COMMAND,    4, 0, NULL, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL}

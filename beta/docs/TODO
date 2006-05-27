@@ -44,11 +44,6 @@ Add command character to help text of any commands that need it. Strip
 command character from "help !foo" commands before looking them up. 
 Allow multiple command characters - SETCHAR !'~
 
-Convert these things in defines into ./configure --enable-X 
-CTCP DO_CHANBOT_CRAP GOOGLE WEATHER METAR TAF QUIZ  
-DO_MATH_STUFF STATUS DO_WHOIS ENCRYPT_PASSWORDS
-DISALLOW_COUNT VERB CHECK_STONED
-
 Convert these things in defines into ./configure --X=Y 
 LANG REQ_ACCESS_ADD REQ_ACCESS_DEL SLEEP_LEVEL RAND_LEVEL
 MAX_DATA_SIZE MAX_TOPIC_SIZE 
@@ -77,6 +72,10 @@ it's more efficient to actually calculate that.
 
 Merge all the scripts plus convertdb into darkbot so that all admin
 stuff can be done from IRC, command line, or text UI.
+
+Add a callback to the webinfo structure and otherwise restructure the
+web stuff so that disabling a web command can #ifdef out all the code for
+that command.
 
 Make the replaceable params in responses consistant.  X~ and %X.
 

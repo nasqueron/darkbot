@@ -10,6 +10,7 @@ sig_alrm (int notUsed)
 	check_dbtimers ();			/* timers :) */
 	AIL8 += AIL;
 
+#ifdef ENABLE_QUIZ
 	if (quiz_halt == 1)
 	{
 		AIL13++;
@@ -32,6 +33,8 @@ sig_alrm (int notUsed)
 		else
 			quiz_timer++;
 	}
+#endif
+
 	if (AIL8 >= SEND_DELAY)
 	{
 		AIL8 = 0;
@@ -41,7 +44,7 @@ sig_alrm (int notUsed)
 	if (LastInput >= 500)
 	{
 		LastInput = 0;
-#if CHECK_STONED == 1
+#ifdef ENABLE_STONED_CHECK
 		L088 (BS);
 		printf ("\nNo response from %s in 5 mins, reconnecting...\n", BS);
 		prepare_bot ();
@@ -122,7 +125,7 @@ sig_alrm (int notUsed)
 	if (AIL2 >= 300)
 	{
 		AIL2 = 0;
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 		S ("LUSERS\n");
 #endif
 		S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);

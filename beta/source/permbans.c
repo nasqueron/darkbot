@@ -84,7 +84,7 @@ check_permban (const char *uh, const char *chan, const char *nick)
 	return false;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 
 /**
  * Remove a permban based on nickname and user@host.
@@ -140,7 +140,7 @@ del_permban (const char *nick, const char *uh)
 }
 #endif
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 
 /**
  * Save the permban list to file.

@@ -44,7 +44,9 @@ extern long ram_load_time;
 extern long AIL9;
 extern long AIL666;
 extern long AIL8;
+#ifdef ENABLE_QUIZ
 extern long AIL13;
+#endif
 extern long LastInput;
 extern long AIL10;
 extern long MARK_CHANGE;
@@ -55,11 +57,13 @@ extern long lcn4;
 extern long lcn3;
 extern long SeeN;
 extern long DebuG;
+#ifdef ENABLE_QUIZ
 extern long quiz_timer;
 extern long quiz_line;
 extern bool quiz_answer;
 extern bool quiz_halt;
 extern long recent_questions[10];
+#endif
 extern char NICK_COMMA[32];
 extern char COLON_NICK[33];
 extern char BPASS[32];

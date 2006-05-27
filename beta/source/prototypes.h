@@ -1,6 +1,6 @@
 /* ------------ Below are function declarations --------------- */
 
-#if		STATUS == 1
+#ifdef ENABLE_STATUS
 void	parse_252				(char *), 
 	parse_251				(char *), 
 	parse_255				(char *);
@@ -39,13 +39,13 @@ void	datasearch				(const char *, char *, char *),
 long	verify_pass				(char *, char *, char *, char *), 
 	ifexist_autotopic			(char *);
 
-#if	DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 void	save_permbans				(void);
 #endif
 
 void	do_quit					(const char *, long);
 
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
 void	do_math					(const char *, char *, char *);
 #endif
 
@@ -56,7 +56,7 @@ void	delete_user_ram				(char *, char *),
 	delete_url				(const char *, char *, char *),
 	update_setinfo				(const char *, const char *, const char *);
 
-#if	DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 void	add_permban				(const char *, size_t, const char *);
 int	del_permban				(const char *, const char *);
 #endif
@@ -142,18 +142,13 @@ void	do_autotopics				(void);
 void	add_stats				(char *, char *, long, long, long);
 void	load_stats				(void);
 void	get_stats				(char *, char *);
+#ifdef ENABLE_QUIZ
 void	run_quiz_question			(char *);
 void	run_quiz_answer				(void);
+#endif
 void	check_files				(void);
 void	run_perform				(void);
-void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
 int 	web_post_query				(char *trigger, char *source, char *uh, char *target, char *query, int size);
-int 	web_open_socket				(char *host, int port);
-int 	web_write_server 			(int filedes, char *format,...);
-int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
-int 	google_parse_query			(char *source, char *uh, char *target, char *data);
-int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
-int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
 int	add_ignore_user_ram			(char *);
 int	delete_ignore_user_ram			(char *);
 int	check_ignore_user_ram			(char *);

@@ -31,12 +31,14 @@ long send_tog = 0;
 long NUM_HELPER = 0;
 long NUMLINESSEEN = 0;
 long NUM_USER = 0;
+#ifdef ENABLE_QUIZ
 long quiz_timer = 0;
 long quiz_line = 0;
 bool quiz_answer = 0;
 bool quiz_halt = 0;
 char quiz_target[STRING_SHORT] = { 0 };
 long recent_questions[10] = { 0 };
+#endif
 
 #ifdef	RANDOM_STUFF
 long Rand_Stuff = 0;
@@ -54,7 +56,9 @@ long ram_load_time = 0;
 long AIL9 = 0;
 long AIL666 = 0;
 long AIL8 = 0;
+#ifdef ENABLE_QUIZ
 long AIL13 = 0;
+#endif
 long LastInput = 0;
 long AIL10 = 0;
 long MARK_CHANGE = 0;

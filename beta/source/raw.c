@@ -114,7 +114,7 @@ raw_now (char *type)
 					*CMDCHAR = *ptr;
 				}
 			}
-#ifdef	VERB
+#ifdef	ENABLE_VERBOSE
 			printf ("   - botnick(%s),", Mynick);
 			printf ("userid(%s),", UID);
 			printf ("channel(%s),", CHAN);

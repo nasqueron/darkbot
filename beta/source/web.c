@@ -1,7 +1,18 @@
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
-#include "stdio.h"
+
+#if defined ENABLE_GOOGLE || defined ENABLE_METAR || defined ENABLE_TAF || defined ENABLE_WEATHER
+
+static void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
+static int 	web_open_socket				(char *host, int port);
+static int 	web_write_server 			(int filedes, char *format,...);
+static int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
+static int 	google_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	weather_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
+
 int
 web_post_query(char *trigger, char *source, char *uh, char *target, char *query, int size)
 {
@@ -73,7 +84,7 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     return SUCCESS;
 }
 
-void
+static void
 init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port)
 {
     struct hostent *hostinfo;
@@ -89,7 +100,7 @@ init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port)
     name->sin_addr = *(struct in_addr *) hostinfo->h_addr;
 }
 
-int
+static int
 web_open_socket(char *host, int port)
 {
     extern void init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port);
@@ -171,7 +182,7 @@ web_open_socket(char *host, int port)
     return SUCCESS;
 }
 
-int
+static int
 web_write_server (int filedes, char *format,...)
 {
     int	nbytes = 0;
@@ -221,7 +232,7 @@ web_write_server (int filedes, char *format,...)
     }
 }
 
-int
+static int
 web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 {
     int nbytes = 0;
@@ -308,7 +319,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     
     return SUCCESS;
 }
-int
+static int
 weather_parse_query (char *source, char *uh, char *target, char *data)
 {
 	char	*s1 = NULL, *s2 = NULL;
@@ -457,7 +468,7 @@ weather_parse_query (char *source, char *uh, char *target, char *data)
 			cond, vis, cloud, sunr, suns);
 
 }
-int
+static int
 google_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -511,7 +522,7 @@ google_parse_query(char *source, char *uh, char *target, char *data)
     return SUCCESS;
 }
 
-int
+static int
 metar_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -561,7 +572,7 @@ metar_parse_query(char *source, char *uh, char *target, char *data)
     return SUCCESS;
 }
 
-int
+static int
 taf_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -610,3 +621,5 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
     }
     return SUCCESS;
 }
+
+#endif

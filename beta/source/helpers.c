@@ -14,7 +14,7 @@ add_helper (const char *chan,
 {
 	struct	helperlist *n = 0;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	const char *salt = "8fei3k";
 
 	if ( mode == 0 )
@@ -183,7 +183,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 {
 	struct	helperlist *c;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	char	*salt = "8fei3k";
 #endif
 
@@ -191,7 +191,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 	strlwr (uh);
 
 
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	if ((ptr = crypt (pass, salt)) == NULL)	/* encrypt old password */
 		return;
 #else
@@ -231,14 +231,14 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 {
 	struct	helperlist *c;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	char	*salt = "8fei3k";
 #endif
 
 	c = helperhead;
 	strlwr (uh);
 
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	if ((ptr = crypt (pass, salt)) == NULL)
 		return 0;
 #else

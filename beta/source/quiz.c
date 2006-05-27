@@ -2,6 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
+#ifdef ENABLE_QUIZ
 void
 run_quiz_question (char *target)
 {
@@ -108,3 +109,4 @@ run_quiz_answer (void)
 
 	fclose (fp);
 }
+#endif

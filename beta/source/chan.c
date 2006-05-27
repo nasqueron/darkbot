@@ -2,7 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
 
 /* Changed input to be unsigned instead of signed. This
  * suppressed warning messages when compiling on Solaris.

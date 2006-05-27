@@ -146,7 +146,7 @@ parse (char *line)
 		{
 			s2 = strtok (NULL, "");
 			parse_who (s2);
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 		}
 		else if (strcasecmp (cmd, "252") == 0)
 		{
@@ -334,7 +334,7 @@ parse (char *line)
 					S ("PRIVMSG %s :hello %s. need any help?\n", s);
 #endif			
 
-#if DO_WHOIS == 1
+#ifdef ENABLE_WHOIS
 				strncpy (g_chan, s1, sizeof (g_chan));
 				S ("WHOIS %s\n", s);
 #endif
@@ -399,7 +399,7 @@ parse_who (char *data)
 		do_op(nick, chan, 1);
 }
 
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 void
 parse_252 (char *s)
 {
@@ -413,7 +413,7 @@ parse_252 (char *s)
 }
 #endif
 
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 void
 parse_251 (char *s)
 {
@@ -439,7 +439,7 @@ parse_251 (char *s)
 }
 #endif
 
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 void
 parse_255 (char *s)
 {

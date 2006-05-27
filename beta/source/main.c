@@ -132,7 +132,7 @@ main (int argc, char **argv)
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
-# ifndef DISALLOW_COUNT
+# ifdef ENABLE_VERSION_CHECK
 	snprintf (temp, sizeof (temp), "lynx -source http://www.darkbot.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 # endif
