@@ -44,10 +44,6 @@ Add command character to help text of any commands that need it. Strip
 command character from "help !foo" commands before looking them up. 
 Allow multiple command characters - SETCHAR !'~
 
-Convert these things in defines into ./configure --X=Y 
-LANG REQ_ACCESS_ADD REQ_ACCESS_DEL SLEEP_LEVEL RAND_LEVEL
-MAX_DATA_SIZE MAX_TOPIC_SIZE 
-
 Move the rest of user definable stuff in defines.h into a proper config
 file.  Add a "!set foo=bar" command to configure it all.  Remove all
 commands that twiddled with some setup param and replace them with 

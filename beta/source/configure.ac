@@ -65,6 +65,13 @@ DB_ENABLE_GENERIC([stoned],[yes],[STONED_CHECK],[server stoned check])
 DB_ENABLE_GENERIC([version],[no],[VERSION_CHECK],[new darkbot version check])
 DB_ENABLE_GENERIC([verbose],[yes],[VERBOSE],[verbose startup])
 DB_ENABLE_GENERIC([encrypt],[no],[ENCRYPT],[encryption of passwords])
+DB_ENABLE_VALUE([lang],[1],[LANG],[language])
+DB_ENABLE_VALUE([sleep],[3],[SLEEP_LEVEL],[sleep command access level])
+DB_ENABLE_VALUE([add],[1],[ADD_LEVEL],[topic adding access level])
+DB_ENABLE_VALUE([del],[1],[DEL_LEVEL],[topic deleting access level])
+DB_ENABLE_VALUE([random],[2],[RAND_LEVEL],[randomstuff command access level])
+DB_ENABLE_VALUE([data],[400],[MAX_DATA_SIZE],[maximum data size])
+DB_ENABLE_VALUE([topic],[50],[MAX_TOPIC_SIZE],[maximum topic size])
 
 # Create output files.
 AC_CONFIG_FILES([Makefile defines.h:../source/defines.h.in])

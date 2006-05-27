@@ -95,7 +95,7 @@
  * ? = Email juice@darkbot.org if you want to help add other langs!
  * ------------------------------------------------------------------
  */
-#define	LANG 1
+//#define	LANG 1
 
 /* ================ STARTUP, CONNECTION, IRC ================ */
 
@@ -237,13 +237,13 @@
  * Minimal access level required to add
  * topics? (default = define)
  */
-#define	REQ_ACCESS_ADD
+//#define	REQ_ACCESS_ADD
 
 /*
  * Minimal access level required to to delete
  * topics? (default = define)
  */
-#define	REQ_ACCESS_DEL
+//#define	REQ_ACCESS_DEL
 
 /* ==== LOGS ==== */
 /*
@@ -266,7 +266,7 @@
  * they want darkbot to quit talking while they address
  * something important in the chan (default = 3)
  */
-#define	SLEEP_LEVEL	3
+//#define	SLEEP_LEVEL	3
 
 /*
  * How many seconds to sleep for? (default = 300 (5 minutes)) 
@@ -289,12 +289,12 @@
  * allows you to do more, for example, with bitwise operator PIPE
  * (default = 400)
  */
-#define	MAX_DATA_SIZE	400
+//#define	MAX_DATA_SIZE	400
 
 /*
  * The max length your database topics will be. (default = 50)
  */
-#define	MAX_TOPIC_SIZE	50
+//#define	MAX_TOPIC_SIZE	50
 
 /* ==== OUTPUTS - TIMERS ==== */
 /*
@@ -441,7 +441,7 @@
  * randomstuff topics, this also is the level at which
  * users will be able to add RDB topics (default = 2)
  */
-#define	RAND_LEVEL 2
+//#define	RAND_LEVEL 2
 
 /*
  * This is a new feature which enables the RANDQ

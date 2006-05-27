@@ -1640,7 +1640,7 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
  */
 struct chanserv_command chanserv_commands[] =
 {
-    {NORMAL_COMMAND,  1, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
+    {NORMAL_COMMAND,  ADD_LEVEL, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
     {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]", "Add a user to the access list."},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>", "Set some text to be said by the bot at a later time."},
 #ifdef ENABLE_CHANNEL
@@ -1667,7 +1667,7 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the permanent ban list."},
 #endif
-    {NORMAL_COMMAND,  1, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
+    {NORMAL_COMMAND,  DEL_LEVEL, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the access list."},
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Remove channel operator status from users."},
