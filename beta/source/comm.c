@@ -391,7 +391,7 @@ create_connection (char *server, char *virtualhost, long port)
 		FD_SET (sock, &set);
 
 		/* select will let us know when our socket is ready (connected) */
-		switch (select (FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+		switch (select (FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
 		{
 				/* if select returns 0, our timeout was reached */
 			case 0:

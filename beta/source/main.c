@@ -165,7 +165,7 @@ main (int argc, char **argv)
 		timeout.tv_usec = USEC;
 		FD_ZERO (&fdvar);
 		FD_SET (socketfd, &fdvar);
-		switch (select (NFDBITS, &fdvar, (fd_set *) 0, (fd_set *) 0, &timeout))
+		switch (select (NFDBITS, &fdvar, (fd_set *) NULL, (fd_set *) NULL, &timeout))
 		{
 			case 0:
 				break;

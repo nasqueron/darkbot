@@ -40,7 +40,8 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
-# FIXME: change all select()'s to cater to the detected results of this -
+# FIXME: change all select()'s to cater to the detected results of AC_FUNC_SELECT_ARGTYPES.
+# Probably not a lot can be done with the results actually.
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_LSTAT

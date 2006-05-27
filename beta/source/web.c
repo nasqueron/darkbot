@@ -130,7 +130,7 @@ web_open_socket(char *host, int port)
 	FD_ZERO(&set);
 	FD_SET(wsock, &set);
 
-	switch(select(FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+	switch(select(FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		return ERR_TIMED_OUT;
@@ -191,7 +191,7 @@ web_write_server (int filedes, char *format,...)
 	FD_ZERO(&set);
 	FD_SET(filedes, &set);
 
-	switch (select(FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+	switch (select(FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		close(filedes);
@@ -245,7 +245,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 	FD_ZERO(&set);
 	FD_SET(filedes, &set);
 
-	switch(select(FD_SETSIZE, &set, (fd_set *) 0, (fd_set *) 0, &timeout))
+	switch(select(FD_SETSIZE, &set, (fd_set *) NULL, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		close(filedes);
