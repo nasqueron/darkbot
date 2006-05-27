@@ -46,9 +46,9 @@ AC_TYPE_SIGNAL
 AC_FUNC_LSTAT
 AC_FUNC_STAT
 AC_FUNC_VPRINTF
-# FIXME: No idea at the moment what to do about select, socket, and strspn.
-AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr strspn])
-AC_REPLACE_FUNCS([memset snprintf strcasecmp strstr])
+# FIXME: No idea at the moment what to do about select and socket.
+AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr])
+AC_REPLACE_FUNCS([memset snprintf strcasecmp strspn strstr])
 
 # User enabled stuff.
 DB_ENABLE_COMMAND([math],[yes],[DO_MATH_STUFF])
