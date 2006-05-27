@@ -9,19 +9,19 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     char *mem = NULL;
     struct webinfo *wi = NULL;
     
-    if(stricmp (trigger, GOOGLE_webinfo.trigger) == 0)
+    if(strcasecmp (trigger, GOOGLE_webinfo.trigger) == 0)
     {
 	wi = (struct webinfo *) &GOOGLE_webinfo;
     }
-    else if(stricmp (trigger, METAR_webinfo.trigger) == 0)
+    else if(strcasecmp (trigger, METAR_webinfo.trigger) == 0)
     { 
 	wi = (struct webinfo *) &METAR_webinfo;
     }
-    else if(stricmp (trigger, TAF_webinfo.trigger) == 0)
+    else if(strcasecmp (trigger, TAF_webinfo.trigger) == 0)
     { 
 	wi = (struct webinfo *) &TAF_webinfo;
     }
-    else if(stricmp (trigger, WEATHER_webinfo.trigger) == 0)
+    else if(strcasecmp (trigger, WEATHER_webinfo.trigger) == 0)
     {
         wi = (struct webinfo *) &WEATHER_webinfo;
     }
@@ -287,19 +287,19 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     close(filedes);
 
     
-    if(stricmp (host, GOOGLE_webinfo.trigger) == 0)
+    if(strcasecmp (host, GOOGLE_webinfo.trigger) == 0)
     {
 	google_parse_query(source, uh, target, mem);
     }
-    else if(stricmp (host, METAR_webinfo.trigger) == 0)
+    else if(strcasecmp (host, METAR_webinfo.trigger) == 0)
     { 
 	metar_parse_query(source, uh, target, mem);
     }
-    else if(stricmp (host, TAF_webinfo.trigger) == 0)
+    else if(strcasecmp (host, TAF_webinfo.trigger) == 0)
     { 
 	taf_parse_query(source, uh, target, mem);
     }
-    else if (stricmp (host, WEATHER_webinfo.trigger) == 0)
+    else if (strcasecmp (host, WEATHER_webinfo.trigger) == 0)
     {
         weather_parse_query (source, uh, target, mem);
     }

@@ -18,7 +18,7 @@ scan_chan_users (char *chan, char *nick, char *banned)
 	{
 		if (!match_wild (banned, c->uh) == 0)
 		{
-			if (stricmp (c->nick, Mynick) != 0)
+			if (strcasecmp (c->nick, Mynick) != 0)
 			{
 				S ("KICK %s %s :BANNED\n", chan, c->nick);
 			}
@@ -43,7 +43,7 @@ delete_user (const char *nick, char *chan)
 
 	while (pNode)
 	{
-		if (stricmp (pNode->nick, nick) == 0 && stricmp (pNode->chan, chan) == 0)
+		if (strcasecmp (pNode->nick, nick) == 0 && strcasecmp (pNode->chan, chan) == 0)
 		{
 			save_seen (pNode->nick, pNode->uh, pNode->chan);
 			if (pPrev != NULL)
@@ -76,14 +76,14 @@ add_user (char *chan, char *nick, char *uh, long tog)
 	{							/* don't readd data that already exists */
 		if (tog == 0)
 		{
-			if (stricmp (c->nick, nick) == 0 && stricmp (c->chan, chan) == 0)
+			if (strcasecmp (c->nick, nick) == 0 && strcasecmp (c->chan, chan) == 0)
 			{
 				c->idle = time (NULL);
 			}
 		}
 		if (tog == 1)
 		{
-			if (stricmp (c->nick, nick) == 0 && stricmp (c->chan, chan) == 0)
+			if (strcasecmp (c->nick, nick) == 0 && strcasecmp (c->chan, chan) == 0)
 			{
 				/* If user is somehow already here, just update his data instead
 				   of readding */
@@ -133,7 +133,7 @@ delete_user_ram (char *source, char *uh)
 	pPrev = NULL;
 	while (pNode)
 	{
-		if (stricmp (pNode->uh, uh) == 0)
+		if (strcasecmp (pNode->uh, uh) == 0)
 		{
 			L015 (source, pNode->uh, pNode->level, pNode->num_join);
 			if (pPrev != NULL)
@@ -211,7 +211,7 @@ long	is_op(char *who, const char *chan)
 	const struct	userlist *c = userhead;
 	for (; c != NULL; c = c->next)
 	{
-		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			return (c->flags & FLAG_CHANOP);
 		}
@@ -225,7 +225,7 @@ do_op(char *who, const char *chan, long tog)
 	struct	userlist *c = userhead;
 	for (; c != NULL; c = c->next)
 	{
-		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			if (tog == 1)
 				c->flags |= FLAG_CHANOP;
@@ -241,7 +241,7 @@ char	*uh_from_nick (char *who, const char *chan)
 	const struct	userlist *c = userhead;
 	for (; c != NULL; c = c->next)
 	{
-		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			strcpy (mask_tmp, c->uh);
 			return (mask_tmp);

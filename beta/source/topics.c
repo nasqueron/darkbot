@@ -34,7 +34,7 @@ del_autotopic (const char *chan)
 		r_chan = strtok (b, " ");
 		r_data = strtok (NULL, "");
 
-		if (stricmp (r_chan, chan) == 0)
+		if (strcasecmp (r_chan, chan) == 0)
 		{
 			/* Found the channel */
 			toggle = true;
@@ -104,7 +104,7 @@ ifexist_autotopic (char *chan)
 		if (*b == '/')
 			continue;
 		r_chan = strtok (b, " ");
-		if (stricmp (r_chan, chan) == 0)
+		if (strcasecmp (r_chan, chan) == 0)
 		{
 			fclose (fp);
 			return 1;			/* exists */

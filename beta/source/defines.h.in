@@ -769,6 +769,8 @@ for 60 sec)"
 
 #include "langs/lang.h"
 
+#define _GNU_SOURCE 1
+
 #include <ctype.h>
 #include <sys/resource.h>
 

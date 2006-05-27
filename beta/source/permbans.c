@@ -26,7 +26,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 	}
 
 	memset (n, 0, sizeof (struct permbanlist));
-	n->uh = db_strndup (uh, STRING_SHORT);
+	n->uh = strndup (uh, STRING_SHORT);
 	if (NULL == n->uh)
 	{
 		db_log ("error.log", "add_permban> Memory allocation failure\n");
@@ -35,7 +35,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 		return;
 	}
 
-	n->reason = db_strndup (reason, STRING_SHORT);
+	n->reason = strndup (reason, STRING_SHORT);
 	if (NULL == n->reason)
 	{
 		db_log ("error.log", "add_permban> Memory allocation failure\n");
@@ -107,7 +107,7 @@ del_permban (const char *nick, const char *uh)
 
 	while (pNode)
 	{
-		if (stricmp (pNode->uh, uh) == 0)
+		if (strcasecmp (pNode->uh, uh) == 0)
 		{
 			L002 (nick, PERMBAN_counter, uh);
 			PERMBAN_counter--;

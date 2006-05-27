@@ -71,7 +71,7 @@ sig_alrm (int notUsed)
 	if (AIL9 >= 30)
 	{
 		AIL9 = 0;
-		if (stricmp (s_Mynick, Mynick) != 0)
+		if (strcasecmp (s_Mynick, Mynick) != 0)
 		{
 			S ("NICK %s\n", s_Mynick);
 			strncpy (Mynick, s_Mynick, sizeof (Mynick));

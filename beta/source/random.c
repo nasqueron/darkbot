@@ -578,7 +578,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 
 			/*
 			 * If type is specified as being case sensitive, use strstr,
-			 * otherwise, use db_stristr
+			 * otherwise, use strcasestr
 			 */
 
 			if (type == RANDQ_CASE) 
@@ -591,7 +591,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 			}
 			else /* if (type == RANDQ_NORMAL) */
 			{
-				if (db_stristr(szBuffer, text) != 0)
+				if (strcasestr(szBuffer, text) != 0)
 				{
 					nNumMatches++;
 					db_log(RANDQ_TEMPFILE, "%s\n", szBuffer);

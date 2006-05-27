@@ -28,7 +28,7 @@ get_stats (char *target, char *user)
 		}
 		else
 		{
-			if (stricmp (c->nick, user) == 0)
+			if (strcasecmp (c->nick, user) == 0)
 			{
 				added_time = c->added_time;
 				last_time = c->last_time;
@@ -62,7 +62,7 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 
 	while (c)
 	{
-		if (stricmp (c->nick, nick) == 0)
+		if (strcasecmp (c->nick, nick) == 0)
 		{
 			strncpy (c->uh, uh, sizeof (c->uh));
 			c->total++;

@@ -70,8 +70,6 @@ Properly license it under GPL2.
 
 Update the INSTALL instructions.
 
-In general.c replace - db_strndup, stricmp (strcasecmp), db_stristr (strcasestr).
-
 We use usleep(), sleep(), and alarm().  Using any two of those at the
 same time is bad.  usleep() is obsolete, and alarm() may not be portable
 enough.

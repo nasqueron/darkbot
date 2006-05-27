@@ -1,14 +1,3 @@
-
-#ifdef 	HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#define _XOPEN_SOURCE
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
@@ -272,7 +261,7 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 				if (*chan == '*')
 					return c->level;
 
-				if (stricmp (c->chan, chan) == 0)
+				if (strcasecmp (c->chan, chan) == 0)
 					return c->level;
 
 				return 0;		/* don't match chan access */
@@ -322,7 +311,7 @@ get_pass (char *data)
 		temp = strtok (NULL, " ");
 		snprintf (b, sizeof (b), "%s %s", b, temp);
 	}
-	if (stricmp (b, pass_pass) == 0)
+	if (strcasecmp (b, pass_pass) == 0)
 	{
 		strncpy (pass_data, "0", sizeof (pass_data));
 		return 1;
@@ -343,7 +332,7 @@ do_login (char *nick, char *pass)
 	c = userhead;
 	while (c)
 	{
-		if (stricmp (nick, c->nick) == 0)
+		if (strcasecmp (nick, c->nick) == 0)
 		{
 			x = verify_pass (c->nick, c->chan, c->uh, pass);
 			if (x > 0)
@@ -391,11 +380,11 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 	{							/* get access level */
 		while (c2)
 		{
-			if (stricmp (c2->uh, uh) == 0)
+			if (strcasecmp (c2->uh, uh) == 0)
 			{
-				if (((stricmp (c2->chan, chan) == 0) || (stricmp ("#*", chan) == 0)))	/* privmsg */
+				if (((strcasecmp (c2->chan, chan) == 0) || (strcasecmp ("#*", chan) == 0)))	/* privmsg */
 				{
-					if (stricmp (c2->nick, nick) == 0)
+					if (strcasecmp (c2->nick, nick) == 0)
 					{
 						return c2->level;
 					}
@@ -416,7 +405,7 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 					return 0;
 				}
 				if (c->chan[1] != '*')
-					if (stricmp (c->chan, chan) != 0)
+					if (strcasecmp (c->chan, chan) != 0)
 						return 0;
 				c->num_join++;
 				if (*c->greetz == '+')

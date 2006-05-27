@@ -115,13 +115,13 @@ setinfo_lastcomm (char *rest)
 								 * to artifically raise join counters */
 	long c_uptime = 0;
 
-	if (stricmp (rest, slc1) == 0)
+	if (strcasecmp (rest, slc1) == 0)
 		return 1;				/* don't reply if already asked in LASTCOMM_TIME sec */
-	if (stricmp (rest, slc2) == 0)
+	if (strcasecmp (rest, slc2) == 0)
 		return 1;
-	if (stricmp (rest, slc3) == 0)
+	if (strcasecmp (rest, slc3) == 0)
 		return 1;
-	if (stricmp (rest, slc4) == 0)
+	if (strcasecmp (rest, slc4) == 0)
 		return 1;
 	if (*slc1 == '0')
 	{							/* init lastcomms */
@@ -180,13 +180,13 @@ do_lastcomm (char *nick, char *target, char *rest)
 {
 	long c_uptime = 0;
 
-	if (stricmp (rest, lc1) == 0)
+	if (strcasecmp (rest, lc1) == 0)
 		return 1;				/* don't reply if already asked in LASTCOMM_TIME sec */
-	if (stricmp (rest, lc2) == 0)
+	if (strcasecmp (rest, lc2) == 0)
 		return 1;
-	if (stricmp (rest, lc3) == 0)
+	if (strcasecmp (rest, lc3) == 0)
 		return 1;
-	if (stricmp (rest, lc4) == 0)
+	if (strcasecmp (rest, lc4) == 0)
 		return 1;
 	if (*lc1 == '0')
 	{							/* init lastcomms */

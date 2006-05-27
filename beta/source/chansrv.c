@@ -552,7 +552,7 @@ struct chanserv_output *chanserv_idle(char *source, char *target, char *cmd, cha
 
 	if (args[0] == NULL)
 		return result;
-	if (stricmp (args[0], source) == 0)
+	if (strcasecmp (args[0], source) == 0)
 		return chanserv_asprintf(NULL, "Don't be lame.");
 	unixtime = return_useridle (target, args[0], 0);
 	if (unixtime == 0)
@@ -698,12 +698,12 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 			s2 = strtok (NULL, "");
 			if (s2 == NULL)
 			{
-				if (stricmp (args[0], Mynick) == 0)
+				if (strcasecmp (args[0], Mynick) == 0)
 					S ("KICK %s %s :hah! As *IF*\n", target, source);
 				else
 					S ("KICK %s %s :\2%s\2'ed: %s\n", target, args[0], cmd, DEFAULT_KICK);
 			}
-			else if (stricmp (args[0], Mynick) == 0)
+			else if (strcasecmp (args[0], Mynick) == 0)
 				S ("KICK %s %s :%s\n", target, args[0], s2);
 			else
 				S ("KICK %s %s :\2%s\2'ed: %s\n", target, args[0], cmd, s2);
@@ -718,7 +718,7 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 				s3 = strtok (NULL, "");
 				if (s3 == NULL)
 				{
-					if (stricmp (s2, Mynick) == 0)
+					if (strcasecmp (s2, Mynick) == 0)
 						S ("KICK %s %s :hah! As *IF*\n", args[0], source);
 					else
 						S ("KICK %s %s :\2%s\2ed: %s\n", args[0], s2, cmd, DEFAULT_KICK);
@@ -726,7 +726,7 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 				else
 				{
 
-					if (stricmp (s2, Mynick) == 0)
+					if (strcasecmp (s2, Mynick) == 0)
 						S ("KICK %s %s :hah! As *IF* (%s)\n", args[0], source);
 					else
 						S ("KICK %s %s :\2%s\2ed: %s\n", args[0], s2, cmd, s3);
@@ -1178,7 +1178,7 @@ struct chanserv_output *chanserv_search(char *source, char *target, char *cmd, c
 
 	if (args[0] == NULL)
 	{
-		if (stricmp(cmd, "FIND") == 0)
+		if (strcasecmp(cmd, "FIND") == 0)
 			result = chanserv_asprintf(NULL, "%s?", TRY_FIND);
 		else
 			result = chanserv_asprintf(NULL, "What should I be %sing for?", cmd);
@@ -1349,7 +1349,7 @@ struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, 
 
 	if (args[0] == NULL)
 		return chanserv_asprintf(NULL, "Specify a nick!");
-	if (stricmp (args[0], Mynick) == 0)
+	if (strcasecmp (args[0], Mynick) == 0)
 		result = chanserv_asprintf(result, "How about I not do that?");
 	else
 		S ("MODE %s +o-o+o-o+o-o %s %s %s %s %s %s\n", target, args[0], args[0], args[0], args[0], args[0], args[0]);
@@ -1367,9 +1367,9 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	    return chanserv_asprintf(NULL, "Tell who?");
 	if (args[1] == NULL)
 	    return chanserv_asprintf(NULL, "What do you want me to tell %s?", args[0]);
-	if (stricmp (args[1], Mynick) == 0)
+	if (strcasecmp (args[1], Mynick) == 0)
 	    return result;			/* don't bother telling myself about stuff */
-	if (stricmp (args[1], "ABOUT") == 0)
+	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
 		s = strtok (NULL, " ");
 		if (s == NULL)
@@ -1561,7 +1561,7 @@ struct chanserv_output *chanserv_wakeup(char *source, char *target, char *cmd, c
 	Sleep_Toggle = 0;
 	AIL4 = 0;
 	S ("PRIVMSG %s :%s\n", target, WAKEUP_ACTION);
-	if (stricmp (sleep_chan, target) != 0)
+	if (strcasecmp (sleep_chan, target) != 0)
 		S ("PRIVMSG %s :%s\n", sleep_chan, WAKEUP_ACTION);
 
 	return result;
@@ -1594,7 +1594,7 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 	ptr3 = strchr (args[1], '!');
 	if (ptr3 != NULL)
 		memmove (ptr3, ptr3 + 1, strlen (ptr3 + 1) + 1);
-	if (stricmp (args[1], "A") == 0 || stricmp (args[1], "AN") == 0)
+	if (strcasecmp (args[1], "A") == 0 || strcasecmp (args[1], "AN") == 0)
 	{
 		s = strtok (NULL, " ");
 		if (s == NULL)
@@ -1616,9 +1616,9 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 		return chanserv_asprintf(NULL, "Whisper to who?");
 	if (args[1] == NULL)
 		return chanserv_asprintf(NULL, "What do you want me to whisper to %s?", args[0]);
-	if (stricmp (args[1], Mynick) == 0)
+	if (strcasecmp (args[1], Mynick) == 0)
 		return result;		/* don't bother telling myself about stuff */
-	if (stricmp (args[1], "ABOUT") == 0)
+	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
 		s = strtok (NULL, " ");
 		if (s == NULL)
@@ -1799,7 +1799,7 @@ void chanserv(char *source, char *target, char *buf)
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
 #ifdef	RANDOM_STUFF
-	if (stricmp (target, CHAN) == 0)
+	if (strcasecmp (target, CHAN) == 0)
 		Rand_Idle = 0;
 #endif
 	stripline (buf);
@@ -1819,7 +1819,7 @@ void chanserv(char *source, char *target, char *buf)
 
 	if (*target != '#' && *target != '&' && *target != '+')
 		input_type = MSG_INVOKE;
-	else if (stricmp (cmd, NICK_COMMA) == 0 || stricmp (cmd, COLON_NICK) == 0 || stricmp (cmd, BCOLON_NICK) == 0 || stricmp (cmd, Mynick) == 0)
+	else if (strcasecmp (cmd, NICK_COMMA) == 0 || strcasecmp (cmd, COLON_NICK) == 0 || strcasecmp (cmd, BCOLON_NICK) == 0 || strcasecmp (cmd, Mynick) == 0)
 	{
 		input_type = ADDRESS_INVOKE;
 		cmd = strtok(NULL, " ");

@@ -22,12 +22,12 @@ parse (char *line)
 #endif
 	stripline (line);
 	s = strtok (line, " ");
-	if (stricmp (s, "PING") == 0)
+	if (strcasecmp (s, "PING") == 0)
 	{
 		s1 = strtok (NULL, " ");
 		Snow ("PONG %s\n", s1);
 	}
-	else if (stricmp (s, "ERROR") == 0)
+	else if (strcasecmp (s, "ERROR") == 0)
 	{
 		s1 = strtok (NULL, "");
 		if (s1 != NULL)
@@ -64,7 +64,7 @@ parse (char *line)
 	else if (strstr (s, "!") == NULL)
 	{							/* From Server */
 		cmd = strtok (NULL, " ");
-		if (stricmp (cmd, "004") == 0)
+		if (strcasecmp (cmd, "004") == 0)
 		{						/* Connected! */
 			save_changes ();
 			s2 = strtok (NULL, " ");	/* Copy the current nick */
@@ -74,7 +74,7 @@ parse (char *line)
 			snprintf (BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", Mynick);
 			s2 = strtok (NULL, " ");	/* Got server name */
 		}
-		else if (stricmp (cmd, "315") == 0)
+		else if (strcasecmp (cmd, "315") == 0)
 		{
 #if DISPLAY_SYNC == 1
 			s2 = strtok (NULL, " ");	/*mynick */
@@ -83,7 +83,7 @@ parse (char *line)
 			S ("PRIVMSG %s :Sync with %s completed.\n", s2, s2);
 #endif
 		}
-		else if (stricmp (cmd, "311") == 0)
+		else if (strcasecmp (cmd, "311") == 0)
 		{
 			s1 = strtok (NULL, " ");
 			s1 = strtok (NULL, " ");
@@ -91,7 +91,7 @@ parse (char *line)
 			s1 = strtok (NULL, " ");
 			strncpy (g_host, s1, sizeof (g_host));
 		}
-		else if (stricmp (cmd, "319") == 0)
+		else if (strcasecmp (cmd, "319") == 0)
 		{
 			s1 = strtok (NULL, " ");
 			s1 = strtok (NULL, " ");
@@ -119,21 +119,21 @@ parse (char *line)
 				return;
 			}
 		}
-		else if (stricmp (cmd, "432") == 0 || stricmp (cmd, "468") == 0)
+		else if (strcasecmp (cmd, "432") == 0 || strcasecmp (cmd, "468") == 0)
 		{						/* Invalid nick/user */
 			s2 = strtok (NULL, "");
 			printf ("Server Reported error %s\n\nDarkbot exiting.\n", s2);
 			db_sleep (2);
 			exit (0);
 		}
-		else if ((stricmp (cmd, "376") == 0) || (stricmp(cmd, "422") == 0))
+		else if ((strcasecmp (cmd, "376") == 0) || (strcasecmp(cmd, "422") == 0))
 		{
 			/* Set default umodes */
 			S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
 			run_perform (); /* Run performs */
 			S ("JOIN %s\n", CHAN);
 		}
-		else if (stricmp (cmd, "482") == 0)
+		else if (strcasecmp (cmd, "482") == 0)
 		{
 #if BITCH_ABOUT_DEOP == 1
 			s2 = strtok (NULL, " ");	/* mynick */
@@ -142,38 +142,38 @@ parse (char *line)
 			/* We used to run the DEOP.INI here */
 #endif
 		}
-		else if (stricmp (cmd, "352") == 0)
+		else if (strcasecmp (cmd, "352") == 0)
 		{
 			s2 = strtok (NULL, "");
 			parse_who (s2);
 #if STATUS == 1
 		}
-		else if (stricmp (cmd, "252") == 0)
+		else if (strcasecmp (cmd, "252") == 0)
 		{
 			s2 = strtok (NULL, "");
 			parse_252 (s2);
 		}
-		else if (stricmp (cmd, "404") == 0
-				 || stricmp (cmd, "475") == 0
-				 || stricmp (cmd, "474") == 0 || stricmp (cmd, "473") == 0)
+		else if (strcasecmp (cmd, "404") == 0
+				 || strcasecmp (cmd, "475") == 0
+				 || strcasecmp (cmd, "474") == 0 || strcasecmp (cmd, "473") == 0)
 		{						/* Can't join? */
 			s2 = strtok (NULL, " ");
 			s2 = strtok (NULL, " ");
 			db_sleep (5);
 			S ("JOIN %s\n", s2);
 		}
-		else if (stricmp (cmd, "251") == 0)
+		else if (strcasecmp (cmd, "251") == 0)
 		{
 			s2 = strtok (NULL, "");
 			parse_251 (s2);
 		}
-		else if (stricmp (cmd, "255") == 0)
+		else if (strcasecmp (cmd, "255") == 0)
 		{
 			s2 = strtok (NULL, "");
 			parse_255 (s2);
 #endif
 		}
-		else if (stricmp (cmd, "433") == 0)
+		else if (strcasecmp (cmd, "433") == 0)
 		{
 			s2 = strtok (NULL, " ");
 			if (*s2 != '*')
@@ -200,7 +200,7 @@ parse (char *line)
 		if (*s == ':')			/* Remove the colon prefix */
 			s++;
 		cmd = strtok (NULL, " ");	/* Read in command  */
-		if (stricmp (cmd, "NOTICE") == 0)
+		if (strcasecmp (cmd, "NOTICE") == 0)
 		{
 			s2 = strtok (NULL, " ");	/* target */
 #if KICK_ON_CHANNEL_NOTICE == ON
@@ -220,7 +220,7 @@ parse (char *line)
 			}
 #endif
 		}
-		else if (stricmp (cmd, "PRIVMSG") == 0)
+		else if (strcasecmp (cmd, "PRIVMSG") == 0)
 		{						/* PRIVMSG  */
 			s1 = strtok (NULL, " ");	/* Target */
 			s2 = strtok (NULL, "");	/* Rest  */
@@ -235,10 +235,10 @@ parse (char *line)
 					return;
 			chanserv (s, s1, s2);	/* Process PRIVMSG commands */
 		}
-		else if (stricmp (cmd, "KILL") == 0)
+		else if (strcasecmp (cmd, "KILL") == 0)
 		{
 			s1 = strtok (NULL, " ");	/* Kill nick */
-			if (stricmp (s1, Mynick) == 0)
+			if (strcasecmp (s1, Mynick) == 0)
 			{
 				do_quit (s1, 3);	/* delete all users from ram since I'm gone */
 
@@ -246,11 +246,11 @@ parse (char *line)
 				register_bot ();
 			}
 		}
-		else if (stricmp (cmd, "KICK") == 0)
+		else if (strcasecmp (cmd, "KICK") == 0)
 		{
 			s1 = strtok (NULL, " ");	/* #chan */
 			s2 = strtok (NULL, " ");	/* Who got kicked? */
-			if (stricmp (s2, Mynick) == 0)
+			if (strcasecmp (s2, Mynick) == 0)
 			{					/* Rejoin if I was
 								   * kicked */
 				do_quit (s1, 2);
@@ -261,16 +261,16 @@ parse (char *line)
 			else
 				delete_user (s2, s1);
 		}
-		else if (stricmp (cmd, "INVITE") == 0)
+		else if (strcasecmp (cmd, "INVITE") == 0)
 		{
 			s1 = strtok (NULL, " ");	/* Mynick */
 			s2 = strtok (NULL, " ");	/* Target */
 			if (*s2 == ':')
 				s2++;
-			if (stricmp (s2, CHAN) == 0)
+			if (strcasecmp (s2, CHAN) == 0)
 				S ("JOIN %s\n", s2);
 		}
-		else if (stricmp (cmd, "PART") == 0)
+		else if (strcasecmp (cmd, "PART") == 0)
 		{
 
                         if ((ptr = strchr (s, '!')) != NULL)
@@ -289,30 +289,30 @@ parse (char *line)
 			 * memory. If someone else is parting, only remove them from memory.
 			 */
 			
-			if (stricmp (s, Mynick) != 0)
+			if (strcasecmp (s, Mynick) != 0)
 				delete_user (s, s1);
 			else			
 				do_quit (s1, 2);
 	
 		}
-		else if (stricmp (cmd, "QUIT") == 0)
+		else if (strcasecmp (cmd, "QUIT") == 0)
 		{
 			if ((ptr = strchr (s, '!')) != NULL)
 				*ptr++ = '\0';
 			do_quit (s, 1);
 		}
-		else if (stricmp (cmd, "MODE") == 0)
+		else if (strcasecmp (cmd, "MODE") == 0)
 		{
 			do_modes (s, strtok (NULL, ""));
 		}
-		else if (stricmp (cmd, "NICK") == 0)
+		else if (strcasecmp (cmd, "NICK") == 0)
 		{
 			if ((ptr = strchr (s, '!')) != NULL)
 				*ptr++ = '\0';
 			s1 = strtok (NULL, " ");
 			process_nick (s, s1);
 		}
-		else if (stricmp (cmd, "JOIN") == 0)
+		else if (strcasecmp (cmd, "JOIN") == 0)
 		{
 			JOINs++;
 			s1 = strtok (NULL, " ");	/* TARGET */
@@ -323,7 +323,7 @@ parse (char *line)
 			strlwr (ptr);
 			if (SeeN == 1 && *s1 == '#')
 				seen_value = save_seen (s, ptr, s1);
-			if (stricmp (s, Mynick) != 0)
+			if (strcasecmp (s, Mynick) != 0)
 			{
 				if (check_permban (ptr, s1, s) == 1)
 					return;
@@ -354,7 +354,7 @@ parse (char *line)
 					return;		/* don't greet if the guy has
 								   * access (and no setinfo) */
 				}
-				else if (stricmp (s1, CHAN) == 0)
+				else if (strcasecmp (s1, CHAN) == 0)
 				{
 					if (SeeN == 1)
 					{

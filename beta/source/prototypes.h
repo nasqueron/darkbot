@@ -6,7 +6,6 @@ void	parse_252				(char *),
 	parse_255				(char *);
 #endif
 
-char	*db_strndup				(const char *, size_t);
 char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
 void	show_seen				(char *, char *, char *),
@@ -83,7 +82,6 @@ void	info					(const char *, char *),
 	load_helpers				(void),
 	scan_chan_users				(char *, char *, char *), 
 	do_login				(char *, char *);
-int	stricmp					(const char *, const char *);
 long	do_lastcomm				(char *, char *, char *), 
 	setinfo_lastcomm			(char *);
 void	parse					(char *), 
@@ -122,8 +120,6 @@ void	trailing_blanks				(char *),
 
 char	L[524], 
 	*random_word				(char **);
-
-char	*db_stristr				(char *, char *);
 
 int	socketfd, 
 	alarmed,	

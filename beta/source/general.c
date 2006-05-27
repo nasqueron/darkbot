@@ -91,22 +91,6 @@ strupr (char *buf)
 	return buf;
 }
 
-/* stristr: case insensitive strstr. */
-char	*db_stristr		(char *pHaystack, char *pNeedle)
-{
-	char	szHaystack	[STRING_LONG] = {0};
-	char	szNeedle	[STRING_LONG] =	{0};
-	
-	strcpy(szHaystack, pHaystack);
-	strcpy(szNeedle, pNeedle);
-
-	strlwr(szHaystack);
-	strlwr(szNeedle);
-
-	return(strstr(szHaystack, szNeedle));
-}
-
-
 /* 
  * Added cast to str[i -1] to prevent warnings on Solaris.
  * -ron
@@ -128,31 +112,6 @@ trailing_blanks (char *str)
 	}
 }
 
-
-#ifndef WIN32
-int
-stricmp (const char *s1, const char *s2)
-{
-	return strcasecmp (s1, s2);
-}
-#else
-int
-stricmp (const char *s1, const char *s2)
-{
-	register int c = 0;
-
-	while ((c = tolower (*s1)) == tolower (*s2))
-	{
-		if (c == 0)
-			return 0;
-		s1++;
-		s2++;
-	}
-	if (c < tolower (*s2))
-		return -1;
-	return 1;
-}
-#endif
 
 void
 save_changes (void)
@@ -211,47 +170,6 @@ date (void)
 	return strbuff;
 }
 
-
-/**
- * Allocate a new character array.  Copy into it at most
- * maxBytes bytes.
- */
-char *
-db_strndup (const char *dupMe, size_t maxBytes)
-{
-	char *ptr = NULL;
-	char *retMe = NULL;
-
-	/* Configure maxBytes to be the number of bytes to copy */
-	maxBytes = MIN(strlen(dupMe), maxBytes);
-	/* Allocate the return buffer. */
-	retMe = malloc (maxBytes + 1);
-	/* Was the allocation successful? */
-	if (NULL == retMe)
-	{
-		return NULL;
-	}
-
-	/*
-	 * ptr will point to the byte to which to copy the next
-	 * source byte.
-	 */
-	ptr = retMe;
-	/*
-	 * Continue while dupMe is valid and we are < maxBytes number
-	 * of bytes copied. This is typecase here because size_t is
-	 * unsigned, so comparing against > 0 *should* produce a
-	 * warning :)
-	 */
-	while (dupMe && (int) maxBytes-- > 0)
-	{
-		*ptr++ = *dupMe++;
-	}
-
-	/* Be sure to NULL terminate the array */
-	*ptr = 0;
-	return retMe;
-}
 
 int
 match_wild (const char *pattern, const char *str)
@@ -364,9 +282,9 @@ get_rand_nick (const char *chan)
 	for (; c != NULL; c = c->next)
 	{
 		/* Check if this user is on the channel */
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
 		{
-			if (stricmp (Mynick, c->nick) != 0)
+			if (strcasecmp (Mynick, c->nick) != 0)
 			{
 				strncpy (f_tmp, c->nick, sizeof (f_tmp));
 				i++;
@@ -379,7 +297,7 @@ get_rand_nick (const char *chan)
 
 	for (c = userhead; c != NULL; c = c->next)
 	{
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
 		{
 			i++;
 			if (i == x)
@@ -388,7 +306,7 @@ get_rand_nick (const char *chan)
 				{
 					return f_tmp;
 				}
-				if (stricmp (Mynick, c->nick) != 0)
+				if (strcasecmp (Mynick, c->nick) != 0)
 				{
 					strncpy (f_tmp, c->nick, sizeof (f_tmp));
 					return f_tmp;
@@ -423,7 +341,7 @@ check_dbtimers (void)
 		{
 			continue;			/* it's a dir, ignore it */
 		}
-		if (S_ISDIR (statbuf.st_mode) && stricmp(entry->d_name, "CVS") == 0)
+		if (S_ISDIR (statbuf.st_mode) && strcasecmp(entry->d_name, "CVS") == 0)
 		{
 			/* Ignore the CVS directory */
 			continue;
@@ -459,7 +377,7 @@ add_ignore_user_ram (char *nick)
 
     while (c)
 	{
-		if (stricmp (c->nick, nick) == 0)
+		if (strcasecmp (c->nick, nick) == 0)
 		{
 			return 1;
 		}
@@ -493,7 +411,7 @@ check_ignore_user_ram (char *nick)
 
     while (c)
 	{
-        if (stricmp (c->nick, nick) == 0)
+        if (strcasecmp (c->nick, nick) == 0)
 		{
 			return 1;
 		}
@@ -512,7 +430,7 @@ delete_ignore_user_ram (char *nick)
 
 	while (pNode)
 	{
-		if (stricmp (pNode->nick, nick) == 0)
+		if (strcasecmp (pNode->nick, nick) == 0)
 		{
 			if (pPrev != NULL)
 			{

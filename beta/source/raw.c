@@ -45,20 +45,20 @@ raw_now (char *type)
 	char str[STRING_LONG] = { 0 }, *dat = NULL, *ptr = NULL, *tmp1 =
 		NULL, *tmp2 = NULL, *tmp3 = NULL;
 
-	if (stricmp (type, "PERMBAN") == 0)
+	if (strcasecmp (type, "PERMBAN") == 0)
 		if ((fp = fopen (PERMBAN, "r")) == NULL)
 			return;
-	if (stricmp (type, "DEOP") == 0)
+	if (strcasecmp (type, "DEOP") == 0)
 		if ((fp = fopen (DEOP, "r")) == NULL)
 			return;
-	if (stricmp (type, "SERVERS") == 0)
+	if (strcasecmp (type, "SERVERS") == 0)
 		if ((fp = fopen (SERVERS, "r")) == NULL)
 		{
 			printf ("%s not found. You must create the file with format:\n", SERVERS);
 			printf ("server port ...this list can be as long as you want.\n");
 			exit (0);
 		}
-	if (stricmp (type, "SETUP") == 0)
+	if (strcasecmp (type, "SETUP") == 0)
 		if ((fp = fopen (SETUP, "r")) == NULL)
 		{
 			printf ("Unable to locate %s! You must run configure!.\n", SETUP);
@@ -66,7 +66,7 @@ raw_now (char *type)
 		}
 	while (!feof (fp))
 	{
-		if (stricmp (type, "SETUP") == 0)
+		if (strcasecmp (type, "SETUP") == 0)
 		{
 			SeeN = 1;
 			while (fgets (str, STRING_LONG, fp))
@@ -80,7 +80,7 @@ raw_now (char *type)
 				dat = strtok (str, "");
 				if ((ptr = strchr (dat, '=')) != NULL)
 					*ptr++ = '\0';
-				if (stricmp (dat, "NICK") == 0)
+				if (strcasecmp (dat, "NICK") == 0)
 				{
 					strncpy (Mynick, ptr, sizeof (Mynick));
 					strncpy (s_Mynick, ptr, sizeof (s_Mynick));
@@ -89,27 +89,27 @@ raw_now (char *type)
 							  "%s%s-privmsg.log", LOG_DIR, Mynick);
 #endif
 				}
-				else if (stricmp (dat, "USERID") == 0)
+				else if (strcasecmp (dat, "USERID") == 0)
 				{
 					strncpy (UID, ptr, sizeof (UID));
 				}
-				else if (stricmp (dat, "CHAN") == 0)
+				else if (strcasecmp (dat, "CHAN") == 0)
 				{
 					strncpy (CHAN, ptr, sizeof (CHAN));
 				}
-				else if (stricmp (dat, "SEEN") == 0)
+				else if (strcasecmp (dat, "SEEN") == 0)
 				{
 					SeeN = atoi (ptr);
 				}
-				else if (stricmp (dat, "VHOST") == 0)
+				else if (strcasecmp (dat, "VHOST") == 0)
 				{
 					strncpy (VHOST, ptr, sizeof (VHOST));
 				}
-				else if (stricmp (dat, "REALNAME") == 0)
+				else if (strcasecmp (dat, "REALNAME") == 0)
 				{
 					strncpy (REALNAME, ptr, sizeof (REALNAME));
 				}
-				else if (stricmp (dat, "CMDCHAR") == 0)
+				else if (strcasecmp (dat, "CMDCHAR") == 0)
 				{
 					*CMDCHAR = *ptr;
 				}
@@ -124,7 +124,7 @@ raw_now (char *type)
 			printf ("seen(%s)\n", SeeN == 1 ? "On" : "Off");
 #endif
 		}
-		else if (stricmp (type, "PERMBAN") == 0)
+		else if (strcasecmp (type, "PERMBAN") == 0)
 		{
 			while (fgets (str, STRING_LONG, fp))
 			{
@@ -149,7 +149,7 @@ raw_now (char *type)
 				add_permban (tmp1, counter, tmp3);
 			}
 		}
-		else if (stricmp (type, "SERVERS") == 0)
+		else if (strcasecmp (type, "SERVERS") == 0)
 		{
 #ifndef	WIN32
 			printf ("Loading %s file ", SERVERS);

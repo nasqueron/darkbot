@@ -216,7 +216,7 @@ info (const char *source, char *target)
 		subj = strtok (b, " ");
 		ptr = strtok (NULL, "");
 		strlwr (subj);
-		if (stricmp (last, subj) == 0)
+		if (strcasecmp (last, subj) == 0)
 		{
 			dup++;
 #ifdef	SAVE_DUPS
@@ -318,7 +318,7 @@ return_useridle (const char *chan, const char *who, int toggle)
 
 	for (; c != NULL; c = c->next)
 	{
-		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			if (toggle == 1)
 			{
@@ -341,7 +341,7 @@ process_nick (char *nick, char *newnick)
 	newnick++;
 	while (c)
 	{
-		if (stricmp (nick, c->nick) == 0)
+		if (strcasecmp (nick, c->nick) == 0)
 		{
 			strncpy (c->nick, newnick, sizeof (c->nick));
 		}
@@ -363,7 +363,7 @@ show_chaninfo (const char *nick, const char *chan, const char *target)
 	for (; c != NULL; c = c->next)
 	{
 		++totalUsers;
-		if (!stricmp (chan, c->chan))
+		if (!strcasecmp (chan, c->chan))
 			++foundUsers;
 	}
 	S ("PRIVMSG %s :%s, I see %d users in %s (%d users total in ram)\n",
@@ -385,7 +385,7 @@ void    show_chanusers  (const char *nick, const char *chan)
         
     for (; c != NULL; c = c->next)
     {
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
         {
 			++foundUsers;
 			
@@ -510,7 +510,7 @@ do_quit (const char *nick, long toggle)
 		/* delete user */
 		while (pNode)
 		{
-			if (stricmp (pNode->nick, nick) == 0)
+			if (strcasecmp (pNode->nick, nick) == 0)
 			{
 				/* found a match, remove it */
 				save_seen (pNode->nick, pNode->uh, pNode->chan);
@@ -541,7 +541,7 @@ do_quit (const char *nick, long toggle)
 		/* delete channel */
 		while (pNode)
 		{
-			if (stricmp (pNode->chan, nick) == 0)
+			if (strcasecmp (pNode->chan, nick) == 0)
 			{
 				/* found a match, remove it */
 				save_seen (pNode->nick, pNode->uh, pNode->chan);
