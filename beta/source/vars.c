@@ -74,7 +74,7 @@ long lcn1 = 0;
 long lcn2 = 0;
 long lcn4 = 0;
 long lcn3 = 0;
-long SeeN = 0;
+bool SeeN = false;
 long DebuG = 0;
 char slc1[STRING_SHORT] = "0";
 char slc2[STRING_SHORT] = "0";
@@ -157,12 +157,131 @@ struct webinfo
 
 struct setup_parameter parameters[] =
 {
-    {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     &Mynick,   NULL},
-    {STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      &UID,      NULL},
-    {STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            &CHAN,     NULL},
+    {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     Mynick,    check_nick_parameter},
+    {STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      UID,       NULL},
+    {STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            CHAN,      NULL},
     {BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen",               &SeeN,     NULL},
-    {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", &VHOST,    NULL},
-    {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    &REALNAME, NULL},
-    {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", &CMDCHAR,  NULL},
+    {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", VHOST,     NULL},
+    {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    REALNAME,  NULL},
+    {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", CMDCHAR,   NULL},
     {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
 };
+
+
+struct setup_parameter *
+set_parameter(char *input)
+{
+    struct setup_parameter *result = NULL;
+
+    /* ignore comments. */
+    if (*input != '#') 
+    {
+	int i, found = -1;
+	char *dat = NULL, *ptr = NULL;
+
+	dat = strdup(input);
+	if ((ptr = strchr(dat, '=')) != NULL)
+	    *ptr++ = '\0';
+	for (result = &parameters[0]; result->parameter[0] != NULL; result++)
+	{
+	    for (i = 0; result->parameter[i] != NULL; i++)
+	    {
+		if (strcasecmp(dat, result->parameter[i]) == 0)
+		{
+		    found = i;
+		    break;
+		}
+	    }
+	    if (found != -1)
+		break;
+	}
+
+	if (found == -1)
+	    result = NULL;
+	else
+	{
+	    if ((ptr) && (result->func))
+	    {
+		ptr = result->func(result, ptr);
+		if (ptr == NULL)
+		    result = NULL;
+	    }
+	    if (ptr)
+	    {
+#ifdef	ENABLE_VERBOSE
+		printf("Setting %s = %s\n", result->summary, ptr);
+#endif
+		switch (result->type)
+		{
+		    case BOOLEAN : 
+		    {
+			bool *variable = result->value;
+
+			*variable = isBoolean(ptr);
+			break;
+		    }
+
+		    case INTEGER : 
+		    {
+			long *variable = result->value;
+
+			*variable = atoi(ptr);
+			break;
+		    }
+
+		    case STRING  : 
+		    {
+			char *variable = result->value;
+
+			strncpy(variable, ptr, result->max_size);
+			break;
+		    }
+		}
+	    }
+	}
+	free(dat);
+    }
+
+    return result;
+}
+
+void
+save_setup (void)
+{
+    struct setup_parameter *result = NULL;
+
+    printf("*** Writing setup file: %s (%s)\n", SETUP, date());
+    remove(TMP_FILE);
+
+    for (result = &parameters[0]; result->parameter[0] != NULL; result++)
+    {
+	switch (result->type)
+	{
+	    case BOOLEAN : 
+	    {
+		long *variable = result->value;
+
+		db_log(TMP_FILE, "%s=%d\n", result->parameter[0], (*variable) ? 1 : 0);
+		break;
+	    }
+
+	    case INTEGER : 
+	    {
+		long *variable = result->value;
+
+		db_log(TMP_FILE, "%s=%ld\n", result->parameter[0], *variable);
+		break;
+	    }
+
+	    case STRING  : 
+	    {
+		char *variable = result->value;
+
+		db_log(TMP_FILE, "%s=%s\n", result->parameter[0], variable);
+		break;
+	    }
+	}
+    }
+
+    rename(TMP_FILE, SETUP);
+}

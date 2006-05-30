@@ -62,6 +62,7 @@ int	del_permban				(const char *, const char *);
 #endif
 
 int	check_existing_url			(const char *, char *, char *);
+void	*check_nick_parameter			(struct setup_parameter *parameter, char *ptr);
 void	show_helper_list			(const char *, long),
 	set_paths				(void),
 	show_banlist				(const char *), 
@@ -155,8 +156,11 @@ int	check_ignore_user_ram			(char *);
 void	call_reserved_1				(char *, char *, char *);
 void	call_reserved_2				(char *, char *, char *);
 size_t	count_char				(const char *, const char);
+bool	isBoolean				(char *aBoolean);
 void	reverse					(char *);
 char	*mask_from_nick				(char *, const char *);
 char	*uh_from_nick				(char *, const char *);
 long	is_op					(char *, const char *);
 void	do_op					(char *, const char *, long);
+
+struct setup_parameter *set_parameter		(char *input);

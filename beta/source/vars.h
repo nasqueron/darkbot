@@ -55,7 +55,7 @@ extern long lcn1;
 extern long lcn2;
 extern long lcn4;
 extern long lcn3;
-extern long SeeN;
+extern bool SeeN;
 extern long DebuG;
 #ifdef ENABLE_QUIZ
 extern long quiz_timer;
@@ -253,6 +253,6 @@ extern struct setup_parameter
     char		*parameter[5];
     char		*summary;
     void		*value;         /* Where the value is stored. */
-    void 		*(*func) (struct setup_parameter *parameter);  /* Optional function that can do other things with the value, and veto the change by returning NULL. */
+    void 		*(*func) (struct setup_parameter *parameter, char *ptr);  /* Optional function that can do other things with the value, and veto the change by returning NULL. */
 }
 parameters[];

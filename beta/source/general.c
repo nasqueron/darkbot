@@ -142,21 +142,6 @@ save_changes (void)
 	rename (TMP_FILE, STATS_FILE);
 }
 
-void
-save_setup (void)
-{
-	printf ("*** Writing setup file: %s (%s)\n", SETUP, date ());
-	remove (TMP_FILE);
-	db_log (TMP_FILE, "NICK=%s\n", s_Mynick);
-	db_log (TMP_FILE, "USERID=%s\n", UID);
-	db_log (TMP_FILE, "CHAN=%s\n", CHAN);
-	db_log (TMP_FILE, "VHOST=%s\n", VHOST);
-	db_log (TMP_FILE, "REALNAME=%s\n", REALNAME);
-	db_log (TMP_FILE, "CMDCHAR=%c\n", *CMDCHAR);
-	db_log (TMP_FILE, "SEEN=%d\n", SeeN);
-	rename (TMP_FILE, SETUP);
-}
-
 char *
 date (void)
 {
@@ -511,4 +496,23 @@ size_t		count_char		(const char *pStuff, const char nChar)
 	}
 
 	return(nCount);
+}
+
+/* I wrote this for my matrix-RAD.net project, this is translated from the Java.
+ *
+ * Tly to turn all sorts of string things into a boolean.  Only the first character is considered.
+ */
+
+// true   1 yes ack  ok   one  positive absolutely affirmative  'ah ha' 'shit yeah' 'why not'
+static char *IS_TRUE =  "t1aopswy";
+// false  0 no  nack nope zero negative nah 'no way' 'get real' 'uh uh' 'fuck off' 'bugger off'
+static char *IS_FALSE = "f0bgnuz";
+bool isBoolean(char *aBoolean)
+{
+    if (aBoolean == NULL)
+        aBoolean = IS_FALSE;
+    if (aBoolean[0] == '\0')
+        aBoolean = IS_FALSE;
+    strlwr(aBoolean);
+    return (strchr(IS_TRUE, aBoolean[0]) != NULL);
 }

@@ -33,6 +33,16 @@ check_files (void)
 
 }
 
+
+void *check_nick_parameter(struct setup_parameter *parameter, char *ptr)
+{
+    strncpy (s_Mynick, ptr, sizeof (s_Mynick));
+#if LOG_PRIVMSG == 1
+    snprintf (privmsg_log, sizeof (privmsg_log), "%s%s-privmsg.log", LOG_DIR, s_Mynick);
+#endif
+    return ptr;
+}
+
 /**
  * 6/23/00 Dan:
  * - Initialized all variables
@@ -68,61 +78,12 @@ raw_now (char *type)
 	{
 		if (strcasecmp (type, "SETUP") == 0)
 		{
-			SeeN = 1;
+			SeeN = true;
 			while (fgets (str, STRING_LONG, fp))
 			{
 				stripline (str);
-
-				/* Allow comments */
-				if (*str == '#') 
-					continue;
-
-				dat = strtok (str, "");
-				if ((ptr = strchr (dat, '=')) != NULL)
-					*ptr++ = '\0';
-				if (strcasecmp (dat, "NICK") == 0)
-				{
-					strncpy (Mynick, ptr, sizeof (Mynick));
-					strncpy (s_Mynick, ptr, sizeof (s_Mynick));
-#if	LOG_PRIVMSG == 1
-					snprintf (privmsg_log, sizeof (privmsg_log),
-							  "%s%s-privmsg.log", LOG_DIR, Mynick);
-#endif
-				}
-				else if (strcasecmp (dat, "USERID") == 0)
-				{
-					strncpy (UID, ptr, sizeof (UID));
-				}
-				else if (strcasecmp (dat, "CHAN") == 0)
-				{
-					strncpy (CHAN, ptr, sizeof (CHAN));
-				}
-				else if (strcasecmp (dat, "SEEN") == 0)
-				{
-					SeeN = atoi (ptr);
-				}
-				else if (strcasecmp (dat, "VHOST") == 0)
-				{
-					strncpy (VHOST, ptr, sizeof (VHOST));
-				}
-				else if (strcasecmp (dat, "REALNAME") == 0)
-				{
-					strncpy (REALNAME, ptr, sizeof (REALNAME));
-				}
-				else if (strcasecmp (dat, "CMDCHAR") == 0)
-				{
-					*CMDCHAR = *ptr;
-				}
+				set_parameter(str);
 			}
-#ifdef	ENABLE_VERBOSE
-			printf ("   - botnick(%s),", Mynick);
-			printf ("userid(%s),", UID);
-			printf ("channel(%s),", CHAN);
-			printf ("realname(%s)\n", REALNAME);
-			printf ("   - cmdchar(%c),", *CMDCHAR);
-			printf ("vhost(%s),", VHOST);
-			printf ("seen(%s)\n", SeeN == 1 ? "On" : "Off");
-#endif
 		}
 		else if (strcasecmp (type, "PERMBAN") == 0)
 		{

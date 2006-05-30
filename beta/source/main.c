@@ -55,7 +55,7 @@ main (int argc, char **argv)
 			{
 				if (argv[i][1] == 'S')
 				{
-					SeeN = 1;
+					SeeN = true;
 				}
 				else if (argv[i][1] == 'D')
 				{
@@ -78,7 +78,7 @@ main (int argc, char **argv)
 		}
 	}
 	
-	if (SeeN == 1)
+	if (SeeN)
 	{
 		printf ("\nSEEN ENABLED.\n");
 	}

@@ -321,7 +321,7 @@ parse (char *line)
 			if ((ptr = strchr (s, '!')) != NULL)
 				*ptr++ = '\0';
 			strlwr (ptr);
-			if (SeeN == 1 && *s1 == '#')
+			if ((SeeN) && (*s1 == '#'))
 				seen_value = save_seen (s, ptr, s1);
 			if (strcasecmp (s, Mynick) != 0)
 			{
@@ -356,7 +356,7 @@ parse (char *line)
 				}
 				else if (strcasecmp (s1, CHAN) == 0)
 				{
-					if (SeeN == 1)
+					if (SeeN)
 					{
 						if (seen_value == 0)	/* don't show people the
 												   * notice every join */
