@@ -500,7 +500,7 @@ size_t		count_char		(const char *pStuff, const char nChar)
 
 /* I wrote this for my matrix-RAD.net project, this is translated from the Java.
  *
- * Tly to turn all sorts of string things into a boolean.  Only the first character is considered.
+ * Try to turn all sorts of string things into a boolean.  Only the first character is considered.
  */
 
 // true   1 yes ack  ok   one  positive absolutely affirmative  'ah ha' 'shit yeah' 'why not'
