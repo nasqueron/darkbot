@@ -21,6 +21,8 @@ be added, will be listed here.
 
 - Fix broken commands.  google, calc, weather.
 
+- Write things to replace the stuff that Windows can't do.
+
 - Make the google command (and maybe all other web 
   lookup commands) more robust.
 
@@ -39,9 +41,6 @@ be added, will be listed here.
 ----------------------------------------------------------
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
-
-Search out any "uncomment this to compile under Windows" and similar
-things, replacing them with appropriate autofoo.
 
 Move the rest of user definable stuff in defines.h into a proper config
 file.  Add a "!set foo=bar" command to configure it all.  Remove all
