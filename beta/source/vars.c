@@ -131,6 +131,9 @@ char VHOST[STRING_SHORT] = "0";
 char REALNAME[STRING_SHORT] = "http://www.darkbot.org";
 char privmsg_log[STRING_SHORT] = { 0 };
 
+long CONNECT_WAIT_TIMEOUT = 10;
+
+
 struct rusage r_usage;
 
 struct ignorelist *ignorehead = NULL;
@@ -155,6 +158,7 @@ struct webinfo
  TAF_webinfo = { "TAF", "weather.noaa.gov", 80, "/cgi-bin/mgettaf.pl?cccc=" } ,
  WEATHER_webinfo = { "WEATHER", "mobile.wunderground.com", 80, "/cgi-bin/findweather/getForecast?brand=mobile&query=" };
 
+
 struct setup_parameter parameters[] =
 {
     {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     Mynick,    check_nick_parameter},
@@ -164,6 +168,7 @@ struct setup_parameter parameters[] =
     {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", VHOST,     NULL},
     {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    REALNAME,  NULL},
     {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", CMDCHAR,   NULL},
+    {INTEGER, 3, sizeof(CONNECT_WAIT_TIMEOUT), {"CONNECT_WAIT_TIMEOUT", NULL, NULL, NULL, NULL}, "server connection timeout", &CONNECT_WAIT_TIMEOUT, NULL},
     {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
 };
 

@@ -126,6 +126,9 @@ extern char VHOST[STRING_SHORT];
 extern char REALNAME[STRING_SHORT];
 extern char privmsg_log[STRING_SHORT];
 
+extern long CONNECT_WAIT_TIMEOUT;
+
+
 extern struct rusage r_usage;
 
 extern struct ignorelist
