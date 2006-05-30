@@ -66,7 +66,7 @@ extern long recent_questions[10];
 #endif
 extern char NICK_COMMA[32];
 extern char COLON_NICK[33];
-extern char BPASS[32];
+extern char BPASS[STRING_SHORT];
 extern char pass_data[512];
 extern char pass_pass[STRING_SHORT];
 extern char rword[STRING_SHORT];
@@ -193,7 +193,7 @@ extern struct old
 	int value;
 	int kick;
 }
-ood[STRING_SHORT];
+ ood[STRING_SHORT];
 
 extern struct sl124
 {
@@ -222,9 +222,7 @@ extern struct	randstats
 	size_t	Rand_Stuff;
 	size_t	Rand_Idle;
 	size_t	refnum;
-	size_t	nCount;		/* Number of times we outputted to this 
- 				   channel. */
-
+	size_t	nCount;		/* Number of times we outputted to this channel. */
 	struct	randstats	*next;
 /*	struct	randstats	*prev; */
 }	
@@ -238,3 +236,23 @@ extern struct webinfo
 	char url[STRING_SHORT];
 }
  GOOGLE_webinfo, METAR_webinfo, TAF_webinfo, WEATHER_webinfo;
+
+
+enum setup_type
+{
+   BOOLEAN = 0,
+   INTEGER = 1,
+   STRING = 2
+};
+
+extern struct setup_parameter
+{
+    enum setup_type	type;
+    int			access;         /* Access level required to change the value. */
+    size_t		max_size;
+    char		*parameter[5];
+    char		*summary;
+    void		*value;         /* Where the value is stored. */
+    void 		*(*func) (struct setup_parameter *parameter);  /* Optional function that can do other things with the value, and veto the change by returning NULL. */
+}
+parameters[];

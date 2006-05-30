@@ -1,10 +1,6 @@
 #include "defines.h"
-
-#define STRING_SHORT    512
-#define STRING_LONG     2048
-
-#define FLAG_CHANOP	0x0001
-#define FLAG_CHANVOICE	0x0002
+#include "vars.h"
+#include "prototypes.h"
 
 int wsock = 0;
 int sockerr = 0;
@@ -135,108 +131,38 @@ char VHOST[STRING_SHORT] = "0";
 char REALNAME[STRING_SHORT] = "http://www.darkbot.org";
 char privmsg_log[STRING_SHORT] = { 0 };
 
-#define PBOT "ArchFiend"
-
-/* ------------ Below are structs ------------------ */
-
 struct rusage r_usage;
 
-struct ignorelist
-{
-    char nick[STRING_SHORT];
-    struct ignorelist *next;
-}
- *ignorehead = NULL;
+struct ignorelist *ignorehead = NULL;
 
-struct sendq
-{
-	char data[STRING_SHORT];
-	struct sendq *next;
-}
- *sendqhead = NULL, *sendqtail = NULL;
+struct sendq *sendqhead = NULL, *sendqtail = NULL;
 
-struct userlist
-{					/* internal userlist */
-	char chan[STRING_SHORT];
-	char nick[STRING_SHORT];
-	char uh[STRING_SHORT];
-	long flags;			/* op/voice/etc */
-	long level;			/* auth */
-	short global;			/* Global user? */
-	long idle;
-	struct userlist *next;
-}
- *userhead = NULL;
+struct userlist *userhead = NULL;
 
-struct helperlist
-{
-	char chan[STRING_SHORT];
-	char uh[STRING_SHORT];
-	char nick[STRING_SHORT];
-	long level;
-	size_t num_join;
-	char greetz[STRING_SHORT];
-	char pass[STRING_SHORT];
-	struct helperlist *next;
-}
- *helperhead = NULL;
+struct helperlist *helperhead = NULL;
 
-/**
- * 6/23/00 Dan
- * - Changed permbanlist to have dynamically allocated
- *   userhost and reason fields.
- * - Changed type of counter to size_t, this should be an
- *   unsigned type.
- */
-struct permbanlist
-{
-	char *uh;
-	char *reason;
-	size_t counter;
+struct permbanlist *permbanhead = NULL;
 
-	struct permbanlist *next;
-}
- *permbanhead = NULL;
+struct old ood[STRING_SHORT];
 
-struct old
-{
-	char host[200];
-	long time;
-	int count;
-	int value;
-	int kick;
-}
-ood[STRING_SHORT];
+struct sl124 *sh124 = NULL;
 
-struct sl124
-{
-	char name[STRING_SHORT];
-	long port;
-	char pass[STRING_SHORT];
-	struct sl124 *next;
-}
- *sh124 = NULL;
-
-struct statslist
-{
-	char nick[STRING_SHORT];
-	char uh[STRING_SHORT];
-	long total;
-	long added_time;
-	long last_time;
-
-	struct statslist *next;
-}
- *statshead = NULL;
+struct statslist *statshead = NULL;
 
 struct webinfo
-{
-	char trigger[STRING_SHORT];
-	char host[STRING_SHORT];
-	int port;
-	char url[STRING_SHORT];
-}
  GOOGLE_webinfo = { "GOOGLE", "www.google.com", 80, "/search?q=" } ,
  METAR_webinfo = { "METAR", "weather.noaa.gov", 80, "/cgi-bin/mgetmetar.pl?cccc=" } ,
  TAF_webinfo = { "TAF", "weather.noaa.gov", 80, "/cgi-bin/mgettaf.pl?cccc=" } ,
  WEATHER_webinfo = { "WEATHER", "mobile.wunderground.com", 80, "/cgi-bin/findweather/getForecast?brand=mobile&query=" };
+
+struct setup_parameter parameters[] =
+{
+    {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     &Mynick,   NULL},
+    {STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      &UID,      NULL},
+    {STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            &CHAN,     NULL},
+    {BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen",               &SeeN,     NULL},
+    {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", &VHOST,    NULL},
+    {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    &REALNAME, NULL},
+    {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", &CMDCHAR,  NULL},
+    {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
+};

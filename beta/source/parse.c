@@ -464,6 +464,7 @@ parse_255 (char *s)
 	snprintf (tmp, sizeof (tmp), "%3.2f", (float) (((float) L_CLIENTS / (float) G_USERS) * 100));
 /* FIXME: I don't see PLAY defined anywhere, is it left over from something else? */
 #if PLAY == 1
+#define PBOT "ArchFiend"
 	if (pre_CLIENTS == 0 || pre_CLIENTS == L_CLIENTS)
 	{
 		S ("PRIVMSG %s :!SENDQ %d srvs, %d ops, %d users (%s%% of %d, %ld avg)\n", PBOT, NUM_SERV,
