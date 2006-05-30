@@ -48,7 +48,7 @@
  * 'man signal' on your unix box for more info.
  * (default = <signal.h>)
  */
-#include <signal.h>
+//#include <signal.h>
 
 /*
  * Most BSD systems will not need this. If your bot will
@@ -56,13 +56,13 @@
  * (default = OFF)
  */
 
-#define NEED_LIBC5 OFF
+//#define NEED_LIBC5 OFF
 
 /*
  * SGI boxes (ie; IRIX system) need this
  * define to run. (default = OFF)
  */
-#define	SGI OFF
+//#define	SGI OFF
 
 /* ================ LANGUAGE ================ */
 /*
@@ -798,6 +798,7 @@ extern int errno;
 #ifdef WIN32
 # include <windows.h>
 #endif
+
 #include <signal.h>
 #include <sys/stat.h>
 

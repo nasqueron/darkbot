@@ -16,10 +16,10 @@ main (int argc, char **argv)
 	int		i = 0;
 	fd_set fdvar;
 	struct stat st;
-
-#if (SGI == 1) || (NEED_LIBC5 == 1)
+#ifdef SA_NOCLDSTOP
 	struct sigaction newact;
 #endif
+
 #ifdef	DEBUG
 	DebuG = 1;
 #endif
@@ -89,7 +89,9 @@ main (int argc, char **argv)
 
 	set_paths ();
 
-#if (SGI == 1) || (NEED_LIBC5 == 1)
+/* This is the best way to deternmine if sigaction() can be used.  
+ * sigaction() is more portable than signal(), so use it if we can. */
+#ifdef SA_NOCLDSTOP
 	newact.sa_handler = sig_alrm;
 	sigemptyset (&newact.sa_mask);
 	newact.sa_flags = 0;
@@ -102,11 +104,12 @@ main (int argc, char **argv)
 	sigemptyset (&newact.sa_mask);
 	newact.sa_flags = 0;
 	sigaction (SIGHUP, &newact, NULL);
-#else /* ----------------------- */
+#else
 	signal (SIGALRM, sig_alrm);
 	signal (SIGSEGV, sig_segv);
 	signal (SIGHUP, sig_hup);
 #endif
+
 #ifdef	RANDOM_STUFF
 	get_rand_stuff_time ();
 #endif
