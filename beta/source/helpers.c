@@ -204,7 +204,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 		{
 			if (strcmp (c->pass, ptr) == 0 || strcmp (c->pass, "0") == 0)
 			{
-#if				ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 				if ((ptr = crypt (newpass, salt)) == NULL)	/* encrypt new password */
 					return;
 #else
