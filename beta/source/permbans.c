@@ -138,9 +138,7 @@ del_permban (const char *nick, const char *uh)
 	}
 	return foundBan;
 }
-#endif
 
-#ifdef ENABLE_CHANNEL
 
 /**
  * Save the permban list to file.
@@ -219,4 +217,3 @@ show_banlist (const char *nick)
 	
 	S ("NOTICE %s :End of PERMBAN list; %d ban%s found.\n", nick, x, (x == 1) ? "" : "s");
 }
-

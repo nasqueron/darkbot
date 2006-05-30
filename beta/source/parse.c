@@ -224,7 +224,7 @@ parse (char *line)
 		{						/* PRIVMSG  */
 			s1 = strtok (NULL, " ");	/* Target */
 			s2 = strtok (NULL, "");	/* Rest  */
-#if	LOG_PRIVMSG == 1
+#if LOG_PRIVMSG == 1
 			if (*s1 != '#' && *s1 != '&')
 			{
 				db_log (privmsg_log, "[%s] %s %s %s\n", date (), s, s1, s2);
@@ -411,9 +411,7 @@ parse_252 (char *s)
 	sscanf (tmp, "%d", &numb);
 	IRCOPS = numb;
 }
-#endif
 
-#ifdef ENABLE_STATUS
 void
 parse_251 (char *s)
 {
@@ -437,9 +435,7 @@ parse_251 (char *s)
 	NUM_SERV = numb;
 	G_USERS = r + i;
 }
-#endif
 
-#ifdef ENABLE_STATUS
 void
 parse_255 (char *s)
 {
@@ -466,6 +462,7 @@ parse_255 (char *s)
 		pre_CLIENTS = L_CLIENTS - pre_CLIENTS;
 	}
 	snprintf (tmp, sizeof (tmp), "%3.2f", (float) (((float) L_CLIENTS / (float) G_USERS) * 100));
+/* FIXME: I don't see PLAY defined anywhere, is it left over from something else? */
 #if PLAY == 1
 	if (pre_CLIENTS == 0 || pre_CLIENTS == L_CLIENTS)
 	{

@@ -435,8 +435,7 @@ char	*rand_reply	(const char *nick)
 	FILE		*fp = 0;
 	char		temp	[STRING_SHORT] = {0};
 	size_t		nIndex = 0, nRandTopics = 0, nLine = 0,
-				nLength = 0;
-
+	nLength = 0;
 
 	// Count how many lines are in the RAND_SAY file, if can't be
 	// counted, just return.
@@ -507,7 +506,7 @@ char	*rand_reply	(const char *nick)
 	return(" ");
 }
 
-#if		RANDQ == ON
+#if RANDQ == ON
 
 /* 
  * do_randq():
