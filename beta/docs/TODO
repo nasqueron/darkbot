@@ -42,10 +42,9 @@ be added, will be listed here.
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
 
-Move the rest of user definable stuff in defines.h into a proper config
-file.  Add a "!set foo=bar" command to configure it all.  Remove all
-commands that twiddled with some setup param and replace them with 
-"!set foo=bar".
+Move the rest of user definable stuff in defines.h into setup.ini. 
+Remove all commands that twiddled with some setup param and replace them
+with "!set foo=bar".
 
 Convert to gettext.
 

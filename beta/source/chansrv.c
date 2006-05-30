@@ -1203,6 +1203,51 @@ struct chanserv_output *chanserv_seen(char *source, char *target, char *cmd, cha
 	return result;
 }
 
+struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
+{
+	struct chanserv_output *result = NULL;
+	struct setup_parameter *param = NULL;
+
+	if (args[0] == NULL)
+		return result;
+
+	param = set_parameter(args[0]);
+	if (param)
+	{
+	    switch (param->type)
+	    {
+		case BOOLEAN : 
+		{
+		    bool *variable = param->value;
+
+		    result = chanserv_asprintf(result, "Setting %s = %s", param->summary, (*variable) ? "true" : "false");
+		    break;
+		}
+
+		case INTEGER : 
+		{
+		    long *variable = param->value;
+
+		    result = chanserv_asprintf(result, "Setting %s = %ld", param->summary, *variable);
+		    break;
+		}
+
+		case STRING  : 
+		{
+		    char *variable = param->value;
+
+		    result = chanserv_asprintf(result, "Setting %s = %s", param->summary, variable);
+		    break;
+		}
+	    }
+	    save_setup();
+	}
+	else
+	    result = chanserv_asprintf(result, "Unknown parameter.");
+
+	return result;
+}
+
 struct chanserv_output *chanserv_setchan(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1749,6 +1794,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_search,		{"SEARCH", "LOOK", "FIND", NULL, NULL}, "<text>", "Search in the topics."},
     {INFO_COMMAND,    0, 1, chanserv_seen,		{"SEEN", NULL, NULL, NULL, NULL}, "<nick>", "Show the last time a user was seen."},
     {DANGER_COMMAND,  3, 1, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", "Switch bot to a different server."},
+    {DANGER_COMMAND,  3, 1, chanserv_set,		{"SET", NULL, NULL, NULL, NULL}, "<parameter>[=<new value>]", "Set or show the value of a setup.ini parameter."},
     {DANGER_COMMAND,  3, 1, chanserv_setchan,		{"SETCHAN", NULL, NULL, NULL, NULL}, "<new #channel>", "Set the default channel."},
     {DANGER_COMMAND,  3, 1, chanserv_setchar,		{"SETCHAR", NULL, NULL, NULL, NULL}, "<new command char>", "Set the command character."},
     {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
