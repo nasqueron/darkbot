@@ -4,6 +4,28 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: May 31, 2006
+	- A busy month.
+	- Completed the autofoo.
+	- Added compat directory full of replacement functions for
+	  when autofoo decides that the users OS is missing stuff.
+	- Cleaned up most OS dependant things so that they now work 
+	  everywhere.
+	- Converted some defines.h things into ./configure --enable-X
+	  --with-X=Y things.
+	- Added !set foo=bar infrastructure and command.  The contents
+	  of setup.ini is now under the control of generic, array based
+	  code.  To add things to setup.ini, just add them to the array.
+	- Started moving the rest of defines.h to setup.ini.
+	- General clean up and lots of minor things that get fixed in 
+	  passing.
+	- Added docs/HACKING.
+	- Re arranged some files.
+	- New building scripts.
+	- Darkbot and convertdb are much cleverer about finding the data
+	  files.
+	- Cleaned up vars.c and vars.h.
+
 Darkbot 8rc2: May 04, 2006
 	- Cleaned generated files out of cvs and updated .cvsignore 
 	  files to match.

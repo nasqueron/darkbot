@@ -46,6 +46,8 @@ Move the rest of user definable stuff in defines.h into setup.ini.
 Remove all commands that twiddled with some setup param and replace them
 with "!set foo=bar".
 
+Add a help parameters option.
+
 Convert to gettext.
 
 LSB style init script.
