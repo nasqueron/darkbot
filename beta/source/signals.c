@@ -117,9 +117,8 @@ sig_alrm (int notUsed)
 	AIL5 += AIL;
 	if (AIL5 >= 600)
 	{
-#ifdef	ANTI_IDLE
-		S ("PRIVMSG ! :\2\n");
-#endif
+		if (ANTI_IDLE)
+		    S ("PRIVMSG ! :\2\n");
 		AIL5 = 0;
 	}
 	if (AIL2 >= 300)
@@ -133,10 +132,8 @@ sig_alrm (int notUsed)
 		reset_ ();
 		save_changes ();
 
-#if PERFORM_TIMER == 1
-                run_perform ();
-#endif
-
+		if (PERFORM_TIMER)
+            	    run_perform ();
 	}
 }
 

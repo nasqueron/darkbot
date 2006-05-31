@@ -132,6 +132,10 @@ char REALNAME[STRING_SHORT] = "http://www.darkbot.org";
 char privmsg_log[STRING_SHORT] = { 0 };
 
 long CONNECT_WAIT_TIMEOUT = 10;
+bool PERFORM_TIMER = true;
+char DEFAULT_UMODE[STRING_SHORT] = "+i-ds";
+bool ANTI_IDLE = false;
+bool DISPLAY_SYNC = false;
 
 
 struct rusage r_usage;
@@ -164,11 +168,17 @@ struct setup_parameter parameters[] =
     {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     Mynick,    check_nick_parameter},
     {STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      UID,       NULL},
     {STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            CHAN,      NULL},
-    {BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen",               &SeeN,     NULL},
+    {BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen mode",          &SeeN,     NULL},
     {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", VHOST,     NULL},
     {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    REALNAME,  NULL},
     {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", CMDCHAR,   NULL},
-    {INTEGER, 3, sizeof(CONNECT_WAIT_TIMEOUT), {"CONNECT_WAIT_TIMEOUT", NULL, NULL, NULL, NULL}, "server connection timeout", &CONNECT_WAIT_TIMEOUT, NULL},
+    {INTEGER, 3, sizeof(CONNECT_WAIT_TIMEOUT), {"CONNECT_WAIT_TIMEOUT", NULL, NULL, NULL, NULL}, "server connection timeout",               &CONNECT_WAIT_TIMEOUT, NULL},
+    {BOOLEAN, 3, sizeof(PERFORM_TIMER),        {"PERFORM_TIMER",        NULL, NULL, NULL, NULL}, "sending perform.ini to server reqularly", &PERFORM_TIMER,        NULL},
+    {STRING,  3, sizeof(DEFAULT_UMODE),        {"DEFAULT_UMODE",        NULL, NULL, NULL, NULL}, "bot's user modes",                        DEFAULT_UMODE,         NULL},
+    {BOOLEAN, 3, sizeof(ANTI_IDLE),            {"ANTI_IDLE",            NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
+    {BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,     NULL},
+
+
     {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
 };
 

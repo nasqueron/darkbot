@@ -139,12 +139,12 @@
  * Useful if the bot is banned, or X was
  * split at the time darkbot signed on.
  */
-#define	PERFORM_TIMER ON
+//#define	PERFORM_TIMER ON
 
 /*
  * What user modes do you want for darkbot?
  */
-#define	DEFAULT_UMODE "+i-ds"
+//#define	DEFAULT_UMODE "+i-ds"
 
 /* ==== ON IRC ==== */
 /*
@@ -157,7 +157,7 @@
  * 10 min idle? This isn't usually needed since
  * darkbots tend to talk a lot. (default = undef)
  */
-#undef	ANTI_IDLE
+//#undef	ANTI_IDLE
 
 /* ==== ONJOIN ==== */
 /*
@@ -168,7 +168,7 @@
  * still syncing, it may just ignore your login request
  * until it sees you in the channel. (default = OFF)
  */
-#define DISPLAY_SYNC OFF
+//#define DISPLAY_SYNC OFF
 
 /* ================ DATABASE MANAGEMENT ================ */
 

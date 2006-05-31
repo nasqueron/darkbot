@@ -127,6 +127,10 @@ extern char REALNAME[STRING_SHORT];
 extern char privmsg_log[STRING_SHORT];
 
 extern long CONNECT_WAIT_TIMEOUT;
+extern bool PERFORM_TIMER;
+extern char DEFAULT_UMODE[STRING_SHORT];
+extern bool ANTI_IDLE;
+extern bool DISPLAY_SYNC;
 
 
 extern struct rusage r_usage;

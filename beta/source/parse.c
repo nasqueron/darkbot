@@ -76,12 +76,13 @@ parse (char *line)
 		}
 		else if (strcasecmp (cmd, "315") == 0)
 		{
-#if DISPLAY_SYNC == 1
-			s2 = strtok (NULL, " ");	/*mynick */
-			strncpy (Mynick, s2, sizeof (Mynick));
-			s2 = strtok (NULL, " ");	/* chan */
-			S ("PRIVMSG %s :Sync with %s completed.\n", s2, s2);
-#endif
+			if (DISPLAY_SYNC)
+			{
+			    s2 = strtok (NULL, " ");	/*mynick */
+			    strncpy (Mynick, s2, sizeof (Mynick));
+			    s2 = strtok (NULL, " ");	/* chan */
+			    S ("PRIVMSG %s :Sync with %s completed.\n", s2, s2);
+			}
 		}
 		else if (strcasecmp (cmd, "311") == 0)
 		{
