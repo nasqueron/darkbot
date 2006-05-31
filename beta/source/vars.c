@@ -145,6 +145,13 @@ bool GENERAL_QUESTIONS = true;
 //bool ALLOW_DEL_IN_MSG = false;
 bool MSG_RESPONSES = false;
 
+bool LOG_ADD_DELETES = true;
+bool LOG_PRIVMSG = true;
+
+long SLEEP_TIME = 300;
+char GOSLEEP_ACTION[STRING_SHORT] = "\1ACTION falls asleep... ZzzZZzzZZzz\1";
+char WAKEUP_ACTION[STRING_SHORT] = "\1ACTION wakes up from a snooze..\1";
+
 
 struct rusage r_usage;
 
@@ -185,14 +192,19 @@ struct setup_parameter parameters[] =
     {STRING,  3, sizeof(DEFAULT_UMODE),        {"DEFAULT_UMODE",        NULL, NULL, NULL, NULL}, "bot's user modes",                        DEFAULT_UMODE,         NULL},
     {BOOLEAN, 3, sizeof(ANTI_IDLE),            {"ANTI_IDLE",            NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
     {BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,         NULL},
-    {BOOLEAN, 3, sizeof(SORT),                 {"SORT",                 NULL, NULL, NULL, NULL}, "sort database on startup"      ,          &SORT,                 NULL},
+    {BOOLEAN, 3, sizeof(SORT),                 {"SORT",                 NULL, NULL, NULL, NULL}, "sort database on startup",                &SORT,                 NULL},
     {BOOLEAN, 3, sizeof(FIND_DUPS),            {"FIND_DUPS",            NULL, NULL, NULL, NULL}, "remove duplicates in hatabase",           &FIND_DUPS,            NULL},
     {BOOLEAN, 3, sizeof(SAVE_DUPS),            {"SAVE_DUPS",            NULL, NULL, NULL, NULL}, "save duplicates in database",             &SAVE_DUPS,            NULL},
     {BOOLEAN, 3, sizeof(GENERAL_QUESTIONS),    {"GENERAL_QUESTIONS",    NULL, NULL, NULL, NULL}, "bot responds without being asked",        &GENERAL_QUESTIONS,    NULL},
 // I managed to eliminate these options when I rewrote chansrv.c.
 //    {BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),     {"ALLOW_ADD_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
 //    {BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),     {"ALLOW_DEL_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
-    {BOOLEAN, 3, sizeof(MSG_RESPONSES),        {"MSG_RESPONSES",        NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,     NULL},
+    {BOOLEAN, 3, sizeof(MSG_RESPONSES),        {"MSG_RESPONSES",        NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,        NULL},
+    {BOOLEAN, 3, sizeof(LOG_ADD_DELETES),      {"LOG_ADD_DELETES",      NULL, NULL, NULL, NULL}, "logging of database changes",             &LOG_ADD_DELETES,      NULL},
+    {BOOLEAN, 3, sizeof(LOG_PRIVMSG),          {"LOG_PRIVMSG",          NULL, NULL, NULL, NULL}, "logging of priwate messages",             &LOG_PRIVMSG,          NULL},
+    {INTEGER, 3, sizeof(SLEEP_TIME),           {"SLEEP_TIME",           NULL, NULL, NULL, NULL}, "seconds to sleep for",                    &SLEEP_TIME,           NULL},
+    {STRING,  3, sizeof(GOSLEEP_ACTION),       {"GOSLEEP_ACTION",       NULL, NULL, NULL, NULL}, "sleep action",                            GOSLEEP_ACTION,        NULL},
+    {STRING,  3, sizeof(WAKEUP_ACTION),        {"WAKEUP_ACTION",        NULL, NULL, NULL, NULL}, "wakeup action",                           WAKEUP_ACTION,         NULL},
 
 
     {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}

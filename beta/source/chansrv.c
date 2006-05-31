@@ -121,9 +121,8 @@ struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char
 		return chanserv_asprintf(result, "Rdb files can only be called from the data of a topic, they cannot be used in the topic itself.");
 	if (check_existing_url(source, args[0], target) == 1)
 		return chanserv_asprintf(result, "%s \37%s\37\n", EXISTING_ENTRY, args[0]);
-#ifdef	LOG_ADD_DELETES
-	db_log(ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date(), source, userhost, args[0], s);
-#endif
+	if (LOG_ADD_DELETES)
+	    db_log(ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date(), source, userhost, args[0], s);
 	ADDITIONS++;
 	if (args[0][0] == 'i' && args[0][1] == 'l' && args[0][2] == 'c')
 		db_log(URL2, "%s ([%s] %s!%s): %s\n", args[0], date(), source, userhost, s);
@@ -359,9 +358,8 @@ struct chanserv_output *chanserv_delete(char *source, char *target, char *cmd, c
 		return chanserv_asprintf(NULL, "%s what?", cmd);
 	if (strlen (args[0]) > MAX_TOPIC_SIZE)
 		args[0][MAX_TOPIC_SIZE] = '\0';
-#ifdef	LOG_ADD_DELETES
-	db_log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, args[0]);
-#endif
+	if (LOG_ADD_DELETES)
+	    db_log (ADD_DELETES, "[%s] %s!%s DEL %s\n", date (), source, userhost, args[0]);
 	if (*args[0] == '~')
 	{	/* need level 2 to delete .rdb files */
 		if (invoked == MSG_INVOKE)
@@ -1124,9 +1122,8 @@ struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, 
 	if (check_existing_url(source, args[0], target) != 1)
 		return chanserv_asprintf(NULL, "%s \37%s\37", NO_ENTRY, args[0]);
 	delete_url (source, args[0], target);
-#ifdef	LOG_ADD_DELETES
-	db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, args[0], s);
-#endif
+	if (LOG_ADD_DELETES)
+	    db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, args[0], s);
 	ADDITIONS++;
 	db_log (URL2, "%s %s\n", args[0], s);
 

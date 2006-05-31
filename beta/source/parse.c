@@ -225,12 +225,10 @@ parse (char *line)
 		{						/* PRIVMSG  */
 			s1 = strtok (NULL, " ");	/* Target */
 			s2 = strtok (NULL, "");	/* Rest  */
-#if LOG_PRIVMSG == 1
-			if (*s1 != '#' && *s1 != '&')
+			if ((LOG_PRIVMSG) && (*s1 != '#') && (*s1 != '&'))
 			{
 				db_log (privmsg_log, "[%s] %s %s %s\n", date (), s, s1, s2);
 			}
-#endif
 			if (*s1 == '#' || *s1 == '&' || *s1 == '+')
 				if (do_lastcomm (s, s1, s2) == 1)
 					return;

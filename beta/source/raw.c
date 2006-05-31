@@ -48,9 +48,8 @@ void *check_nick_parameter(struct setup_parameter *parameter, char *ptr)
     snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", s_Mynick);
     S("NICK %s\n", s_Mynick);
 
-#if LOG_PRIVMSG == 1
-    snprintf (privmsg_log, sizeof (privmsg_log), "%s%s-privmsg.log", LOG_DIR, s_Mynick);
-#endif
+    if(LOG_PRIVMSG)
+	snprintf (privmsg_log, sizeof (privmsg_log), "%s%s-privmsg.log", LOG_DIR, s_Mynick);
 
     return ptr;
 }

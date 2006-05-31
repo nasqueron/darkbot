@@ -250,14 +250,14 @@
  * Do you want to log who adds/deletes topics? Log saved 
  * to dat/logs/add_delete.log (default = define)
  */
-#define LOG_ADD_DELETES
+//#define LOG_ADD_DELETES
 
 /*
  * Do you want to log all privmsg's to your
  * darkbot? (will be saved to dat/logs/ dir)
  * (default = ON)
  */
-#define LOG_PRIVMSG ON
+//#define LOG_PRIVMSG ON
 
 /* ==== SLEEP DIRECTIVES ==== */
 /*
@@ -271,15 +271,15 @@
 /*
  * How many seconds to sleep for? (default = 300 (5 minutes)) 
  */
-#define	SLEEP_TIME	300
+//#define	SLEEP_TIME	300
 
 /*
  * What you would want your Darkbot to say when sleep and
  * wake up commands are issued? (If you want you can change
  * what is between 'ACTION' and '\1')
  */
-#define	GOSLEEP_ACTION	"\1ACTION falls asleep... ZzzZZzzZZzz\1"
-#define	WAKEUP_ACTION	"\1ACTION wakes up from a snooze..\1"
+//#define	GOSLEEP_ACTION	"\1ACTION falls asleep... ZzzZZzzZZzz\1"
+//#define	WAKEUP_ACTION	"\1ACTION wakes up from a snooze..\1"
 
 /* ==== DATA SIZE ==== */
 /*

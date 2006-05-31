@@ -140,6 +140,12 @@ extern bool ALLOW_ADD_IN_MSG;
 extern bool ALLOW_DEL_IN_MSG;
 extern bool MSG_RESPONSES;
 
+extern bool LOG_ADD_DELETES;
+extern bool LOG_PRIVMSG;
+
+extern long SLEEP_TIME;
+extern char GOSLEEP_ACTION[STRING_SHORT];
+extern char WAKEUP_ACTION[STRING_SHORT];
 
 extern struct rusage r_usage;
 
