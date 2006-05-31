@@ -1248,32 +1248,6 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 	return result;
 }
 
-struct chanserv_output *chanserv_setchan(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if (args[0] == NULL)
-		return result;
-	strncpy (CHAN, args[0], sizeof (CHAN));
-	result = chanserv_asprintf(result, "Default channel: %s.", CHAN);
-	save_setup ();
-
-	return result;
-}
-
-struct chanserv_output *chanserv_setchar(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if (args[0] == NULL)
-		return result;
-	*CMDCHAR = *args[0];
-	result = chanserv_asprintf(result, "New command char now: %c.", *CMDCHAR);
-	save_setup ();
-
-	return result;
-}
-
 struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1284,39 +1258,6 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 	save_changes ();
 
 	return result;
-}
-
-struct chanserv_output *chanserv_setnick(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if (args[0] == NULL)
-		return result;
-
-	if (strspn (args[0], LEGAL_NICK_TEXT) != strlen (args[0]))
-		return chanserv_asprintf(NULL, "The nickname %s contains illegal characters.", args[0]);
-
-	S("NICK %s\n", args[0]);
-	strncpy(s_Mynick, args[0], sizeof (s_Mynick));
-	strncpy(Mynick, args[0], sizeof (Mynick));
-	snprintf(NICK_COMMA, sizeof (NICK_COMMA), "%s,", Mynick);
-	snprintf(COLON_NICK, sizeof (COLON_NICK), "%s:", Mynick);
-	snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", Mynick);
-	save_setup();
-
-	return result;
-}
-
-struct chanserv_output *chanserv_setuser(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if (args[0] == NULL)
-		return result;
-	strncpy (UID, args[0], sizeof (UID));
-	save_setup ();
-
-	return chanserv_asprintf(NULL, "Default userid now: %s.", UID);
 }
 
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -1554,18 +1495,6 @@ struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, 
 }
 #endif
 
-struct chanserv_output *chanserv_vhost(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if (args[0] == NULL)
-	    return result;
-	strncpy(VHOST, args[0], sizeof (VHOST));
-	save_setup();
-
-	return chanserv_asprintf(NULL, "NOTICE %s :Default Vhost now: %s.", VHOST);
-}
-
 #ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1685,7 +1614,7 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
  */
 struct chanserv_command chanserv_commands[] =
 {
-    {NORMAL_COMMAND,  ADD_LEVEL, 1, chanserv_add,		{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
+    {NORMAL_COMMAND,  ADD_LEVEL, 1, chanserv_add,	{"ADD", "REMEMBER", "SAVE", "STORE", NULL}, "<topic> <text>", "Add a topic and it's text."},
     {PASSWORD_COMMAND,  3, 4, chanserv_add_user,	{"ADDUSER", NULL, NULL, NULL, NULL}, "<#channel|#*> <user@host> <level> [password]", "Add a user to the access list."},
     {SAFE_COMMAND,    2, 2, chanserv_alarm,		{"ALARM", "ALARMCLOCK", NULL, NULL, NULL}, "<time type: d/h/m><time> <text to say>", "Set some text to be said by the bot at a later time."},
 #ifdef ENABLE_CHANNEL
@@ -1712,7 +1641,7 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_delban,		{"DELBAN", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the permanent ban list."},
 #endif
-    {NORMAL_COMMAND,  DEL_LEVEL, 1, chanserv_delete,		{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
+    {NORMAL_COMMAND,  DEL_LEVEL, 1, chanserv_delete,	{"DELETE", "DEL", "REMOVE", "FORGET", NULL}, "<topic>", "Delete a topic."},
     {DANGER_COMMAND,  3, 1, chanserv_deluser,		{"DELUSER", NULL, NULL, NULL, NULL}, "<user@host>", "Delete a user from the access list."},
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_deop,		{"DEOP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Remove channel operator status from users."},
@@ -1756,7 +1685,7 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_METAR
     {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw METAR weather data."},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", "Change bot's nickname."},
+    {DANGER_COMMAND,  3, 1, chanserv_nick,		{"NICK", "N", NULL, NULL, NULL}, "<newnick>", "Change bot's nickname, but not the default."},
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel operator status to users."},
 #endif
@@ -1795,11 +1724,7 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 1, chanserv_seen,		{"SEEN", NULL, NULL, NULL, NULL}, "<nick>", "Show the last time a user was seen."},
     {DANGER_COMMAND,  3, 1, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", "Switch bot to a different server."},
     {DANGER_COMMAND,  3, 1, chanserv_set,		{"SET", NULL, NULL, NULL, NULL}, "<parameter>[=<new value>]", "Set or show the value of a setup.ini parameter."},
-    {DANGER_COMMAND,  3, 1, chanserv_setchan,		{"SETCHAN", NULL, NULL, NULL, NULL}, "<new #channel>", "Set the default channel."},
-    {DANGER_COMMAND,  3, 1, chanserv_setchar,		{"SETCHAR", NULL, NULL, NULL, NULL}, "<new command char>", "Set the command character."},
     {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
-    {DANGER_COMMAND,  3, 1, chanserv_setnick,		{"SETNICK", NULL, NULL, NULL, NULL}, "<new nick>", "Set the bot's default nick."},
-    {DANGER_COMMAND,  3, 1, chanserv_setuser,		{"SETUSER", NULL, NULL, NULL, NULL}, "<new userid>", "Set the bot's userid (requires a restart)."},
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, "Deactivate bot for a period."},
     {INFO_COMMAND,    0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
 #ifdef ENABLE_TAF
@@ -1825,7 +1750,6 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CTCP
     {INFO_COMMAND,    0, 0, chanserv_version,		{"\1VERSION\1", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
-    {DANGER_COMMAND,  3, 1, chanserv_vhost,		{"VHOST", "SETHOST", NULL, NULL, NULL}, "<new virtual host>", "Set the bot's virtual host (requires a restart)."},
 #ifdef ENABLE_CHANNEL
     {NORMAL_COMMAND,  3, 1, chanserv_voice,		{"VOICE", "V", NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel voice status to users."},
 #endif

@@ -36,10 +36,22 @@ check_files (void)
 
 void *check_nick_parameter(struct setup_parameter *parameter, char *ptr)
 {
+    if (strspn (ptr, LEGAL_NICK_TEXT) != strlen (ptr))
+    {
+	printf("The nickname %s contains illegal characters.", ptr);
+	return NULL;
+    }
+
     strncpy (s_Mynick, ptr, sizeof (s_Mynick));
+    snprintf(NICK_COMMA, sizeof (NICK_COMMA), "%s,", s_Mynick);
+    snprintf(COLON_NICK, sizeof (COLON_NICK), "%s:", s_Mynick);
+    snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", s_Mynick);
+    S("NICK %s\n", s_Mynick);
+
 #if LOG_PRIVMSG == 1
     snprintf (privmsg_log, sizeof (privmsg_log), "%s%s-privmsg.log", LOG_DIR, s_Mynick);
 #endif
+
     return ptr;
 }
 
