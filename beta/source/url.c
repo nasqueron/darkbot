@@ -483,14 +483,12 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 				S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
 			}
-#if MSG_RESPONSES == ON
-			else
+			else if (MSG_RESPONSES)
 			{
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 
 				S ("NOTICE %s :%s\n", target, Data);
 			}
-#endif
 			fclose (fp);
 			return;
 		}						/* Subject match */

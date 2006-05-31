@@ -137,6 +137,14 @@ char DEFAULT_UMODE[STRING_SHORT] = "+i-ds";
 bool ANTI_IDLE = false;
 bool DISPLAY_SYNC = false;
 
+bool SORT = false;
+bool FIND_DUPS = false;
+bool SAVE_DUPS = true;
+bool GENERAL_QUESTIONS = true;
+//bool ALLOW_ADD_IN_MSG = false;
+//bool ALLOW_DEL_IN_MSG = false;
+bool MSG_RESPONSES = false;
+
 
 struct rusage r_usage;
 
@@ -176,7 +184,15 @@ struct setup_parameter parameters[] =
     {BOOLEAN, 3, sizeof(PERFORM_TIMER),        {"PERFORM_TIMER",        NULL, NULL, NULL, NULL}, "sending perform.ini to server reqularly", &PERFORM_TIMER,        NULL},
     {STRING,  3, sizeof(DEFAULT_UMODE),        {"DEFAULT_UMODE",        NULL, NULL, NULL, NULL}, "bot's user modes",                        DEFAULT_UMODE,         NULL},
     {BOOLEAN, 3, sizeof(ANTI_IDLE),            {"ANTI_IDLE",            NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
-    {BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,     NULL},
+    {BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,         NULL},
+    {BOOLEAN, 3, sizeof(SORT),                 {"SORT",                 NULL, NULL, NULL, NULL}, "sort database on startup"      ,          &SORT,                 NULL},
+    {BOOLEAN, 3, sizeof(FIND_DUPS),            {"FIND_DUPS",            NULL, NULL, NULL, NULL}, "remove duplicates in hatabase",           &FIND_DUPS,            NULL},
+    {BOOLEAN, 3, sizeof(SAVE_DUPS),            {"SAVE_DUPS",            NULL, NULL, NULL, NULL}, "save duplicates in database",             &SAVE_DUPS,            NULL},
+    {BOOLEAN, 3, sizeof(GENERAL_QUESTIONS),    {"GENERAL_QUESTIONS",    NULL, NULL, NULL, NULL}, "bot responds without being asked",        &GENERAL_QUESTIONS,    NULL},
+// I managed to eliminate these options when I rewrote chansrv.c.
+//    {BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),     {"ALLOW_ADD_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
+//    {BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),     {"ALLOW_DEL_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
+    {BOOLEAN, 3, sizeof(MSG_RESPONSES),        {"MSG_RESPONSES",        NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,     NULL},
 
 
     {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}

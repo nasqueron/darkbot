@@ -132,6 +132,14 @@ extern char DEFAULT_UMODE[STRING_SHORT];
 extern bool ANTI_IDLE;
 extern bool DISPLAY_SYNC;
 
+extern bool SORT;
+extern bool FIND_DUPS;
+extern bool SAVE_DUPS;
+extern bool GENERAL_QUESTIONS;
+extern bool ALLOW_ADD_IN_MSG;
+extern bool ALLOW_DEL_IN_MSG;
+extern bool MSG_RESPONSES;
+
 
 extern struct rusage r_usage;
 

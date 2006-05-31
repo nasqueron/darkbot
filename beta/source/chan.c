@@ -191,11 +191,8 @@ info (const char *source, char *target)
 	char b[STRING_LONG] = { 0 };
 	size_t topics = 0, dup = 0;
 	time_t t2time = 0, c_uptime = 0;
-
-#ifdef FIND_DUPS
 	char *ptr = NULL, *subj = NULL;
-    char last[STRING_LONG] = { 0 };
-#endif
+	char last[STRING_LONG] = { 0 };
 	t2time = time (NULL);
 	unlink (TMP_URL);
 	starttime = clock ();
@@ -208,38 +205,36 @@ info (const char *source, char *target)
 	while (fgets (b, STRING_LONG, fp))
 	{
 		topics++;
-#ifdef	FIND_DUPS
-		if(*b == '\n')
-            continue;
+		if (FIND_DUPS)
+		{
+		    if(*b == '\n')
+        		continue;
 
-        stripline (b);
-		subj = strtok (b, " ");
-		ptr = strtok (NULL, "");
-		strlwr (subj);
-		if (strcasecmp (last, subj) == 0)
-		{
+    		    stripline (b);
+		    subj = strtok (b, " ");
+		    ptr = strtok (NULL, "");
+		    strlwr (subj);
+		    if (strcasecmp (last, subj) == 0)
+		    {
 			dup++;
-#ifdef	SAVE_DUPS
-			db_log (BACKUP_DUP, "%s %s\n", subj, ptr);
-#endif
-		}
-		else
-		{
+			if (SAVE_DUPS)
+			    db_log (BACKUP_DUP, "%s %s\n", subj, ptr);
+		    }
+		    else
+		    {
 			db_log (TMP_URL, "%s %s\n", subj, ptr);
+		    }
+		    strncpy (last, subj, sizeof (last));
+		    last[sizeof (last) - 1] = '\0';
 		}
-		strncpy (last, subj, sizeof (last));
-		last[sizeof (last) - 1] = '\0';
-#endif
 	}
 
 	fclose (fp);
 	rename (TMP_URL, URL2);
-#ifdef	FIND_DUPS
-	if (dup > 0)
+	if ((FIND_DUPS) && (dup > 0))
 	{
 		L025 (target, dup);
 	}
-#endif
 	c_uptime = time (NULL) - uptime;
 	topics -= dup;
 	if (c_uptime > 86400)

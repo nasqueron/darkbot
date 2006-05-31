@@ -181,40 +181,40 @@
  * Sorting the database will put all items listed in
  * alphabetic order. (default = undef)
  */
-#undef	SORT
+//#undef	SORT
 
 /*
  * When user's do the INFO command, and at
  * startup, do you want to find and remove
  * duplicates database entries? (default = undef)
  */
-#undef	FIND_DUPS
+//#undef	FIND_DUPS
 
 /*
  * When duplicate topics are found, do you
  * want to save them? (in case some topics
  * are accidently deleted) (default = define)
  */
-#define	SAVE_DUPS
+//#define	SAVE_DUPS
 
 /* ==== PERMISSIONS ==== */
 /*
  * Do you want Darkbot to answer questions that match a topic
  * without addressing the bot? (default = ON)
  */
-#define	GENERAL_QUESTIONS ON
+//#define	GENERAL_QUESTIONS ON
 
 /*
  * Turn this ON if you want to be able to use the ADD function
  * in private message to the bot. (default = OFF)
  */
-#define ALLOW_ADD_IN_MSG        OFF
+//#define ALLOW_ADD_IN_MSG        OFF
    
 /*
  * Turn this ON if you want to be able to use the DEL function
  * in private message to the bot. (default = OFF)
  */
-#define ALLOW_DEL_IN_MSG        OFF
+//#define ALLOW_DEL_IN_MSG        OFF
 
 /*
  * If you want your bot to be able to respond to things asked
@@ -222,7 +222,7 @@
  * defines to allow/disallow adding or deleting entries in private.
  * (default = OFF)
  */
-#define MSG_RESPONSES OFF
+//#define MSG_RESPONSES OFF
 
 /*
  * Toggles the use of encrypted passwords in the userlist.db file.

@@ -140,11 +140,12 @@ main (int argc, char **argv)
 	system (temp);
 # endif
 	db_sleep (2);
-# ifdef	SORT
-	printf ("Sorting database...\n");
-	snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
-	system (temp);
-# endif
+	if (SORT)
+	{
+	    printf ("Sorting database...\n");
+	    snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
+	    system (temp);
+	}
 #endif
 	load_helpers ();
 	load_stats ();

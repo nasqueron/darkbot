@@ -1993,8 +1993,7 @@ void chanserv(char *source, char *target, char *buf)
 		    S("PRIVMSG %s :%s: %s\n", target, source, WHUT);
 #endif
 	    }
-#if GENERAL_QUESTIONS == 1
-	    else if (cmd != NULL)
+	    else if ((GENERAL_QUESTIONS) && (cmd != NULL))
 	    {
 		show_url(source, get_multiword_topic(cmd), 
 		    (input_type == MSG_INVOKE) ? source : target, 
@@ -2002,7 +2001,6 @@ void chanserv(char *source, char *target, char *buf)
 		    (input_type == DIRECT_INVOKE), 
 		    userhost, 0);
 	    }
-#endif
 	}
 }
 
