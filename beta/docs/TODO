@@ -62,7 +62,8 @@ Allow multiple command characters - SETCHAR !'~
 
 We use usleep(), sleep(), and alarm().  Using any two of those at the
 same time is bad.  usleep() is obsolete, and alarm() may not be portable
-enough.
+enough.  Replace usleep() and sleep() with nanosleep().  Replace
+multiple alarm() calls with a single setitimer() call.
 
 Convert use of the obsolete gethostbyname() to getaddrinfo().
 
