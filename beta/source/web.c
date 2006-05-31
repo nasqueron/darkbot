@@ -211,7 +211,7 @@ web_write_server (int filedes, char *format,...)
 	    case -1:
 		if (!alarmed)
                 {
-		    sleep(RECHECK);
+		    db_sleep(RECHECK);
 		}
                 else
                 {

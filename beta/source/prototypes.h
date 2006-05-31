@@ -157,6 +157,7 @@ void	call_reserved_1				(char *, char *, char *);
 void	call_reserved_2				(char *, char *, char *);
 size_t	count_char				(const char *, const char);
 bool	isBoolean				(char *aBoolean);
+void	db_sleep				(unsigned long seconds);
 void	reverse					(char *);
 char	*mask_from_nick				(char *, const char *);
 char	*uh_from_nick				(char *, const char *);

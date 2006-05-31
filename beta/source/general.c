@@ -520,3 +520,12 @@ bool isBoolean(char *aBoolean)
 
     return result;
 }
+
+
+void db_sleep(unsigned long seconds)
+{
+    struct timespec req, rem;
+
+    req.tv_sec = seconds;
+    nanosleep(&req, &rem);
+}

@@ -13,6 +13,7 @@ AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror])
 
 # Checks for programs.
+AC_GNU_SOURCE
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
@@ -34,6 +35,7 @@ AC_C_CONST
 AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
+AC_C_VOLATILE
 
 # Checks for library functions.
 AC_FUNC_CLOSEDIR_VOID
@@ -45,10 +47,11 @@ AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_LSTAT
+AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr])
-AC_REPLACE_FUNCS([memset snprintf strcasecmp strcasestr strndup strspn strstr])
+AC_REPLACE_FUNCS([memset nanosleep snprintf strcasecmp strcasestr strndup strspn strstr])
 
 # User enabled stuff.
 DB_ENABLE_COMMAND([math],[yes],[MATH])

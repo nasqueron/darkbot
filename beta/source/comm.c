@@ -250,7 +250,7 @@ prepare_bot (void)
 		gs26 ();
 		printf (".: Connecting to %s:%ld\t\r", BS, BP);
 		fflush (stdout);
-		sleep (2);
+		db_sleep (2);
 
 		socketfd = create_connection (BS, VHOST, BP);
 
@@ -260,13 +260,13 @@ prepare_bot (void)
 			case ERR_TIMED_OUT:
 				printf (".: Connection to %s:%ld timed out!\t\r", BS, BP);
 				fflush (stdout);
-				sleep (2);
+				db_sleep (2);
 				break;
 
 			case ERR_CONN_REFUSED:
 				printf (".: Connection to %s:%ld was refused!\t\r", BS, BP);
 				fflush (stdout);
-				sleep (2);
+				db_sleep (2);
 				break;
 
 			case ERR_NOT_ADDR:
@@ -283,7 +283,7 @@ prepare_bot (void)
 					(".: Connected to %s:%ld! [%ld]\t\r", BS, BP, (long) getpid ());
 
 				fflush (stdout);
-				sleep (5);
+				db_sleep (5);
 				break;
 		}
 	}
