@@ -16,6 +16,7 @@ Darkbot 8rc2: May 31, 2006
 	- Added !set foo=bar infrastructure and command.  The contents
 	  of setup.ini is now under the control of generic, array based
 	  code.  To add things to setup.ini, just add them to the array.
+	- Added setup.ini parameters to the internal help system.
 	- Started moving the rest of defines.h to setup.ini.
 	- General clean up and lots of minor things that get fixed in 
 	  passing.

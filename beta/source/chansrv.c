@@ -532,7 +532,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
 	    if (cf(userhost, source, target))
 		return result;
-	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For more info about me, visit http://www.darkbot.org/ .",
+	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.darkbot.org/ .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
 	}
 	else
@@ -2052,6 +2052,72 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 		}
 	    }
 	    result = chanserv_asprintf(result, "%s", temp);
+	}
+	else if (strcmp(cmd, "PARAMETERS") == 0)
+	{
+    	    for (i = 0; parameters[i].parameter[0] != NULL; i++)
+	    {
+		if (parameters[i].access <= user_level)
+		{
+		    if (i)
+			strcat(temp, " ");
+		    strcat(temp, parameters[i].parameter[0]);
+		}
+	    }
+	    result = chanserv_asprintf(result, "%s", temp);
+	}
+	else
+	{
+    	    for (i = 0; parameters[i].parameter[0] != NULL; i++)
+	    {
+		for (j = 0; parameters[i].parameter[j] != NULL; j++)
+		{
+		    if (strcmp(cmd, parameters[i].parameter[j]) == 0)
+		    {
+			found = i;
+	    		break;
+		    }
+		}
+		if (found != -1)
+		    break;
+	    }
+
+	    if (found != -1)
+	    {
+		for (j = 0; parameters[found].parameter[j] != NULL; j++)
+		{
+		    if (j)
+			strcat(temp, " | ");
+		    strcat(temp, parameters[found].parameter[j]);
+		}
+
+		switch (parameters[found].type)
+		{
+		    case BOOLEAN : 
+	    	    {
+			    bool *variable = parameters[found].value;
+
+			    result = chanserv_asprintf(result, "%s [level %d] - %s  VALUE - %s = %s", temp, parameters[found].access, parameters[found].summary, cmd, (*variable) ? "true" : "false");
+			    break;
+	    	    }
+
+	    	    case INTEGER : 
+	    	    {
+			    long *variable = parameters[found].value;
+
+			    result = chanserv_asprintf(result, "%s [level %d] - %s  VALUE - %s = %ld", temp, parameters[found].access, parameters[found].summary, cmd, *variable);
+			    break;
+	    	    }
+
+	    	    case STRING  : 
+	    	    {
+			    char *variable = parameters[found].value;
+
+			    result = chanserv_asprintf(result, "%s [level %d] - %s  VALUE - %s = %s", temp, parameters[found].access, parameters[found].summary, cmd, variable);
+			    break;
+	    	    }
+		}
+	    }
 	}
 
 	return result;

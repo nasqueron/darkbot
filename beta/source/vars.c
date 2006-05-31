@@ -302,7 +302,7 @@ save_setup (void)
 	{
 	    case BOOLEAN : 
 	    {
-		long *variable = result->value;
+		bool *variable = result->value;
 
 		db_log(TMP_FILE, "%s=%d\n", result->parameter[0], (*variable) ? 1 : 0);
 		break;

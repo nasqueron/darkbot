@@ -22,6 +22,7 @@ be added, will be listed here.
 - Fix broken commands.  google, calc, weather.
 
 - Write things to replace the stuff that Windows can't do.
+  Backup command, etc.
 
 - Make the google command (and maybe all other web 
   lookup commands) more robust.
@@ -30,8 +31,6 @@ be added, will be listed here.
   slashdot news (http://slashdot.org) searches.
 
 - Single login, remembered across channel part/joins etc.
-
-- Make backup command work under Windows.
 
 - Changing the bot's nick needs some testing and tweaking.
 
@@ -46,9 +45,10 @@ onefang's TO-DO List For Darkbot
 
 Move the rest of user definable stuff in defines.h into setup.ini. 
 
-Add a help parameters option.
-
 Add a show parameters command.
+
+There is some overlap with the commands and parameters when doing help,
+so some names will have to be changed.
 
 Convert to gettext.
 
