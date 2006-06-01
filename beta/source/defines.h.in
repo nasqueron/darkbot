@@ -767,6 +767,12 @@ for 60 sec)"
 
 /* -------------------------------------------------- */
 
+#if defined _WIN32 || defined __CYGWIN__ || defined __CYGWIN32__ || defined __MINGW32__
+# ifndef WIN32
+#  define WIN32
+# endif
+#endif
+
 #include "langs/lang.h"
 
 #define _GNU_SOURCE 1
