@@ -26,6 +26,7 @@ Darkbot 8rc2: May 31, 2006
 	- Darkbot and convertdb are much cleverer about finding the data
 	  files.
 	- Cleaned up vars.c and vars.h.
+	- Have the help system deal with the command character as needed.
 
 Darkbot 8rc2: May 04, 2006
 	- Cleaned generated files out of cvs and updated .cvsignore 

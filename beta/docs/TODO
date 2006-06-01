@@ -63,8 +63,6 @@ Update the INSTALL instructions.
 Move all the comments in define.h for stuff that got moved to a proper
 documentation file.  Also double check the in code summaries for them.
 
-Add command character to help text of any commands that need it. Strip
-command character from "help !foo" commands before looking them up. 
 Allow multiple command characters - SETCHAR !'~
 
 Convert use of the obsolete gethostbyname() to getaddrinfo().

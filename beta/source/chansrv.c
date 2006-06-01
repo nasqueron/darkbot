@@ -2007,6 +2007,8 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 	char temp[10 * 1024] = { 0 }, cmdchar[2] = "\0\0";
 	int i, j, found = -1;
 
+	if (*cmd == *CMDCHAR)
+	    cmd++;
 	strupr(cmd);
     	for (i = 0; chanserv_commands[i].func != NULL; i++)
 	{
@@ -2032,6 +2034,8 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 	    {
 		if (j)
 		    strcat(temp, " | ");
+		if (chanserv_commands[i].type == DANGER_COMMAND)
+		    strcat(temp, cmdchar);
 		strcat(temp, chanserv_commands[found].command[j]);
 	    }
 	    result = chanserv_asprintf(result, "%s [level %d] - %s  SYNTAX - %s%s %s", temp, chanserv_commands[found].access, chanserv_commands[found].summary, cmdchar, cmd, 
@@ -2039,6 +2043,7 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 	}
 	else if (strcmp(cmd, "COMMANDS") == 0)
 	{
+	    cmdchar[0] = *CMDCHAR;
     	    for (i = 0; chanserv_commands[i].func != NULL; i++)
 	    {
 		if (chanserv_commands[i].access <= user_level)
@@ -2047,6 +2052,8 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 		    {
 			if (i)
 			    strcat(temp, " ");
+			if (chanserv_commands[i].type == DANGER_COMMAND)
+			    strcat(temp, cmdchar);
 			strcat(temp, chanserv_commands[i].command[0]);
 		    }
 		}
