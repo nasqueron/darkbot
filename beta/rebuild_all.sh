@@ -1,6 +1,6 @@
 #! /bin/sh
 
-./autogen.sh
+sh autogen.sh
 
 cd build
 make && make install

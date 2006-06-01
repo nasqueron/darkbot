@@ -1,7 +1,7 @@
 #! /bin/sh
 
-test ! -r build/configure && ./bootstrap.sh
+test ! -r build/configure && sh bootstrap.sh
 
 cd build
-./configure -C --prefix=$HOME/darkbot "$@" && make && make install
+sh configure -C --prefix=$HOME/darkbot "$@" && make && make install
 cd ..

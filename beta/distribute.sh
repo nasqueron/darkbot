@@ -1,6 +1,6 @@
 #! /bin/sh
 
-./bootstrap.sh
+sh bootstrap.sh
 
 DESTDIR="darkbot-`cat VERSION`" 
 rm -rf $DESTDIR
