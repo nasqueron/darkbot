@@ -903,6 +903,12 @@ char *strchr (), *strrchr ();
 # define strstr rpl_strstr
 #endif
 
+#if !HAVE_VPRINTF
+# define vsprintf rpl_vsprintf
+# define vfprintf rpl_vfprintf
+#endif
+
+
 
 #define ERR_CANT_MALLOC     -1
 #define ERR_OPEN_SOCKET     -2

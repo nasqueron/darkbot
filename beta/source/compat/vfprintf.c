@@ -9,7 +9,7 @@
 #undef vfprintf
 
 int
-vfprintf (FILE *stream, const char *format, va_list ap)
+rpl_vfprintf (FILE *stream, const char *format, va_list ap)
 {
   return _doprnt (format, ap, stream);
 }

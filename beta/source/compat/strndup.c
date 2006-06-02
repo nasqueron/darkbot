@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "minmax.h"
 
 #undef strndup
 

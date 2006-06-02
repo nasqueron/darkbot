@@ -46,31 +46,43 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level);
 struct chanserv_output *chanserv_asprintf(struct chanserv_output *output, const char *format, ...)
 {
 	struct chanserv_output *result = NULL;
-	char *ptr;
+	static char temp[BUFSIZ];	/* a temp buffer (8KB) */
 	va_list list;
 	int r;
 
 	va_start(list, format);
-	r = vasprintf(&ptr, format, list);
+	r = vsprintf(temp, format, list);
 	va_end(list);
 
 	if (r >= 0) 
 	{
-	    result = malloc(sizeof(struct chanserv_output));
-	    if (result)
-	    {
-		result->output = ptr;
-		result->next = NULL;
-		if (output)
-		{
-		    struct chanserv_output *next = output;
+	    char *ptr;
 
-		    while (next->next)
-			next = next->next;
-		    next->next = result;
-		    result = output;
+	    ptr = malloc(r + 1);
+	    if (ptr)
+	    {
+		result = malloc(sizeof(struct chanserv_output));
+		if (result)
+		{
+		    strncpy(ptr, temp, r);	/* copy at most n */
+ 		    ptr[r] = '\0';		/* ensure \0 at end */
+
+		    result->output = ptr;
+		    result->next = NULL;
+		    if (output)
+		    {
+			struct chanserv_output *next = output;
+
+			while (next->next)
+			    next = next->next;
+			next->next = result;
+			result = output;
+		    }
 		}
+		else
+		    free(ptr);
 	    }
+
 	}
 	if (result == NULL)
 	{

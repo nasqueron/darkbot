@@ -2,6 +2,4 @@
 
 sh autogen.sh
 
-cd build
-make && make install
-cd ..
+cd build && make && make install && cd ..
