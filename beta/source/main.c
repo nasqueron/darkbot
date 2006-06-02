@@ -1,7 +1,6 @@
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
-#include <libgen.h>
 
 /**
  * 6/23/00 Dan:
