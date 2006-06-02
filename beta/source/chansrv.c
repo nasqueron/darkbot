@@ -1213,7 +1213,7 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 	{
 	    switch (param->type)
 	    {
-		case BOOLEAN : 
+		case ST_BOOLEAN : 
 		{
 		    bool *variable = param->value;
 
@@ -1221,7 +1221,7 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 		    break;
 		}
 
-		case INTEGER : 
+		case ST_INTEGER : 
 		{
 		    long *variable = param->value;
 
@@ -1229,7 +1229,7 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 		    break;
 		}
 
-		case STRING  : 
+		case ST_STRING  : 
 		{
 		    char *variable = param->value;
 
@@ -2100,7 +2100,7 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 
 		switch (parameters[found].type)
 		{
-		    case BOOLEAN : 
+		    case ST_BOOLEAN : 
 	    	    {
 			    bool *variable = parameters[found].value;
 
@@ -2108,7 +2108,7 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 			    break;
 	    	    }
 
-	    	    case INTEGER : 
+	    	    case ST_INTEGER : 
 	    	    {
 			    long *variable = parameters[found].value;
 
@@ -2116,7 +2116,7 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 			    break;
 	    	    }
 
-	    	    case STRING  : 
+	    	    case ST_STRING  : 
 	    	    {
 			    char *variable = parameters[found].value;
 

@@ -180,34 +180,34 @@ struct webinfo
 
 struct setup_parameter parameters[] =
 {
-    {STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     Mynick,    check_nick_parameter},
-    {STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      UID,       NULL},
-    {STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            CHAN,      NULL},
-    {BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen mode",          &SeeN,     NULL},
-    {STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", VHOST,     NULL},
-    {STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    REALNAME,  NULL},
-    {STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", CMDCHAR,   NULL},
-    {INTEGER, 3, sizeof(CONNECT_WAIT_TIMEOUT), {"CONNECT_WAIT_TIMEOUT", NULL, NULL, NULL, NULL}, "server connection timeout",               &CONNECT_WAIT_TIMEOUT, NULL},
-    {BOOLEAN, 3, sizeof(PERFORM_TIMER),        {"PERFORM_TIMER",        NULL, NULL, NULL, NULL}, "sending perform.ini to server reqularly", &PERFORM_TIMER,        NULL},
-    {STRING,  3, sizeof(DEFAULT_UMODE),        {"DEFAULT_UMODE",        NULL, NULL, NULL, NULL}, "bot's user modes",                        DEFAULT_UMODE,         NULL},
-    {BOOLEAN, 3, sizeof(ANTI_IDLE),            {"ANTI_IDLE",            NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
-    {BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,         NULL},
-    {BOOLEAN, 3, sizeof(SORT),                 {"SORT",                 NULL, NULL, NULL, NULL}, "sort database on startup",                &SORT,                 NULL},
-    {BOOLEAN, 3, sizeof(FIND_DUPS),            {"FIND_DUPS",            NULL, NULL, NULL, NULL}, "remove duplicates in hatabase",           &FIND_DUPS,            NULL},
-    {BOOLEAN, 3, sizeof(SAVE_DUPS),            {"SAVE_DUPS",            NULL, NULL, NULL, NULL}, "save duplicates in database",             &SAVE_DUPS,            NULL},
-    {BOOLEAN, 3, sizeof(GENERAL_QUESTIONS),    {"GENERAL_QUESTIONS",    NULL, NULL, NULL, NULL}, "bot responds without being asked",        &GENERAL_QUESTIONS,    NULL},
+    {ST_STRING,  3, sizeof(Mynick),   {"NICK",     NULL, NULL, NULL, NULL}, "bot's nickname",     Mynick,    check_nick_parameter},
+    {ST_STRING,  3, sizeof(UID),      {"USERID",   NULL, NULL, NULL, NULL}, "bot's user ID",      UID,       NULL},
+    {ST_STRING,  3, sizeof(CHAN),     {"CHAN",     NULL, NULL, NULL, NULL}, "channel",            CHAN,      NULL},
+    {ST_BOOLEAN, 3, sizeof(SeeN),     {"SEEN",     NULL, NULL, NULL, NULL}, "seen mode",          &SeeN,     NULL},
+    {ST_STRING,  3, sizeof(VHOST),    {"VHOST",    NULL, NULL, NULL, NULL}, "bot's virtual host", VHOST,     NULL},
+    {ST_STRING,  3, sizeof(REALNAME), {"REALNAME", NULL, NULL, NULL, NULL}, "bot's real name",    REALNAME,  NULL},
+    {ST_STRING,  3, sizeof(CMDCHAR),  {"CMDCHAR",  NULL, NULL, NULL, NULL}, "bot's command char", CMDCHAR,   NULL},
+    {ST_INTEGER, 3, sizeof(CONNECT_WAIT_TIMEOUT), {"CONNECT_WAIT_TIMEOUT", NULL, NULL, NULL, NULL}, "server connection timeout",               &CONNECT_WAIT_TIMEOUT, NULL},
+    {ST_BOOLEAN, 3, sizeof(PERFORM_TIMER),        {"PERFORM_TIMER",        NULL, NULL, NULL, NULL}, "sending perform.ini to server reqularly", &PERFORM_TIMER,        NULL},
+    {ST_STRING,  3, sizeof(DEFAULT_UMODE),        {"DEFAULT_UMODE",        NULL, NULL, NULL, NULL}, "bot's user modes",                        DEFAULT_UMODE,         NULL},
+    {ST_BOOLEAN, 3, sizeof(ANTI_IDLE),            {"ANTI_IDLE",            NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
+    {ST_BOOLEAN, 3, sizeof(DISPLAY_SYNC),         {"DISPLAY_SYNC",         NULL, NULL, NULL, NULL}, "tell channel bot has finished syncing",   &DISPLAY_SYNC,         NULL},
+    {ST_BOOLEAN, 3, sizeof(SORT),                 {"SORT",                 NULL, NULL, NULL, NULL}, "sort database on startup",                &SORT,                 NULL},
+    {ST_BOOLEAN, 3, sizeof(FIND_DUPS),            {"FIND_DUPS",            NULL, NULL, NULL, NULL}, "remove duplicates in hatabase",           &FIND_DUPS,            NULL},
+    {ST_BOOLEAN, 3, sizeof(SAVE_DUPS),            {"SAVE_DUPS",            NULL, NULL, NULL, NULL}, "save duplicates in database",             &SAVE_DUPS,            NULL},
+    {ST_BOOLEAN, 3, sizeof(GENERAL_QUESTIONS),    {"GENERAL_QUESTIONS",    NULL, NULL, NULL, NULL}, "bot responds without being asked",        &GENERAL_QUESTIONS,    NULL},
 // I managed to eliminate these options when I rewrote chansrv.c.
-//    {BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),     {"ALLOW_ADD_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
-//    {BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),     {"ALLOW_DEL_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
-    {BOOLEAN, 3, sizeof(MSG_RESPONSES),        {"MSG_RESPONSES",        NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,        NULL},
-    {BOOLEAN, 3, sizeof(LOG_ADD_DELETES),      {"LOG_ADD_DELETES",      NULL, NULL, NULL, NULL}, "logging of database changes",             &LOG_ADD_DELETES,      NULL},
-    {BOOLEAN, 3, sizeof(LOG_PRIVMSG),          {"LOG_PRIVMSG",          NULL, NULL, NULL, NULL}, "logging of priwate messages",             &LOG_PRIVMSG,          NULL},
-    {INTEGER, 3, sizeof(SLEEP_TIME),           {"SLEEP_TIME",           NULL, NULL, NULL, NULL}, "seconds to sleep for",                    &SLEEP_TIME,           NULL},
-    {STRING,  3, sizeof(GOSLEEP_ACTION),       {"GOSLEEP_ACTION",       NULL, NULL, NULL, NULL}, "sleep action",                            GOSLEEP_ACTION,        NULL},
-    {STRING,  3, sizeof(WAKEUP_ACTION),        {"WAKEUP_ACTION",        NULL, NULL, NULL, NULL}, "wakeup action",                           WAKEUP_ACTION,         NULL},
+//    {ST_BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),     {"ALLOW_ADD_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
+//    {ST_BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),     {"ALLOW_DEL_IN_MSG",     NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
+    {ST_BOOLEAN, 3, sizeof(MSG_RESPONSES),        {"MSG_RESPONSES",        NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,        NULL},
+    {ST_BOOLEAN, 3, sizeof(LOG_ADD_DELETES),      {"LOG_ADD_DELETES",      NULL, NULL, NULL, NULL}, "logging of database changes",             &LOG_ADD_DELETES,      NULL},
+    {ST_BOOLEAN, 3, sizeof(LOG_PRIVMSG),          {"LOG_PRIVMSG",          NULL, NULL, NULL, NULL}, "logging of priwate messages",             &LOG_PRIVMSG,          NULL},
+    {ST_INTEGER, 3, sizeof(SLEEP_TIME),           {"SLEEP_TIME",           NULL, NULL, NULL, NULL}, "seconds to sleep for",                    &SLEEP_TIME,           NULL},
+    {ST_STRING,  3, sizeof(GOSLEEP_ACTION),       {"GOSLEEP_ACTION",       NULL, NULL, NULL, NULL}, "sleep action",                            GOSLEEP_ACTION,        NULL},
+    {ST_STRING,  3, sizeof(WAKEUP_ACTION),        {"WAKEUP_ACTION",        NULL, NULL, NULL, NULL}, "wakeup action",                           WAKEUP_ACTION,         NULL},
 
 
-    {STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
+    {ST_STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
 };
 
 
@@ -256,7 +256,7 @@ set_parameter(char *input)
 #endif
 		switch (result->type)
 		{
-		    case BOOLEAN : 
+		    case ST_BOOLEAN : 
 		    {
 			bool *variable = result->value;
 
@@ -264,7 +264,7 @@ set_parameter(char *input)
 			break;
 		    }
 
-		    case INTEGER : 
+		    case ST_INTEGER : 
 		    {
 			long *variable = result->value;
 
@@ -272,7 +272,7 @@ set_parameter(char *input)
 			break;
 		    }
 
-		    case STRING  : 
+		    case ST_STRING  : 
 		    {
 			char *variable = result->value;
 
@@ -300,7 +300,7 @@ save_setup (void)
     {
 	switch (result->type)
 	{
-	    case BOOLEAN : 
+	    case ST_BOOLEAN : 
 	    {
 		bool *variable = result->value;
 
@@ -308,7 +308,7 @@ save_setup (void)
 		break;
 	    }
 
-	    case INTEGER : 
+	    case ST_INTEGER : 
 	    {
 		long *variable = result->value;
 
@@ -316,7 +316,7 @@ save_setup (void)
 		break;
 	    }
 
-	    case STRING  : 
+	    case ST_STRING  : 
 	    {
 		char *variable = result->value;
 

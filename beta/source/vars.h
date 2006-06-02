@@ -261,9 +261,9 @@ extern struct webinfo
 
 enum setup_type
 {
-   BOOLEAN = 0,
-   INTEGER = 1,
-   STRING = 2
+   ST_BOOLEAN = 0,
+   ST_INTEGER = 1,
+   ST_STRING = 2
 };
 
 extern struct setup_parameter
