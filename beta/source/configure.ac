@@ -51,7 +51,7 @@ AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr])
-AC_REPLACE_FUNCS([memset nanosleep snprintf strcasecmp strcasestr strndup strspn strstr vfprintf vsprintf])
+AC_REPLACE_FUNCS([crypt memset nanosleep snprintf strcasecmp strcasestr strndup strspn strstr vfprintf vsprintf])
 
 # User enabled stuff.
 DB_ENABLE_COMMAND([math],[yes],[MATH])
