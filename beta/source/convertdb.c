@@ -84,11 +84,13 @@ int main(int argc, char *argv[])
     {
 	    fscanf(in, "%s %s %s %s %s %[^\n]s", channel, uh, level, joins, pass, setinfo);
 
+#ifdef ENABLE_ENCRYPT
         if ((ptr = crypt(pass, salt)) == NULL)
         {
             printf("\ncrypt() error\n");
             return EXIT_FAILURE;
         }
+#endif
         if(!feof(in))
             fprintf(out, "%s %s %s %s %s %s\n", channel, uh, level, joins, ptr, setinfo);
     }

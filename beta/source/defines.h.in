@@ -908,6 +908,9 @@ char *strchr (), *strrchr ();
 # define vfprintf rpl_vfprintf
 #endif
 
+#if !HAVE_LIBCRYPT
+#undef ENABLE_ENCRYPT
+#endif
 
 
 #define ERR_CANT_MALLOC     -1
