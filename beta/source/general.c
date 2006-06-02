@@ -19,6 +19,9 @@
 # endif
 #endif
 
+#if !HAVE_NANOSLEEP
+# include "timespec.h"
+#endif
 
 /**
  * Removed trailing newline and carriage returns.
