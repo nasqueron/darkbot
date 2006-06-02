@@ -74,8 +74,8 @@ This is a library of implementations of standard functions that may be
 missing from a particular OS installation.  Autoconf (via the configure
 script) will detect if they are missing and build the contents of
 libcompat as needed.  These functions generally are copied from gnulib,
-libiberty (part of gcc now) and uClibc.  Select() and socket() are
+libiberty (part of gcc now) or uClibc.  Select() and socket() are
 checked for, but there is no replacement functions for them.  It is
 unlikely that replacements will be needed, when they are, then we can
-worry about them.  Alarm() is also checked for, but I'm givinc it the
+worry about them.  Alarm() is also checked for, but I'm giving it the
 benefit of the doubt for now.
