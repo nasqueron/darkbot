@@ -911,8 +911,6 @@ char *strchr (), *strrchr ();
 #if !HAVE_LIBCRYPT
 # if !HAVE_CRYPT
 #  define crypt rpl_crypt
-# else
-#  undef ENABLE_ENCRYPT
 # endif
 #endif
 
