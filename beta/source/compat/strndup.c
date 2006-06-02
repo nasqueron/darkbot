@@ -1,4 +1,4 @@
-# include "defines.h"
+#include <stdlib.h>
 
 #undef strndup
 

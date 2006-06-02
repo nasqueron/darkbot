@@ -114,7 +114,7 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * Darkbot (c) 2006 v8 Release Candidate 2 * * * * * * * * *  \n");
+	printf ("  * * * * * * * * Darkbot (c) 1996 v8 Release Candidate 2 * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");

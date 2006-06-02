@@ -872,11 +872,11 @@ char *strchr (), *strrchr ();
 
 
 #if !HAVE_MEMSET
-# define  rpl_memset
+# define memset rpl_memset
 #endif
 
 #if !HAVE_NANOSLEEP
-# define  rpl_nanosleep
+# define nanosleep rpl_nanosleep
 #endif
 
 #if !HAVE_SNPRINTF
@@ -884,23 +884,23 @@ char *strchr (), *strrchr ();
 #endif
 
 #if !HAVE_STRCASECMP
-# define  rpl_strcasecmp
+# define strcasecmp rpl_strcasecmp
 #endif
 
 #if !HAVE_STRCASESTR
-# define  rpl_strcasestr
+# define strcasestr rpl_strcasestr
 #endif
 
 #if !HAVE_STRNDUP
-# define  rpl_strndup
+# define strndup rpl_strndup
 #endif
 
 #if !HAVE_STRSPN
-# define  rpl_strspn
+# define strspn rpl_strspn
 #endif
 
 #if !HAVE_STRSTR
-# define  rpl_strstr
+# define strstr rpl_strstr
 #endif
 
 
