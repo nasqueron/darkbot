@@ -867,8 +867,41 @@ char *strchr (), *strrchr ();
 # define EXIT_FAILURE 1
 #endif
 
-#include "compat/stat-macros.h"
-#include "compat/minmax.h"
+#include "stat-macros.h"
+#include "minmax.h"
+
+
+#if !HAVE_MEMSET
+# define  rpl_memset
+#endif
+
+#if !HAVE_NANOSLEEP
+# define  rpl_nanosleep
+#endif
+
+#if !HAVE_SNPRINTF
+# define snprintf rpl_snprintf
+#endif
+
+#if !HAVE_STRCASECMP
+# define  rpl_strcasecmp
+#endif
+
+#if !HAVE_STRCASESTR
+# define  rpl_strcasestr
+#endif
+
+#if !HAVE_STRNDUP
+# define  rpl_strndup
+#endif
+
+#if !HAVE_STRSPN
+# define  rpl_strspn
+#endif
+
+#if !HAVE_STRSTR
+# define  rpl_strstr
+#endif
 
 
 #define ERR_CANT_MALLOC     -1
