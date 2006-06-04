@@ -2,7 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
-#ifdef		RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 void		add_randomstuff		(char *source, char *target, char *data)
 {
 	char		*ptr = NULL;
@@ -11,13 +11,14 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	int			toggle = 1;
 	
 	
-#ifdef	BACKUP_RANDOMSTUFF
-#	ifndef		WIN32	
-	// Backup randomstuff file to a temporary file.
-	unlink(RAND_BACKUP_FILE);
-	snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
-	system(file);
-#	endif
+#ifndef	WIN32	
+	if (BACKUP_RANDOMSTUFF)
+	{
+	    // Backup randomstuff file to a temporary file.
+	    unlink(RAND_BACKUP_FILE);
+	    snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
+	    system(file);
+	}
 #endif
 
 	if(*data == '~')
@@ -164,7 +165,7 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 	// This ends up being the response, if we're doing a dunno, or whut reply, and the file
 	// containing the random responses can't be opened.
 
-	pDefault = (type == DUNNOR ? DONNO_Q : WHUT);
+	pDefault = (type == DUNNOR ? DUNNO_Q : WHUT);
 
 	if(file != NULL)
 		snprintf(file2, sizeof(file2), "%s/%s.rdb", RDB_DIR, file);
@@ -506,7 +507,7 @@ char	*rand_reply	(const char *nick)
 	return(" ");
 }
 
-#if RANDQ == ON
+#ifdef ENABLE_RANDQ
 
 /* 
  * do_randq():

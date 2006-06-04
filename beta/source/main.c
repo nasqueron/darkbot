@@ -109,7 +109,7 @@ main (int argc, char **argv)
 	signal (SIGHUP, sig_hup);
 #endif
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 	get_rand_stuff_time ();
 #endif
 

@@ -998,7 +998,7 @@ struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, cha
 }
 #endif
 
-#if RANDQ == ON
+#ifdef ENABLE_RANDQ
 struct chanserv_output *chanserv_quote(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1029,7 +1029,7 @@ struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char
 }
 #endif
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1713,12 +1713,12 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_QUIZ
     {SAFE_COMMAND,    0, 0, chanserv_quiz,		{"QUIZ", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
-#if RANDQ == ON
+#ifdef ENABLE_RANDQ
     {NORMAL_COMMAND,  0, 1, chanserv_quote,		{"QUOTE", NULL, NULL, NULL, NULL}, "<>", ""},
     {NORMAL_COMMAND,  0, 1, chanserv_random_quote,	{"RANDQUOTE", "RANDQ", NULL, NULL, NULL}, "<>", ""},
     {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "<>", ""},
 #endif
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
     {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
     {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, "Shows time until next random thing is said."},
 #endif
@@ -1779,7 +1779,7 @@ void chanserv(char *source, char *target, char *buf)
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 	if (strcasecmp (target, CHAN) == 0)
 		Rand_Idle = 0;
 #endif
@@ -1993,14 +1993,15 @@ void chanserv(char *source, char *target, char *buf)
 	{
 	    if ((input_type == DIRECT_INVOKE) && (cmd == NULL))
 	    {
-#if RANDOM_WHUT == 1
-		do_randomtopic(WHUTR, target, WHUT_FILE, source, cmd);
-#else
-		if (input_type == MSG_INVOKE)
-		    S("NOTICE %s :%s\n", source, WHUT);
+		if (RANDOM_WHUT)
+		    do_randomtopic(WHUTR, target, WHUT_FILE, source, cmd);
 		else
-		    S("PRIVMSG %s :%s: %s\n", target, source, WHUT);
-#endif
+		{
+		    if (input_type == MSG_INVOKE)
+			S("NOTICE %s :%s\n", source, WHUT);
+		    else
+			S("PRIVMSG %s :%s: %s\n", target, source, WHUT);
+		}
 	    }
 	    else if ((GENERAL_QUESTIONS) && (cmd != NULL))
 	    {

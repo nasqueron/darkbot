@@ -507,13 +507,14 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 		}
 		if ((*target == '#') || (*target == '+') || (*target == '&'))
-#if RANDOM_DUNNO == 1
-			do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
-#else
-			S ("PRIVMSG %s :%s, %s\n", target, nick, DONNO_Q);
-#endif
+		{
+			if (RANDOM_DUNNO)
+			    do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
+			else
+			    S ("PRIVMSG %s :%s, %s\n", target, nick, DUNNO_Q);
+		}
 		else
-			S ("NOTICE %s :%s, %s\n", nick, nick, DONNO_Q);
+			S ("NOTICE %s :%s, %s\n", nick, nick, DUNNO_Q);
 	}
 }
 

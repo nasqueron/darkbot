@@ -93,7 +93,7 @@ sig_alrm (int notUsed)
 	}
 	AIL2 += AIL;
 	AIL3 += AIL;
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 	Rand_Idle++;
 	if (RAND_IDLE <= Rand_Idle)
 	{

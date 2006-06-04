@@ -307,7 +307,7 @@
  * falling prey to users who like to repeat.
  * (default = 5)
  */
-#define LASTCOMM_TIME 5
+//#define LASTCOMM_TIME 5
 
 /*
  * BELOW is the output timers. Darkbot does not
@@ -336,16 +336,16 @@
  * doing anything when you ask it something in your
  * channel. (defaults = 4) = 1) = 6) = 2)
  */
-#define OUTPUT1_COUNT 4
-#define OUTPUT1_DELAY 1
-#define OUTPUT2_COUNT 6
-#define OUTPUT2_DELAY 2
+//#define OUTPUT1_COUNT 4
+//#define OUTPUT1_DELAY 1
+//#define OUTPUT2_COUNT 6
+//#define OUTPUT2_DELAY 2
 
 /*
  * If still < OUTPUT_PURGE_COUNT and > OUTPUT2_COUNT
  * then delay OUTPUT3_DELAY secs. (default = 3)
  */
-#define OUTPUT3_DELAY 3
+//#define OUTPUT3_DELAY 3
 
 /*
  * When all else fails... if more than OUTPUT_PURGE_COUNT
@@ -355,7 +355,7 @@
  * till the bot is ready to output any new data to you!
  * (default = 7)
  */
-#define OUTPUT_PURGE_COUNT 7
+//#define OUTPUT_PURGE_COUNT 7
 
 /* ======== OUTPUT MESSAGES ======== */
 
@@ -363,12 +363,12 @@
 /*
  * Message to give when adding an existent topic
  */ 
-#define	EXISTING_ENTRY	"Sorry, there is an existing entry under keyword"
+//#define	EXISTING_ENTRY	"Sorry, there is an existing entry under keyword"
 
 /*
  * Message to give when there is no mentioned topic
  */ 
-#define	NO_ENTRY	"I was unable to find entry:"
+//#define	NO_ENTRY	"I was unable to find entry:"
 
 /* ==== OUTPUT MESSAGES - ON SEARCH ==== */
 /*
@@ -376,9 +376,9 @@
  * search queries. Change the areas between " " with what
  * you want.
  */
-#define	CANT_FIND	"Was unable to find"	/* ... */
-#define	NO_TOPIC	"Sorry, I don't have any entry for"	/* ... */
-#define	TRY_FIND	"What am I trying to find"
+//#define	CANT_FIND	"Was unable to find"	/* ... */
+//#define	NO_TOPIC	"Sorry, I don't have any entry for"	/* ... */
+//#define	TRY_FIND	"What am I trying to find"
 
 
 /* ==== OUTPUT MESSAGES - ON NONEXISTENT TEXT ==== */
@@ -387,27 +387,27 @@
  * without any further text. Do not UNDEF. If you want
  * change only what is between " ". Check next directive.
  */
-#define	WHUT	"hmmm?"
+//#define	WHUT	"hmmm?"
 
 /*
  * Gives a random response from dat/whut.rdb instead what
  * is specified on 'define WHUT'. (default = ON)
  */
-#define RANDOM_WHUT	ON
+//#define RANDOM_WHUT	ON
 
 /*
  * Answer to give in case there is no reply on Darkbot's database
  * Do not UNDEF. If you want change only what is between " ". Check
  * next directive.
  */ 
-#define	DONNO_Q	"*shrug*"
+//#define	DUNNO_Q	"*shrug*"
 
 /*
- * For those wanting the DONNO_Q response to be random, turn this
+ * For those wanting the DUNNO_Q response to be random, turn this
  * option ON, and darkbot will ignore the default definition and
  * use a random line from dat/dunno.db
  */
-#define RANDOM_DUNNO	ON
+//#define RANDOM_DUNNO	ON
 
 /* ======== RANDOM STUFF ========= */
 /*
@@ -421,20 +421,20 @@
  * increase the time _TIME and _IDLE defines to, for example,
  * 54750, which corresponds to 365 days :)
  */
-#define	RANDOM_STUFF
+//#define	RANDOM_STUFF
 
 /*
  * Time in seconds to randomly say something
  * from randomstuff.ini (default = 3600 (1 hour))
  */
-#define	RAND_STUFF_TIME	3600
+//#define	RAND_STUFF_TIME	3600
 
 /*
  * Time in secs to say something in home chan when no
  * one says anything. This overrides the RAND_STUFF_TIME
  * counter. (default = 1800 (30 minutes))
  */
-#define RAND_IDLE	1800
+//#define RAND_IDLE	1800
 
 /*
  * Level at which user's can on-line add new
@@ -449,14 +449,14 @@
  * quote from your randomstuff.ini containing the
  * specified search string. ( default = ON )
  */
-#define RANDQ ON
+//#define RANDQ ON
 
 /*
  * This define backs up your randomstuff file every time
  * you add a random quote, in case you would like to do so.
  * ( default = #undef )
  */
-#undef BACKUP_RANDOMSTUFF
+//#undef BACKUP_RANDOMSTUFF
 
 
 /* ================ IRC - CHANNEL RELATED ================ */

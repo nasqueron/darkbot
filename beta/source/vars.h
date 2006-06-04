@@ -147,6 +147,33 @@ extern long SLEEP_TIME;
 extern char GOSLEEP_ACTION[STRING_SHORT];
 extern char WAKEUP_ACTION[STRING_SHORT];
 
+extern long LASTCOMM_TIME;
+extern long OUTPUT1_COUNT;
+extern long OUTPUT1_DELAY;
+extern long OUTPUT2_COUNT;
+extern long OUTPUT2_DELAY;
+extern long OUTPUT3_DELAY;
+extern long OUTPUT_PURGE_COUNT;
+
+extern char EXISTING_ENTRY[STRING_SHORT];
+extern char NO_ENTRY[STRING_SHORT];
+//extern char CANT_FIND[STRING_SHORT];	/* ... */
+extern char NO_TOPIC[STRING_SHORT];	/* ... */
+extern char TRY_FIND[STRING_SHORT];
+extern char WHUT[STRING_SHORT];
+extern bool RANDOM_WHUT;
+extern char DUNNO_Q[STRING_SHORT];
+extern bool RANDOM_DUNNO;
+
+#ifdef ENABLE_RANDOM
+//extern bool RANDOM_STUFF;
+extern long RAND_STUFF_TIME;
+extern long RAND_IDLE;
+//extern long RAND_LEVEL;
+//extern bool RANDQ;
+extern bool BACKUP_RANDOMSTUFF;
+#endif
+
 extern struct rusage r_usage;
 
 extern struct ignorelist

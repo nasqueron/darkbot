@@ -36,7 +36,7 @@ char quiz_target[STRING_SHORT] = { 0 };
 long recent_questions[10] = { 0 };
 #endif
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 long Rand_Stuff = 0;
 long Rand_Idle = 0;
 #endif
@@ -152,6 +152,32 @@ long SLEEP_TIME = 300;
 char GOSLEEP_ACTION[STRING_SHORT] = "\1ACTION falls asleep... ZzzZZzzZZzz\1";
 char WAKEUP_ACTION[STRING_SHORT] = "\1ACTION wakes up from a snooze..\1";
 
+long LASTCOMM_TIME = 5;
+long OUTPUT1_COUNT = 4;
+long OUTPUT1_DELAY = 1;
+long OUTPUT2_COUNT = 6;
+long OUTPUT2_DELAY = 2;
+long OUTPUT3_DELAY = 3;
+long OUTPUT_PURGE_COUNT = 7;
+
+char EXISTING_ENTRY[STRING_SHORT] = "Sorry, there is an existing entry under keyword";
+char NO_ENTRY[STRING_SHORT] = "I was unable to find entry:";
+//char CANT_FIND[STRING_SHORT] = "Was unable to find";	/* ... */
+char NO_TOPIC[STRING_SHORT] = "Sorry, I don't have any entry for";	/* ... */
+char TRY_FIND[STRING_SHORT] = "What am I trying to find";
+char WHUT[STRING_SHORT] = "hmmm?";
+bool RANDOM_WHUT = true;
+char DUNNO_Q[STRING_SHORT] = "*shrug*";
+bool RANDOM_DUNNO = true;
+
+#ifdef ENABLE_RANDOM
+//bool RANDOM_STUFF = true;
+long RAND_STUFF_TIME = 3600;
+long RAND_IDLE = 1800;
+//long RAND_LEVEL = 2;
+//bool RANDQ = true;
+bool BACKUP_RANDOMSTUFF = false;
+#endif
 
 struct rusage r_usage;
 
@@ -205,6 +231,34 @@ struct setup_parameter parameters[] =
     {ST_INTEGER, 3, sizeof(SLEEP_TIME),           {"SLEEP_TIME",           NULL, NULL, NULL, NULL}, "seconds to sleep for",                    &SLEEP_TIME,           NULL},
     {ST_STRING,  3, sizeof(GOSLEEP_ACTION),       {"GOSLEEP_ACTION",       NULL, NULL, NULL, NULL}, "sleep action",                            GOSLEEP_ACTION,        NULL},
     {ST_STRING,  3, sizeof(WAKEUP_ACTION),        {"WAKEUP_ACTION",        NULL, NULL, NULL, NULL}, "wakeup action",                           WAKEUP_ACTION,         NULL},
+    {ST_INTEGER, 3, sizeof(LASTCOMM_TIME),        {"LASTCOMM_TIME",        NULL, NULL, NULL, NULL}, "seconds to ignore repeated topics",       &LASTCOMM_TIME,        NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT1_COUNT),        {"OUTPUT1_COUNT",        NULL, NULL, NULL, NULL}, "output delay threshold",                  &OUTPUT1_COUNT,        NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT1_DELAY),        {"OUTPUT1_DELAY",        NULL, NULL, NULL, NULL}, "output delay seconds",                    &OUTPUT1_DELAY,        NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT2_COUNT),        {"OUTPUT2_COUNT",        NULL, NULL, NULL, NULL}, "long output delay threshold",             &OUTPUT2_COUNT,        NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT2_DELAY),        {"OUTPUT2_DELAY",        NULL, NULL, NULL, NULL}, "long output delay seconds",               &OUTPUT2_DELAY,        NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT_PURGE_COUNT),   {"OUTPUT_PURGE_COUNT",   NULL, NULL, NULL, NULL}, "purge output delay threshold",            &OUTPUT_PURGE_COUNT,   NULL},
+    {ST_INTEGER, 3, sizeof(OUTPUT3_DELAY),        {"OUTPUT3_DELAY",        NULL, NULL, NULL, NULL}, "purge output delay seconds",              &OUTPUT3_DELAY,        NULL},
+    {ST_STRING,  3, sizeof(EXISTING_ENTRY),       {"EXISTING_ENTRY",       NULL, NULL, NULL, NULL}, "replacing existing complaint",            EXISTING_ENTRY,        NULL},
+    {ST_STRING,  3, sizeof(NO_ENTRY),             {"NO_ENTRY",             NULL, NULL, NULL, NULL}, "non-existing topic complaint",            NO_ENTRY,              NULL},
+// Cant find CANT_FIND.  B-)
+//    {ST_STRING,  3, sizeof(CANT_FIND),            {"CANT_FIND",            NULL, NULL, NULL, NULL}, "cant find search complaint",              CANT_FIND,             NULL},
+    {ST_STRING,  3, sizeof(NO_TOPIC),             {"NO_TOPIC",             NULL, NULL, NULL, NULL}, "no topic search complaint",               NO_TOPIC,              NULL},
+    {ST_STRING,  3, sizeof(TRY_FIND),             {"TRY_FIND",             NULL, NULL, NULL, NULL}, "try find search complaint",               TRY_FIND,              NULL},
+    {ST_STRING,  3, sizeof(WHUT),                 {"WHUT",                 NULL, NULL, NULL, NULL}, "no text complaint",                       WHUT,                  NULL},
+    {ST_BOOLEAN, 3, sizeof(RANDOM_WHUT),          {"RANDOM_WHUT",          NULL, NULL, NULL, NULL}, "random no text complaint",                &RANDOM_WHUT,          NULL},
+    {ST_STRING,  3, sizeof(DUNNO_Q),              {"DUNNO_Q",              NULL, NULL, NULL, NULL}, "no answer complaint",                     DUNNO_Q,               NULL},
+    {ST_BOOLEAN, 3, sizeof(RANDOM_DUNNO),         {"RANDOM_DUNNO",         NULL, NULL, NULL, NULL}, "random no answer complaint",              &RANDOM_DUNNO,         NULL},
+#ifdef ENABLE_RANDOM
+// This one is currently a ./configure --enable-random
+//    {ST_BOOLEAN, 3, sizeof(RANDOM_STUFF),         {"RANDOM_STUFF",         NULL, NULL, NULL, NULL}, "random utterences",                       &RANDOM__TUFF,         NULL},
+    {ST_INTEGER, 3, sizeof(RAND_STUFF_TIME),      {"RAND_STUFF_TIME",      NULL, NULL, NULL, NULL}, "seconds between random utterences",       &RAND_STUFF_TIME,      NULL},
+    {ST_INTEGER, 3, sizeof(RAND_IDLE),            {"RAND_IDLE",            NULL, NULL, NULL, NULL}, "seconds idle beforerandom utterences",    &RAND_IDLE,            NULL},
+// This one is currently a ./configure --with-random=level
+//    {ST_INTEGER, 3, sizeof(RAND_LEVEL),           {"RAND_LEVEL",           NULL, NULL, NULL, NULL}, "level for adding random things",          &RAND_LEVEL,           NULL},
+// This one is currently a ./configure --enable-randq
+//    {ST_BOOLEAN, 3, sizeof(RANDQ),                {"RANDQ",                NULL, NULL, NULL, NULL}, "enable RANDQ command",                    &RANDQ,                NULL},
+    {ST_BOOLEAN, 3, sizeof(BACKUP_RANDOMSTUFF),   {"BACKUP_RANDOMSTUFF",   NULL, NULL, NULL, NULL}, "enable random stuff auto backups",        &BACKUP_RANDOMSTUFF,   NULL},
+#endif
 
 
     {ST_STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}

@@ -17,7 +17,7 @@ void	do_randomtopic				(int, char *, char *, char *, char *);
 
 
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 
 void	do_random_stuff				(void),
 	check_idle_channels			(void),
@@ -27,7 +27,7 @@ void	do_random_stuff				(void),
 	do_autotopics				(void);
 #endif
 
-#ifdef	RANDQ
+#ifdef	ENABLE_RANDQ
 void	do_randq				(char *, const int, const char *, const char *);
 #endif
 
