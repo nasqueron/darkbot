@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 //extern char * __md5_crypt( const char *pw, const char *salt) attribute_hidden;
-extern char * __des_crypt( const char *pw, const char *salt) attribute_hidden;
+char * __des_crypt( const char *pw, const char *salt) //attribute_hidden;
 
 char * rpl_crypt(const char *key, const char *salt)
 {
@@ -668,7 +668,7 @@ encrypt(char *block, int flag)
 			block[(i << 5) | j] = (io[i] & bits32[j]) ? 1 : 0;
 }
 
-char *__des_crypt(const char *key, const char *setting) attribute_hidden;
+char *__des_crypt(const char *key, const char *setting) //attribute_hidden;
 char *
 __des_crypt(const char *key, const char *setting)
 {
