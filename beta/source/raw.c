@@ -138,7 +138,7 @@ raw_now (char *type)
 				tmp1 = strtok (str, " ");
 				if (tmp1 == NULL)
 				{
-					printf ("Found error in %s! Aboring! please re-run configure!\n", SERVERS);
+					printf ("Found error in %s! Aborting! please re-run configure!\n", SERVERS);
 					exit (0);
 				}
 				else
