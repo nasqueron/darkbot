@@ -668,7 +668,6 @@ encrypt(char *block, int flag)
 			block[(i << 5) | j] = (io[i] & bits32[j]) ? 1 : 0;
 }
 
-char *__des_crypt(const char *key, const char *setting) //attribute_hidden;
 char *
 __des_crypt(const char *key, const char *setting)
 {
@@ -785,4 +784,3 @@ __des_crypt(const char *key, const char *setting)
 
 	return(output);
 }
-
