@@ -45,8 +45,6 @@ be added, will be listed here.
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
 
-Move the rest of user definable stuff in defines.h into setup.ini. 
-
 Add a show parameters command.
 
 There is some overlap with the commands and parameters when doing help,

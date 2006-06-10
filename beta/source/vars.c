@@ -184,13 +184,41 @@ long SLASTCOMM_TIME = 60;
 bool VOICE_USERS_ON_JOIN = false;
 bool OP_USERS_ON_LOGIN = false;
 
-//bool DO_WHOIS = false;
+bool DO_WHOIS = false;
 long MAX_LASTSEEN = 604800;
 char SEEN_REPLY[STRING_SHORT] = "in the last 7 days.";
 
 char COMPLAIN_REASON[STRING_SHORT] = "grrr, kick me again and I'm going to...";
 bool BITCH_ABOUT_DEOP = false;
 char BITCH_DEOP_REASON[STRING_SHORT] = "grr, someone op me!";
+
+long AUTOTOPIC_TIME = 1800;
+char DEFAULT_KICK[STRING_SHORT] = "Requested!";
+bool KICK_ON_BAN = false;
+
+bool KICK_ON_CHANNEL_NOTICE = true;
+bool BAN_ON_CHANNEL_NOTICE = false;
+bool BAN_BY_HOST = false;
+
+bool FLOOD_KICK = true;
+char FLOOD_REASON[STRING_SHORT] = "Don't flood!";
+
+long QUIZ_TIMER = 25;
+long QUIZ_REPEAT_TIMER = 20;
+
+bool HELP_GREET = false;
+bool AUTOHELP_GUESTS = false;
+
+char mySetinfo[STRING_SHORT] = "My !setinfo variables are: ^ nick, % Number of joins, & \
+Channel, $ user@host. Example: !setinfo ^ has joined & % times!!  (also, if \
+you make the first char of your SETINFO a \"+\" the setinfo will be shown \
+as an ACTION)";
+
+char myVariables[STRING_SHORT] = "Data variables are: N~ (Nick), C~ (Chan), T~ \
+(Time/date) B~ (Botnick), Q~ (Question asked), R~ (random nick), !~ \
+(command char), S~ (current Server), P~ (current port) V~ (botVer), W~ \
+(db WWW site), H~ (u@h), t~ (unixtime), BAN (sets a ban), TEMPBAN (bans \
+for 60 sec)";
 
 
 struct rusage r_usage;
@@ -255,7 +283,7 @@ struct setup_parameter parameters[] =
     {ST_STRING,  3, sizeof(EXISTING_ENTRY),       {"EXISTING_ENTRY",       NULL, NULL, NULL, NULL}, "replacing existing complaint",            EXISTING_ENTRY,        NULL},
     {ST_STRING,  3, sizeof(NO_ENTRY),             {"NO_ENTRY",             NULL, NULL, NULL, NULL}, "non-existing topic complaint",            NO_ENTRY,              NULL},
 // Cant find CANT_FIND.  B-)
-//    {ST_STRING,  3, sizeof(CANT_FIND),            {"CANT_FIND",            NULL, NULL, NULL, NULL}, "cant find search complaint",              CANT_FIND,             NULL},
+//    {ST_STRING,  3, sizeof(CANT_FIND),            {"CANT_FIND",            NULL, NULL, NULL, NULL}, "can't find search complaint",             CANT_FIND,             NULL},
     {ST_STRING,  3, sizeof(NO_TOPIC),             {"NO_TOPIC",             NULL, NULL, NULL, NULL}, "no topic search complaint",               NO_TOPIC,              NULL},
     {ST_STRING,  3, sizeof(TRY_FIND),             {"TRY_FIND",             NULL, NULL, NULL, NULL}, "try find search complaint",               TRY_FIND,              NULL},
     {ST_STRING,  3, sizeof(WHUT),                 {"WHUT",                 NULL, NULL, NULL, NULL}, "no text complaint",                       WHUT,                  NULL},
@@ -263,13 +291,13 @@ struct setup_parameter parameters[] =
     {ST_STRING,  3, sizeof(DUNNO_Q),              {"DUNNO_Q",              NULL, NULL, NULL, NULL}, "no answer complaint",                     DUNNO_Q,               NULL},
     {ST_BOOLEAN, 3, sizeof(RANDOM_DUNNO),         {"RANDOM_DUNNO",         NULL, NULL, NULL, NULL}, "random no answer complaint",              &RANDOM_DUNNO,         NULL},
 #ifdef ENABLE_RANDOM
-// This one is currently a ./configure --enable-random
-//    {ST_BOOLEAN, 3, sizeof(RANDOM_STUFF),         {"RANDOM_STUFF",         NULL, NULL, NULL, NULL}, "random utterences",                       &RANDOM__TUFF,         NULL},
+// This one is currently ./configure --enable-random
+//    {ST_BOOLEAN, 3, sizeof(RANDOM_STUFF),         {"RANDOM_STUFF",         NULL, NULL, NULL, NULL}, "random utterences",                       &RANDOM_STUFF,         NULL},
     {ST_INTEGER, 3, sizeof(RAND_STUFF_TIME),      {"RAND_STUFF_TIME",      NULL, NULL, NULL, NULL}, "seconds between random utterences",       &RAND_STUFF_TIME,      NULL},
     {ST_INTEGER, 3, sizeof(RAND_IDLE),            {"RAND_IDLE",            NULL, NULL, NULL, NULL}, "seconds idle beforerandom utterences",    &RAND_IDLE,            NULL},
-// This one is currently a ./configure --with-random=level
+// This one is currently ./configure --with-random=level
 //    {ST_INTEGER, 3, sizeof(RAND_LEVEL),           {"RAND_LEVEL",           NULL, NULL, NULL, NULL}, "level for adding random things",          &RAND_LEVEL,           NULL},
-// This one is currently a ./configure --enable-randq
+// This one is currently ./configure --enable-randq
 //    {ST_BOOLEAN, 3, sizeof(RANDQ),                {"RANDQ",                NULL, NULL, NULL, NULL}, "enable RANDQ command",                    &RANDQ,                NULL},
     {ST_BOOLEAN, 3, sizeof(BACKUP_RANDOMSTUFF),   {"BACKUP_RANDOMSTUFF",   NULL, NULL, NULL, NULL}, "enable random stuff auto backups",        &BACKUP_RANDOMSTUFF,   NULL},
 #endif
@@ -277,15 +305,26 @@ struct setup_parameter parameters[] =
     {ST_INTEGER, 3, sizeof(SLASTCOMM_TIME),       {"SLASTCOMM_TIME",       NULL, NULL, NULL, NULL}, "registered user delay seconds",           &SLASTCOMM_TIME,       NULL},
     {ST_BOOLEAN, 3, sizeof(VOICE_USERS_ON_JOIN),  {"VOICE_USERS_ON_JOIN",  NULL, NULL, NULL, NULL}, "voice users on join",                     &VOICE_USERS_ON_JOIN,  NULL},
     {ST_BOOLEAN, 3, sizeof(OP_USERS_ON_LOGIN),    {"OP_USERS_ON_LOGIN",    NULL, NULL, NULL, NULL}, "op users on login",                       &OP_USERS_ON_LOGIN,    NULL},
-// This one is currently a ./configure --enable-whois
-//    {ST_BOOLEAN, 3, sizeof(DO_WHOIS),             {"DO_WHOIS",             NULL, NULL, NULL, NULL}, "questionable channel alert",              &DO_WHOIS,             NULL},
+    {ST_BOOLEAN, 3, sizeof(DO_WHOIS),             {"DO_WHOIS",             NULL, NULL, NULL, NULL}, "questionable channel alert",              &DO_WHOIS,             NULL},
     {ST_INTEGER, 3, sizeof(MAX_LASTSEEN),         {"MAX_LASTSEEN",         NULL, NULL, NULL, NULL}, "maximum last seen seconds",               &MAX_LASTSEEN,         NULL},
     {ST_STRING,  3, sizeof(SEEN_REPLY),           {"SEEN_REPLY",           NULL, NULL, NULL, NULL}, "maximum last seen reply",                 SEEN_REPLY,            NULL},
     {ST_STRING,  3, sizeof(COMPLAIN_REASON),      {"COMPLAIN_REASON",      NULL, NULL, NULL, NULL}, "bot kicked message",                      COMPLAIN_REASON,       NULL},
     {ST_BOOLEAN, 3, sizeof(BITCH_ABOUT_DEOP),     {"BITCH_ABOUT_DEOP",     NULL, NULL, NULL, NULL}, "bitch about deop",                        &BITCH_ABOUT_DEOP,     NULL},
     {ST_STRING,  3, sizeof(BITCH_DEOP_REASON),    {"BITCH_DEOP_REASON",    NULL, NULL, NULL, NULL}, "deop complaint",                          BITCH_DEOP_REASON,     NULL},
-
-
+    {ST_INTEGER, 3, sizeof(AUTOTOPIC_TIME),       {"AUTOTOPIC_TIME",       NULL, NULL, NULL, NULL}, "topic setting seconds",                   &AUTOTOPIC_TIME,       NULL},
+    {ST_STRING,  3, sizeof(DEFAULT_KICK),         {"DEFAULT_KICK",         NULL, NULL, NULL, NULL}, "kick message",                            DEFAULT_KICK,          NULL},
+    {ST_BOOLEAN, 3, sizeof(KICK_ON_BAN),          {"KICK_ON_BAN",          NULL, NULL, NULL, NULL}, "kick when banned",                        &KICK_ON_BAN,          NULL},
+    {ST_BOOLEAN, 3, sizeof(KICK_ON_CHANNEL_NOTICE), {"KICK_ON_CHANNEL_NOTICE", NULL, NULL, NULL, NULL}, "kick on channel notice flood",        &KICK_ON_CHANNEL_NOTICE, NULL},
+    {ST_BOOLEAN, 3, sizeof(BAN_ON_CHANNEL_NOTICE), {"BAN_ON_CHANNEL_NOTICE", NULL, NULL, NULL, NULL}, "ban on channel notice flood",           &BAN_ON_CHANNEL_NOTICE, NULL},
+    {ST_BOOLEAN, 3, sizeof(BAN_BY_HOST),          {"BAN_BY_HOST",          NULL, NULL, NULL, NULL}, "ban by host on channel notice flood",     &BAN_BY_HOST,          NULL},
+    {ST_BOOLEAN, 3, sizeof(FLOOD_KICK),           {"FLOOD_KICK",           NULL, NULL, NULL, NULL}, "kick if bot is flooded",                  &FLOOD_KICK,           NULL},
+    {ST_STRING,  3, sizeof(FLOOD_REASON),         {"FLOOD_REASON",         NULL, NULL, NULL, NULL}, "flooded bot complaint",                   FLOOD_REASON,          NULL},
+    {ST_INTEGER, 3, sizeof(QUIZ_TIMER),           {"QUIZ_TIMER",           NULL, NULL, NULL, NULL}, "quiz answer seconds",                     &QUIZ_TIMER,           NULL},
+    {ST_INTEGER, 3, sizeof(QUIZ_REPEAT_TIMER),    {"QUIZ_REPEAT_TIMER",    NULL, NULL, NULL, NULL}, "next quiz delay seconds",                 &QUIZ_REPEAT_TIMER,    NULL},
+    {ST_BOOLEAN, 3, sizeof(HELP_GREET),           {"HELP_GREET",           NULL, NULL, NULL, NULL}, "give new users help",                     &HELP_GREET,           NULL},
+    {ST_BOOLEAN, 3, sizeof(AUTOHELP_GUESTS),      {"AUTOHELP_GUESTS",      NULL, NULL, NULL, NULL}, "give guests help",                        &AUTOHELP_GUESTS,      NULL},
+    {ST_STRING,  3, sizeof(mySetinfo),            {"mySetinfo",            NULL, NULL, NULL, NULL}, "setinfo variables help text",             mySetinfo,             NULL},
+    {ST_STRING,  3, sizeof(myVariables),          {"myVariables",          NULL, NULL, NULL, NULL}, "data variables help text",                myVariables,           NULL},
     {ST_STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
 };
 

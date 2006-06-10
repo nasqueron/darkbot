@@ -548,7 +548,7 @@
  * Autotopic time interval in seconds
  * (default = 1800 (30 minutes))
  */
-#define	AUTOTOPIC_TIME	1800
+//#define	AUTOTOPIC_TIME	1800
 
 /* ==== KICKS AND BANS ==== */
 
@@ -557,12 +557,12 @@
  * Note when you apply a kick with reason this setting will
  * not overwrite it. (Change for what you want between " ")
  */
-#define	DEFAULT_KICK	"Requested!"
+//#define	DEFAULT_KICK	"Requested!"
 
 /*
  * Kick people out when they are banned?
  */
-#define KICK_ON_BAN OFF
+//#define KICK_ON_BAN OFF
 
 /* ==== KICKS AND BANS - FLOODS ==== */
 /*
@@ -570,19 +570,19 @@
  * This define will make the bot kick those people
  * when they do a channel notice. (default = ON)
  */
-#define	KICK_ON_CHANNEL_NOTICE ON
+//#define	KICK_ON_CHANNEL_NOTICE ON
 
 /*
  * If you want to take it a step further, you can also
  * have the bot ban the user@host too. (default = OFF)
  */
-#define BAN_ON_CHANNEL_NOTICE OFF
+//#define BAN_ON_CHANNEL_NOTICE OFF
 
 /*
  * Finally, we can ban by *@host. This requires the
  * above two to be turned on. (default = OFF)
  */
-#define	BAN_BY_HOST OFF
+//#define	BAN_BY_HOST OFF
 
 /* ==== KICKS AND BANS - DARKBOT'S OWN FLOOD PROTECTION ==== */
 /*
@@ -591,13 +591,13 @@
  * not your CHANNEL. If you don't define this, it will just
  * ignore the user. (default = define)
  */
-#define	FLOOD_KICK
+//#define	FLOOD_KICK
 
 /*
  * What do you want your Darkbot to say when someone is
  * flooding it? (Change for what you want between " ")
  */
-#define	FLOOD_REASON	"Don't flood!"
+//#define	FLOOD_REASON	"Don't flood!"
 
 /* ================ MISCELLANEOUS ================ */
 
@@ -629,13 +629,13 @@
 /*
  * How long to wait before giving the answer? (default = 25)
  */
-#define QUIZ_TIMER 25
+//#define QUIZ_TIMER 25
 
 /*
  * Don't allow another quiz until this time has expired (since
  * the last answer) (default = 20)
  */
-#define QUIZ_REPEAT_TIMER 20
+//#define QUIZ_REPEAT_TIMER 20
 
 /*
  * Do you want your bot to do math commands? (default = define)
@@ -658,7 +658,7 @@
  * to most general questions users ask. If your bot is new and doesn't
  * know much, then you may want to have it tell people how to use it.
  */
-#define	HELP_GREET OFF
+//#define	HELP_GREET OFF
 
 /* 
  * This define just sends a message to the channel, whenever a "Guest"
@@ -666,7 +666,7 @@
  * for help channels.
  */
 
-#define	AUTOHELP_GUESTS OFF
+//#define	AUTOHELP_GUESTS OFF
 
 /*
  * If you change anything on the next 5 directives be careful not to
@@ -687,19 +687,19 @@ about me, visit http://www.darkbot.org\n",a,b,c,d)
 #define	L102(a,b,c,d) S("NOTICE %s :Welcome to %s, %s. Before \
 asking your question, type %cHELP for a list of help topics.\n", a,b,c,d)
 
-#define mySetinfo "My !setinfo variables are: ^ nick, % Number of joins, & \
-Channel, $ user@host. Example: !setinfo ^ has joined & % times!!  (also, if \
-you make the first char of your SETINFO a \"+\" the setinfo will be shown \
-as an ACTION)"
+//#define mySetinfo "My !setinfo variables are: ^ nick, % Number of joins, & \
+//Channel, $ user@host. Example: !setinfo ^ has joined & % times!!  (also, if \
+//you make the first char of your SETINFO a \"+\" the setinfo will be shown \
+//as an ACTION)"
 
 /*(62)
  * Below are variables for the data replys
  */
-#define myVariables "data variables are: N~ (Nick), C~ (Chan), T~ \
-(Time/date) B~ (Botnick), Q~ (Question asked), R~ (random nick), !~ \
-(command char), S~ (current Server), P~ (current port) V~ (botVer), W~ \
-(db WWW site), H~ (u@h), t~ (unixtime), BAN (sets a ban), TEMPBAN (bans \
-for 60 sec)"
+//#define myVariables "data variables are: N~ (Nick), C~ (Chan), T~ \
+//(Time/date) B~ (Botnick), Q~ (Question asked), R~ (random nick), !~ \
+//(command char), S~ (current Server), P~ (current port) V~ (botVer), W~ \
+//(db WWW site), H~ (u@h), t~ (unixtime), BAN (sets a ban), TEMPBAN (bans \
+//for 60 sec)"
 
 
 /* *******************************---******************************* */

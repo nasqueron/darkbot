@@ -13,9 +13,10 @@ scan_chan_users (char *chan, char *nick, char *banned)
 		S ("MODE %s -ob %s %s\n", chan, nick, banned);
 		return;
 	}
-#if KICK_ON_BAN == 1
-	while (c)
+	if (KICK_ON_BAN)
 	{
+	    while (c)
+	    {
 		if (!match_wild (banned, c->uh) == 0)
 		{
 			if (strcasecmp (c->nick, Mynick) != 0)
@@ -29,8 +30,8 @@ scan_chan_users (char *chan, char *nick, char *banned)
 			}
 		}
 		c = c->next;
+	    }
 	}
-#endif
 }
 
 void

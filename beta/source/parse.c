@@ -8,10 +8,7 @@
 void
 parse (char *line)
 {
-	char *s = NULL, *s1 = NULL, *s2 = NULL, *s3 = NULL, *cmd = NULL, *ptr = NULL;
-#if BAN_BY_HOST == ON
-	char *s4 = NULL;
-#endif
+	char *s = NULL, *s1 = NULL, *s2 = NULL, *s3 = NULL, *s4 = NULL, *cmd = NULL, *ptr = NULL;
 	long TOG = 0, seen_value = 0;
 
 	LastInput = 0;
@@ -205,22 +202,22 @@ parse (char *line)
 		if (strcasecmp (cmd, "NOTICE") == 0)
 		{
 			s2 = strtok (NULL, " ");	/* target */
-#if KICK_ON_CHANNEL_NOTICE == ON
-			if (*s2 == '#')
+			if ((KICK_ON_CHANNEL_NOTICE) && (*s2 == '#'))
 			{
 				s3 = strtok (s, "!");
-#if BAN_ON_CHANNEL_NOTICE == ON
-#if BAN_BY_HOST == ON
-				s4 = strtok (NULL, "@");
-				s4 = strtok (NULL, "");
-				S ("MODE %s +b *!*@%s\n", s2, s4);
-#else /* ban just by u@h */
-				S ("MODE %s +b *%s\n", s2, strtok (NULL, ""));
-#endif
-#endif
+				if (BAN_ON_CHANNEL_NOTICE)
+				{
+				    if (BAN_BY_HOST)
+				    {
+					s4 = strtok (NULL, "@");
+					s4 = strtok (NULL, "");
+					S ("MODE %s +b *!*@%s\n", s2, s4);
+				    }
+				    else /* ban just by u@h */
+					S ("MODE %s +b *%s\n", s2, strtok (NULL, ""));
+				}
 				S ("KICK %s %s :Punt\n", s2, s3);
 			}
-#endif
 		}
 		else if (strcasecmp (cmd, "PRIVMSG") == 0)
 		{						/* PRIVMSG  */
@@ -329,15 +326,15 @@ parse (char *line)
 					return;
 				add_user (s1, s, ptr, 1);
 				
-#if AUTOHELP_GUESTS == 1
-				if (strstr (s, "Guest") != NULL)
+				if ((AUTOHELP_GUESTS) && (strstr(s, "Guest") != NULL))
 					S ("PRIVMSG %s :hello %s. need any help?\n", s);
-#endif			
 
-#ifdef ENABLE_WHOIS
-				strncpy (g_chan, s1, sizeof (g_chan));
-				S ("WHOIS %s\n", s);
-#endif
+				if (DO_WHOIS)
+				{
+				    strncpy (g_chan, s1, sizeof (g_chan));
+				    S ("WHOIS %s\n", s);
+				}
+
 				if (check_access (ptr, s1, 0, s) >= 4)
 				{
 					S ("MODE %s +o %s\n", s1, s);
@@ -346,14 +343,13 @@ parse (char *line)
 				{
 					if (VOICE_USERS_ON_JOIN)
 					    S ("MODE %s +v %s\n", s1, s);
-#if HELP_GREET == 1
 				}
-				else if (check_access (ptr, s1, 0, s) >= 1)
+				else if ((HELP_GREET) && (check_access(ptr, s1, 0, s) >= 1))
 				{
 					return;		/* don't greet if the guy has
 								   * access (and no setinfo) */
 				}
-				else if (strcasecmp (s1, CHAN) == 0)
+				else if ((HELP_GREET) && (strcasecmp(s1, CHAN) == 0))
 				{
 					if (SeeN)
 					{
@@ -368,9 +364,6 @@ parse (char *line)
 							L102 (s, s1, s, *CMDCHAR);
 					}
 				}
-#else
-				}
-#endif
 			}
 			else
 				S ("WHO %s\n", s1);	/* Check who is in the

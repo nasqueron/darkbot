@@ -125,21 +125,15 @@ cf (char *host, char *nick, char *chan)
 		if (!ood[f_n].kick)
 		{
 			ood[f_n].kick = 1;
-#ifdef	FLOOD_KICK
 			if (*chan == '#' || *chan == '&')
 			{
+			    if (FLOOD_KICK)
 				L018 (chan, nick, FLOOD_REASON, fc, host);
-			}
-			else
-				L019 (CHAN, fc, host);
-#else
-			if (*chan == '#' || *chan == '&')
-			{
+			    else
 				L019 (CHAN, fc, host);
 			}
 			else
-				L019 (CHAN, fc, host);
-#endif
+			    L019 (CHAN, fc, host);
 		}
 		return 1;
 	}
