@@ -19,17 +19,17 @@
 #if ! defined TIMESPEC_H
 # define TIMESPEC_H
 
-# include <sys/types.h>
-# if TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  if HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
+//# include <sys/types.h>
+//# if TIME_WITH_SYS_TIME
+//#  include <sys/time.h>
+//#  include <time.h>
+//# else
+//#  if HAVE_SYS_TIME_H
+//#   include <sys/time.h>
+//#  else
+//#   include <time.h>
+//#  endif
+//# endif
 
 # if ! HAVE_STRUCT_TIMESPEC
 /* Some systems don't define this struct, e.g., AIX 4.1, Ultrix 4.3.  */
@@ -55,8 +55,5 @@ timespec_cmp (struct timespec a, struct timespec b)
    nanosleep with a conflicting one (const-less first parameter).  */
 int nanosleep ();
 # endif
-
-void gettime (struct timespec *);
-int settime (struct timespec const *);
 
 #endif

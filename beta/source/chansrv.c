@@ -824,7 +824,7 @@ struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, c
 {
 	char temp[1024] = { 0 };
 
-	snprintf(temp, sizeof (temp), "ps -u -p %d\n", getpid());
+	snprintf(temp, sizeof (temp), "ps u -p %d\n", getpid());
 	return chanserv_asprintf(NULL, "ps: %s", run_program(temp));
 }
 #endif
