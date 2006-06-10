@@ -179,6 +179,20 @@ long RAND_IDLE = 1800;
 bool BACKUP_RANDOMSTUFF = false;
 #endif
 
+bool JOIN_GREET = true;
+long SLASTCOMM_TIME = 60;
+bool VOICE_USERS_ON_JOIN = false;
+bool OP_USERS_ON_LOGIN = false;
+
+//bool DO_WHOIS = false;
+long MAX_LASTSEEN = 604800;
+char SEEN_REPLY[STRING_SHORT] = "in the last 7 days.";
+
+char COMPLAIN_REASON[STRING_SHORT] = "grrr, kick me again and I'm going to...";
+bool BITCH_ABOUT_DEOP = false;
+char BITCH_DEOP_REASON[STRING_SHORT] = "grr, someone op me!";
+
+
 struct rusage r_usage;
 
 struct ignorelist *ignorehead = NULL;
@@ -259,6 +273,17 @@ struct setup_parameter parameters[] =
 //    {ST_BOOLEAN, 3, sizeof(RANDQ),                {"RANDQ",                NULL, NULL, NULL, NULL}, "enable RANDQ command",                    &RANDQ,                NULL},
     {ST_BOOLEAN, 3, sizeof(BACKUP_RANDOMSTUFF),   {"BACKUP_RANDOMSTUFF",   NULL, NULL, NULL, NULL}, "enable random stuff auto backups",        &BACKUP_RANDOMSTUFF,   NULL},
 #endif
+    {ST_BOOLEAN, 3, sizeof(JOIN_GREET),           {"JOIN_GREET",           NULL, NULL, NULL, NULL}, "registered user greeting",                &JOIN_GREET,           NULL},
+    {ST_INTEGER, 3, sizeof(SLASTCOMM_TIME),       {"SLASTCOMM_TIME",       NULL, NULL, NULL, NULL}, "registered user delay seconds",           &SLASTCOMM_TIME,       NULL},
+    {ST_BOOLEAN, 3, sizeof(VOICE_USERS_ON_JOIN),  {"VOICE_USERS_ON_JOIN",  NULL, NULL, NULL, NULL}, "voice users on join",                     &VOICE_USERS_ON_JOIN,  NULL},
+    {ST_BOOLEAN, 3, sizeof(OP_USERS_ON_LOGIN),    {"OP_USERS_ON_LOGIN",    NULL, NULL, NULL, NULL}, "op users on login",                       &OP_USERS_ON_LOGIN,    NULL},
+// This one is currently a ./configure --enable-whois
+//    {ST_BOOLEAN, 3, sizeof(DO_WHOIS),             {"DO_WHOIS",             NULL, NULL, NULL, NULL}, "questionable channel alert",              &DO_WHOIS,             NULL},
+    {ST_INTEGER, 3, sizeof(MAX_LASTSEEN),         {"MAX_LASTSEEN",         NULL, NULL, NULL, NULL}, "maximum last seen seconds",               &MAX_LASTSEEN,         NULL},
+    {ST_STRING,  3, sizeof(SEEN_REPLY),           {"SEEN_REPLY",           NULL, NULL, NULL, NULL}, "maximum last seen reply",                 SEEN_REPLY,            NULL},
+    {ST_STRING,  3, sizeof(COMPLAIN_REASON),      {"COMPLAIN_REASON",      NULL, NULL, NULL, NULL}, "bot kicked message",                      COMPLAIN_REASON,       NULL},
+    {ST_BOOLEAN, 3, sizeof(BITCH_ABOUT_DEOP),     {"BITCH_ABOUT_DEOP",     NULL, NULL, NULL, NULL}, "bitch about deop",                        &BITCH_ABOUT_DEOP,     NULL},
+    {ST_STRING,  3, sizeof(BITCH_DEOP_REASON),    {"BITCH_DEOP_REASON",    NULL, NULL, NULL, NULL}, "deop complaint",                          BITCH_DEOP_REASON,     NULL},
 
 
     {ST_STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}

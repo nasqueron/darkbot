@@ -470,7 +470,7 @@
  * Have the bot do auto-greet (setinfo) to registered users?
  * (default = ON)
  */
-#define	JOIN_GREET ON
+//#define	JOIN_GREET ON
 
 /*
  * This is the length of time to NOT allow someone to be recounted
@@ -479,17 +479,17 @@
  * of who joined in the last ___ seconds, and does not do their
  * setinfo during that amount of time. (default = 60 (seconds))
  */
-#define SLASTCOMM_TIME 60
+//#define SLASTCOMM_TIME 60
 
 /*
  * Have the bot VOICE users when they join? (default = OFF)
  */
-#define VOICE_USERS_ON_JOIN OFF
+//#define VOICE_USERS_ON_JOIN OFF
 
 /*
  * Have the bot OP users when they login? (default = OFF)
  */
-#define OP_USERS_ON_LOGIN OFF
+//#define OP_USERS_ON_LOGIN OFF
 
 /* ==== USERS LOOKOUT ==== */
 /*
@@ -504,35 +504,35 @@
  * Max length in seconds to keep a lastseen
  * (default = 604800 (7 days))
  */
-#define	MAX_LASTSEEN	604800
+//#define	MAX_LASTSEEN	604800
 
 /*
  * If you change the above time (MAX_LASTSEEN), be sure to
  * update the SEEN_REPLY to the respective time length.
  * (Change for what you want between " ")
  */
-#define	SEEN_REPLY	"in the last 7 days."
+//#define	SEEN_REPLY	"in the last 7 days."
 
 /* ==== COMPLAINT MESSAGES ==== */
 /*
  * Message Darkbot will send to the channel where it was kicked
  * from. (Change for what you want between " ")
  */
-#define	COMPLAIN_REASON	"grrr, kick me again and I'm going to..."
+//#define	COMPLAIN_REASON	"grrr, kick me again and I'm going to..."
 
 /*
  * will complain in the chan that the Darkbot is deoped in.
  * (default = OFF)
  */
-#define BITCH_ABOUT_DEOP OFF
+//#define BITCH_ABOUT_DEOP OFF
 
 /*
  * What do you want your Darkbot to say when is not
  * oped? (Change for what you want between " ")
  */
-#if BITCH_ABOUT_DEOP == 1
-#define BITCH_DEOP_REASON "grr, someone op me!"
-#endif
+//#if BITCH_ABOUT_DEOP == 1
+//#define BITCH_DEOP_REASON "grr, someone op me!"
+//#endif
 
 /* ==== CHAN OP DIRECTIVES ==== */
 /*

@@ -174,6 +174,20 @@ extern long RAND_IDLE;
 extern bool BACKUP_RANDOMSTUFF;
 #endif
 
+extern bool JOIN_GREET;
+extern long SLASTCOMM_TIME;
+extern bool VOICE_USERS_ON_JOIN;
+extern bool OP_USERS_ON_LOGIN;
+
+//extern bool DO_WHOIS;
+extern long MAX_LASTSEEN;
+extern char SEEN_REPLY[STRING_SHORT];
+
+extern char COMPLAIN_REASON[STRING_SHORT];
+extern bool BITCH_ABOUT_DEOP;
+extern char BITCH_DEOP_REASON[STRING_SHORT];
+
+
 extern struct rusage r_usage;
 
 extern struct ignorelist

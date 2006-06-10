@@ -136,12 +136,13 @@ parse (char *line)
 		}
 		else if (strcasecmp (cmd, "482") == 0)
 		{
-#if BITCH_ABOUT_DEOP == 1
-			s2 = strtok (NULL, " ");	/* mynick */
-			strncpy (Mynick, s2, sizeof (Mynick));
-			s2 = strtok (NULL, " ");	/* chan */
-			/* We used to run the DEOP.INI here */
-#endif
+			if (BITCH_ABOUT_DEOP)
+			{
+			    s2 = strtok (NULL, " ");	/* mynick */
+			    strncpy (Mynick, s2, sizeof (Mynick));
+			    s2 = strtok (NULL, " ");	/* chan */
+			    /* We used to run the DEOP.INI here */
+			}
 		}
 		else if (strcasecmp (cmd, "352") == 0)
 		{
@@ -343,9 +344,8 @@ parse (char *line)
 				}
 				else if (check_access (ptr, s1, 1, s) >= 1)
 				{
-#if VOICE_USERS_ON_JOIN == 1
-					S ("MODE %s +v %s\n", s1, s);
-#endif
+					if (VOICE_USERS_ON_JOIN)
+					    S ("MODE %s +v %s\n", s1, s);
 #if HELP_GREET == 1
 				}
 				else if (check_access (ptr, s1, 0, s) >= 1)

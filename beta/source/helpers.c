@@ -338,11 +338,12 @@ do_login (char *nick, char *pass)
 				i++;
 				if (c->level == 0 && x >= 2)
 				{
-#if OP_USERS_ON_LOGIN == 1
+				    if (OP_USERS_ON_LOGIN)
+				    {
 					/* only if not already authed */
 					S ("MODE %s +ov %s %s\n", c->chan, c->nick, c->nick);
-#endif
-					D = 1;
+				    }
+				    D = 1;
 				}
 				c->level = x;
 				snprintf (b, sizeof (b), "%s[%d] %s", c->chan, (int) c->level, Data);
@@ -442,30 +443,31 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 							continue;
 						strncpy (data, temp, sizeof (data));
 					}			/* While */
-#if JOIN_GREET == 1
-					if (i == 0)
+					if (JOIN_GREET)
 					{
+					    if (i == 0)
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :%ld\2!\2\37(\37%s\37)\37\2:\2 %s\n",
 							   chan, c->num_join, nick, c->greetz);
 						}
-					}
-					else if (A == 1)
-					{
+					    }
+					    else if (A == 1)
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :\1ACTION %s\1\n", chan, data);
 						}
-					}
-					else
-					{
+					    }
+					    else
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :%s\n", chan, data);
 						}
+					    }
 					}
-#endif
 					return c->level;
 				}
 			}
