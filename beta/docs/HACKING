@@ -44,6 +44,9 @@ rebuild_all.sh - calls autogen.sh to configure everything, then builds
 everything from scratch.  This script is meant for developers installing
 from cvs.
 
+testing.sh - Same as build.sh, but turns on testing mode, for developers
+only.
+
 One of the major things I have attempted to do is to enable building
 darkbot from "out of tree".  That means building it from anywhere
 outside of the directory that holds the source code.  In this way the
