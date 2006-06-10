@@ -9,6 +9,7 @@ Darkbot 8rc2: May 31, 2006
 	- Completed the autofoo.
 	- Added compat directory full of replacement functions for
 	  when autofoo decides that the users OS is missing stuff.
+	- Added a testing mode for developers.
 	- Cleaned up most OS dependant things so that they now work 
 	  everywhere.
 	- Converted some defines.h things into ./configure --enable-X

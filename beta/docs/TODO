@@ -24,6 +24,8 @@ be added, will be listed here.
 - Write things to replace the stuff that Windows can't do.
   Backup command, etc.
 
+- Make the output of the MEM command more useful and friendly.
+
 - Make the google command (and maybe all other web 
   lookup commands) more robust.
 
