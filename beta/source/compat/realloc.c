@@ -17,12 +17,9 @@
 
 /* written by Jim Meyering */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-#undef realloc
+#include "defines.h"
 
-#include <stdlib.h>
+#undef realloc
 
 /* Change the size of an allocated block of memory P to N bytes,
    with error checking.  If N is zero, change it to 1.  If P is NULL,

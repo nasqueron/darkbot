@@ -40,6 +40,10 @@
 	|  not sure of what to do, leave the default settings alone :)    |
 	`-----------------------------------------------------------------' */
 
+#define ON			1
+#define OFF			0
+
+
 /* ================ SYSTEM REQUIREMENTS ================ */
 
 /* 
@@ -701,86 +705,28 @@ for 60 sec)"
 /* *******************************---******************************* */
 /* --------------- Don't change anything else below! --------------- */
 /* ***************************************************************** */
-#define	fr		3	/* these two are the # of lines per secs */
-#define	ft		3
-#define	AIL		1
-#define	WSEC 		10
-#define	USEC 		0
-#define	RECHECK 	45
-#define DEFAULT_DBTIMERS_PATH	"timers"
-#define	DEFAULT_LOG_DIR		"logs/"
-#define	DEFAULT_RDB_DIR		"rdb"
-#define DEFAULT_STATS_FILE	"stats.db"
-#define	DEFAULT_SEEN_FILE	"seen.db"
-#define	DEFAULT_URL2	"info2.db"
-#define DUNNO_FILE  "dunno"
-#define WHUT_FILE   "whut"
-#define	DEFAULT_BACKUP_DUP	"backup_dups.db"
-#define	DEFAULT_ADD_DELETES	"logs/add_delete.log"
-#define	TMP_URL		".info.tmp"
-#define	TMP_FILE	".file.tmp"
-#define	DEFAULT_AUTOTOPIC_F	"autotopic.ini"
-#define	DEFAULT_HELPER_LIST	"userlist.db"
-#define	DEFAULT_QUIZ_FILE	"quiz.db"
-#define	DEFAULT_PERFORM		"perform.ini"
-#define	DEFAULT_DEOP		"deop.ini"
-#define	DEFAULT_RAND_SAY	"random.ini"
-#define	DEFAULT_RAND_FILE	"randomstuff.ini"
-#define DEFAULT_RANDQ_TEMPFILE  "randq.tmp"
-#define DEFAULT_RAND_BACKUP_FILE "randomstuff.bak"
-#define	DEFAULT_SERVERS		"servers.ini"
-#define	DEFAULT_PERMBAN		"permbans.db"
-#define	DEFAULT_SETUP		"setup.ini"
-#define	MAX_SEARCH_LENGTH	350
-#define ERR_SOCK_OPT		-1
-#define ERR_TIMED_OUT		-1
-#define ERR_CONN_REFUSED	-2
-#define ERR_NOT_ADDR		-3
-#define ERR_NO_REACH		-4
-#define ERR_CANT_CONNECT	-5
-#define ERR_SERVER_BUSY		-6
-#define ERR_NO_DATA			-7
-#define SUCCESS				0
-
-#define ON	1
-#define OFF	0
-
-#define LEGAL_TEXT "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"
-#define SAFE_LIST "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-#define LEGAL_NICK_TEXT "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-\\|[]{}`"
-
-#define NUMBER_LIST "1234567890"
-#define	MAX_NICK_LENGTH		35
-
-#ifndef	LANG	/* If not defined, default to english */
-#define	LANG 1
-#endif
-
-#define	NORMALR				0
-#define WHUTR				1
-#define DUNNOR				2
-
-#define	RAND_NORMAL			0
-#define	RAND_ACTION			1
-#define	RAND_RAW			2
 
 
-/* -------------------------------------------------- */
+//#include <sys/cdefs.h>
+//#include <sys/param.h>
+//#include <pwd.h>
 
+
+/* Here we sort out what to do based on some autoconf detected things. */
 #if defined _WIN32 || defined __CYGWIN__ || defined __CYGWIN32__ || defined __MINGW32__
 # ifndef WIN32
 #  define WIN32
 # endif
 #endif
 
-#include "langs/lang.h"
-
 #define _GNU_SOURCE 1
 
+#include <ansidecl.h>
 #include <ctype.h>
 #include <sys/resource.h>
+#include <limits.h>
+#include <stddef.h>
 
-/* Here we sort out what to do based on some autoconf detected things. */
 #if HAVE_ERRNO_H
 # include <errno.h>
 #endif
@@ -862,14 +808,19 @@ char *strchr (), *strrchr ();
 # endif
 #endif
 
+#include "stat-macros.h"
+#include "minmax.h"
+
 #ifndef EXIT_SUCCESS
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 #endif
 
-#include "stat-macros.h"
-#include "minmax.h"
-
+#if !LSTAT_FOLLOWS_SLASHED_SYMLINK
+extern int rpl_lstat (const char *name, struct stat *buf);
+# undef lstat
+# define lstat rpl_lstat
+#endif
 
 #if !HAVE_MEMSET
 # define memset rpl_memset
@@ -915,21 +866,85 @@ char *strchr (), *strrchr ();
 #endif
 
 
-#define ERR_CANT_MALLOC     -1
-#define ERR_OPEN_SOCKET     -2
-#define ERR_WRITE_SOCKET    -3
-#define ERR_READ_SOCKET     -5
-#define ERR_NO_DOCUMENTS    -6
+/* -------------------------------------------------- */
+
+
+#define	FR			3	/* these two are the # of lines per secs */
+#define	FT			3
+#define	AIL			1
+#define	WSEC 			10
+#define	USEC 			0
+#define	RECHECK 		45
+#define DEFAULT_DBTIMERS_PATH	"timers"
+#define	DEFAULT_LOG_DIR		"logs/"
+#define	DEFAULT_RDB_DIR		"rdb"
+#define DEFAULT_STATS_FILE	"stats.db"
+#define	DEFAULT_SEEN_FILE	"seen.db"
+#define	DEFAULT_URL2		"info2.db"
+#define DUNNO_FILE		"dunno"
+#define WHUT_FILE		"whut"
+#define	DEFAULT_BACKUP_DUP	"backup_dups.db"
+#define	DEFAULT_ADD_DELETES	"logs/add_delete.log"
+#define	TMP_URL			".info.tmp"
+#define	TMP_FILE		".file.tmp"
+#define	DEFAULT_AUTOTOPIC_F	"autotopic.ini"
+#define	DEFAULT_HELPER_LIST	"userlist.db"
+#define	DEFAULT_QUIZ_FILE	"quiz.db"
+#define	DEFAULT_PERFORM		"perform.ini"
+#define	DEFAULT_DEOP		"deop.ini"
+#define	DEFAULT_RAND_SAY	"random.ini"
+#define	DEFAULT_RAND_FILE	"randomstuff.ini"
+#define DEFAULT_RANDQ_TEMPFILE  "randq.tmp"
+#define DEFAULT_RAND_BACKUP_FILE "randomstuff.bak"
+#define	DEFAULT_SERVERS		"servers.ini"
+#define	DEFAULT_PERMBAN		"permbans.db"
+#define	DEFAULT_SETUP		"setup.ini"
+#define	MAX_SEARCH_LENGTH	350
+#define ERR_SOCK_OPT		-1
+#define ERR_TIMED_OUT		-1
+#define ERR_CANT_MALLOC		-1
+#define ERR_OPEN_SOCKET		-2
+#define ERR_CONN_REFUSED	-2
+#define ERR_NOT_ADDR		-3
+#define ERR_WRITE_SOCKET	-3
+#define ERR_NO_REACH		-4
+#define ERR_CANT_CONNECT	-5
+#define ERR_READ_SOCKET		-5
+#define ERR_SERVER_BUSY		-6
+#define ERR_NO_DOCUMENTS	-6
+#define ERR_NO_DATA		-7
+#define SUCCESS			0
+
+#define LEGAL_TEXT		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"
+#define SAFE_LIST		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+#define LEGAL_NICK_TEXT		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-\\|[]{}`"
+
+#define NUMBER_LIST		"1234567890"
+#define	MAX_NICK_LENGTH		35
+
+#ifndef	LANG	/* If not defined, default to english */
+#define	LANG 			1
+#endif
+
+#define	NORMALR			0
+#define WHUTR			1
+#define DUNNOR			2
+
+#define	RAND_NORMAL		0
+#define	RAND_ACTION		1
+#define	RAND_RAW		2
 
 #define RANDQ_NORMAL            0
 #define RANDQ_CASE              1
-#define	RANDQ_RAND				2
+#define	RANDQ_RAND		2
 
-#define	RDB_NORMAL				0
-#define	RDB_ACTION				1
-#define	RDB_RAW					2
+#define	RDB_NORMAL		0
+#define	RDB_ACTION		1
+#define	RDB_RAW			2
 
 /* ////////////////////////////////////////////////////////////////////// */
 
-#define RESERVED1           "EXPLAIN"
-#define RESERVED2           "DECLARE"
+#define RESERVED1		"EXPLAIN"
+#define RESERVED2		"DECLARE"
+
+#include "langs/lang.h"

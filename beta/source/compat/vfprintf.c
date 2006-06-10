@@ -3,10 +3,7 @@
    Copyright (C) 1998 Free Software Foundation, Inc.
  */
 
-#include "ansidecl.h"
-#include <stdarg.h>
-#include <stdio.h>
-#undef vfprintf
+#include "defines.h"
 
 int
 rpl_vfprintf (FILE *stream, const char *format, va_list ap)

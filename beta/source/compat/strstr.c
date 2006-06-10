@@ -20,11 +20,7 @@ length, the function returns @var{string}.
 /* FIXME:  The above description is ANSI compiliant.  This routine has not
    been validated to comply with it.  -fnf */
 
-#include <stddef.h>
-
-//extern char *strchr (const char *, int);
-//extern int strncmp (const void *, const void *, size_t);
-//extern size_t strlen (const char *);
+#include "defines.h"
 
 char *
 rpl_strstr (const char *s1, const char *s2)

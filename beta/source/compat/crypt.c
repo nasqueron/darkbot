@@ -9,8 +9,13 @@
 /* Written by Erik Andersen <andersen@uclibc.org> */
 
 #define __FORCE_GLIBC
+#include "defines.h"
+
+#include <sys/cdefs.h>
+#include <sys/param.h>
+#include <pwd.h>
 //#include <crypt.h>
-#include <unistd.h>
+
 
 //extern char * crypt_md5_crypt( const char *pw, const char *salt) attribute_hidden;
 char * crypt_des_crypt(const char *pw, const char *salt); //attribute_hidden;
@@ -85,15 +90,6 @@ char * rpl_crypt(const char *key, const char *salt)
  *	alignment).
  */
 
-#define __FORCE_GLIBC
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/param.h>
-#include <netinet/in.h>
-#include <pwd.h>
-#include <string.h>
-//#include <crypt.h>
-
 /* Re-entrantify me -- all this junk needs to be in 
  * struct crypt_data to make this really reentrant... */
 static u_char	inv_key_perm[64];
@@ -117,8 +113,6 @@ static u_int32_t old_rawkey0, old_rawkey1;
 static u_char	init_perm[64], final_perm[64];
 static u_char	m_sbox[4][4096];
 static u_int32_t psbox[4][256];
-
-
 
 
 /* A pile of data */

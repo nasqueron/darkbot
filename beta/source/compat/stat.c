@@ -19,21 +19,9 @@
 
 /* written by Jim Meyering */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "defines.h"
 
-/* The specification of these functions is in sys_stat.h.  But we cannot
-   include this include file here, because on some systems, a
-   "#define lstat lstat64" is being used, and sys_stat.h deletes this
-   definition.  */
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <errno.h>
-
-#include "stat-macros.h"
+#undef stat
 
 /* stat works differently on Linux and Solaris systems.  POSIX (see
    `pathname resolution' in the glossary) requires that programs like

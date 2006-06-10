@@ -17,23 +17,13 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-/* Specification.  */
-#include "strcase.h"
-
-#include <ctype.h>
-#include <limits.h>
+#include "defines.h"
 
 #if HAVE_MBRTOWC
 # include "mbuiter.h"
 #endif
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-
-#undef strcasecmp
 
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than, equal to or greater

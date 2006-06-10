@@ -26,10 +26,7 @@ the resulting executable to be covered by the GNU General Public License.
 This exception does not however invalidate any other reasons why
 the executable file might be covered by the GNU General Public License. */
 
-#include <ansidecl.h>
-#include <stdarg.h>
-#include <stdio.h>
-#undef vsprintf
+#include "defines.h"
 
 #if defined _IOSTRG && defined _IOWRT
 

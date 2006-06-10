@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include "minmax.h"
-
-#undef strndup
+#include "defines.h"
 
 
 /**
@@ -44,4 +41,3 @@ rpl_strndup (const char *dupMe, size_t maxBytes)
 	*ptr = 0;
 	return retMe;
 }
-

@@ -16,9 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#include <string.h>
+#include "defines.h"
 
-#undef strspn
 
 /* Return the length of the maximum initial segment
    of S which contains only characters in ACCEPT.  */

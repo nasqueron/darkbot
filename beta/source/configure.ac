@@ -30,6 +30,7 @@ AC_HEADER_DIRENT
 AC_HEADER_STDC
 AC_HEADER_STAT
 AC_CHECK_HEADERS([arpa/inet.h errno.h fcntl.h limits.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/param.h sys/socket.h sys/time.h unistd.h])
+gl_MINMAX
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -87,9 +88,13 @@ DB_ENABLE_VALUE([topic],[50],[MAX_TOPIC_SIZE],[maximum topic size])
 # If in testing mode, then make sure everything gets compiled.
 if test "[${db_cv_enable_testing}]" = yes; then
   AC_LIBOBJ([crypt])
+   AC_LIBOBJ([lstat])
+   AC_LIBOBJ([malloc])
   AC_LIBOBJ([memset])
   AC_LIBOBJ([nanosleep])
+   AC_LIBOBJ([realloc])
   AC_LIBOBJ([snprintf])
+   AC_LIBOBJ([stat])
   AC_LIBOBJ([strcasecmp])
   AC_LIBOBJ([strcasestr])
   AC_LIBOBJ([strndup])

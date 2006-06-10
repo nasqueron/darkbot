@@ -3,10 +3,7 @@
    Copyright (C) 1998 Free Software Foundation, Inc.
  */
 
-#include "ansidecl.h"
-#include <stdarg.h>
-#include <stdio.h>
-#undef snprintf
+#include "defines.h"
 
 int
 rpl_snprintf (char *buff, size_t size, const char *fmt, ...)

@@ -117,9 +117,9 @@ cf (char *host, char *nick, char *chan)
 	if (ood[f_n].value)
 		return 1;
 	ood[f_n].count++;
-	if ((time (NULL) - ood[f_n].time) > ft)
+	if ((time (NULL) - ood[f_n].time) > FT)
 		ood[f_n].count = 0;
-	else if ((time (NULL) - ood[f_n].time) <= ft && ood[f_n].count >= fr)
+	else if ((time (NULL) - ood[f_n].time) <= FT && ood[f_n].count >= FR)
 	{
 		ood[f_n].value = true;
 		if (!ood[f_n].kick)
