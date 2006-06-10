@@ -1,4 +1,3 @@
-/* vi: set sw=4 ts=4: */
 /*
  * crypt() for uClibc
  *
@@ -13,8 +12,8 @@
 //#include <crypt.h>
 #include <unistd.h>
 
-//extern char * __md5_crypt( const char *pw, const char *salt) attribute_hidden;
-char * __des_crypt( const char *pw, const char *salt) //attribute_hidden;
+//extern char * crypt_md5_crypt( const char *pw, const char *salt) attribute_hidden;
+char * crypt_des_crypt(const char *pw, const char *salt); //attribute_hidden;
 
 char * rpl_crypt(const char *key, const char *salt)
 {
@@ -22,9 +21,9 @@ char * rpl_crypt(const char *key, const char *salt)
 	 * instead of DES...  */
 // ...or not, darkbot doesn't use MD5 crypt.
 //	if (salt[0]=='$' && salt[1]=='1' && salt[2]=='$')
-//		return __md5_crypt(key, salt);
+//		return crypt_md5_crypt(key, salt);
 //	else
-		return __des_crypt(key, salt);
+		return crypt_des_crypt(key, salt);
 }
 
 
@@ -669,7 +668,7 @@ encrypt(char *block, int flag)
 }
 
 char *
-__des_crypt(const char *key, const char *setting)
+crypt_des_crypt(const char *key, const char *setting)
 {
 	u_int32_t	count, salt, l, r0, r1, keybuf[2];
 	u_char		*p, *q;
