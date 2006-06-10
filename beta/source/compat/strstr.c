@@ -22,9 +22,9 @@ length, the function returns @var{string}.
 
 #include <stddef.h>
 
-extern char *strchr (const char *, int);
-extern int strncmp (const void *, const void *, size_t);
-extern size_t strlen (const char *);
+//extern char *strchr (const char *, int);
+//extern int strncmp (const void *, const void *, size_t);
+//extern size_t strlen (const char *);
 
 char *
 rpl_strstr (const char *s1, const char *s2)

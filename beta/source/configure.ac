@@ -19,6 +19,8 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
+gl_USE_SYSTEM_EXTENSIONS
+
 # Checks for libraries.
 AC_CHECK_LIB(crypt, crypt)
 LIB_SOCKET_NSL
@@ -36,6 +38,7 @@ AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_HEADER_TIME
 AC_C_VOLATILE
+gl_TIMESPEC
 
 # Checks for library functions.
 AC_FUNC_CLOSEDIR_VOID
@@ -54,6 +57,9 @@ AC_CHECK_FUNCS([alarm gethostbyname memmove select socket strchr strrchr])
 AC_REPLACE_FUNCS([crypt memset nanosleep snprintf strcasecmp strcasestr strndup strspn strstr vfprintf vsprintf])
 
 # User enabled stuff.
+# testing mode must be done first.
+DB_ENABLE_GENERIC([testing],[no],[TESTING],[testing mode - for developers only])
+
 DB_ENABLE_COMMAND([math],[yes],[MATH])
 DB_ENABLE_COMMANDS([CTCP],[yes],[CTCP])
 DB_ENABLE_COMMANDS([channel],[yes],[CHANNEL])
@@ -77,6 +83,21 @@ DB_ENABLE_VALUE([del],[1],[DEL_LEVEL],[topic deleting access level])
 DB_ENABLE_VALUE([random],[2],[RAND_LEVEL],[randomstuff command access level])
 DB_ENABLE_VALUE([data],[400],[MAX_DATA_SIZE],[maximum data size])
 DB_ENABLE_VALUE([topic],[50],[MAX_TOPIC_SIZE],[maximum topic size])
+
+# If in testing mode, then make sure everything gets compiled.
+if test "[${db_cv_enable_testing}]" = yes; then
+  AC_LIBOBJ([crypt])
+  AC_LIBOBJ([memset])
+  AC_LIBOBJ([nanosleep])
+  AC_LIBOBJ([snprintf])
+  AC_LIBOBJ([strcasecmp])
+  AC_LIBOBJ([strcasestr])
+  AC_LIBOBJ([strndup])
+  AC_LIBOBJ([strspn])
+  AC_LIBOBJ([strstr])
+  AC_LIBOBJ([vfprintf])
+  AC_LIBOBJ([vsprintf])
+fi
 
 # Create output files.
 AC_CONFIG_FILES([Makefile defines.h:../source/defines.h.in])
