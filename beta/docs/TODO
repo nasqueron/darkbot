@@ -50,6 +50,8 @@ Add a show parameters command.
 There is some overlap with the commands and parameters when doing help,
 so some names will have to be changed.
 
+Only write setup.ini stuff that is different from default.
+
 Convert to gettext.
 
 LSB style init script.
