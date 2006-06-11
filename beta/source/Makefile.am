@@ -6,7 +6,7 @@ db_db = $(topdir)/dat
 db_src = $(topdir)/source
 cm_src = $(topdir)/source/compat
 db_scripts = $(topdir)/scripts
-VPATH = $(db_src):$(cm_src)
+VPATH = @srcdir@/../source:@srcdir@/../source/compat
 
 ## Database location.
 databasedir = $(localstatedir)/@PACKAGE@
