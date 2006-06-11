@@ -60,8 +60,7 @@ Properly license it under GPL2.
 
 Update the INSTALL instructions.
 
-Move all the comments in define.h for stuff that got moved to a proper
-documentation file.  Also double check the in code summaries for them.
+Double check the in code summaries for setup parameters.
 
 Allow multiple command characters - SETCHAR !'~
 
