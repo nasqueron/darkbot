@@ -104,5 +104,5 @@ if test "[${db_cv_enable_testing}]" = yes; then
 fi
 
 # Create output files.
-AC_CONFIG_FILES([Makefile defines.h:../source/defines.h.in])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

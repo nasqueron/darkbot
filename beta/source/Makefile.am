@@ -6,13 +6,14 @@ db_db = $(topdir)/dat
 db_src = $(topdir)/source
 cm_src = $(topdir)/source/compat
 db_scripts = $(topdir)/scripts
+VPATH = $(db_src):$(cm_src)
 
 ## Database location.
 databasedir = $(localstatedir)/@PACKAGE@
 
 ## Setup options for other programs.
 ACLOCAL_AMFLAGS = -I ../m4
-AM_CPPFLAGS = -I$(db_src) -DDATABASEDIR='"$(databasedir)"' -DSOURCEDIR='"@srcdir@"'
+AM_CPPFLAGS = -I$(db_src) -I$(cm_src) -DDATABASEDIR='"$(databasedir)"' -DSOURCEDIR='"@srcdir@"'
 
 ## Compatability library.
 noinst_LIBRARIES = compat/libcompat.a

@@ -10,3 +10,5 @@ mkdir build/dat/rdb && \
 cp dat/rdb/*.rdb build/dat/rdb && \
 autoreconf -fiv -Wall -Werror build
 rm -rf build/autom4te.cache
+rm -f build/*.c
+rm -f build/*.h
