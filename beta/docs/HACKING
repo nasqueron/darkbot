@@ -8,6 +8,7 @@ SOFTWARE REQUIREMENTS FOR DEVELOPERS
 GNU M4   1.4
 autoconf 2.59
 automake 1.9
+perl     5.005_3
 
 
 AUTOCONF, AUTOMAKE, AND FRIENDS (AUTOFOO)
@@ -82,3 +83,7 @@ checked for, but there is no replacement functions for them.  It is
 unlikely that replacements will be needed, when they are, then we can
 worry about them.  Alarm() is also checked for, but I'm giving it the
 benefit of the doubt for now.
+
+The --enable-testing option to configure will force the compiling of all
+libcompat source code, as well as all other optional code sa that it can
+be tested.
