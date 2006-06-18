@@ -35,7 +35,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
 
   AC_REQUIRE([AC_HEADER_TIME])
   AC_CHECK_HEADERS(sys/time.h)
-  AC_CACHE_CHECK([for struct timespec], fu_cv_sys_struct_timespec,
+  AC_CACHE_CHECK([for struct timespec], [fu_cv_sys_struct_timespec],
     [AC_COMPILE_IFELSE([AC_LANG_SOURCE([
       [
 #      if TIME_WITH_SYS_TIME
@@ -54,8 +54,8 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
       [fu_cv_sys_struct_timespec=no])
     ])
 
-  if test $fu_cv_sys_struct_timespec = yes; then
-    AC_DEFINE(HAVE_STRUCT_TIMESPEC, 1,
+  if test "[$fu_cv_sys_struct_timespec]" = yes; then
+    AC_DEFINE([HAVE_STRUCT_TIMESPEC], [1],
 	      [Define if struct timespec is declared in <time.h>. ])
   fi
 ])

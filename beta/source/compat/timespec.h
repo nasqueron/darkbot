@@ -19,8 +19,13 @@
 #if ! defined TIMESPEC_H
 # define TIMESPEC_H
 
-# if ! HAVE_STRUCT_TIMESPEC
-/* Some systems don't define this struct, e.g., AIX 4.1, Ultrix 4.3.  */
+
+// # if ! HAVE_STRUCT_TIMESPEC  // This is what it should be, but old cygwin versions seem to break this check.
+# if defined _STRUCT_TIMESPEC || defined __timespec_defined
+#else
+/* Some systems don't define this struct, e.g., AIX 4.1, Ultrix 4.3, early cygwin versions.  */
+# define _STRUCT_TIMESPEC
+# define __timespec_defined	1
 struct timespec
 {
   time_t tv_sec;
@@ -28,7 +33,8 @@ struct timespec
 };
 # endif
 
-# if ! HAVE_DECL_NANOSLEEP
+
+# if !HAVE_DECL_NANOSLEEP
 /* Don't specify a prototype here.  Some systems (e.g., OSF) declare
    nanosleep with a conflicting one (const-less first parameter).  */
 int nanosleep ();
