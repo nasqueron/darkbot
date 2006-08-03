@@ -29,7 +29,7 @@ LIB_SOCKET_NSL
 AC_HEADER_DIRENT
 AC_HEADER_STDC
 AC_HEADER_STAT
-AC_CHECK_HEADERS([arpa/inet.h errno.h fcntl.h limits.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/param.h sys/socket.h sys/time.h unistd.h])
+AC_CHECK_HEADERS([ansidecl.h arpa/inet.h errno.h fcntl.h limits.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/param.h sys/socket.h sys/time.h unistd.h])
 gl_MINMAX
 
 # Checks for typedefs, structures, and compiler characteristics.

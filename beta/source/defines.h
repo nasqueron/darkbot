@@ -107,7 +107,9 @@ asking your question, type %cHELP for a list of help topics.\n", a,b,c,d)
 
 #define _GNU_SOURCE 1
 
+#if HAVE_ANSIDECL_H
 #include <ansidecl.h>
+#endif
 #include <ctype.h>
 #include <sys/resource.h>
 #include <limits.h>
@@ -229,6 +231,8 @@ extern int rpl_lstat (const char *name, struct stat *buf);
 #endif
 
 #if !HAVE_STRNDUP
+extern char *rpl_strndup (const char *dupMe, size_t maxBytes);
+# undef strndup
 # define strndup rpl_strndup
 #endif
 
