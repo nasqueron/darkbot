@@ -54,7 +54,7 @@ S (const char *format, ...)
 		send_tog = 1;
 		if (DebuG == 1)
 		{
-			printf ("OUT: %s\n", b);
+			printf ("OUT: %s", b);
 		}
 		writeln (b);
 		return;
@@ -96,7 +96,7 @@ Snow (const char *format, ...)
 	vsprintf (b, format, arglist);
 	va_end (arglist);
 	if (DebuG == 1)
-		printf ("OUT: %s\n", b);
+		printf ("OUT: %s", b);
 	return (writeln (b));
 }
 
@@ -113,9 +113,9 @@ Send ()
 		return -1;
 	}
 	if (DebuG == 1)
-		printf ("OUT: %s\n", c->data);
+		printf ("OUT: %s", c->data);
 #ifdef	DEBUG2
-	db_log ("darkbot_debug.log", "OUT: %s\n", c->data);
+	db_log ("darkbot_debug.log", "OUT: %s", c->data);
 #endif
 	strncpy (output, c->data, sizeof (output));
 	del_sendq (0);

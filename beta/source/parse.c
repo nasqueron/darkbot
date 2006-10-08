@@ -13,9 +13,9 @@ parse (char *line)
 
 	LastInput = 0;
 	if (DebuG == 1)
-		printf ("IN :%s\n", line);
+		printf ("IN: %s", line);
 #ifdef	DEBUG2
-	db_log ("darkbot_debug.log", "IN :%s\n", line);
+	db_log ("darkbot_debug.log", "IN: %s", line);
 #endif
 	stripline (line);
 	s = strtok (line, " ");
