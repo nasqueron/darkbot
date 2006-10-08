@@ -472,7 +472,7 @@ parse_255 (char *s)
 #else
 	if (pre_CLIENTS == 0 || pre_CLIENTS == L_CLIENTS)
 	{
-		S ("PRIVMSG %s :\1ACTION \37(\37%2d servers\37)\37: %2d opers + \2%4d\2 users \37(\37%s%% %5d global \2!\2 %3ld avg\37)\37\1\n", CHAN, NUM_SERV, IRCOPS, L_CLIENTS, tmp, G_USERS, G_USERS / NUM_SERV);
+		S ("PRIVMSG %s :\1ACTION \37(\37%2d servers\37)\37: %2d opers + \2%4d\2 users \37(\37%s%% %5d global \2!\2 %3ld avg\37)\37\1\n", CHAN, NUM_SERV, IRCOPS, L_CLIENTS, tmp, G_USERS, NUM_SERV ? (G_USERS / NUM_SERV) : 0);
 	}
 	else
 		S ("PRIVMSG %s :\1ACTION \37(\37%2d servers\37)\37: %2d opers + \2%4d\2 users [\37%c%2d\37] \37(\37%s%% %5d global \2!\2 %3ld avg\37)\37\1\n", CHAN, NUM_SERV, IRCOPS, L_CLIENTS, Stat[0], pre_CLIENTS, tmp, G_USERS, G_USERS / NUM_SERV);
