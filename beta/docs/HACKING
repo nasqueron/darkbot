@@ -84,5 +84,15 @@ worry about them.  Alarm() is also checked for, but I'm giving it the
 benefit of the doubt for now.
 
 The --enable-testing option to configure will force the compiling of all
-libcompat source code, as well as all other optional code sa that it can
+libcompat source code, as well as all other optional code so that it can
 be tested.
+
+Tested and working on -
+Linux SuSE 9.3
+LInux Fedora Core 5
+FreeBSD 6.1
+Latest cygwin
+Old cygwin (from the darkbot.org web site)
+
+Failed with -
+Debian sarge, it's too old, we require more up to date autotools.
