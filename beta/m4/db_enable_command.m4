@@ -10,6 +10,7 @@ AC_DEFUN([DB_ENABLE_COMMAND],
   fi
   if test "[${db_cv_enable_testing}]" = yes; then
     AC_DEFINE_UNQUOTED([ENABLE_$3],[1],[whether to enable $1 command (testing mode)])
+    db_cv_enable_command_$1=yes
   fi
   AC_MSG_RESULT([$db_cv_enable_command_$1])
 ])
@@ -27,6 +28,7 @@ AC_DEFUN([DB_ENABLE_COMMANDS],
   fi
   if test "[${db_cv_enable_testing}]" = yes; then
     AC_DEFINE_UNQUOTED([ENABLE_$3],[1],[whether to enable $1 commands (testing mode)])
+    db_cv_enable_command_$1=yes
   fi
   AC_MSG_RESULT([$db_cv_enable_command_$1])
 ])
@@ -44,6 +46,7 @@ AC_DEFUN([DB_ENABLE_GENERIC],
   fi
   if test "[${db_cv_enable_testing}]" = yes; then
     AC_DEFINE_UNQUOTED([ENABLE_$3],[1],[whether to enable $4 (testing mode)])
+    db_cv_enable_$1=yes
   fi
   AC_MSG_RESULT([$db_cv_enable_$1])
 ])
@@ -54,7 +57,7 @@ AC_DEFUN([DB_ENABLE_VALUE],
 [
   AC_MSG_CHECKING([value of $4])
   AC_ARG_WITH([$1],
-    AS_HELP_STRING([--with-$1],[set value of $4 @<:@$2@:>@]),
+    AS_HELP_STRING([--with-$1],[set $4 @<:@$2@:>@]),
     [db_cv_with_$1=$withval],
     AC_CACHE_VAL([db_cv_with_$1], [db_cv_with_$1=$2]))
   AC_DEFINE_UNQUOTED([$3],[$db_cv_with_$1],[value of $4])
