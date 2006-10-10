@@ -176,14 +176,17 @@ extern bool BACKUP_RANDOMSTUFF;
 
 extern bool JOIN_GREET;
 extern long SLASTCOMM_TIME;
+#ifdef ENABLE_CHANNEL
 extern bool VOICE_USERS_ON_JOIN;
 extern bool OP_USERS_ON_LOGIN;
+#endif
 
 extern bool DO_WHOIS;
 extern long MAX_LASTSEEN;
 extern char SEEN_REPLY[STRING_SHORT];
 
 extern char COMPLAIN_REASON[STRING_SHORT];
+#ifdef ENABLE_CHANNEL
 extern bool BITCH_ABOUT_DEOP;
 extern char BITCH_DEOP_REASON[STRING_SHORT];
 
@@ -197,9 +200,12 @@ extern bool BAN_BY_HOST;
 
 extern bool FLOOD_KICK;
 extern char FLOOD_REASON[STRING_SHORT];
+#endif
 
+#ifdef ENABLE_QUIZ
 extern long QUIZ_TIMER;
 extern long QUIZ_REPEAT_TIMER;
+#endif
 
 extern bool HELP_GREET;
 extern bool AUTOHELP_GUESTS;

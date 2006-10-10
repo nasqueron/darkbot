@@ -203,8 +203,10 @@ bool BAN_BY_HOST = false;
 bool FLOOD_KICK = true;
 char FLOOD_REASON[STRING_SHORT] = "Don't flood!";
 
+#ifdef ENABLE_QUIZ
 long QUIZ_TIMER = 25;
 long QUIZ_REPEAT_TIMER = 20;
+#endif
 
 bool HELP_GREET = false;
 bool AUTOHELP_GUESTS = false;
@@ -252,8 +254,10 @@ struct setup_parameter parameters[] =
 //    {ST_BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),       {"ALLOW_ADD_IN_MSG",       NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
 //    {ST_BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),       {"ALLOW_DEL_IN_MSG",       NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
     {ST_BOOLEAN, 3, sizeof(ANTI_IDLE),              {"ANTI_IDLE",              NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
+#ifdef ENABLE_CHANNEL
     {ST_BOOLEAN, 3, sizeof(BITCH_ABOUT_DEOP),       {"BITCH_DEOP",             NULL, NULL, NULL, NULL}, "bitch about deop",                        &BITCH_ABOUT_DEOP,     NULL},
     {ST_STRING,  3, sizeof(BITCH_DEOP_REASON),      {"BITCH_DEOP_TEXT",        NULL, NULL, NULL, NULL}, "deop complaint",                          BITCH_DEOP_REASON,     NULL},
+#endif
     {ST_STRING,  3, sizeof(COMPLAIN_REASON),        {"BITCH_KICK_TEXT",        NULL, NULL, NULL, NULL}, "bot kicked message",                      COMPLAIN_REASON,       NULL},
     {ST_STRING,  3, sizeof(CMDCHAR),                {"BOT_CMD_CHAR",           NULL, NULL, NULL, NULL}, "bot's command char",                      CMDCHAR,               NULL},
     {ST_STRING,  3, sizeof(Mynick),                 {"BOT_NICK",               NULL, NULL, NULL, NULL}, "bot's nickname",                          Mynick,                check_nick_parameter},
@@ -273,21 +277,27 @@ struct setup_parameter parameters[] =
     {ST_STRING,  3, sizeof(NO_ENTRY),               {"ENTRY_NOT_EXIST_TEXT",   NULL, NULL, NULL, NULL}, "non-existing topic complaint",            NO_ENTRY,              NULL},
     {ST_STRING,  3, sizeof(NO_TOPIC),               {"FIND_NO_TEXT",           NULL, NULL, NULL, NULL}, "no topic search complaint",               NO_TOPIC,              NULL},
     {ST_STRING,  3, sizeof(TRY_FIND),               {"FIND_WHAT_TEXT",         NULL, NULL, NULL, NULL}, "try find search complaint",               TRY_FIND,              NULL},
+#ifdef ENABLE_CHANNEL
     {ST_BOOLEAN, 3, sizeof(KICK_ON_CHANNEL_NOTICE), {"FLOOD_NOTICE_KICK",      NULL, NULL, NULL, NULL}, "kick on channel notice flood",          &KICK_ON_CHANNEL_NOTICE, NULL},
     {ST_BOOLEAN, 3, sizeof(BAN_ON_CHANNEL_NOTICE),  {"FLOOD_NOTICE_BAN",       NULL, NULL, NULL, NULL}, "ban on channel notice flood",           &BAN_ON_CHANNEL_NOTICE,  NULL},
     {ST_BOOLEAN, 3, sizeof(BAN_BY_HOST),            {"FLOOD_NOTICE_BAN_HOST",  NULL, NULL, NULL, NULL}, "ban by host on channel notice flood",     &BAN_BY_HOST,          NULL},
     {ST_BOOLEAN, 3, sizeof(FLOOD_KICK),             {"FLOOD_KICK",             NULL, NULL, NULL, NULL}, "kick if bot is flooded",                  &FLOOD_KICK,           NULL},
     {ST_STRING,  3, sizeof(FLOOD_REASON),           {"FLOOD_TEXT",             NULL, NULL, NULL, NULL}, "flooded bot complaint",                   FLOOD_REASON,          NULL},
+#endif
     {ST_BOOLEAN, 3, sizeof(AUTOHELP_GUESTS),        {"GREET_GUESTS_TEXT",      NULL, NULL, NULL, NULL}, "give guests help",                        &AUTOHELP_GUESTS,      NULL},
     {ST_BOOLEAN, 3, sizeof(HELP_GREET),             {"GREET_NEW_TEXT",         NULL, NULL, NULL, NULL}, "give new users help",                     &HELP_GREET,           NULL},
     {ST_BOOLEAN, 3, sizeof(JOIN_GREET),             {"GREET_USER_TEXT",        NULL, NULL, NULL, NULL}, "registered user greeting",                &JOIN_GREET,           NULL},
     {ST_INTEGER, 3, sizeof(LASTCOMM_TIME),          {"IGNORE_TIME",            NULL, NULL, NULL, NULL}, "seconds to ignore repeated topics",       &LASTCOMM_TIME,        NULL},
     {ST_INTEGER, 3, sizeof(SLASTCOMM_TIME),         {"IGNORE_USER_TIME",       NULL, NULL, NULL, NULL}, "registered user delay seconds",           &SLASTCOMM_TIME,       NULL},
+#ifdef ENABLE_CHANNEL
     {ST_STRING,  3, sizeof(DEFAULT_KICK),           {"KICK_TEXT",              NULL, NULL, NULL, NULL}, "kick message",                            DEFAULT_KICK,          NULL},
     {ST_BOOLEAN, 3, sizeof(KICK_ON_BAN),            {"KICK_ON_BAN",            NULL, NULL, NULL, NULL}, "kick when banned",                        &KICK_ON_BAN,          NULL},
+#endif
     {ST_BOOLEAN, 3, sizeof(LOG_ADD_DELETES),        {"LOG_CHANGES",            NULL, NULL, NULL, NULL}, "logging of database changes",             &LOG_ADD_DELETES,      NULL},
     {ST_BOOLEAN, 3, sizeof(LOG_PRIVMSG),            {"LOG_PRIVATE",            NULL, NULL, NULL, NULL}, "logging of private messages",             &LOG_PRIVMSG,          NULL},
+#ifdef ENABLE_CHANNEL
     {ST_BOOLEAN, 3, sizeof(OP_USERS_ON_LOGIN),      {"OP_ON_LOGIN",            NULL, NULL, NULL, NULL}, "op users on login",                       &OP_USERS_ON_LOGIN,    NULL},
+#endif
     {ST_INTEGER, 3, sizeof(OUTPUT1_COUNT),          {"OUTPUT1_COUNT",          NULL, NULL, NULL, NULL}, "output delay threshold",                  &OUTPUT1_COUNT,        NULL},
     {ST_INTEGER, 3, sizeof(OUTPUT1_DELAY),          {"OUTPUT1_TIME",           NULL, NULL, NULL, NULL}, "output delay seconds",                    &OUTPUT1_DELAY,        NULL},
     {ST_INTEGER, 3, sizeof(OUTPUT2_COUNT),          {"OUTPUT2_COUNT",          NULL, NULL, NULL, NULL}, "long output delay threshold",             &OUTPUT2_COUNT,        NULL},
@@ -297,8 +307,10 @@ struct setup_parameter parameters[] =
     {ST_BOOLEAN, 3, sizeof(PERFORM_TIMER),          {"PERFORM_TIME",           NULL, NULL, NULL, NULL}, "sending perform.ini to server reqularly", &PERFORM_TIMER,        NULL},
     {ST_BOOLEAN, 3, sizeof(GENERAL_QUESTIONS),      {"QUESTIONS_GENERAL",      NULL, NULL, NULL, NULL}, "bot responds without being asked",        &GENERAL_QUESTIONS,    NULL},
     {ST_BOOLEAN, 3, sizeof(MSG_RESPONSES),          {"QUESTIONS_PRIVATE",      NULL, NULL, NULL, NULL}, "bot responds to private questions",       &MSG_RESPONSES,        NULL},
+#ifdef ENABLE_QUIZ
     {ST_INTEGER, 3, sizeof(QUIZ_TIMER),             {"QUIZ_TIME",              NULL, NULL, NULL, NULL}, "quiz answer seconds",                     &QUIZ_TIMER,           NULL},
     {ST_INTEGER, 3, sizeof(QUIZ_REPEAT_TIMER),      {"QUIZ_REPEAT_TIME",       NULL, NULL, NULL, NULL}, "next quiz delay seconds",                 &QUIZ_REPEAT_TIMER,    NULL},
+#endif
 #ifdef ENABLE_RANDOM
 // This one is currently ./configure --enable-random
 //    {ST_BOOLEAN, 3, sizeof(RANDOM_STUFF),           {"RANDOM_STUFF",           NULL, NULL, NULL, NULL}, "random utterences",                       &RANDOM_STUFF,         NULL},
@@ -318,9 +330,13 @@ struct setup_parameter parameters[] =
     {ST_STRING,  3, sizeof(GOSLEEP_ACTION),         {"SLEEP_TEXT",             NULL, NULL, NULL, NULL}, "sleep action",                            GOSLEEP_ACTION,        NULL},
     {ST_STRING,  3, sizeof(WAKEUP_ACTION),          {"SLEEP_WAKE_TEXT",        NULL, NULL, NULL, NULL}, "wakeup action",                           WAKEUP_ACTION,         NULL},
     {ST_BOOLEAN, 3, sizeof(SORT),                   {"SORT_DB",                NULL, NULL, NULL, NULL}, "sort database on startup",                &SORT,                 NULL},
+#ifdef ENABLE_CHANNEL
     {ST_INTEGER, 3, sizeof(AUTOTOPIC_TIME),         {"TOPIC_TIME",             NULL, NULL, NULL, NULL}, "topic setting seconds",                   &AUTOTOPIC_TIME,       NULL},
+#endif
     {ST_STRING,  3, sizeof(myVariables),            {"VARIABLES_TEXT",         NULL, NULL, NULL, NULL}, "data variables help text",                myVariables,           NULL},
+#ifdef ENABLE_CHANNEL
     {ST_BOOLEAN, 3, sizeof(VOICE_USERS_ON_JOIN),    {"VOICE_ON_JOIN",          NULL, NULL, NULL, NULL}, "voice users on join",                     &VOICE_USERS_ON_JOIN,  NULL},
+#endif
     {ST_STRING,  3, sizeof(WHUT),                   {"WHUT_TEXT",              NULL, NULL, NULL, NULL}, "no text complaint",                       WHUT,                  NULL},
     {ST_BOOLEAN, 3, sizeof(RANDOM_WHUT),            {"WHUT_RANDOM_TEXT",       NULL, NULL, NULL, NULL}, "random no text complaint",                &RANDOM_WHUT,          NULL},
 // Cant find CANT_FIND.  B-)

@@ -109,11 +109,13 @@ sig_alrm (int notUsed)
 		get_rand_stuff_time ();
 	}
 #endif
+#ifdef ENABLE_CHANNEL
 	if (AIL3 >= AUTOTOPIC_TIME)
 	{
 		AIL3 = 0;
 		do_autotopics ();
 	}
+#endif
 	AIL5 += AIL;
 	if (AIL5 >= 600)
 	{

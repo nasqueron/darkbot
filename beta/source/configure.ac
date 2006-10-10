@@ -61,9 +61,9 @@ AC_REPLACE_FUNCS([crypt memset nanosleep snprintf strcasecmp strcasestr strndup 
 # testing mode must be done first.
 DB_ENABLE_GENERIC([testing],[no],[TESTING],[testing mode - for developers only])
 
-DB_ENABLE_COMMAND([math],[yes],[MATH])
 DB_ENABLE_COMMANDS([CTCP],[yes],[CTCP])
 DB_ENABLE_COMMANDS([channel],[yes],[CHANNEL])
+DB_ENABLE_COMMAND([math],[yes],[MATH])
 DB_ENABLE_COMMAND([google],[yes],[GOOGLE])
 DB_ENABLE_COMMAND([weather],[yes],[WEATHER])
 DB_ENABLE_COMMAND([METAR],[yes],[METAR])

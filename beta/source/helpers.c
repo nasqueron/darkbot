@@ -338,11 +338,13 @@ do_login (char *nick, char *pass)
 				i++;
 				if (c->level == 0 && x >= 2)
 				{
+#ifdef ENABLE_CHANNEL
 				    if (OP_USERS_ON_LOGIN)
 				    {
 					/* only if not already authed */
 					S ("MODE %s +ov %s %s\n", c->chan, c->nick, c->nick);
 				    }
+#endif
 				    D = 1;
 				}
 				c->level = x;

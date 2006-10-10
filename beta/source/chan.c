@@ -127,9 +127,11 @@ cf (char *host, char *nick, char *chan)
 			ood[f_n].kick = 1;
 			if (*chan == '#' || *chan == '&')
 			{
+#ifdef ENABLE_CHANNEL
 			    if (FLOOD_KICK)
 				L018 (chan, nick, FLOOD_REASON, fc, host);
 			    else
+#endif
 				L019 (CHAN, fc, host);
 			}
 			else

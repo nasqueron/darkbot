@@ -133,6 +133,7 @@ parse (char *line)
 		}
 		else if (strcasecmp (cmd, "482") == 0)
 		{
+#ifdef ENABLE_CHANNEL
 			if (BITCH_ABOUT_DEOP)
 			{
 			    s2 = strtok (NULL, " ");	/* mynick */
@@ -140,6 +141,7 @@ parse (char *line)
 			    s2 = strtok (NULL, " ");	/* chan */
 			    /* We used to run the DEOP.INI here */
 			}
+#endif
 		}
 		else if (strcasecmp (cmd, "352") == 0)
 		{
@@ -201,6 +203,7 @@ parse (char *line)
 		cmd = strtok (NULL, " ");	/* Read in command  */
 		if (strcasecmp (cmd, "NOTICE") == 0)
 		{
+#ifdef ENABLE_CHANNEL
 			s2 = strtok (NULL, " ");	/* target */
 			if ((KICK_ON_CHANNEL_NOTICE) && (*s2 == '#'))
 			{
@@ -218,6 +221,7 @@ parse (char *line)
 				}
 				S ("KICK %s %s :Punt\n", s2, s3);
 			}
+#endif
 		}
 		else if (strcasecmp (cmd, "PRIVMSG") == 0)
 		{						/* PRIVMSG  */
@@ -341,8 +345,10 @@ parse (char *line)
 				}
 				else if (check_access (ptr, s1, 1, s) >= 1)
 				{
+#ifdef ENABLE_CHANNEL
 					if (VOICE_USERS_ON_JOIN)
 					    S ("MODE %s +v %s\n", s1, s);
+#endif
 				}
 				else if ((HELP_GREET) && (check_access(ptr, s1, 0, s) >= 1))
 				{
