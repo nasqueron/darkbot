@@ -45,10 +45,10 @@ be added, will be listed here.
 onefang's TO-DO List For Darkbot
 ----------------------------------------------------------
 
-Add a show parameters command.
+Some commands call externl functions that bypass the new output stuff. 
+Fix that.
 
-There is some overlap with the commands and parameters when doing help,
-so some names will have to be changed.
+Add a show parameters command.
 
 Only write setup.ini stuff that is different from default.
 

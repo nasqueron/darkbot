@@ -1714,9 +1714,9 @@ struct chanserv_command chanserv_commands[] =
     {SAFE_COMMAND,    0, 0, chanserv_quiz,		{"QUIZ", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
 #ifdef ENABLE_RANDQ
-    {NORMAL_COMMAND,  0, 1, chanserv_quote,		{"QUOTE", NULL, NULL, NULL, NULL}, "<>", ""},
-    {NORMAL_COMMAND,  0, 1, chanserv_random_quote,	{"RANDQUOTE", "RANDQ", NULL, NULL, NULL}, "<>", ""},
-    {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "<>", ""},
+    {NORMAL_COMMAND,  0, 1, chanserv_quote,		{"QUOTE", NULL, NULL, NULL, NULL}, "[text]", "Shows a random quote."},
+    {NORMAL_COMMAND,  0, 1, chanserv_random_quote,	{"RANDQUOTE", "RANDQ", NULL, NULL, NULL}, "[text]", "Shows a random quote."},
+    {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "[text]", "Shows a random quote."},
 #endif
 #ifdef ENABLE_RANDOM
     {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
