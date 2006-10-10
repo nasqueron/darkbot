@@ -4,6 +4,16 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+Darkbot 8rc2: October 11, 2006
+	- Fixed some divide by zero errors.
+	- Cleaned up tho logging.
+	- Cleaned up tho output of the build system.
+	- Cleaned up the parameter names.
+	- Cleaned up lsome help text.
+	- Script for building minimal darkbot.
+	- Disabled more channel code.
+	- Started documenting what darkbot works on.
+
 Darkbot 8rc2: June 11, 2006
 	- Added docs/SETUP.
 
