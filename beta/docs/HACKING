@@ -5,6 +5,10 @@ assumption changes, we know what to change.
 
 SOFTWARE REQUIREMENTS FOR DEVELOPERS
 
+None of this stuff is required for ordinary users, this is what is
+required to build from the cvs version.  Most people should be able to
+build from the distributed tarball (if there is one).
+
 GNU M4   1.4
 autoconf 2.59
 automake 1.9
@@ -90,7 +94,7 @@ The --enable-testing option to configure will force the compiling of all
 libcompat source code, as well as all other optional code so that it can
 be tested.
 
-Tested and working on -
+Working cvs version on -
 Linux CentOS 4.2
 Linux Fedora Core 3
 Linux Fedora Core 5
@@ -99,7 +103,7 @@ FreeBSD 6.1
 Latest cygwin
 Old cygwin (from the darkbot.org web site)
 
-Failed with -
+Failed cvs version on -
 Linux Debian 3.1 sarge, it's too old, we require more up to date autotools.
 Linux Fedora Core 2, it's too old, we require more up to date autotools.
 FreeBSD 5.4, doesn't seem to have autotools at all.
@@ -107,3 +111,16 @@ NetBSD 2.0.2, it's too old, we require more up to date autotools.
 OpenBSD 3.8, it's too old, we require more up to date autotools.
 MacOS X 10.2, it's too old, we require more up to date autotools.
 Solaris 9, it's too old, we require more up to date autotools.
+
+Working distributed version on -
+Linux Debian 3.0 sid
+Linux Debian 3.1 sarge
+Linux Fedora Core 2
+Linux SuSE Enterprise Server 9
+FreeBSD 5.4
+NetBSD 2.0.2
+
+Failed distributed version on -
+MacOS X 10.2
+OpenBSD 3.8
+Solaris 9
