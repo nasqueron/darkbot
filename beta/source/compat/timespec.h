@@ -26,11 +26,13 @@
 /* Some systems don't define this struct, e.g., AIX 4.1, Ultrix 4.3, early cygwin versions.  */
 # define _STRUCT_TIMESPEC
 # define __timespec_defined	1
+#  if !HAVE_STRUCT_TIMESPEC
 struct timespec
 {
   time_t tv_sec;
   long tv_nsec;
 };
+#  endif
 # endif
 
 
