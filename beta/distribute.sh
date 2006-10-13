@@ -2,7 +2,7 @@
 
 sh bootstrap.sh
 
-DESTDIR="darkbot-`cat VERSION`" 
+DESTDIR="darkbot-`cat VERSION`-CVS-SNAPSHOT"
 rm -rf $DESTDIR
 mkdir $DESTDIR
 cp -p * $DESTDIR 2>/dev/null
