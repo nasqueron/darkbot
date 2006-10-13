@@ -91,11 +91,19 @@ libcompat source code, as well as all other optional code so that it can
 be tested.
 
 Tested and working on -
+Linux CentOS 4.2
+Linux Fedora Core 3
+Linux Fedora Core 5
 Linux SuSE 9.3
-LInux Fedora Core 5
 FreeBSD 6.1
 Latest cygwin
 Old cygwin (from the darkbot.org web site)
 
 Failed with -
-Debian sarge, it's too old, we require more up to date autotools.
+Linux Debian 3.1 sarge, it's too old, we require more up to date autotools.
+Linux Fedora Core 2, it's too old, we require more up to date autotools.
+FreeBSD 5.4, doesn't seem to have autotools at all.
+NetBSD 2.0.2, it's too old, we require more up to date autotools.
+OpenBSD 3.8, it's too old, we require more up to date autotools.
+MacOS X 10.2, it's too old, we require more up to date autotools.
+Solaris 9, it's too old, we require more up to date autotools.
