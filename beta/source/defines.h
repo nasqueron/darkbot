@@ -111,7 +111,6 @@ asking your question, type %cHELP for a list of help topics.\n", a,b,c,d)
 #include <ansidecl.h>
 #endif
 #include <ctype.h>
-#include <sys/resource.h>
 #include <limits.h>
 #include <stddef.h>
 
@@ -195,6 +194,9 @@ char *strchr (), *strrchr ();
 #  include <time.h>
 # endif
 #endif
+
+/* MacOS X is happier with this one AFTER timeval is declared. */
+#include <sys/resource.h>
 
 #include "stat-macros.h"
 #include "minmax.h"
