@@ -348,8 +348,9 @@ create_connection (char *server, char *virtualhost, long port)
 
 	if(!(hostname = gethostbyname (server)))
 	{
-		printf ("\n");
-		herror ("hostname");
+		printf ("\nCan't create the connection!\n");
+		// FIXME: This is obsolete, and solaris doesn't know about it.
+//		herror ("hostname");
 		exit (EXIT_FAILURE);
 	}
 
