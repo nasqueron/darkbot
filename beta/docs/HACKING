@@ -116,11 +116,15 @@ Working distributed version on -
 Linux Debian 3.0 sid
 Linux Debian 3.1 sarge
 Linux Fedora Core 2
+Linux Slackware 11.0
 Linux SuSE Enterprise Server 9
 FreeBSD 5.4
 NetBSD 2.0.2
 OpenBSD 3.8
 MacOS X 10.2
 Solaris 9
+Windows cygwin NT 5.1 (WinXP, cygwin 1.5 I think).
 
 Failed distributed version on -
+Older cygwin from darkbot site.
+Windows SFU.
