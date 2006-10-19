@@ -240,7 +240,17 @@ run_program (const char *input)
 	read_fp = popen (input, "r");
 	if (read_fp != NULL)
 	{
-		while ( fgets(f_tmp, sizeof(f_tmp), read_fp) );
+		int length = 0;
+
+		while ( fgets(f_tmp + length, sizeof(f_tmp - length), read_fp) )
+		{
+			length = strlen(f_tmp);
+			while ((f_tmp[length - 1] == '\n') || (f_tmp[length - 1] == '\r'))
+			{
+				f_tmp[length - 1] = '\0';
+				length--;
+			}
+		}
 
 		pclose (read_fp);
 		if (f_tmp)
