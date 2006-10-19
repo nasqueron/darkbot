@@ -11,7 +11,7 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	int			toggle = 1;
 	
 	
-#ifndef	WIN32	
+//#ifndef	WIN32	
 	if (BACKUP_RANDOMSTUFF)
 	{
 	    // Backup randomstuff file to a temporary file.
@@ -19,7 +19,7 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	    snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
 	    system(file);
 	}
-#endif
+//#endif
 
 	if(*data == '~')
 	{

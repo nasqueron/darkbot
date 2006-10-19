@@ -224,17 +224,17 @@ struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd
 }
 #endif
 
-#ifndef	WIN32
+//#ifndef	WIN32
 struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
 
-	snprintf(temp, sizeof (temp), "/bin/cp -rf %s \"%s.bak @ `date`\"\n", URL2, URL2);
+	snprintf(temp, sizeof (temp), "/bin/cp -f %s %s_`date +%%F_%%R.bak`\n", URL2, URL2);
 	system (temp);
 
 	return chanserv_asprintf(NULL, "Backed up database.");
 }
-#endif
+//#endif
 
 #ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -819,7 +819,7 @@ struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, cha
 	return chanserv_asprintf(NULL, " %s", mask_from_nick(args[0], target));
 }
 
-#ifndef	WIN32
+//#ifndef	WIN32
 struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
@@ -827,7 +827,7 @@ struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, c
 	snprintf(temp, sizeof (temp), "ps u -p %d\n", getpid());
 	return chanserv_asprintf(NULL, "ps: %s", run_program(temp));
 }
-#endif
+//#endif
 
 #ifdef ENABLE_METAR
 struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -901,7 +901,7 @@ struct chanserv_output *chanserv_os_show(char *source, char *target, char *cmd, 
 	char temp[1024] = { 0 };
 
 #ifdef	WIN32
-	snprintf (temp, sizeof (temp), "cmd /c ver\n");
+	snprintf (temp, sizeof (temp), "cmd /c ver;uname\n");
 #else				
 	snprintf (temp, sizeof (temp), "uname\n");
 #endif
@@ -1072,7 +1072,7 @@ struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char
 	return result;
 }
 
-#ifndef	WIN32
+//#ifndef WIN32
 struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1095,7 +1095,7 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 
 	return result;
 }
-#endif
+//#endif
 
 struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1451,7 +1451,7 @@ struct chanserv_output *chanserv_up(char *source, char *target, char *cmd, char 
 }
 #endif
 
-#ifndef	WIN32
+//#ifndef	WIN32
 struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
@@ -1459,7 +1459,7 @@ struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, c
 	snprintf(temp, sizeof (temp), "uptime\n");
 	return chanserv_asprintf(NULL, "Uptime: %s.", run_program(temp));
 }
-#endif
+//#endif
 
 struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
@@ -1629,9 +1629,9 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, chanserv_autotopic,		{"AUTOTOPIC", NULL, NULL, NULL, NULL}, "<channel topic>", "Refreshes the channel topic every thirty minutes (set to \"0\" to turn off)."},
 #endif
-#ifndef	WIN32
+//#ifndef	WIN32
     {DANGER_COMMAND,  3, 0, chanserv_backup,		{"BACKUP", NULL, NULL, NULL, NULL}, NULL, "Create a backup of the database."},
-#endif
+//#endif
 #ifdef ENABLE_CHANNEL
     {INFO_COMMAND,    1, 0, chanserv_ban_list,		{"BANLIST", NULL, NULL, NULL, NULL}, NULL, "Displays permanent bans."},
 #endif
@@ -1688,9 +1688,9 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    1, 0, chanserv_users_list,	{"LUSERS", NULL, NULL, NULL, NULL}, NULL, ""},
 #endif
     {INFO_COMMAND,    0, 1, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", "Show the users user@host mask."},
-#ifndef	WIN32
+//#ifndef	WIN32
     {INFO_COMMAND,    3, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, "Shows some memory usage and process statistics."},
-#endif
+//#endif
 #ifdef ENABLE_METAR
     {NORMAL_COMMAND,  0, 1, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw METAR weather data."},
 #endif
@@ -1723,9 +1723,9 @@ struct chanserv_command chanserv_commands[] =
     {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, "Shows time until next random thing is said."},
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", "Get bot to send raw IRC data."},
-#ifndef	WIN32
+//#ifndef	WIN32
     {INFO_COMMAND,    0, 0, chanserv_rdb,		{"RDB", NULL, NULL, NULL, NULL}, "[topic]", "Display information about the random databases."},
-#endif
+//#endif
     {DANGER_COMMAND,  3, 3, chanserv_repeat,		{"REPEAT", "TIMER", NULL, NULL, NULL}, "<number> <delay> <raw data>", "Get bot to send raw IRC data a number of times."},
     {NORMAL_COMMAND,  1, 1, chanserv_replace,		{"REPLACE", NULL, NULL, NULL, NULL}, "<topic> <text>", "Replace the text of a topic."},
     {DANGER_COMMAND,  3, 0, chanserv_restart,		{"RESTART", "REHASH", NULL, NULL, NULL}, NULL, "Restart the bot."},
@@ -1751,9 +1751,9 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  2, 0, chanserv_up,		{"UP", NULL, NULL, NULL, NULL}, NULL, "Add channel operator status to yourself."},
 #endif
-#ifndef	WIN32
+//#ifndef	WIN32
     {INFO_COMMAND,    0, 0, chanserv_uptime,		{"UPTIME", NULL, NULL, NULL, NULL}, NULL, "Shows the uptime statistics for the computer the bot is running on."},
-#endif
+//#endif
     {INFO_COMMAND,    1, 0, chanserv_user_list,		{"USERLIST", "HLIST", "ACCESS", NULL, NULL}, NULL, "Show the bot's access list."},
     {INFO_COMMAND,    0, 0, chanserv_variables,		{"VARIABLES", NULL, NULL, NULL, NULL}, NULL, "Displays variables you can use."},
 #ifdef ENABLE_CTCP

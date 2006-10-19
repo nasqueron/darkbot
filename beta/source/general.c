@@ -242,7 +242,7 @@ run_program (const char *input)
 	{
 		while ( fgets(f_tmp, sizeof(f_tmp), read_fp) );
 
-        pclose (read_fp);
+		pclose (read_fp);
 		if (f_tmp)
 		{
 			return f_tmp;
