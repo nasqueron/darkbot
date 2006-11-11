@@ -8,7 +8,7 @@ mkdir build/dat && \
 cp dat/*.ini dat/*.db build/dat && \
 mkdir build/dat/rdb && \
 cp dat/rdb/*.rdb build/dat/rdb && \
-autoreconf -fiv -Wall -Werror build
+autoreconf -fiv -Wall build
 rm -rf build/autom4te.cache
 rm -f build/*.c
 rm -f build/*.h
