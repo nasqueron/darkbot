@@ -2,13 +2,14 @@
 
 AC_PREREQ(2.59)
 AC_INIT([Darkbot],[8rc2],[ron@darkbot.org])
-AC_COPYRIGHT([Copyright 1996 Darkbot Development Team])
+AC_COPYRIGHT([Copyright 1996-2006 Darkbot Development Team])
 AC_REVISION($Revision$)
 AC_CONFIG_AUX_DIR([auxdir])
 AC_CONFIG_LIBOBJ_DIR([../source/compat])
 AC_CONFIG_MACRO_DIR([../m4])
 AC_CONFIG_SRCDIR([../source/parse.c])
-AC_CONFIG_HEADERS([config.h])
+# Preserve 8.3 file format for MS-DOS compatibility.
+AC_CONFIG_HEADERS([config.h:config-h.in])
 
 AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror])
 
