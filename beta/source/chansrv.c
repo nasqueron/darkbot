@@ -1873,8 +1873,9 @@ void chanserv(char *source, char *target, char *buf)
 		    {
 			if (input_type == DIRECT_INVOKE)
 			    return;
-			else if ((input_type == ADDRESS_INVOKE) && (command != 1))
-			    return;
+// Not sure why this is here.
+//			else if ((input_type == ADDRESS_INVOKE) && (command != 1))
+//			    return;
 			break;
 		    }
 
