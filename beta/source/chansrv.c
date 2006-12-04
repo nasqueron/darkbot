@@ -1766,7 +1766,7 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_WEATHER
     {NORMAL_COMMAND,  0, 1, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", "Get decoded weather data."},
 #endif
-    {INFO_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", "Recall a topic."},
+    {SAFE_COMMAND,    0, 2, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", "Recall a topic."},
     {SAFE_COMMAND,    0, 2, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user privately."},
     {INFO_COMMAND,    4, 0, NULL, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL}
 };
