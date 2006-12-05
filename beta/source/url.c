@@ -508,7 +508,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 		}
 		if ((*target == '#') || (*target == '+') || (*target == '&'))
 		{
-			if (RANDOM_DUNNO)
+			if (RANDOM_DUNNO == true)
 			    do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
 			else
 			    S ("PRIVMSG %s :%s, %s\n", target, nick, DUNNO_Q);

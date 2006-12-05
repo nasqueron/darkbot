@@ -128,7 +128,7 @@ cf (char *host, char *nick, char *chan)
 			if (*chan == '#' || *chan == '&')
 			{
 #ifdef ENABLE_CHANNEL
-			    if (FLOOD_KICK)
+			    if (FLOOD_KICK == true)
 				L018 (chan, nick, FLOOD_REASON, fc, host);
 			    else
 #endif
