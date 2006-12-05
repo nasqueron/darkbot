@@ -168,6 +168,7 @@ char TRY_FIND[STRING_SHORT] = "What am I trying to find";
 char WHUT[STRING_SHORT] = "hmmm?";
 char DUNNO_Q[STRING_SHORT] = "*shrug*";
 bool RANDOM_DUNNO = true;
+bool RANDOM_WHUT = true;
 
 #ifdef ENABLE_RANDOM
 //bool RANDOM_STUFF = true;
