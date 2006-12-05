@@ -337,9 +337,7 @@ struct setup_parameter parameters[] =
     {ST_BOOLEAN, 3, sizeof(VOICE_USERS_ON_JOIN),    {"VOICE_ON_JOIN",          NULL, NULL, NULL, NULL}, "voice users on join",                     &VOICE_USERS_ON_JOIN,  NULL},
 #endif
     {ST_STRING,  3, sizeof(WHUT),                   {"WHUT_TEXT",              NULL, NULL, NULL, NULL}, "no text complaint",                       WHUT,                  NULL},
-#ifdef ENABLE_RANDWHUT
     {ST_BOOLEAN, 3, sizeof(RANDOM_WHUT),            {"WHUT_RANDOM_TEXT",       NULL, NULL, NULL, NULL}, "random no text complaint",                &RANDOM_WHUT,          NULL},
-#endif
 // Cant find CANT_FIND.  B-)
 //    {ST_STRING,  3, sizeof(CANT_FIND),              {"CANT_FIND",              NULL, NULL, NULL, NULL}, "can't find search complaint",             CANT_FIND,             NULL},
     {ST_STRING,  4, 0, {NULL, NULL, NULL, NULL, NULL}, NULL, NULL, NULL}
