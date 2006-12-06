@@ -1992,7 +1992,7 @@ void chanserv(char *source, char *target, char *buf)
 	}
 	else if (input_type != CHAR_INVOKE)
 	{
-	    if ((input_type == DIRECT_INVOKE) && (cmd == NULL))
+	    if ((input_type == ADDRESS_INVOKE) && (cmd == NULL))
 	    {
 		if (RANDOM_WHUT == true)
 		    do_randomtopic(WHUTR, target, WHUT_FILE, source, cmd);
