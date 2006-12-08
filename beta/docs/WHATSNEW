@@ -4,6 +4,13 @@
     Support Forum: http://forum.darkbot.org
     *******************************************************
 
+
+Darkbot 8rc2: December 09, 2006
+	- Updated server and user lists.
+	- More fixes to random whut.
+	- Tweaked random number generation.
+	- Consistant random number generation throughout the code.
+
 Darkbot 8rc2: December 04, 2006
 	- Fixed some variable checking that was checking for integers
 	  instead of bool values (random whut is fixed by this, flood 
@@ -14,10 +21,10 @@ Darkbot 8rc2: December 04, 2006
 
 Darkbot 8rc2: October 11, 2006
 	- Fixed some divide by zero errors.
-	- Cleaned up tho logging.
-	- Cleaned up tho output of the build system.
+	- Cleaned up the logging.
+	- Cleaned up the output of the build system.
 	- Cleaned up the parameter names.
-	- Cleaned up lsome help text.
+	- Cleaned up some help text.
 	- Script for building minimal darkbot.
 	- Disabled more channel code.
 	- Started documenting what darkbot works on.
