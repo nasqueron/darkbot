@@ -288,7 +288,7 @@ get_rand_nick (const char *chan)
 		}
 	}
 
-	x = rand () % i + 2;
+	x = 2 + get_random_integer(i);
 	i = 0;						/* reinit! */
 
 	for (c = userhead; c != NULL; c = c->next)

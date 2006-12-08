@@ -16,6 +16,7 @@ long	save_seen				(char *, char *, char *);
 void	do_randomtopic				(int, char *, char *, char *, char *);
 
 
+int	get_random_integer			(int max);
 
 #ifdef ENABLE_RANDOM
 

@@ -18,8 +18,6 @@ run_quiz_question (char *target)
 	if (quiz_timer > 0)
 		return;					/* timer already running */
 
-	srand (time (0));
-
 	if ((fp = fopen (QUIZ_FILE, "r")) == NULL)
 		return;
 
@@ -29,7 +27,7 @@ run_quiz_question (char *target)
 	}
 
 	fseek (fp, 0L, SEEK_SET);
-	j = rand () % i;
+	j = get_random_integer(i);
 	size = sizeof (recent_questions) / sizeof (recent_questions[0]);
 
 	if (i < size)
@@ -37,11 +35,9 @@ run_quiz_question (char *target)
 
 	while (k <= size)
 	{
-		srand (time (NULL));
-
 		if (j == recent_questions[k])
 		{
-			j = rand () % i;
+			j = get_random_integer(i);
 			k = 0;
 			continue;
 		}

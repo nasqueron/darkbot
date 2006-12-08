@@ -2,6 +2,18 @@
 #include "vars.h"
 #include "prototypes.h"
 
+int get_random_integer(int max)
+{
+    int result;
+
+    result = ((float) max) * (rand() / (RAND_MAX + 1.0));
+    if (result >= max)  // Paranoid check.
+	result = max - 1;
+
+    return result;
+}
+
+
 #ifdef ENABLE_RANDOM
 void		add_randomstuff		(char *source, char *target, char *data)
 {
@@ -54,11 +66,10 @@ void		add_randomstuff		(char *source, char *target, char *data)
 
 void		get_rand_stuff_time			(void)
 {
-	Rand_Stuff = rand () % RAND_STUFF_TIME + 2;
+	Rand_Stuff = 2 + get_random_integer(RAND_STUFF_TIME);
 	if (Rand_Stuff < RAND_STUFF_TIME / 2)
 		Rand_Stuff = RAND_STUFF_TIME;
 }
-
 
 void		do_random_stuff					(void)
 {
@@ -73,10 +84,8 @@ void		do_random_stuff					(void)
 	if ((nRandStuffs = count_lines(RAND_FILE)) < 1)
 		return;
 
-	// Get a random line number to display. If nLine is more than the number of RandStuffs,
-	// nLine becomes equal to the number of RandStuffs.
-	if ((nLine = 1 + (size_t) ((float)nRandStuffs * rand() / (RAND_MAX + 1.0))) > nRandStuffs)
-		nLine = nRandStuffs;
+	// Get a random line number to display.
+	nLine = 1 + (size_t) get_random_integer(nRandStuffs);
 
 	// If nLine is less than 1, nLine becomes equal to 1
 	if(nLine < 1)
@@ -197,14 +206,8 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 	
 	/* db_sleep(1) */
 
-	// Get line number that we are searching for in the file. If it ends up less than 
-	// 1, for some reason, set it to 1.
-
-	if ((nLine = (size_t) ((float)nRandTopics * rand() / (RAND_MAX+1.0))) < 1)
-		nLine = 1;
-
-	if(nLine > nRandTopics)
-		nLine = nRandTopics;
+	// Get line number that we are searching for in the file.
+	nLine = 1 + (size_t) get_random_integer(nRandTopics);
 
 	while(fgets(szBuffer2, STRING_LONG, fp))
 	{
@@ -444,7 +447,7 @@ char	*rand_reply	(const char *nick)
 		return(0);
 
 	// set nLine to be a random number between 1 and nRandTopics.
-	nLine = 1 + (size_t) ((float)nRandTopics * rand() / (RAND_MAX+1.0));
+	nLine = 1 + (size_t) get_random_integer(nRandTopics);
 
 	// If the RAND_SAY file can't be opened, just return.
 	if((fp = fopen(RAND_SAY, "r")) == NULL)
@@ -611,7 +614,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 		return;
 	}
 
-	nLine = 1 + (size_t) ((float)nNumMatches * rand() / (RAND_MAX + 1.0));
+	nLine = 1 + (size_t) get_random_integer(nNumMatches);
 	
 	// If we can't open the temporary file, complain about it.
 	if((fp = fopen(RANDQ_TEMPFILE, "r")) == 0)
