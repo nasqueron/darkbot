@@ -10,10 +10,11 @@ required to build from the cvs version.  Most people should be able to
 build from the distributed tarball (if there is one).
 
 GNU M4   1.4
-autoconf 2.59
+autoconf 2.59 or 2.60
 automake 1.9
 perl     5.005_3
 
+automake 1.10 is specifically not supported.
 
 AUTOCONF, AUTOMAKE, AND FRIENDS (AUTOFOO)
 
