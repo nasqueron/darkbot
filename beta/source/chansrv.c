@@ -1774,7 +1774,8 @@ struct chanserv_command chanserv_commands[] =
 void chanserv(char *source, char *target, char *buf)
 {
 	struct chanserv_output *result = NULL;
-	char *cmd = NULL, *userhost = NULL;
+	char *cmd = NULL, *userhost = NULL, oldbuf[BUFSIZ] = {"NULL"},
+	     *ptr = NULL;
 	int i, j, found = -1, command = 0, wakeup = 0;
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
@@ -1787,6 +1788,17 @@ void chanserv(char *source, char *target, char *buf)
 	stripline (source);
 	if (buf == NULL || target == NULL || source == NULL)
 	    return;
+
+	/* Make a copy of the original buffer in a safe location for
+	 * later use. Strip the : if there is one.
+	 */
+
+	strcpy (oldbuf, buf);
+
+	ptr = oldbuf;
+	if (*ptr == ':')
+		*ptr++;
+
 	cmd = strtok (buf, " ");
 	if (cmd == NULL)
 	    return;
@@ -1897,9 +1909,28 @@ void chanserv(char *source, char *target, char *buf)
 	    if (check_access(userhost, (input_type == MSG_INVOKE) ? "#*" : target, 0, source) >= chanserv_commands[found].access)
 	    {
 		char **args = NULL;
-		int more_needed = 0;
+		int more_needed = 0, too_many = 0;
+		int k = 0;
 
 		j = chanserv_commands[found].arg_count;
+
+		/* Use the char count of spaces in our oldbuf ptr. Since 
+		 * it has the cmd tacked on the beginning, the number of 
+		 * spaces gives us an accurate early number of arguments
+		 * supplied by the user. 
+		 */
+		k = count_char (ptr, ' ');
+
+		if (j == 0)
+		{
+			if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
+			   (input_type == DIRECT_INVOKE) && (k > j))
+			{
+				too_many = 1;
+			}	
+			
+		}
+
 		if (j > 0)
 		{
 		    args = calloc(j, sizeof(char *));
@@ -1918,9 +1949,38 @@ void chanserv(char *source, char *target, char *buf)
 		    else  // FIXME: Should bitch about lack of ram.
 			return;
 		}
-		/* We call this first to give the command a chance to supply a custom error msg if there are not enough arguments. */
-    		result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
+		
+		if (too_many == 1)
+		{
+			int i = 0;
+			char *ptr2 = NULL;
 
+			strlwr (ptr);
+			
+			for (i = 0; i < strlen (ptr); i++)
+			{
+				if (ptr[i] == ' ')
+					ptr[i] = '+';
+			}
+			
+				
+			if (input_type == ADDRESS_INVOKE)
+			{
+				ptr2 = strtok (ptr, "+");
+				ptr = strtok (NULL, "");
+			}
+			if ((check_existing_url(source, ptr, target)) == 1)
+			{	
+				show_url(source, ptr, target, 1, 0, userhost, 0);
+				return;	
+			}
+			return;
+		}
+		else
+		{
+			/* We call this first to give the command a chance to supply a custom error msg if there are not enough arguments. */
+	    		result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
+		}
 		if (result)
 		{
 		    struct chanserv_output *output = result;
