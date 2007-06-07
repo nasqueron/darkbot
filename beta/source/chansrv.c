@@ -1937,11 +1937,11 @@ void chanserv(char *source, char *target, char *buf)
 		if (j == 0)
 		{
 			if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
-			   (input_type == DIRECT_INVOKE) && (k > j))
+			   (input_type == DIRECT_INVOKE) && (k > j) ||
+			   (input_type == MSG_INVOKE) && (k > j))
 			{
 				too_many = 1;
 			}	
-			
 		}
 
 		if (j > 0)
@@ -1983,16 +1983,23 @@ void chanserv(char *source, char *target, char *buf)
 				ptr = strtok (NULL, "");
 				
 			}
+
 			/* Output only if the topic exists. If the bot was 
 			 * addressed by nickname (ADDRESS_INVOKE), output 
 			 * anyway because show_url will supply a DUNNO 
-			 * response.
+			 * response. If the input_type was MSG_INVOKE, we 
+			 * use the source as a target instead of the target,
+			 * because the target will be the bot's own nickname 
+	 		 * due to the way things are parsed. 
 			 */
 
 			if ((check_existing_url(source, ptr, target)) == 1 
-				|| (input_type == ADDRESS_INVOKE))
+				|| (input_type == ADDRESS_INVOKE)
+				|| (input_type == MSG_INVOKE))
 			{	
-				show_url(source, ptr, target, 1, 0, userhost, 0);
+				show_url(source, ptr, 
+					((input_type == MSG_INVOKE) 
+					? source : target), 1, 0, userhost, 0);
 				return;	
 			}
 			{ 
