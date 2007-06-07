@@ -2002,14 +2002,11 @@ void chanserv(char *source, char *target, char *buf)
 					? source : target), 1, 0, userhost, 0);
 				return;	
 			}
-			{ 
-				
-			}
 			return;
 		}
 		else
 		{
-			/* We call this first to give the command a chance to supply a custom error msg if there are not enough arguments. */
+			/* We call this to give the command a chance to supply a custom error msg if there are not enough arguments. */
 	    		result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
 		}
 		if (result)
