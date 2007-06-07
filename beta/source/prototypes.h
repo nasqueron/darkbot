@@ -154,6 +154,7 @@ int 	web_post_query				(char *trigger, char *source, char *uh, char *target, cha
 int	add_ignore_user_ram			(char *);
 int	delete_ignore_user_ram			(char *);
 int	check_ignore_user_ram			(char *);
+int	check_exempt				(char *);
 void	call_reserved_1				(char *, char *, char *);
 void	call_reserved_2				(char *, char *, char *);
 size_t	count_char				(const char *, const char);

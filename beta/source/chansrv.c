@@ -1962,16 +1962,17 @@ void chanserv(char *source, char *target, char *buf)
                           (input_type == DIRECT_INVOKE) && (k > j) ||
                           (input_type == MSG_INVOKE) && (k > j))
                        {
-                               /* Exemption list.. these commands allocate
-                                * no room for arguments but still need and
-                                * get them this way. It's magic and such.
+                               /* FIXME: Exemption list.. these commands 
+				* allocate no room for arguments but still 
+				* need and get them this way. Fixme soon
+				* to check for all command variances.
                                 */
-                               if ((stricmp (cmd, "HELP") == 0) ||
-                                   (stricmp (cmd, "STATS") == 0))
-                                       exempt = 1;
-
+			       if (check_exempt(cmd) == 1)
+     			       {
+				 	exempt = 1;
+			       }
                                else
-                                       too_many = 1;
+                                        too_many = 1;
                        }
                 }		
 	
@@ -2243,3 +2244,40 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 
 	return result;
 }
+
+int	check_exempt	(char *cmd)
+{
+	int i = 0;
+	int j = 0; 
+	int k = 0;
+	
+	char *exempt_items[] = {
+		"STATS", 
+		"HELP",
+	        NULL
+	};
+
+	strupr(cmd);
+
+	for (i = 0; chanserv_commands[i].func != NULL; i++)
+	{
+		for (j = 0; chanserv_commands[i].command[j] != NULL; j++)
+		{
+			if (strcmp (cmd, chanserv_commands[i].command[j]) == 0)
+			{
+				for (k = 0; exempt_items[k] != NULL; k++)
+				{
+						if (strcmp (chanserv_commands[i].command[j], exempt_items[k]) == 0)
+						{
+							strlwr(cmd);	
+							return 1;
+						}
+				}
+			}
+		}
+	}
+	
+	strlwr(cmd);
+	return 0;
+}
+
