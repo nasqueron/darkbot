@@ -1917,7 +1917,20 @@ void chanserv(char *source, char *target, char *buf)
 		/* Use the char count of spaces in our oldbuf ptr. Since 
 		 * it has the cmd tacked on the beginning, the number of 
 		 * spaces gives us an accurate early number of arguments
-		 * supplied by the user. 
+		 * supplied by the user, because the count of spaces will
+		 * return one less than the actual number of words supplied.
+		 * The first word is the cmd, so we don't want this counted.
+		 * This is sort of a lazy way of counting arguments before 
+		 * they're actually read into a buffer and dealt with.
+		 *
+		 * This allows us to "break out" of the command routine if
+		 * we've entered accidentally by user input. Such instances
+		 * may be if the user says "info things stuff", the bot 
+		 * realizes this is not a command, but normal conversation,
+		 * and will respond if the topic is in it's database. If it's 
+		 * not found, the bot either ignores it or responds with a
+		 * whut reply if addressed directly.  This code is only 
+		 * intended for commands which have no arguments.  
 		 */
 		k = count_char (ptr, ' ');
 
@@ -1968,11 +1981,22 @@ void chanserv(char *source, char *target, char *buf)
 			{
 				ptr2 = strtok (ptr, "+");
 				ptr = strtok (NULL, "");
+				
 			}
-			if ((check_existing_url(source, ptr, target)) == 1)
+			/* Output only if the topic exists. If the bot was 
+			 * addressed by nickname (ADDRESS_INVOKE), output 
+			 * anyway because show_url will supply a DUNNO 
+			 * response.
+			 */
+
+			if ((check_existing_url(source, ptr, target)) == 1 
+				|| (input_type == ADDRESS_INVOKE))
 			{	
 				show_url(source, ptr, target, 1, 0, userhost, 0);
 				return;	
+			}
+			{ 
+				
 			}
 			return;
 		}

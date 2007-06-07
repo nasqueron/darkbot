@@ -2,8 +2,28 @@
     *******************************************************
     Warnings, errors, malfunctions, code patches, suggestions
     Support Forum: http://forum.darkbot.org
-    *******************************************************
+    (order is reverse-chronologic)
+    ******************************************************* 
+     
 
+Darkbot 8rc2: June 07, 2007
+	- Added a little thing at the top of docs/WHATSNEW that indicates 
+	  which order the lines therein consist of according to when the 
+	  changes they represent were implemented. Made this sound more 
+	  technical than it should for no reason at all.
+
+        - If the input type is ADDRESS_INVOKE (the bot was called upon by  
+          name), the bot responds anyway now, because it's going to output 
+          an "I don't know" response if the topic doesn't exist. This doesn't 
+          happen with  DIRECT_INVOKE because the text may have been normal 
+	  channel conversation that was mistakenly parsed as a command.
+
+	- Commands which require 0 parameters now act accordingly again 
+	  when supplied with too many arguments. In other words, "dbtest 
+ 	  info things" would trigger the info command before. Now, it	
+	  uses check_existing_url and outputs a response if the topic 
+	  exists, otherwise, it just ignores it.  
+	  
 
 Darkbot 8rc2: December 09, 2006
 	- Updated server and user lists.
