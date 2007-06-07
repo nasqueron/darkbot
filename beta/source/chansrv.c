@@ -1776,7 +1776,7 @@ void chanserv(char *source, char *target, char *buf)
 	struct chanserv_output *result = NULL;
 	char *cmd = NULL, *userhost = NULL, oldbuf[BUFSIZ] = {"NULL"},
 	     *ptr = NULL;
-	int i, j, found = -1, command = 0, wakeup = 0;
+	int i, j, found = -1, command = 0, wakeup = 0, exempt = 0;
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
@@ -1934,16 +1934,6 @@ void chanserv(char *source, char *target, char *buf)
 		 */
 		k = count_char (ptr, ' ');
 
-		if (j == 0)
-		{
-			if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
-			   (input_type == DIRECT_INVOKE) && (k > j) ||
-			   (input_type == MSG_INVOKE) && (k > j))
-			{
-				too_many = 1;
-			}	
-		}
-
 		if (j > 0)
 		{
 		    args = calloc(j, sizeof(char *));
@@ -1962,8 +1952,30 @@ void chanserv(char *source, char *target, char *buf)
 		    else  // FIXME: Should bitch about lack of ram.
 			return;
 		}
-		
-		if (too_many == 1)
+		else
+		{
+		   /* args read is equal to 0, so we need to do special 
+		    * handling here to avoid problems.
+		    * Certain commands are exempted.
+	            */
+                   if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
+                          (input_type == DIRECT_INVOKE) && (k > j) ||
+                          (input_type == MSG_INVOKE) && (k > j))
+                       {
+                               /* Exemption list.. these commands allocate
+                                * no room for arguments but still need and
+                                * get them this way. It's magic and such.
+                                */
+                               if ((stricmp (cmd, "HELP") == 0) ||
+                                   (stricmp (cmd, "STATS") == 0))
+                                       exempt = 1;
+
+                               else
+                                       too_many = 1;
+                       }
+                }		
+	
+		if (too_many == 1 && exempt != 1)
 		{
 			int i = 0;
 			char *ptr2 = NULL;
