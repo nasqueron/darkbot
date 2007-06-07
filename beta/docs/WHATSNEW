@@ -7,6 +7,10 @@
      
 
 Darkbot 8rc2: June 07, 2007
+	- Changed the RANDOMSTUFF command to be a NORMAL_COMMAND, so you 
+	  can use this command with ADDRESS_INVOKE again (address the bot
+	  directly).
+
 	- Added a little thing at the top of docs/WHATSNEW that indicates 
 	  which order the lines therein consist of according to when the 
 	  changes they represent were implemented. Made this sound more 

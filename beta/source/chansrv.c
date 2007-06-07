@@ -1719,7 +1719,7 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  0, 1, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "[text]", "Shows a random quote."},
 #endif
 #ifdef ENABLE_RANDOM
-    {DANGER_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff,	{"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
+    {NORMAL_COMMAND, RAND_LEVEL, 1, chanserv_random_stuff, {"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
     {INFO_COMMAND,    0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, "Shows time until next random thing is said."},
 #endif
     {DANGER_COMMAND,  3, 1, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", "Get bot to send raw IRC data."},
@@ -1804,6 +1804,7 @@ void chanserv(char *source, char *target, char *buf)
 	    return;
 	if (*cmd == ':')
 	    cmd++;
+
 	if ((userhost = strchr (source, '!')) != NULL)
 	    *userhost++ = '\0';
 
@@ -1955,22 +1956,18 @@ void chanserv(char *source, char *target, char *buf)
 		else
 		{
 		   /* args read is equal to 0, so we need to do special 
-		    * handling here to avoid problems.
-		    * Certain commands are exempted.
+		    * handling here to avoid problems. Certain commands are 
+		    * exempted if matched from a list declared in the
+		    * check_exempt function. 
 	            */
+
                    if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
                           (input_type == DIRECT_INVOKE) && (k > j) ||
                           (input_type == MSG_INVOKE) && (k > j))
                        {
-                               /* FIXME: Exemption list.. these commands 
-				* allocate no room for arguments but still 
-				* need and get them this way. Fixme soon
-				* to check for all command variances.
-                                */
+				
 			       if (check_exempt(cmd) == 1)
-     			       {
 				 	exempt = 1;
-			       }
                                else
                                         too_many = 1;
                        }
@@ -1990,20 +1987,23 @@ void chanserv(char *source, char *target, char *buf)
 			}
 			
 				
+			/* Strip the bot's nickname if ADDRESS_INVOKE */
+
 			if (input_type == ADDRESS_INVOKE)
 			{
 				ptr2 = strtok (ptr, "+");
 				ptr = strtok (NULL, "");
-				
 			}
 
 			/* Output only if the topic exists. If the bot was 
 			 * addressed by nickname (ADDRESS_INVOKE), output 
 			 * anyway because show_url will supply a DUNNO 
-			 * response. If the input_type was MSG_INVOKE, we 
-			 * use the source as a target instead of the target,
-			 * because the target will be the bot's own nickname 
-	 		 * due to the way things are parsed. 
+			 * response. 
+
+			 * If the input_type was MSG_INVOKE, we use the 
+			 * source as a target, because the target ends up 
+			 * being set to the bot's own nickname due to the 
+			 * parsing under certain conditions.
 			 */
 
 			if ((check_existing_url(source, ptr, target)) == 1 
@@ -2019,9 +2019,16 @@ void chanserv(char *source, char *target, char *buf)
 		}
 		else
 		{
-			/* We call this to give the command a chance to supply a custom error msg if there are not enough arguments. */
+			/* We call this to give the command a chance to supply
+			 * a custom error msg if there are not enough 
+			 * arguments. Because it fell through the loop 
+			 * this far, we assume it's a normal command with
+			 * arguments to be parsed.
+			 */
+
 	    		result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
 		}
+
 		if (result)
 		{
 		    struct chanserv_output *output = result;
