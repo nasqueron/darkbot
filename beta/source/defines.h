@@ -270,7 +270,9 @@ extern char *rpl_strndup (const char *dupMe, size_t maxBytes);
 #define DEFAULT_DBTIMERS_PATH	"timers"
 #define	DEFAULT_LOG_DIR		"logs/"
 #define	DEFAULT_RDB_DIR		"rdb"
+#ifdef	ENABLE_STATS
 #define DEFAULT_STATS_FILE	"stats.db"
+#endif
 #define	DEFAULT_SEEN_FILE	"seen.db"
 #define	DEFAULT_URL2		"info2.db"
 #define DUNNO_FILE		"dunno"

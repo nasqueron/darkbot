@@ -121,10 +121,12 @@ save_changes (void)
 {
 	long i = 0;
 	struct helperlist *c;
+#ifdef	ENABLE_STATS
 	struct statslist *d;
 
-	c = helperhead;
 	d = statshead;
+#endif
+	c = helperhead;
 	remove (TMP_FILE);
 	while (c != NULL)
 	{
@@ -135,6 +137,7 @@ save_changes (void)
 	}
 	rename (TMP_FILE, HELPER_LIST);
 
+#ifdef	ENABLE_STATS
 	while (d != NULL)
 	{
 		i++;
@@ -143,6 +146,7 @@ save_changes (void)
 		d = d->next;
 	}
 	rename (TMP_FILE, STATS_FILE);
+#endif
 }
 
 char *

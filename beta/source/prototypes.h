@@ -141,9 +141,13 @@ void	show_chanusers				(const char *, const char *);
 const 	char		*run_program		(const char *);
 
 void	do_autotopics				(void);
+
+#ifdef ENABLE_STATS
 void	add_stats				(char *, char *, long, long, long);
 void	load_stats				(void);
 void	get_stats				(char *, char *);
+#endif
+
 #ifdef ENABLE_QUIZ
 void	run_quiz_question			(char *);
 void	run_quiz_answer				(void);

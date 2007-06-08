@@ -823,9 +823,14 @@ struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
+	const char *ptr = NULL;
 
 	snprintf(temp, sizeof (temp), "ps u -p %d\n", getpid());
-	return chanserv_asprintf(NULL, "ps: %s", run_program(temp));
+	
+	if ((ptr = run_program (temp)) == NULL)
+		return chanserv_asprintf(NULL, "Unable to gather data for mem output.\n");
+	else
+		return chanserv_asprintf(NULL, "ps: %s", ptr);
 }
 //#endif
 
@@ -1313,6 +1318,7 @@ struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, ch
 	return result;
 }
 
+#ifdef ENABLE_STATS
 struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1321,6 +1327,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 
 	return result;
 }
+#endif
 
 #ifdef ENABLE_TAF
 struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -1735,7 +1742,9 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, chanserv_set,		{"SET", NULL, NULL, NULL, NULL}, "<parameter>[=<new value>]", "Set or show the value of a setup.ini parameter.  Usually requires a restart."},
     {DANGER_COMMAND,  1, 1, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
     {SAFE_COMMAND, SLEEP_LEVEL, 0, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, "Deactivate bot for a period."},
+#ifdef ENABLE_STATS
     {INFO_COMMAND,    0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
+#endif
 #ifdef ENABLE_TAF
     {NORMAL_COMMAND,  0, 1, chanserv_taf,		{"TAF", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw TAF weather data."},
 #endif
@@ -2259,7 +2268,9 @@ int	check_exempt	(char *cmd)
 	int k = 0;
 	
 	char *exempt_items[] = {
+#ifdef ENABLE_STATS
 		"STATS", 
+#endif
 		"HELP",
 	        NULL
 	};

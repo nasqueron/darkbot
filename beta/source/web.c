@@ -512,7 +512,9 @@ google_parse_query(char *source, char *uh, char *target, char *data)
         }
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), url);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {
@@ -562,7 +564,9 @@ metar_parse_query(char *source, char *uh, char *target, char *data)
         snprintf(metardata, sizeof(metardata), "%s", s1);
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), metardata);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {
@@ -612,7 +616,9 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
         snprintf(tafdata, sizeof(tafdata), "%s", s1);
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), tafdata);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {

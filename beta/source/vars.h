@@ -91,7 +91,9 @@ extern char URL2[STRING_SHORT];
 extern char DBTIMERS_PATH[STRING_SHORT];
 extern char LOG_DIR[STRING_SHORT];
 extern char RDB_DIR[STRING_SHORT];
+#ifdef ENABLE_STATS
 extern char STATS_FILE[STRING_SHORT];
+#endif
 extern char SEEN_FILE[STRING_SHORT];
 extern char BACKUP_DUP[STRING_SHORT];
 extern char ADD_DELETES[STRING_SHORT];
@@ -291,6 +293,7 @@ extern struct sl124
 }
  *sh124;
 
+#ifdef ENABLE_STATS
 extern struct statslist
 {
 	char nick[STRING_SHORT];
@@ -302,6 +305,7 @@ extern struct statslist
 	struct statslist *next;
 }
  *statshead;
+#endif
 
 extern struct	randstats
 {

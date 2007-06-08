@@ -2,6 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
+#ifdef ENABLE_STATS
 void
 get_stats (char *target, char *user)
 {
@@ -161,3 +162,4 @@ load_stats (void)
 	if (DebuG == 1)
 		db_sleep (2);
 }
+#endif

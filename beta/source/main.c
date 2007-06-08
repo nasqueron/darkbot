@@ -147,7 +147,9 @@ main (int argc, char **argv)
 	}
 #endif
 	load_helpers ();
+#ifdef	ENABLE_STATS
 	load_stats ();
+#endif
 	check_files ();
 	raw_now ("SERVERS");
 	raw_now ("SETUP");
@@ -186,7 +188,9 @@ void	set_paths	(void)
 	snprintf (DBTIMERS_PATH, sizeof (DBTIMERS_PATH), "%s/%s", DAT_DIR, DEFAULT_DBTIMERS_PATH);
 	snprintf (LOG_DIR, sizeof (LOG_DIR), "%s/%s", DAT_DIR, DEFAULT_LOG_DIR);
 	snprintf (RDB_DIR, sizeof (RDB_DIR), "%s/%s", DAT_DIR, DEFAULT_RDB_DIR);
+#ifdef	ENABLE_STATS
 	snprintf (STATS_FILE, sizeof (STATS_FILE), "%s/%s", DAT_DIR, DEFAULT_STATS_FILE);
+#endif
 	snprintf (SEEN_FILE, sizeof (SEEN_FILE), "%s/%s", DAT_DIR, DEFAULT_SEEN_FILE);
 	snprintf (URL2, sizeof (URL2), "%s/%s", DAT_DIR, DEFAULT_URL2);
 	snprintf (BACKUP_DUP, sizeof (BACKUP_DUP), "%s/%s", DAT_DIR, DEFAULT_BACKUP_DUP);

@@ -278,7 +278,9 @@ info (const char *source, char *target)
 																   starttime) /
 																  CLOCKS_PER_SEC) == 1) ? "" : "s");
 	}
-/*    get_stats(target, NULL); */
+//#ifdef  ENABLE_STATS
+//   get_stats(target, NULL); */
+//#endif
 }
 
 /**

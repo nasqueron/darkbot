@@ -96,7 +96,9 @@ char URL2[STRING_SHORT] = { 0 };
 char DBTIMERS_PATH[STRING_SHORT] = { 0 };
 char LOG_DIR[STRING_SHORT] = { 0 };
 char RDB_DIR[STRING_SHORT] = { 0 };
+#ifdef	ENABLE_STATS
 char STATS_FILE[STRING_SHORT] = { 0 };
+#endif
 char SEEN_FILE[STRING_SHORT] = { 0 };
 char BACKUP_DUP[STRING_SHORT] = { 0 };
 char ADD_DELETES[STRING_SHORT] = { 0 };
@@ -239,7 +241,9 @@ struct old ood[STRING_SHORT];
 
 struct sl124 *sh124 = NULL;
 
+#ifdef	ENABLE_STATS
 struct statslist *statshead = NULL;
+#endif
 
 struct webinfo
  GOOGLE_webinfo = { "GOOGLE", "www.google.com", 80, "/search?q=" } ,

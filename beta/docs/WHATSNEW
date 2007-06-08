@@ -7,6 +7,12 @@
      
 
 Darkbot 8rc2: June 07, 2007
+	- The STATS command, and all overhead produced by this command 
+	  can now be disabled during compile like so:
+		./configure --disable-stats 
+		OR
+		./configure --enable-stats=no
+
 	- Changed the RANDOMSTUFF command to be a NORMAL_COMMAND, so you 
 	  can use this command with ADDRESS_INVOKE again (address the bot
 	  directly).

@@ -449,8 +449,9 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 			if (toggle == 0)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				if (A == 0)
 				{
 					if ((*target == '#') || (*target == '+') || (*target == '&'))
@@ -469,8 +470,9 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 			else if (A == 0)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				if ((*target == '#') || (*target == '+') || (*target == '&'))
 					S ("PRIVMSG %s :%s\n", target, Data);
 				else
@@ -480,13 +482,16 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 			else if ((*target == '#') || (*target == '+') || (*target == '&'))
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
+#endif
 				S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
 			}
 			else if (MSG_RESPONSES)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				S ("NOTICE %s :%s\n", target, Data);
 			}
 			fclose (fp);
