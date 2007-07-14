@@ -11,11 +11,12 @@ AC_CONFIG_SRCDIR([../source/parse.c])
 # Preserve 8.3 file format for MS-DOS compatibility.
 AC_CONFIG_HEADERS([config.h:config-h.in])
 
-AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror])
+AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror subdir-objects no-dependencies])
 
 # Checks for programs.
 AC_GNU_SOURCE
 AC_PROG_CC
+AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
