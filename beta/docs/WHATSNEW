@@ -7,6 +7,9 @@
      
 
 Darkbot 8rc3: Jan 16 2008
+	- Alarmclock function uses time_t variable now instead of long. 
+	  Also now accepts arguments specified in seconds.
+
 	- Bot no longer crashing during start if there's blank lines in 
 	  the servers file. It now ignores blank lines and comments 
 	  starting with '#' and '/'.  If the server file is blank, it 

@@ -166,30 +166,40 @@ struct chanserv_output *chanserv_add_user(char *source, char *target, char *cmd,
 
 struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
+	struct 	chanserv_output *result = NULL;
 
-	char temp[1024] = { 0 };
-	long sn = 0, unixtime = 0;
+	char 	temp[1024] = { 0 };
+	time_t 	sn = 0, unixtime = 0;
 
 	if ((args[0] == NULL) || (args[1] == NULL) || (strlen(args[0]) < 2))
 		return result;
+
 	if (*args[0] == 'd')
 	{
+		/* Days. */
 		sn = 86400;
 		args[0]++;
 	}
 	else if (*args[0] == 'h')
 	{
+		/* Hours */
 		sn = 3600;
 		args[0]++;
 	}
 	else if (*args[0] == 'm')
 	{
+		/* Minutes */
 		sn = 60;
 		args[0]++;
 	}
+	else if (*args[0] == 's')
+	{
+		/* Seconds */
+		sn = 1;
+		args[0]++;
+	}
 	else
-		return chanserv_asprintf(NULL, "Syntax: <time type: \2d/h/m\2><time> <text to say>");
+		return chanserv_asprintf(NULL, "Syntax: <time type: \2d/h/m/s\2><time> <text to say>");
 	if (strspn (args[0], NUMBER_LIST) != strlen (args[0]))
 		return chanserv_asprintf(NULL, "Time must be a number.");
 	snprintf(temp, sizeof (temp), "%s/%ld", DBTIMERS_PATH, (atoi (args[0]) * sn) + time (NULL));
