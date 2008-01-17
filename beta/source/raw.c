@@ -126,23 +126,30 @@ raw_now (char *type)
 			printf ("Loading %s file ", SERVERS);
 			while (fgets (str, STRING_LONG, fp))
 			{
-				/* Allow comments */
+				/* Ignore comment lines */
 
-				if (*str == '#')
+				if (*str == '#' || *str == '/')
 					continue;
 
-				i++;
 				printf (".");
 				fflush (stdout);
 				stripline (str);
-				tmp1 = strtok (str, " ");
-				if (tmp1 == NULL)
-				{
-					printf ("Found error in %s! Aborting! please re-run configure!\n", SERVERS);
-					exit (0);
-				}
+				
+				/* Watch out for blank lines. Since fgets 
+				   returns on NULL, we're checking for NULL 
+				   within the fget'd data, which would indicate
+				   a line containing NULL data in the file, not
+				   EOF (Wrote this as a reminder). Ignore these 
+				   lines and move on.
+				 */
+
+				if ((tmp1 = strtok (str, " ")) == NULL)
+					continue;
 				else
 					tmp2 = strtok (NULL, " ");
+
+				i++;
+
 				if (tmp2 == NULL)
 				{
 					printf ("%s has no matching port in %s!\n", tmp1, SERVERS);
@@ -152,7 +159,14 @@ raw_now (char *type)
 				tmp3 = strtok (NULL, "");
 				add_s25 (tmp1, atoi (tmp2), tmp3);
 			}
-			printf ("done(%d).\n", (int) i);
+			
+			if (i > 0)
+				printf ("done(%d).\n", (int) i);
+			else
+			{
+				printf ("ERROR! No servers found in %s! Please edit this file. Aborting!\n", SERVERS);
+				exit (0);
+			}
 		}
 		else if (fgets (str, STRING_LONG, fp))
 			S ("%s\n", str);

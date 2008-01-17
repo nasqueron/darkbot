@@ -546,3 +546,19 @@ void db_sleep(unsigned long seconds)
     req.tv_sec = seconds;
     nanosleep(&req, &rem);
 }
+
+/* pluralize(): This function takes a size_t value and returns
+   pointer to char data containing either "s" or "" to make 
+   pluralizing words easier in the code. Example case in point: 
+   0 servers, 1 server, 2 servers, etc. 
+ */
+
+char	*pluralize 	(size_t i)
+{
+	if (i == 1)
+		return ("");
+
+	/* Only plural words get the "s". */
+	return ("s");
+}
+

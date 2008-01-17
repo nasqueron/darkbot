@@ -6,6 +6,16 @@
     ******************************************************* 
      
 
+Darkbot 8rc3: Jan 16 2008
+	- Bot no longer crashing during start if there's blank lines in 
+	  the servers file. It now ignores blank lines and comments 
+	  starting with '#' and '/'.  If the server file is blank, it 
+	  aborts and tells the user to edit the file.
+
+	- Added pluralize() function for beautification purposes. See more 
+	  in general.c.
+	
+
 Darkbot 8rc2: June 07, 2007
 	- The STATS command, and all overhead produced by this command 
 	  can now be disabled during compile like so:

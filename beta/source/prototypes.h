@@ -121,7 +121,8 @@ void	trailing_blanks				(char *),
 	clear_sendq				(long, long);
 
 char	L[524], 
-	*random_word				(char **);
+	*random_word				(char **),
+	*pluralize				(size_t);
 
 int	socketfd, 
 	alarmed,	
