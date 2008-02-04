@@ -170,9 +170,14 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 
 	char 	temp[1024] = { 0 };
 	time_t 	sn = 0, unixtime = 0;
+	long	i = 0;
 
 	if ((args[0] == NULL) || (args[1] == NULL) || (strlen(args[0]) < 2))
 		return result;
+
+	/* Check for valid numbers. */
+	if (strspn (args[0], NUMBER_LIST) != strlen (args[0]))
+		return chanserv_asprintf(NULL, "Time must be a number.");
 
 	if (*args[0] == 'd')
 	{
@@ -199,23 +204,36 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 		args[0]++;
 	}
 	else
+	{
 		return chanserv_asprintf(NULL, "Syntax: <time type: \2d/h/m/s\2><time> <text to say>");
-	if (strspn (args[0], NUMBER_LIST) != strlen (args[0]))
-		return chanserv_asprintf(NULL, "Time must be a number.");
-	snprintf(temp, sizeof (temp), "%s/%ld", DBTIMERS_PATH, (atoi (args[0]) * sn) + time (NULL));
+	}
+	
+
+	snprintf(temp, sizeof (temp), "%s/%ld", 
+			DBTIMERS_PATH, 
+			(atoi (args[0]) * sn) + time (NULL));
+	
 	db_log(temp, "PRIVMSG %s :\2ALARMCLOCK\2 by %s!%s: %s", target, source, userhost, args[1]);
+	
 	unixtime = atoi (args[0]) * sn;
+	
 	if (unixtime > 86400)
 		result = chanserv_asprintf(NULL, "alarmclock set to go off in %d day%s, %02d:%02d.", 
-		   unixtime / 86400, (unixtime / 86400 == 1) ? "" : "s",
-		   (unixtime / 3600) % 24, (unixtime / 60) % 60);
+		   unixtime / 86400, 
+		   plural((unixtime / 86400)),
+		   (unixtime / 3600) % 24, 
+		   (unixtime / 60) % 60);
 	else if (unixtime > 3600)
 		result = chanserv_asprintf(NULL, "alarmclock set to go off in %d hour%s, %d min%s.",
-		   unixtime / 3600, unixtime / 3600 == 1 ? "" : "s",
-		   (unixtime / 60) % 60, (unixtime / 60) % 60 == 1 ? "" : "s");
+		   unixtime / 3600, 
+		   plural ((unixtime / 3600)),
+		   (unixtime / 60) % 60, 
+		   plural (((unixtime / 60) % 60)));
 	else
 		result = chanserv_asprintf(NULL, "alarm clock set to go off in %d minute%s, %d sec%s.",
-		   unixtime / 60, unixtime / 60 == 1 ? "" : "s", unixtime % 60,
+		   unixtime / 60, 
+		   unixtime / 60 == 1 ? "" : "s", 
+		   unixtime % 60,
 		   unixtime % 60 == 1 ? "" : "s");
 
 	return result;
@@ -1434,26 +1452,74 @@ struct chanserv_output *chanserv_unignore(char *source, char *target, char *cmd,
 
 struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-	long unixtime = 0;
+	struct 	chanserv_output *result = NULL;
+	time_t	 unixtime = 0, input_t = 0, cur_t = 0;
+	char	*things = NULL;
+	int	errno;
+
+	/* Check if anything was given as input and only do stuff 
+	 * (in this function, anyway) if so. */
 
 	if (args[0] == NULL)
 		return result;
-	unixtime = atoi (args[0]) - time (NULL);
+
+	/* Make sure current time is available while acquiring it. */
+	if ((cur_t = time (NULL)) < 0)
+	{
+		result = chanserv_asprintf (result, "Unable to produce results because current system time is unavailable.");
+		return (result);
+	}
+
+	/* Convert input value to time_t. We check if the return value is 
+	 * 0 here, but our main concern is if things is NULL, because that
+	 * would mean the function converted a string value "0", instead
+	 * of returning a failing code. Set errno to 0 first as for a
+	 * precautionary measure.
+	 */
+
+	errno = 0;
+
+	if ((input_t = (time_t) strtol (args[0], &things, 10)) == 0)
+	{
+		if (things == NULL)
+		{
+			result = chanserv_asprintf (result, "%s (things = %s)", strerror (errno), things);
+			return (result);
+		}
+		
+		/* things was not NULL, this is "0" converted to long.
+		 * So we continue as if nothing happened. */
+	}
+	
+	/* Check for out of range values, tell the user which range
+         * was exceeded, perhaps for debugging purposes. */
+	if (errno == ERANGE)
+	{
+		result = chanserv_asprintf (result, "Your implementation does not support numeric ranges beyond %ld for this function.", 
+				input_t);		
+		return (result);
+	}
+
+	unixtime = input_t - cur_t;
+
 	if (unixtime > 86400)
 		result = chanserv_asprintf(result, "%d day%s, %02d:%02d.",
 		   unixtime / 86400,
-		   (unixtime / 86400 == 1) ? "" : "s",
-		   (unixtime / 3600) % 24, (unixtime / 60) % 60);
+		   plural (unixtime / 86400),
+		   (unixtime / 3600) % 24, 
+		   (unixtime / 60) % 60);
 	else if (unixtime > 3600)
 		result = chanserv_asprintf(result, "%d hour%s, %d min%s.",
 		   unixtime / 3600,
-		   unixtime / 3600 == 1 ? "" : "s",
-		   (unixtime / 60) % 60, (unixtime / 60) % 60 == 1 ? "" : "s");
+		   plural(unixtime / 3600),
+		   (unixtime / 60) % 60, 
+		   plural(unixtime / 60));
 	else
 		result = chanserv_asprintf(result, "%d minute%s, %d sec%s.",
 		   unixtime / 60,
-		   unixtime / 60 == 1 ? "" : "s", unixtime % 60, unixtime % 60 == 1 ? "" : "s");
+		   plural(unixtime / 60), 
+		   unixtime % 60, 
+		   plural(unixtime % 60));
 
 	return result;
 }

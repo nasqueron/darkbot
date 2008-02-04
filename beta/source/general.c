@@ -538,7 +538,6 @@ bool isBoolean(char *aBoolean)
     return result;
 }
 
-
 void db_sleep(unsigned long seconds)
 {
     struct timespec req, rem;
@@ -547,18 +546,19 @@ void db_sleep(unsigned long seconds)
     nanosleep(&req, &rem);
 }
 
-/* pluralize(): This function takes a size_t value and returns
-   pointer to char data containing either "s" or "" to make 
-   pluralizing words easier in the code. Example case in point: 
-   0 servers, 1 server, 2 servers, etc. 
+/* plural(): This function returns "s", or "" (empty string),
+ * depending on the plurality of the number specified by 'i'. 
+ * Used for beautification purposes in output that involves 
+ * showing a numeric count of objects.
  */
 
-char	*pluralize 	(size_t i)
+char	*plural 	(size_t i)
 {
-	if (i == 1)
+	/* We only need to return "" if 'i' is equal to 1 or -1. */
+	if (i == 1 || i == -1)
 		return ("");
 
-	/* Only plural words get the "s". */
+	/* Everything else is considered plural. */
 	return ("s");
 }
 

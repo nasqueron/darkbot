@@ -122,7 +122,7 @@ void	trailing_blanks				(char *),
 
 char	L[524], 
 	*random_word				(char **),
-	*pluralize				(size_t);
+	*plural					(size_t);
 
 int	socketfd, 
 	alarmed,	
