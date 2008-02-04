@@ -10,6 +10,17 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
+- atoi needs to be swapped for strtol in all places 
+  since atoi isn't as safe. 
+
+- Some kind of solution for large numbers needs to be
+  worked out for use with the unixtime user command. 
+  Implementations with 32 bit instead of 64 bit longs 
+  are limited to time representations in a range
+  consisting of only up to one more place value than 
+  the current unixtime, and is a system dependant 
+  value.
+
 - Add some kind of escape sequence or special parsing 
   for topics that start with key words like "WHAT", these
   words are also recognized internally by the bot for 
