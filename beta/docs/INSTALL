@@ -22,10 +22,10 @@
 
 	Help can be found for Darkbot either by irc, or from our web page. 
 
-	Irc: Servers irc.darkbot.org, eu.undernet.org, us.undernet.org
+	Irc: Servers irc.freezedown.org, eu.undernet.org, us.undernet.org
 	Channel: #darkbot
 
-	Web page: http://www.darkbot.org Forum: http://forum.darkbot.org
+	Web page: http://www.freezedown.org Forum: http://www.freezedown.org/forum/
 
 	We do not support any Darkbot code that has been downloaded from any site other 
 	then the official one.  Any code that has been modified by anyone other than an 
@@ -40,7 +40,7 @@
 
 	DOWNLOAD
 	Download to your shell compressed archive from
-	http://www.darkbot.org/downloads.html
+	http://www.freezedown.org/
 
 	INSTALLATION 
 	De-compress the downloaded archive (tar -zxvf *.tar.gz)
@@ -289,7 +289,8 @@
 	Set auto topic
 	Auto-topic function makes Darkbot repeat channel's topic you specify every 30 
 	seconds (default). To do so type, for example,
-	!AUTOTOPIC Visit http://www.darkbot.org for complete Darkbot information.
+	!AUTOTOPIC Visit http://www.freezedown.org for complete Darkbot 
+information.
 
 	Set virtual host
 	If you want to set a virtual host to Darkbot type (must be a registered domain 

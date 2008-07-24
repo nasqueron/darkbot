@@ -63,7 +63,7 @@ responsible for the translation.
 18 = ARABIC	- MrSiMo <mrsimo7@yahoo.fr>
 19 = TAIWANISH	- ?
 ------------------------------------------------------------------
-? = Email juice@darkbot.org if you want to help add other langs!
+? = Email juice@freezedown.org if you want to help add other langs!
 ------------------------------------------------------------------
 
 
@@ -796,7 +796,7 @@ PARAMATER	L101(a,b,c,d)
 DEFAULT		S("NOTICE %s :I can also be triggered with even more \
 human formats: \37%s who is bill gates?\37  .. You can also phrase it \
 in a question: \37%s where is msie?\37 ...For more info \
-about me, visit http:www.darkbot.org\n",a,b,c,d)
+about me, visit http:www.freezedown.org\n",a,b,c,d)
 TYPE		Text
 EXAMPLE		
 

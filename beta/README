@@ -5,7 +5,7 @@ Darkbot, Talking Robot - Copyright (c) 1996 Darkbot Project
 - To configure on Windows edit files in dat folder.
 
 - For full  documentation  and  step  by  step configuration help,
-please check Darkbot's help page  at  http://www.darkbot.org/help
+please check Darkbot's help page  at  http://www.freezedown.org/help
 
 - Read docs/WHATSNEW for added/latest features and changes.
 _ Read docs/README_UTILS for info on shell utilities and all files in
@@ -45,5 +45,5 @@ docs directory with  a list of who  makes this program possible.
 
 
 Project Administrator
-juice (juice@darkbot.org)
+juice (juice@freezedown.org)
 
