@@ -42,6 +42,8 @@ dist_database_DATA = $(db_db)/deop.ini $(db_db)/info2.db $(db_db)/perform.ini $(
 rdbdir = $(databasedir)/rdb
 dist_rdb_DATA = $(db_db)/rdb/dunno.rdb $(db_db)/rdb/whut.rdb
 
+timersdir = $(databasedir)/timers
+
 ## Documentation.
 ## docdir = $(datadir)/doc/@PACKAGE@
 doc_DATA = $(topdir)/COPYING $(topdir)/docs/INSTALL $(topdir)/README $(topdir)/VERSION $(topdir)/docs/AUTHORS $(topdir)/docs/HACKING \
