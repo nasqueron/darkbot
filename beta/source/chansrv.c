@@ -1293,10 +1293,27 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+	int i = 0, j = 0;
+	char *ptr = NULL, *arglist = NULL;
 
 	if (args[0] == NULL)
 		return chanserv_asprintf(NULL, "My !setinfo variables are: ^ nick, % Number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & % times!!  (also, if you make the first char of your SETINFO a \"+\" the setinfo will be shown as an ACTION).");
-	update_setinfo (userhost, args[0], source);
+
+	/* Allocate space for arglist string. */
+	if ((arglist = malloc (STRING_LONG)) == NULL)
+		return chanserv_asprintf (NULL, "Memory allocation failure in chanserv_setinfo().");
+
+	/* Quick fix here. */
+	if ((ptr = strtok (NULL, "")) == NULL)
+		strcpy (arglist, args[0]);
+	else
+	{
+		strcpy (arglist, args[0]);
+		strcat (arglist, " ");
+		strcat (arglist, ptr);
+	}
+
+	update_setinfo (userhost, arglist, source);
 	save_changes ();
 
 	return result;
