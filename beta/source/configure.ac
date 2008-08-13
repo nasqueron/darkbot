@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([Darkbot],[8rc2],[darkbot-devel@lists.sourceforge.net])
+AC_INIT([Darkbot],[8rc3],[darkbot-devel@lists.sourceforge.net])
 AC_COPYRIGHT([Copyright 1996-2007 Darkbot Development Team])
 AC_REVISION($Revision$)
 AC_CONFIG_AUX_DIR([auxdir])
