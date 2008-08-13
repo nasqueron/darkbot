@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 AC_INIT([Darkbot],[8rc3],[darkbot-devel@lists.sourceforge.net])
-AC_COPYRIGHT([Copyright 1996-2007 Darkbot Development Team])
+AC_COPYRIGHT([Copyright 1996-2008 Darkbot Development Team])
 AC_REVISION($Revision$)
 AC_CONFIG_AUX_DIR([auxdir])
 AC_CONFIG_LIBOBJ_DIR([../source/compat])
