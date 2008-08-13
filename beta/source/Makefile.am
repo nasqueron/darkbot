@@ -43,7 +43,6 @@ rdbdir = $(databasedir)/rdb
 dist_rdb_DATA = $(db_db)/rdb/dunno.rdb $(db_db)/rdb/whut.rdb
 
 timersdir = $(databasedir)/timers
-dist_timers_DATA = $(db_db)/timers
 
 ## Documentation.
 ## docdir = $(datadir)/doc/@PACKAGE@
