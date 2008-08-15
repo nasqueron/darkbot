@@ -4,13 +4,13 @@
  * 
  ***	Darkbot Creator  -   Jason Hamilton (play) Jason@superlink.net
  *	Project Administrator  -   LuizCB (Pincel) LuizCB@darkbot.info
- *      Recent Code Modifications -     Ron (`ron) ron@darkbot.org
+ *      Recent Code Modifications -     Ron (`ron) ron@freezedown.org
  *
- *	Official Sites: http://www.darkbot.org 
+ *	Official Sites: http://www.freezedown.org 
  *	 		http://darkbot.sourceforge.net
  * 
  ***	For any questions, suggestions, malfunctions, etc
- *	Use our support forum at http://forum.darkbot.org
+ *	Use our support forum at http://forum.freezedown.org
  *
  * 	*******************************---******************************* */
 /*
@@ -99,7 +99,7 @@
  * 18= ARABIC   - MrSiMo <mrsimo7@yahoo.fr>
  * 19= TAIWANISH- ?
  * ------------------------------------------------------------------
- * ? = Email juice@darkbot.org if you want to help add other langs!
+ * ? = Email juice@freezedown.org if you want to help add other langs!
  * ------------------------------------------------------------------
  */
 #define	LANG 1
@@ -680,7 +680,7 @@ to do a search on a word, or partial text, just type:  <mynick>, search \
 #define	L101(a,b,c,d) S("NOTICE %s :I can also be triggered with even more \
 human formats: \37%s who is bill gates?\37  .. You can also phrase it \
 in a question: \37%s where is msie?\37 ...For more info \
-about me, visit http://www.darkbot.org\n",a,b,c,d)
+about me, visit http://www.freezedown.org\n",a,b,c,d)
 
 #define	L102(a,b,c,d) S("NOTICE %s :Welcome to %s, %s. Before \
 asking your question, type %cHELP for a list of help topics.\n", a,b,c,d)

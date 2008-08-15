@@ -27,7 +27,7 @@ exs:
 $0 all               Starts utility in full mode
 $0 info2             Checks info2.db in normal operation
 $0 userlist -quick   Checks userlist.db bypassing pauses\n
-   Support: http://forum.darkbot.org\n"
+   Support: http://forum.freezedown.org\n"
 exit 1
 }
 
@@ -1200,7 +1200,7 @@ grep 'CHAN' $TMP-DB.WORK.FILE | tr -d ' ' > $TMP-DB.WORK.FILE.chan
 fi >> $TMP-DB.WORK.FILE.tmp
 	
 if [ ! "`grep 'REALNAME=' $TMP-DB.WORK.FILE | cut -d= -f2`" ]; then
-echo "REALNAME=Download me from http://www.darkbot.org"
+echo "REALNAME=Download me from http://www.freezedown.org"
 Missing_Parm="$Missing_Parm""REALNAME "
 else
 grep 'REALNAME' $TMP-DB.WORK.FILE

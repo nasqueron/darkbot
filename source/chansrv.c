@@ -401,7 +401,7 @@ chanserv (char *source, char *target, char *buf)
 				return;
 			if (cf (userhost, source, target))
 				return;
-			S ("NOTICE %s :\1VERSION Hi, I'm a Darkbot. Download me from http://www.darkbot.org\1\n", source);
+			S ("NOTICE %s :\1VERSION Hi, I'm a Darkbot. Download me from http://www.freezedown.org\1\n", source);
 		}
 		else if (stricmp (cmd, "\1PING") == 0)
 		{
@@ -1263,7 +1263,7 @@ chanserv (char *source, char *target, char *buf)
 		if (cf (userhost, source, target))
 			return;
 		S ("NOTICE %s :\1VERSION %s\1\n", source, 
-			"Hi, I'm a Darkbot. Download me from http://www.darkbot.org");
+			"Hi, I'm a Darkbot. Download me from http://www.freezedown.org");
 	}
 	else if (stricmp (cmd, "\1PING") == 0)
 	{

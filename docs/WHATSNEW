@@ -1,7 +1,7 @@
 
     *******************************************************
     Warnings, errors, malfunctions, code patches, suggestions
-    Support Forum: http://forum.darkbot.org
+    Support Forum: http://forum.freezedown.org
     *******************************************************
 
 Darkbot 7f3: Jun 3, 2005
@@ -65,7 +65,7 @@ Darkbot 7f1: March 30, 2004
 	- Removed two unused variables in convertdb.c.  I also changed
 	  'unlink' to 'remove', to comply with the ANSI standard.
 
-	- Changed forum URL to http://forum.darkbot.org, since that
+	- Changed forum URL to http://forum.freezedown.org, since that
           works too, looks cooler, and is shorter. :)
 
 	- Fixed a bug that caused the bot to never respond to anything
@@ -157,7 +157,7 @@ Darkbot 7.0-RC8: June 20th, 2003
 
 	- Minor changes on startup splash screen.
 
-	- Support forum URL is now http://www.darkbot.org/forum
+	- Support forum URL is now http://www.freezedown.org/forum
 
 	- Updated the default servers.ini file to reflect the
 	  changes.
@@ -168,7 +168,7 @@ Darkbot 7.0-RC8: June 20th, 2003
 
 	- Updated some outdated text in the configure script.
 
-	- Darkbots now default to irc.darkbot.org #darkbot.
+	- Darkbots now default to irc.freezedown.org #darkbot.
  	  Please edit your setup.ini and servers.ini files to 
 	  minimize traffic, since that is also our help channel.
 
@@ -475,7 +475,7 @@ Darkbot 7.0-RC4: Jun 24th, 2002
 
 Darkbot 7.0-RC3: May 22nd, 2002
 
-    ron@darkbot.org has worked on the following 4 issues:
+    ron@freezedown.org has worked on the following 4 issues:
     - Fixed a bug that caused crashes if the bot responds to a
     topic containing R~ in private message.
 

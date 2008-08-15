@@ -89,7 +89,7 @@ CTRL+C aborts at all times.
 To launch the utility write $0. For a quick server entry write: 
 $0 server port (ex:  $0 irc.server.here 6667 )\n
 Comments, suggestions?
-Support: http://forum.darkbot.org\n"
+Support: http://forum.freezedown.org\n"
 if [ -n "$insider" ]; then echo "[ Hit ENTER to continue ]"; read PTR; fi
 }
 

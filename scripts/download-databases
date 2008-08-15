@@ -112,9 +112,9 @@ fi
 # download command line to parse redirection url
 GET_SERVER_URLS () {
 if [ "$dld_prg" = "lynx" ]; then
-lynx -source http://www.darkbot.org 2>/dev/null > $TMP
+lynx -source http://www.freezedown.org 2>/dev/null > $TMP
 else
-wget -qO $TMP http://www.darkbot.org
+wget -qO $TMP http://www.freezedown.org
 fi
 # parse redir. main url. ex: http://pincel.net/darkbot/
 REDIRECT_URL_MAIN=$(grep "FRAME SRC" $TMP | cut -d\" -f2)

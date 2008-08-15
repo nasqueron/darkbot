@@ -355,7 +355,7 @@ $PNCFG
      "$srv_entry_s"
      
      Select one of the following 4 options:
-1) - Write only one server or use the default [irc.darkbot.org] `if [ ! -z \
+1) - Write only one server or use the default [irc.freezedown.org] `if [ ! -z \
 "$srv_num_entries" ] && [ "$srv_num_entries" != "0" ]; then \
 echo -e "\n     ${lparen}This option will overwrite \
 the existent "$entry_s" on your servers file${rparen}"; fi`
@@ -374,14 +374,14 @@ do
 
 clear
 echo -e "\n$PNCFG\n* SERVERS *\n
-- Enter the server your Darkbot should connect to [irc.darkbot.org]: "
+- Enter the server your Darkbot should connect to [irc.freezedown.org]: "
 read SERVER
 if [ -z "$SERVER" ]; then
-echo -e "    No server specified. defaulting to irc.darkbot.org
+echo -e "    No server specified. defaulting to irc.freezedown.org
     You can add servers by running scripts/AddServer
     or by editing dat/servers.ini\n"
 sleep 2
-SERVER=irc.darkbot.org
+SERVER=irc.freezedown.org
 PORT=6667
 fi
 done
@@ -701,7 +701,7 @@ echo "
     type  'backtrace'  to  find  out  exactly  why it happened.
     
     If you need further assistance  use  the  support forum  at
-    http://www.darkbot.org/forum   providing detailed information.
+    http://www.freezedown.org/forum   providing detailed information.
                                
           Linux/BSD/Unix users type:    make
           Windows users type:           make win

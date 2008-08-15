@@ -34,7 +34,7 @@ warranty of any kind.  In any event shall Darkbot project or any
 of it's collaborators be liable for any damages whatsoever.
 If you do not agree with the above user disclaimer, please do not
 use the program and delete all Darkbot files.
-Contact juice@darkbot.org with any questions regarding the use
+Contact juice@freezedown.org with any questions regarding the use
 of this program.
 
 Darkbot is a creation of Jason Hamilton  [ Jason@superlink.net ]
