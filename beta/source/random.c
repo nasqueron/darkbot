@@ -315,7 +315,7 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 					}
 					else if(pBuffer[nLength] == 'W')
 					{				// WWW page
-						snprintf(temp, sizeof(temp), "http://darkbot.org%s", Data);
+						snprintf(temp, sizeof(temp), "http://freezedown.org%s", Data);
 					}
 					else if(pBuffer[nLength] == '!')
 					{				// cmdchar

@@ -118,24 +118,24 @@ main (int argc, char **argv)
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");
-	printf ("  *             Project Administrator: juice <juice@darkbot.org>          *  \n");
-	printf ("  *             Last major code changes: ron <ron@darkbot.org>            *  \n");
+	printf ("  *             Project Administrator: juice <juice@freezedown.org>          *  \n");
+	printf ("  *             Last major code changes: ron <ron@freezedown.org>            *  \n");
 	printf ("  *             Last major code changes: onefang <onefang@gmail.com>      *  \n");
 	printf ("  *      Please check docs/contributors for a list of collaborators       *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *        Eventual malfunction,  suggestions or patches use only         *  \n");
-	printf ("  *              Support Forum @  http://forum.darkbot.org                *  \n");
+	printf ("  *              Support Forum @  http://forum.freezedown.org                *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  * By running this installation  you agree that this program is provided *  \n");
 	printf ("  * free for non-commercial use only;  -  Distribution of modified source *  \n");
 	printf ("  * code or binaries compiled from modified source code for any  platform *  \n");
 	printf ("  * or OS  is expressly forbidden.  -   This program is only available at *  \n");
-	printf ("  *                       http://www.darkbot.org                          *  \n");
+	printf ("  *                       http://www.freezedown.org                          *  \n");
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
 # ifdef ENABLE_VERSION_CHECK
-	snprintf (temp, sizeof (temp), "lynx -source http://www.darkbot.org/cgi/laun.cgi?%s &", dbVersion);
+	snprintf (temp, sizeof (temp), "lynx -source http://www.freezedown.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
 # endif
 	db_sleep (2);
