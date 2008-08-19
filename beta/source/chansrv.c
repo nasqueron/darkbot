@@ -160,8 +160,8 @@ struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char
 				userhost, topic, str);
 
 	ADDITIONS++;
-
-	if ((stricmp (topic, "ILC")) == 0)
+	
+	if ((strspn (topic, "ilc")) == 3)
 	{
 		db_log(URL2, "%s ([%s] %s!%s): %s\n", topic, date(), 
 			source, userhost, str);
@@ -170,7 +170,6 @@ struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char
 	{
 		db_log(URL2, "%s %s\n", topic, str);
 	}
-
 	return chanserv_asprintf(result, "Okay.");
 }
 
@@ -847,7 +846,7 @@ struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, ch
 		args++;
 
 		/* Don't bother telling the channel we left about it. */
-		if ((stricmp (target, chan)) != 0)
+		if ((strcasecmp (target, chan)) != 0)
 			result = chanserv_asprintf(result, "Leaving %s.", chan);
 
 		if ((db_argstostr (reason, args, 0, ' ')) < 1)
