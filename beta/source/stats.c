@@ -93,6 +93,8 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 		n->next = statshead;
 		statshead = n;
 	}
+	
+	free (n);
 }
 
 void
