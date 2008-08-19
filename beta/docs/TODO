@@ -10,6 +10,12 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
+- plural functions still needs to be implemented in spots,
+  about half of the functions use a different parsing  
+  mechanism that still works, because I hadn't thought of 
+  adding a "startarg" parameter to my db_argstostr() 
+  function before that point. i will update these later.
+
 - chanserv_topic function needs to be a private message
   command and accept channel arguments (easy, but to 
   remember for later).
