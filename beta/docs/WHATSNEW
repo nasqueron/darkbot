@@ -7,13 +7,15 @@
      
 
 Darkbot 8rc3: Aug 18 2008
+	- Updated TODO.
 	- Changed all command function parsing. Things should hopefully
 	  work more correctly again.
 	- HLIST (Helperlist) command now allows multiple arguments.
 	  For instead if you want to list all users level 3 and level 3,
 	  you would do !HLIST 3 2.
 	- Fixed tell command to tell people about topics without having
-          do delimit them with '+' signs, so it runs like normal text now.
+          do delimit them with '+' signs, so it runs like normal text now
+  	  for multi-word topics.
 	- Fixed sleep command. It now actually sleeps for the specified
 	  amount of time, if any is specified. 
 	- Part message now accepted as a parameter to PART command.
