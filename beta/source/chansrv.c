@@ -107,39 +107,69 @@ void chanserv_output_free(struct chanserv_output *output)
 struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char str [STRING_LONG] = { 0 }, topic [STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 		return chanserv_asprintf(NULL, "Add what?");
 		
+	/* Save topic since we're chopping args[0] off later. */
+	strncpy (topic, args[0], sizeof (topic));
+
+	/* Check to make sure the topic doesn't exist first. */
+	if (check_existing_url(source, topic, target) == 1)
+	{
+		return chanserv_asprintf(result, "%s \37%s\37\n", 
+					EXISTING_ENTRY, topic);
+	}
+
+	/* Cut off the first argument (the topic) */
+	args++;
+
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return chanserv_asprintf(result, "What info is to be added for %s?", topic);
+
 	// Fix for some segmentation fault problems
 	// concerning topics consisting entirely of
 	// wildcard characters.
-	if (strspn(args[0], "*?") == strlen(args[0]))
+	if (strspn(topic, "*?") == strlen(topic))
 		return chanserv_asprintf(NULL, "Sorry, but support for that topic has been removed.");
 		
-	if (strlen(args[0]) > MAX_TOPIC_SIZE)
+	/* FIXME: If both things happen, result is overwritten with 
+  	 * the second event, and the first truncation isn't displayed
+	 */
+	if (strlen(topic) > MAX_TOPIC_SIZE)
 	{
-		args[0][MAX_TOPIC_SIZE] = '\0';
+		topic[MAX_TOPIC_SIZE] = '\0';
 		result = chanserv_asprintf(NULL, "Topic is over the limit, and has had characters truncated.");
 	}
-	s = strtok (NULL, "");
-	if (s == NULL)
-		return chanserv_asprintf(result, "What info is to be added for %s?", args[0]);
-	if (strlen(s) > MAX_DATA_SIZE)
-		s[MAX_DATA_SIZE] = '\0';
-	strlwr(args[0]);
-	if (*args[0] == '~')
+
+	if (strlen(str) > MAX_DATA_SIZE)
+	{
+		str[MAX_DATA_SIZE] = '\0';
+		result = chanserv_asprintf(NULL, "Data is over the limit, and has had characters truncated.");
+	}
+
+	strlwr(topic);
+
+	/* Don't allow the topic to be an rdb file name. */
+	if (*topic == '~')
 		return chanserv_asprintf(result, "Rdb files can only be called from the data of a topic, they cannot be used in the topic itself.");
-	if (check_existing_url(source, args[0], target) == 1)
-		return chanserv_asprintf(result, "%s \37%s\37\n", EXISTING_ENTRY, args[0]);
+
 	if (LOG_ADD_DELETES)
-	    db_log(ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date(), source, userhost, args[0], s);
+	    db_log(ADD_DELETES, "[%s] %s!%s ADD %s %s\n", date(), source, 
+				userhost, topic, str);
+
 	ADDITIONS++;
-	if (args[0][0] == 'i' && args[0][1] == 'l' && args[0][2] == 'c')
-		db_log(URL2, "%s ([%s] %s!%s): %s\n", args[0], date(), source, userhost, s);
+
+	if ((stricmp (topic, "ILC")) == 0)
+	{
+		db_log(URL2, "%s ([%s] %s!%s): %s\n", topic, date(), 
+			source, userhost, str);
+	}
 	else
-		db_log(URL2, "%s %s\n", args[0], s);
+	{
+		db_log(URL2, "%s %s\n", topic, str);
+	}
 
 	return chanserv_asprintf(result, "Okay.");
 }
@@ -340,19 +370,20 @@ struct chanserv_output *chanserv_cpu_show(char *source, char *target, char *cmd,
 struct chanserv_output *chanserv_cycle(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
-
-	s = strtok (NULL, " ");
-	if (s == NULL)
+	char str [STRING_LONG] = {0};
+	int i = 0;
+	
+	/* Check for channel list parameter being specified. */
+	if (!args[0])
 	{
-		S("PART %s\n", target);
-		S("JOIN %s\n", target);
+		S ("PART %s\n", target);
+		S ("JOIN %s\n", target);
 	}
 	else
 	{
+		result = chanserv_asprintf(NULL, "Cycling %s.", args[0]);
 		S("PART %s\n", args[0]);
 		S("JOIN %s\n", args[0]);
-		result = chanserv_asprintf(NULL, "Cycling %s.", s);
 	}
 
 	return result;
@@ -437,26 +468,34 @@ struct chanserv_output *chanserv_deluser(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char 	str [STRING_LONG] = {0}, chan[STRING_LONG] = {0};
 
+	/* Make sure first arg, which should be target chan, is there. */
 	if (args[0] == NULL)
 	    return result;
-	s = strtok (NULL, "");
-	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
+	
+	strncpy (chan, args[0], sizeof (chan));
+
+	/* Chop of first arg, since we have a copy as chan. */
+	args++;
+
+	db_argstostr (str, args, 0, ' ');
+
+	if ((invoked == MSG_INVOKE) || (*chan == '#'))
 	{
-	    if (check_access (userhost, args[0], 0, source) >= 3)
+	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		if (s == NULL)
+		if (str[0] == '\0')
 			return result;
-		S ("MODE %s -oooooo %s\n", args[0], s);
+		S ("MODE %s -oooooo %s\n", chan, str);
 	    }
 	}
 	else
 	{
-	    if (s == NULL)
-		S ("MODE %s -oooooo %s\n", target, args[0]);
+	    if (str[0] == '\0')
+		S ("MODE %s -oooooo %s\n", target, chan);
 	    else
-		S ("MODE %s -oooooo %s %s\n", target, args[0], s);
+		S ("MODE %s -oooooo %s %s\n", target, chan, str);
 	}
 
 	return result;
@@ -465,26 +504,30 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char chan [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 	    return result;
-	s = strtok (NULL, "");
-	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
+
+	strncpy (chan, args[0], sizeof (chan));
+	args++;
+	db_argstostr (str, args, 0, ' ');
+
+	if ((invoked == MSG_INVOKE) || (*chan == '#'))
 	{
-	    if (check_access (userhost, args[0], 0, source) >= 3)
+	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		if (s == NULL)
+		if (str[0] == '\0')
 			return result;
-		S ("MODE %s -vvvvvv %s\n", args[0], s);
+		S ("MODE %s -vvvvvv %s\n", chan, str);
 	    }
 	}
 	else
 	{
-	    if (s == NULL)
-		S ("MODE %s -vvvvvvv %s\n", target, args[0]);
+	    if (str[0] == '\0')
+		S ("MODE %s -vvvvvvv %s\n", target, chan);
 	    else
-		S ("MODE %s -vvvvvvv %s %s\n", target, args[0], s);
+		S ("MODE %s -vvvvvvv %s %s\n", target, chan, str);
 	}
 
 	return result;
@@ -494,15 +537,16 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
-	long unixtime = 0;
+	char 	 str [STRING_LONG] = {0};
+	long	 unixtime = 0;
 
-	s = strtok (NULL, "");
-	if (s == NULL)
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 		Snow("QUIT :K\2\2illed (%s (cause I say so!))\n", source);
 	else
-		Snow("QUIT :K\2\2illed (%s (%s))\n", source, s);
+		Snow("QUIT :K\2\2illed (%s (%s))\n", source, str);
+
 	db_sleep (1);
+
 	printf ("\n\nGood-bye! %s (c) Jason Hamilton\n\n", dbVersion);
 	uptime = time (NULL) - uptime;
 	printf("Time elapsed: %ld hour%s, %ld min%s\n\n",
@@ -563,20 +607,19 @@ struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char str [STRING_LONG] = {0};
 
-	s = strtok (NULL, " ");
-	if (s == NULL)
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 	{
 	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s .  In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37 .  To do a search on a word, or partial text, just type: search <text> or dsearch <text> , eg; \37search nuke\37.", 
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
-	    if (cf(userhost, source, target))
+	    if (cf (userhost, source, target))
 		return result;
-	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.freezedown.org/ .",
+	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.darkbot.org/ .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
 	}
 	else
-	    result = chanserv_show_help(s, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
+	    result = chanserv_show_help(str, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
 
 	return result;
 }
@@ -685,20 +728,26 @@ struct chanserv_output *chanserv_joins_show(char *source, char *target, char *cm
 struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char server [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 	long sn = 0;
 
 	if (args[0] == NULL)
 		return result;
-	s = strtok (NULL, " ");
-	if (s == NULL)
+
+	strncpy (server, args[0], sizeof (server));
+	args++;
+
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 		sn = 6667;
 	else
-		sn = atoi(s);
-	S ("QUIT :Jumping to %s:%d\n", args[0], sn);
+		sn = atoi(str);
+
+	S ("QUIT :Jumping to %s:%d\n", server, sn);
 	db_sleep (1);
-	strcpy (BS, args[0]);
+
+	strncpy (BS, server, sizeof (BS));
 	BP = sn;
+
 	prepare_bot ();
 	register_bot ();
 
@@ -709,68 +758,72 @@ struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s2 = NULL, *s3 = NULL;
+	char 	chan[STRING_LONG] = {0}, nick[STRING_LONG] = {0},
+		reason [STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 	    return chanserv_asprintf(NULL, "Specify a nick/channel!");
+
 	if (invoked == MSG_INVOKE)
 	{
-	    if (check_access (userhost, args[0], 0, source) >= 3)
+	    /* Copy channel variable and chuck it. */
+	    strncpy (chan, args[0], sizeof (chan));
+	    args++;
+
+	    /* Make sure first parameter is a channel name. */
+	    if ((*chan != '#') && (*chan != '&'))
+	    	return chanserv_asprintf (NULL, "You must specify a channel name first.");
+
+     	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		s2 = strtok (NULL, " ");
-		s3 = strtok (NULL, "");
-		if (s2 == NULL)
-			return chanserv_asprintf(NULL, "You must specity a nick to kick from!");
-		if (s3 == NULL)
-			S ("KICK %s %s %s\n", args[0], s2, DEFAULT_KICK);
-		else
-			S ("KICK %s %s %s\n", args[0], s2, s3);
+	        if (!args[0])
+	       	    return chanserv_asprintf(NULL, "You must specity a nickname to kick!");
+
+		strncpy (nick, args[0], sizeof (nick));
+		args++;
+
+		/* Remaining args are fed into reason. */
+		if ((db_argstostr (reason, args, 0, ' ')) < 1)
+		    S ("KICK %s %s %s\n", chan, nick, DEFAULT_KICK);
+                else
+		    S ("KICK %s %s :%s\n", chan, nick, reason);
+
+		return result;
 	    }
 	}
 	else
 	{
 		if (*args[0] != '#' && *args[0] != '&')
 		{
-			s2 = strtok (NULL, "");
-			if (s2 == NULL)
-			{
-				if (strcasecmp (args[0], Mynick) == 0)
+			strncpy (nick, args[0], sizeof (nick));
+			args++;
+
+			if (strcasecmp (nick, Mynick) == 0)
 					S ("KICK %s %s :hah! As *IF*\n", target, source);
-				else
-					S ("KICK %s %s :\2%s\2'ed: %s\n", target, args[0], cmd, DEFAULT_KICK);
-			}
-			else if (strcasecmp (args[0], Mynick) == 0)
-				S ("KICK %s %s :%s\n", target, args[0], s2);
-			else
-				S ("KICK %s %s :\2%s\2'ed: %s\n", target, args[0], cmd, s2);
+			if ((db_argstostr (reason, args, 0, ' ')) < 1)
+				S ("KICK %s %s :\2%s\2'ed: %s\n", target, nick, cmd, DEFAULT_KICK);
+			else 
+				S ("KICK %s %s :\2%s\2'ed: %s\n", target, nick, cmd, reason);
 		}
 		else
 		{
-			s2 = strtok (NULL, " ");
-			if (s2 == NULL)
-				result = chanserv_asprintf(result, "You must specify a nick to kick from!");
-			else
-			{
-				s3 = strtok (NULL, "");
-				if (s3 == NULL)
-				{
-					if (strcasecmp (s2, Mynick) == 0)
-						S ("KICK %s %s :hah! As *IF*\n", args[0], source);
-					else
-						S ("KICK %s %s :\2%s\2ed: %s\n", args[0], s2, cmd, DEFAULT_KICK);
-				}
-				else
-				{
+			if (!args[0] || !args[1])
+				return chanserv_asprintf(result, "You must specify a nickname to kick!");
 
-					if (strcasecmp (s2, Mynick) == 0)
-						S ("KICK %s %s :hah! As *IF* (%s)\n", args[0], source);
-					else
-						S ("KICK %s %s :\2%s\2ed: %s\n", args[0], s2, cmd, s3);
-				}
-			}
+			strncpy (chan, args[0], sizeof chan);
+				args++;
+			strncpy (nick, args[0], sizeof nick);
+				args++;
+
+			if (strcasecmp (nick, Mynick) == 0)
+				S ("KICK %s %s :hah! As *IF*\n", target, nick);
+
+			if ((db_argstostr (reason, args, 0, ' ')) < 1)
+				S ("KICK %s %s :\2%s\2ed: %s\n", chan, nick, cmd, DEFAULT_KICK);
+			else
+				S ("KICK %s %s :\2%s\2ed: %s\n", chan, nick, cmd, reason);
 		}
 	}
-
 	return result;
 }
 #endif
@@ -783,18 +836,27 @@ struct chanserv_output *chanserv_language(char *source, char *target, char *cmd,
 struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char	chan	[STRING_LONG] = {0},
+		reason  [STRING_LONG] = {0};
 
-	s = strtok (NULL, " ");
-	if (s == NULL)
+	if (!args[0])
 		S ("PART %s\n", target);
 	else
 	{
-		S ("PART %s\n", s);
-		result = chanserv_asprintf(result, "Leaving %s.", s);
+		strncpy (chan, args[0], sizeof chan);
+		args++;
+
+		/* Don't bother telling the channel we left about it. */
+		if ((stricmp (target, chan)) != 0)
+			result = chanserv_asprintf(result, "Leaving %s.", chan);
+
+		if ((db_argstostr (reason, args, 0, ' ')) < 1)
+			S ("PART %s :Requested!\n", chan);
+		else
+			S ("PART %s :%s\n", chan, reason);
 	}
 
-	return result;
+	return (result);
 }
 
 struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -903,28 +965,39 @@ struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char nicks [STRING_LONG] = {0}, chan [STRING_LONG] = {0};
+	int  ischan = 0;
 
-	if (args[0] == NULL)
-	    return result;
-	s = strtok (NULL, "");
-	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
+	if (!args[0])
+	    return chanserv_asprintf (NULL, "You must specify a nickname/channel!.");
+	
+	/* Check for channel name specified, set up args accordingly. */
+	if ((*args[0] == '#') || (*args[0] == '&'))
 	{
-	    if (check_access (userhost, args[0], 0, source) >= 3)
+		ischan = 1; /* channel specified */
+		strncpy (chan, args[0], sizeof chan);
+		args++;
+	}
+
+	if ((db_argstostr (nicks, args, 0, ' ')) < 1)
+		return chanserv_asprintf (NULL, "You must specify a nickname to op.");
+
+	if ((invoked == MSG_INVOKE) || (ischan == 1))
+	{
+	    /* If MSG_INVOKE, make sure chan == 1. This seems weird, but 
+ 	     * we could have MSG_INVOKE without channel specified. */
+	    if (ischan != 1)
+		return chanserv_asprintf (NULL, "You must specify a channel to deop people on.");
+
+	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		if (s == NULL)
-			return result;
-		S ("MODE %s +oooooo %s\n", args[0], s);
+		S ("MODE %s +oooooo %s\n", chan, nicks);
+		return result;
 	    }
 	}
 	else
-	{
-	    if (s == NULL)
-		S ("MODE %s +oooooo %s\n", target, args[0]);
-	    else
-		S ("MODE %s +oooooo %s %s\n", target, args[0], s);
-	}
-
+		S ("MODE %s +oooooo %s\n", target, nicks);
+		
 	return result;
 }
 #endif
@@ -968,18 +1041,23 @@ struct chanserv_output *chanserv_performs(char *source, char *target, char *cmd,
 struct chanserv_output *chanserv_perm_ban(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char   reason [STRING_LONG] = {0}, host [STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args[0])
 		return result;
-	s = strtok (NULL, "");
-	if (s == NULL)
-		s = "Permbanned!";
-	add_permban(args[0], 0, s);
-	result = chanserv_asprintf(result, "Added in permban #%d, %s; reason: %s.", PERMBAN_counter, args[0], s);
-	save_permbans();
-	S("MODE %s +b %s\n", target, args[0]);
+	strncpy (host, args[0], sizeof host);
+	args++;
 
+	if ((db_argstostr (reason, args, 0, ' ')) < 1)
+		strncpy (reason, "Permbanned!", sizeof reason);
+				
+	add_permban(host, 0, reason);
+	result = chanserv_asprintf(result, "Added in permban #%d, %s; reason: %s.", 
+					PERMBAN_counter, host, reason);
+	save_permbans();
+	S("MODE %s +b %s\n", target, host);
+
+	/* FIXME: Scan for user in room and kick them with reason. */
 	return result;
 }
 
@@ -1003,7 +1081,7 @@ struct chanserv_output *chanserv_ping(char *source, char *target, char *cmd, cha
 		if (strlen (args[0]) > 21)
 			args[0][21] = '\0';
 		S ("NOTICE %s :\1PING %s\n", source, args[0]);
-	}
+ 	}
 
 	return result;
 }
@@ -1066,23 +1144,24 @@ struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char
 struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char	str	[STRING_LONG] = {0};
 
-// FIXME: Check this, it may be wrong.  The help may not be correct either.
-	if (args[0] == NULL)
+	/* Fill argument buffer, if it's empty we return a message to 
+ 	 * the user asking for input. */
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 	    return chanserv_asprintf(NULL, "What do you want to add?");
+
 	if (invoked == MSG_INVOKE)
 	{
-	    if (check_access (userhost, args[0], 0, source) >= RAND_LEVEL)
+	    if (check_access (userhost, "#*", 0, source) >= RAND_LEVEL)
 	    {
-		s = strtok (NULL, "");
-		if (s == NULL)
+		if ((db_argstostr (str, args, 0, ' ')) < 1)
 			return chanserv_asprintf(NULL, "What do you want to add?");
-		add_randomstuff(source, source, s);
+		add_randomstuff(source, source, str);
 	    }
 	}
 	else
-	    add_randomstuff(source, target, args[0]);
+	    add_randomstuff(source, target, str);
 
 	return result;
 }
@@ -1096,11 +1175,12 @@ struct chanserv_output *chanserv_random_stuff_list(char *source, char *target, c
 struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char 	str [STRING_LONG] = {0};
 
-	s = strtok (NULL, "");
-	if (s != NULL)
-		S("%s\n", s);
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return result;
+
+	S("%s\n", str);
 
 	return result;
 }
@@ -1110,20 +1190,20 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 {
 	struct chanserv_output *result = NULL;
 	char temp[1024] = { 0 };
-	char *s = NULL;
+	char str [STRING_LONG] = {0};
 
-	s = strtok (NULL, " ");
-	if (s == NULL)
+	/* Check for arguments */
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 	{
 		snprintf(temp, sizeof (temp), "ls %s/*.rdb | wc\n", RDB_DIR);
 		result = chanserv_asprintf(result, "RDB: %s.", run_program(temp));
 	}
 	else
 	{
-		if (strspn(s, SAFE_LIST) != strlen(s))
+		if (strspn(str, SAFE_LIST) != strlen(str))
 			return chanserv_asprintf(NULL, "Rdb files are made up of letters and or numbers, no other text is accepted.");
-		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, s);
-		result = chanserv_asprintf(result, ":%s", run_program(temp));
+		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, str);
+		result = chanserv_asprintf(result, "%s", run_program(temp));
 	}
 
 	return result;
@@ -1152,27 +1232,42 @@ struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char   topic [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 		return chanserv_asprintf(NULL, "Replace what?");
+
 	if (strlen(args[0]) > MAX_TOPIC_SIZE)
 		args[0][MAX_TOPIC_SIZE] = '\0';
-	s = strtok (NULL, "");
-	if (s == NULL)
-		return chanserv_asprintf(NULL, "What info should replace %s?", args[0]);
-	if (strlen(s) > MAX_DATA_SIZE)
-		s[MAX_DATA_SIZE] = '\0';
-	strlwr(args[0]);
-	if (check_existing_url(source, args[0], target) != 1)
-		return chanserv_asprintf(NULL, "%s \37%s\37", NO_ENTRY, args[0]);
-	delete_url (source, args[0], target);
-	if (LOG_ADD_DELETES)
-	    db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, args[0], s);
-	ADDITIONS++;
-	db_log (URL2, "%s %s\n", args[0], s);
 
-	return chanserv_asprintf(NULL, "%s has been updated.", args[0]);
+	/* Copy topic, and traverse args for data to be replaced. */
+	strncpy (topic, args[0], sizeof topic);
+	args++;
+
+	/* Make sure there's information to be replaced. */
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return chanserv_asprintf(NULL, "What info should replace %s?",
+						topic);
+
+	/* Don't let str go over MAX_DATA_SIZE characters. */
+	if (strlen(str) > MAX_DATA_SIZE)
+		str[MAX_DATA_SIZE] = '\0';
+
+	strlwr(topic);
+
+	if (check_existing_url(source, topic, target) != 1)
+		return chanserv_asprintf(NULL, "%s \37%s\37", NO_ENTRY, topic);
+
+	/* Replace the data. */
+	delete_url (source, topic, target);
+	if (LOG_ADD_DELETES)
+	    db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, topic, str);
+
+	ADDITIONS++;
+
+	db_log (URL2, "%s %s\n", topic, str);
+
+	return chanserv_asprintf(NULL, "%s has been updated.", topic);
 }
 
 struct chanserv_output *chanserv_reserved_1(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -1322,13 +1417,16 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char str [STRING_LONG] = {0};
 
 	Sleep_Toggle = 1;
 					
-	if ((s = strtok (NULL, "")) == NULL)
+	/* Copy arguments to buffer, if there is one convert to long
+  	 * and use it as the sleep time in seconds. */
+
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
 		Sleep_Time = SLEEP_TIME;
-	else if ((Sleep_Time = strtol (s, (char **) NULL, Sleep_Time)) < 1)
+	else if ((Sleep_Time = strtol (str, (char **) NULL, 10)) < 1)
 		Sleep_Time = SLEEP_TIME;
 
 	S ("PRIVMSG %s :%s\n", target, GOSLEEP_ACTION);
@@ -1368,8 +1466,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 {
 	struct chanserv_output *result = NULL;
 
-	get_stats(target, strtok (NULL, " "));
-
+	get_stats(target, args[0]);
 	return result;
 }
 #endif
@@ -1406,7 +1503,7 @@ struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char	str	[STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 	    return chanserv_asprintf(NULL, "Tell who?");
@@ -1414,24 +1511,29 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	    return chanserv_asprintf(NULL, "What do you want me to tell %s?", args[0]);
 	if (strcasecmp (args[1], Mynick) == 0)
 	    return result;			/* don't bother telling myself about stuff */
+
 	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
-		s = strtok (NULL, " ");
-		if (s == NULL)
+		if ((db_argstostr (str, args, 2, '+')) < 1)
 		    return chanserv_asprintf(NULL, "Tell %s about what?", args[0]);
-		strlwr(s);
+	
+		strlwr(str);
 		if (invoked == MSG_INVOKE)
-		    show_url (source, get_multiword_topic (s), args[0], 1, 0, userhost, 1);
+		    show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
 		else
-		    show_url (args[0], get_multiword_topic (s), target, 1, 0, userhost, 1);
+		    show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
 	}
 	else
 	{
-		strlwr(args[1]);
+		if ((db_argstostr (str, args, 1, '+')) < 1)
+		    return chanserv_asprintf (NULL, "Tell %s about what?", args[0]);
+
+		strlwr(str);
+
 		if (invoked == MSG_INVOKE)
-		    show_url (source, get_multiword_topic (args[1]), args[0], 1, 0, userhost, 1);
+		    show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
 		else
-		    show_url (args[0], get_multiword_topic (args[1]), target, 1, 0, userhost, 1);
+		    show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
 	}
 
 	return result;
@@ -1441,13 +1543,12 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_topic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char	str	[STRING_LONG] = {0};
 
-	s = strtok (NULL, "");
-	if (s == NULL)
-		S ("TOPIC %s :\n", target);
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return chanserv_asprintf (NULL, "What do you want the topic changed to?");
 	else
-		S ("TOPIC %s :%s\n", target, s);
+		S ("TOPIC %s :%s\n", target, str);
 
 	return result;
 }
@@ -1564,12 +1665,20 @@ struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
-
-	if ((s = strtok (NULL, " ")) != NULL)
-		show_helper_list (source, atoi (s));
-	else
+	char	str	[STRING_LONG] = {0};
+	int	i = 0;
+	
+	if (!args[0])
+	{
 		show_helper_list (source, 0);
+		return result;
+	}
+	else
+	{
+		int level = 0;
+		for (i = 0; args[i]; i++)
+			show_helper_list (source, atoi (args[i]));
+	}
 
 	return result;
 }
@@ -1600,7 +1709,7 @@ struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, 
 	if (cf (userhost, source, target))
 		return result;
 
-	return chanserv_asprintf(NULL, "\1VERSION Hi, I'm a Darkbot. Download me from http://www.freezedown.org\1.");
+	return chanserv_asprintf(NULL, "\1VERSION Hi, I'm a Darkbot. Download me from http://www.darkbot.org\1.");
 }
 #endif
 
@@ -1608,27 +1717,42 @@ struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_voice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char	nicks [STRING_LONG] = {0}, chan [STRING_LONG] = {0},
+		str   [STRING_LONG] = {0};
+	int	ischan = 0;
 
-	if (args[0] == NULL)
+	if (!args[0])
 	    return result;
-	s = strtok (NULL, "");
-	if ((invoked == MSG_INVOKE) || (*args[0] == '#'))
+
+	db_argstostr (str, args, 0, ' ');
+
+	/* Check for channel name specified, set up args accordingly. */
+	if ((*args[0] == '#') || (*args[0] == '&'))
 	{
-	    if (check_access (userhost, args[0], 0, source) >= 3)
-	    {
-		if (s == NULL)
-		    return result;
-		S ("MODE %s +vvvvvv %s\n", args[0], s);
-	    }
+		ischan = 1; /* channel specified */
+		strncpy (chan, args[0], sizeof chan);
+		args++;
+	}
+	
+	if ((db_argstostr (nicks, args, 0, ' ')) < 1)
+		return chanserv_asprintf (NULL, "You must specify a nickname to voice.");
+
+	if ((invoked == MSG_INVOKE) || (ischan == 1))
+	{
+		/* If MSG_INVOke, make sure chan ==1. This seems weird, 
+		 * but we could have MSG_INVOKE without a channel given,
+		 * and this is an error. */
+		if (ischan != 1)
+			return chanserv_asprintf (NULL, "You must specify a channel to give voice on.");
+
+		if (check_access (userhost, chan, 0, source) >= 3)
+		{
+			S ("MODE %s +vvvvvv %s\n", chan, nicks);
+			return result;
+		}
 	}
 	else
-	{
-	    if (s == NULL)
-		S ("MODE %s +vvvvvvv %s\n", target, args[0]);
-	    else
-		S ("MODE %s +vvvvvvv %s %s\n", target, args[0], s);
-	}
+		S ("MODE %s +vvvvvv %s\n", target, nicks);
 
 	return result;
 }
@@ -1663,7 +1787,7 @@ struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char str [STRING_LONG] = {0};
 	char *ptr3 = NULL;
 
 	if (args[0] == NULL)
@@ -1679,10 +1803,9 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 		memmove (ptr3, ptr3 + 1, strlen (ptr3 + 1) + 1);
 	if (strcasecmp (args[1], "A") == 0 || strcasecmp (args[1], "AN") == 0)
 	{
-		s = strtok (NULL, " ");
-		if (s == NULL)
+		if ((db_argstostr (str, args, 2, ' ')) < 1)
 		    return chanserv_asprintf(NULL, "%s %s %s? Mind rephrasing that?  (Type %cHELP for syntax hints).", cmd, args[0], args[1], *CMDCHAR);
-		show_url (source, get_multiword_topic (s), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
+		show_url (source, get_multiword_topic (str), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
 	}
 	else
 		show_url (source, get_multiword_topic (args[1]), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
@@ -1693,7 +1816,7 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char *s = NULL;
+	char str	[STRING_LONG] = {0};
 
 	if (args[0] == NULL)
 		return chanserv_asprintf(NULL, "Whisper to who?");
@@ -1703,11 +1826,10 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 		return result;		/* don't bother telling myself about stuff */
 	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
-		s = strtok (NULL, " ");
-		if (s == NULL)
+		if ((db_argstostr (str, args, 2, ' ')) < 1)
 			return chanserv_asprintf(NULL, "Whisper to %s about what?", args[0]);
-		strlwr(s);
-		show_url(source, get_multiword_topic(s), args[0], 1, 0, userhost, 1);
+		strlwr(str);
+		show_url(source, get_multiword_topic(str), args[0], 1, 0, userhost, 1);
 	}
 	else
 	{
@@ -2015,8 +2137,6 @@ void chanserv(char *source, char *target, char *buf)
 		int more_needed = 0, too_many = 0;
 		int k = 0;
 
-		j = chanserv_commands[found].arg_count;
-
 		/* Use the char count of spaces in our oldbuf ptr. Since 
 		 * it has the cmd tacked on the beginning, the number of 
 		 * spaces gives us an accurate early number of arguments
@@ -2035,17 +2155,21 @@ void chanserv(char *source, char *target, char *buf)
 		 * whut reply if addressed directly.  This code is only 
 		 * intended for commands which have no arguments.  
 		 */
-		k = count_char (ptr, ' ');
+		k = (count_char (ptr, ' ') + 1);
+		j = chanserv_commands[found].arg_count;
 
-		if (j > 0)
+		if (k > 0)
 		{
-		    args = calloc(j, sizeof(char *));
+		    args = calloc(k, sizeof(char *));
 		    if (args)
 		    {
-			for (i = 0; i < j; i++)
+			for (i = 0; i < k; i++)
 			{
 			    args[i] = strtok(NULL, " ");
-			    if (args[i] == NULL)
+				
+			    /* Check for more arguments needed, but don't
+			     * bail out, we'll take care of it later. */
+			    if ((i < j) && (args[i] == NULL))
 			    {
 				more_needed = 1;
 				break;
@@ -2364,6 +2488,7 @@ int	check_exempt	(char *cmd)
 #ifdef ENABLE_STATS
 		"STATS", 
 #endif
+		"CYCLE",
 		"HELP",
 	        NULL
 	};

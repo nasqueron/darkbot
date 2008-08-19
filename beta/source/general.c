@@ -562,3 +562,34 @@ char	*plural 	(size_t i)
 	return ("s");
 }
 
+/* db_argstostr(): This function takes char **args and fills the buffer
+ * pointed to by 'str' with a 'delim' delimited string of each element 
+ * in the argument buffer. A pointer to 'str' is returned for value 
+ * checking. 
+ */
+
+int	db_argstostr(char *str, char **args, size_t startarg, char delim)
+{
+	int i = 0, j = 0, tc = 0;
+
+	/* Bail out if no args. */
+	if (args[0] == NULL)
+		return (0);
+	
+	/* Iterate words. */
+	for (i = startarg; args[i]; i++)
+	{
+		/* Go through the letters and fill str buffer. */
+		for (j = 0; args[i][j]; j++)
+		{
+			str[tc++] = args[i][j];
+
+			if (args[i+1] && !(args[i][j+1]))
+				str[tc++] = delim;
+		}
+	}
+
+	str[tc] = '\0';
+	
+	return (tc);
+}

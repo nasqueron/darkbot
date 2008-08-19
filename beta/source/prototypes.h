@@ -168,6 +168,7 @@ void	db_sleep				(unsigned long seconds);
 void	reverse					(char *);
 char	*mask_from_nick				(char *, const char *);
 char	*uh_from_nick				(char *, const char *);
+int	db_argstostr				(char *, char **, size_t, char);
 long	is_op					(char *, const char *);
 void	do_op					(char *, const char *, long);
 

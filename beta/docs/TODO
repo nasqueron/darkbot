@@ -10,6 +10,10 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
+- chanserv_topic function needs to be a private message
+  command and accept channel arguments (easy, but to 
+  remember for later).
+
 - atoi needs to be swapped for strtol in all places 
   since atoi isn't as safe. 
 
