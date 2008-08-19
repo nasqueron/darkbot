@@ -7,6 +7,8 @@
      
 
 Darkbot 8rc3: Aug 18 2008
+	- Part command no longer tries to output "I left the room" 
+	  message to the channel it parts.
 	- Updated TODO.
 	- Changed all command function parsing. Things should hopefully
 	  work more correctly again.
