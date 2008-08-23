@@ -161,7 +161,8 @@ struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char
 
 	ADDITIONS++;
 	
-	if ((strspn (topic, "ilc")) == 3)
+	if ((strspn (topic, "ilc")) == 3 ||
+	    (strspn (topic, "iln")) == 3)
 	{
 		db_log(URL2, "%s ([%s] %s!%s): %s\n", topic, date(), 
 			source, userhost, str);
@@ -1387,32 +1388,15 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	int i = 0, j = 0;
-	char *ptr = NULL, *arglist = NULL;
+	char	str [STRING_LONG] = {0};
 
-	if (args[0] == NULL)
-		return chanserv_asprintf(NULL, "My !setinfo variables are: ^ nick, % Number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & % times!!  (also, if you make the first char of your SETINFO a \"+\" the setinfo will be shown as an ACTION).");
-
-	/* Allocate space for arglist string. */
-	if ((arglist = malloc (STRING_LONG)) == NULL)
-		return chanserv_asprintf (NULL, "Memory allocation failure in chanserv_setinfo().");
-
-	/* Quick fix here. */
-	if ((ptr = strtok (NULL, "")) == NULL)
-		strcpy (arglist, args[0]);
-	else
-	{
-		strcpy (arglist, args[0]);
-		strcat (arglist, " ");
-		strcat (arglist, ptr);
-	}
-
-	update_setinfo (userhost, arglist, source);
-	save_changes ();
-
-	return result;
-}
-
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return chanserv_asprintf (NULL, "My %s variables are: ^ nick, %% number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & %% times (also, if you make the first char of your %s a \"+\", the %s will be shown as an ACTION).", cmd, cmd, cmd);
+	
+	update_setinfo (userhost, str, source);
+	save_changes();
+	return (result);
+}	
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1999,7 +1983,8 @@ void chanserv(char *source, char *target, char *buf)
 	struct chanserv_output *result = NULL;
 	char *cmd = NULL, *userhost = NULL, oldbuf[BUFSIZ] = {"NULL"},
 	     *ptr = NULL;
-	int i, j, found = -1, command = 0, wakeup = 0, exempt = 0;
+	int i, j, found = -1, command = 0, wakeup = 0, more_needed = 0, 
+	    too_many = 0;
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
@@ -2023,7 +2008,8 @@ void chanserv(char *source, char *target, char *buf)
 		*ptr++;
 
 	cmd = strtok (buf, " ");
-	if (cmd == NULL)
+
+	if (!cmd)
 	    return;
 	if (*cmd == ':')
 	    cmd++;
@@ -2036,22 +2022,23 @@ void chanserv(char *source, char *target, char *buf)
 
 	if (*target != '#' && *target != '&' && *target != '+')
 		input_type = MSG_INVOKE;
-	else if (strcasecmp (cmd, NICK_COMMA) == 0 || strcasecmp (cmd, COLON_NICK) == 0 || strcasecmp (cmd, BCOLON_NICK) == 0 || strcasecmp (cmd, Mynick) == 0)
+	else if (strcasecmp (cmd, NICK_COMMA) == 0 || 
+                 strcasecmp (cmd, COLON_NICK) == 0 || 
+                 strcasecmp (cmd, BCOLON_NICK) == 0 || 
+                 strcasecmp (cmd, Mynick) == 0)
 	{
 		input_type = ADDRESS_INVOKE;
 		cmd = strtok(NULL, " ");
 	}
 	else if (*cmd == *CMDCHAR)
-		input_type = CHAR_INVOKE;
-
-	if (cmd != NULL)
 	{
-	    if (*cmd == *CMDCHAR)
-	    {
-		cmd++;
-		command = 1;
-	    }
+            cmd++;
+	    command = 1;
+	    input_type = CHAR_INVOKE;
+        }
 
+	if (cmd)
+	{
 	    strupr(cmd);
     	    for (i = 0; chanserv_commands[i].func != NULL; i++)
 	    {
@@ -2107,8 +2094,8 @@ void chanserv(char *source, char *target, char *buf)
 
 		case NORMAL_COMMAND :
 		    {
-			if (input_type == DIRECT_INVOKE)
-			    return;
+			if (input_type == DIRECT_INVOKE) 
+				return;
 // Not sure why this is here.
 //			else if ((input_type == ADDRESS_INVOKE) && (command != 1))
 //			    return;
@@ -2133,7 +2120,6 @@ void chanserv(char *source, char *target, char *buf)
 	    if (check_access(userhost, (input_type == MSG_INVOKE) ? "#*" : target, 0, source) >= chanserv_commands[found].access)
 	    {
 		char **args = NULL;
-		int more_needed = 0, too_many = 0;
 		int k = 0;
 
 		/* Use the char count of spaces in our oldbuf ptr. Since 
@@ -2154,7 +2140,10 @@ void chanserv(char *source, char *target, char *buf)
 		 * whut reply if addressed directly.  This code is only 
 		 * intended for commands which have no arguments.  
 		 */
+
+		/* Actual number of arguments supplied. */
 		k = (count_char (ptr, ' ') + 1);
+		/* Number of arguments expected. */
 		j = chanserv_commands[found].arg_count;
 
 		if (k > 0)
@@ -2168,7 +2157,7 @@ void chanserv(char *source, char *target, char *buf)
 				
 			    /* Check for more arguments needed, but don't
 			     * bail out, we'll take care of it later. */
-			    if ((i < j) && (args[i] == NULL))
+			    if ((i < j) && (!args[i]))
 			    {
 				more_needed = 1;
 				break;
@@ -2178,27 +2167,17 @@ void chanserv(char *source, char *target, char *buf)
 		    else  // FIXME: Should bitch about lack of ram.
 			return;
 		}
-		else
-		{
-		   /* args read is equal to 0, so we need to do special 
-		    * handling here to avoid problems. Certain commands are 
-		    * exempted if matched from a list declared in the
-		    * check_exempt function. 
-	            */
-
-                   if (((input_type == ADDRESS_INVOKE) && k > (j+1)) ||
+	
+		/* Check for too many args on special cases. */
+                if (((input_type == ADDRESS_INVOKE) && (k > j)) ||
                           (input_type == DIRECT_INVOKE) && (k > j) ||
                           (input_type == MSG_INVOKE) && (k > j))
-                       {
+                {
 				
-			       if (check_exempt(cmd) == 1)
-				 	exempt = 1;
-                               else
-                                        too_many = 1;
-                       }
-                }		
+                                too_many = 1;
+                }
 	
-		if (too_many == 1 && exempt != 1)
+		if (too_many == 0 && command != 1)
 		{
 			int i = 0;
 			char *ptr2 = NULL;
@@ -2337,7 +2316,7 @@ void chanserv(char *source, char *target, char *buf)
 			S("PRIVMSG %s :%s: %s\n", target, source, WHUT);
 		}
 	    }
-	    else if ((GENERAL_QUESTIONS) && (cmd != NULL))
+	    else if ((GENERAL_QUESTIONS) && (cmd))
 	    {
 		show_url(source, get_multiword_topic(cmd), 
 		    (input_type == MSG_INVOKE) ? source : target, 
@@ -2476,43 +2455,3 @@ struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
 
 	return result;
 }
-
-int	check_exempt	(char *cmd)
-{
-	int i = 0;
-	int j = 0; 
-	int k = 0;
-	
-	char *exempt_items[] = {
-#ifdef ENABLE_STATS
-		"STATS", 
-#endif
-		"CYCLE",
-		"HELP",
-	        NULL
-	};
-
-	strupr(cmd);
-
-	for (i = 0; chanserv_commands[i].func != NULL; i++)
-	{
-		for (j = 0; chanserv_commands[i].command[j] != NULL; j++)
-		{
-			if (strcmp (cmd, chanserv_commands[i].command[j]) == 0)
-			{
-				for (k = 0; exempt_items[k] != NULL; k++)
-				{
-						if (strcmp (chanserv_commands[i].command[j], exempt_items[k]) == 0)
-						{
-							strlwr(cmd);	
-							return 1;
-						}
-				}
-			}
-		}
-	}
-	
-	strlwr(cmd);
-	return 0;
-}
-

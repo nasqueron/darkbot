@@ -7,6 +7,7 @@
      
 
 Darkbot 8rc3: Aug 18 2008
+	- More parser errors fixed. Added ILN in additon to ILC.
 	- add stats function now has subsequent call to free() 
 	  after the malloc() call. (Duh? What happened to that?)
 	- Fixed ILC. Oops on my part for breaking it.
