@@ -2173,7 +2173,7 @@ void chanserv(char *source, char *target, char *buf)
 		   /* Check for too many args on special cases. */
 		   if (check_too_many == 1)
 		   {
-		      if ((input_type == ADDRESS_INVOKE) && (k > j))
+		      if ((input_type == ADDRESS_INVOKE) && (k > (j+1)))
 		   	  too_many = 1;
 		      if ((k > j) && (input_type == DIRECT_INVOKE))
 			  too_many = 1;
