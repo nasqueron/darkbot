@@ -7,6 +7,12 @@
      
 
 Darkbot 8rc3: Aug 18 2008
+	- Added "too_many" parameter into the chanserv_command struct.
+          This specifies to the command parser if a command sent to the
+	  bot should be checked for having too many arguments. This 
+          particular change helps fix a number of issues which would 
+          cause headache, and will be fine tuned more thoroughly when
+          I get the chance.
 	- More parser errors fixed. Added ILN in additon to ILC.
 	- add stats function now has subsequent call to free() 
 	  after the malloc() call. (Duh? What happened to that?)
