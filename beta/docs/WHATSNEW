@@ -6,7 +6,16 @@
     ******************************************************* 
      
 
-Darkbot 8rc3: Aug 18 2008
+Darkbot 8rc3: Sep 17 2008
+	- Topics can now start with these commands that check for too
+          many arguments. Say you want to do:
+
+             dbtest add info+things hey N~, I don't have info on things.
+
+          Before this, a parsing error would invoke the "info" command. 
+          This has been fixed, and the bot will now either not respond
+          to these inquiries if they don't exist in it's database, or
+          provide the desired reply. 
 	- Added "too_many" parameter into the chanserv_command struct.
           This specifies to the command parser if a command sent to the
 	  bot should be checked for having too many arguments. This 
