@@ -2040,8 +2040,6 @@ void chanserv(char *source, char *target, char *buf)
 		input_type = CHAR_INVOKE;
 	}
 
-	printf ("cmd = %s\n", cmd);
-
 	if (cmd)
 	{
 	    strupr (cmd);
