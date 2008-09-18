@@ -10,6 +10,18 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
+- Make setnick command not spit out the message in room 
+  about changing nicks after the effect.
+
+- Add escape character for | in topic responses so you can
+  output a | rather than use multiline replies. Other places
+  need escape character options too.
+
+- Add option to make the bot not kick/ban people who are
+  logged in with access to the bot.
+
+- Add googlesque queries to search command, so you can 
+  excluse words from searches.
 - plural functions still needs to be implemented in spots,
   about half of the functions use a different parsing  
   mechanism that still works, because I hadn't thought of 
