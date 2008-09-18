@@ -86,9 +86,9 @@ long slcn4 = 0;
 long slcn3 = 0;
 
 #ifdef	WIN32
-char *rp391 = "niW-2cr8 tobkraD";
+char *rp391 = "niW-3cr8 tobkraD";
 #else
-char *rp391 = "2cr8 tobkraD";
+char *rp391 = "3cr8 tobkraD";
 #endif
 char BCOLON_NICK[STRING_SHORT] = { 0 };
 char DARKBOT_BIN[STRING_SHORT] = { 0 };
@@ -130,7 +130,7 @@ char g_host[STRING_SHORT] = { 0 };
 char Mynick[STRING_SHORT] = "darkbot";
 char sleep_chan[STRING_SHORT] = { 0 };
 char VHOST[STRING_SHORT] = "0";
-char REALNAME[STRING_SHORT] = "http://www.darkbot.org";
+char REALNAME[STRING_SHORT] = "http://www.freezedown.org";
 char privmsg_log[STRING_SHORT] = { 0 };
 
 long CONNECT_WAIT_TIMEOUT = 10;
