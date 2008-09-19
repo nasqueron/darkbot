@@ -7,6 +7,8 @@
      
 
 Darkbot 8rc3: Sep 17 2008
+	- Fixed USERLIST and SETINFO commands crashing with no args. 
+ 	  There's probably more of these to come.
 	- Topics can now start with these commands that check for too
           many arguments. Say you want to do:
 

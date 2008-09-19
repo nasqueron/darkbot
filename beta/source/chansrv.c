@@ -616,7 +616,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
 	    if (cf (userhost, source, target))
 		return result;
-	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.darkbot.org/ .",
+	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.freezedown.org/ .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
 	}
 	else
@@ -1391,8 +1391,11 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 	struct chanserv_output *result = NULL;
 	char	str [STRING_LONG] = {0};
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if (!args)
 		return chanserv_asprintf (NULL, "My %s variables are: ^ nick, %% number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & %% times (also, if you make the first char of your %s a \"+\", the %s will be shown as an ACTION).", cmd, cmd, cmd);
+
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return;
 	
 	update_setinfo (userhost, str, source);
 	save_changes();
@@ -1652,7 +1655,7 @@ struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd
 	char	str	[STRING_LONG] = {0};
 	int	i = 0;
 	
-	if (!args[0])
+	if (!args)
 	{
 		show_helper_list (source, 0);
 		return result;
@@ -2033,15 +2036,16 @@ void chanserv(char *source, char *target, char *buf)
 		input_type = ADDRESS_INVOKE;
 		cmd = strtok (NULL, " ");
 	}
-	else if (cmd && *cmd == *CMDCHAR)
-	{
-		cmd++;
-		command = 1;
-		input_type = CHAR_INVOKE;
-	}
 
 	if (cmd)
 	{
+	    if (*cmd == *CMDCHAR)
+            {
+               cmd++;
+               command = 1;
+               input_type = CHAR_INVOKE;
+            }
+            
 	    strupr (cmd);
     	    for (i = 0; chanserv_commands[i].func != NULL; i++)
 	    {
@@ -2142,6 +2146,9 @@ void chanserv(char *source, char *target, char *buf)
 		 * intended for commands which have no arguments.  
 		 */
 
+		if (*ptr == '!')
+			ptr++;
+		
 		/* Actual number of arguments supplied. */
 		k = count_char (ptr, ' ');
 
@@ -2165,7 +2172,7 @@ void chanserv(char *source, char *target, char *buf)
 				break;
 			    }
 			}
-		     	args[i++] = NULL;
+		        args[i++] = NULL;
 		     }
 		     else
 			return;

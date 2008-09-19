@@ -10,6 +10,10 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
+
+- Freenode uses different identd syntax n=blah@host, update
+  masking to use this and remove the n= part.
+
 - Make setnick command not spit out the message in room 
   about changing nicks after the effect.
 
