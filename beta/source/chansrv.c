@@ -350,7 +350,7 @@ struct chanserv_output *chanserv_char(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args)
 		return result;
 
 	return chanserv_asprintf(NULL, "%c -> %d.", args[0][0], args[0][0]);
@@ -610,7 +610,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 	char str [STRING_LONG] = {0};
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if (!args)
 	{
 	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s .  In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37 .  To do a search on a word, or partial text, just type: search <text> or dsearch <text> , eg; \37search nuke\37.", 
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
@@ -618,10 +618,13 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 		return result;
 	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.freezedown.org/ .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
+	    return (result);
 	}
-	else
-	    result = chanserv_show_help(str, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
+	
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+		return;
 
+        result = chanserv_show_help(str, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
 	return result;
 }
 
