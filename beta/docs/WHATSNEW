@@ -7,6 +7,9 @@
      
 
 Darkbot 8rc4: April 30, 2009
+	- Fixed extensions.m4 file from discriminating against
+	  me using a newer version of automake than 1.9.6, and
+  	  removed a few automake warnings.
 	- Fixed autotopic only using first word of input.
  	- Fixed crash on ADD command and probably others when msg
           with no arguments.
