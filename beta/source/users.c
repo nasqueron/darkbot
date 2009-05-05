@@ -244,6 +244,12 @@ char	*uh_from_nick (char *who, const char *chan)
 	const struct	userlist *c = userhead;
 	for (; c != NULL; c = c->next)
 	{
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, "#*"))
+		{
+			strcpy (mask_tmp, c->uh);
+			return (mask_tmp);
+		}
+
 		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			strcpy (mask_tmp, c->uh);

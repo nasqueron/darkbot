@@ -110,7 +110,7 @@ struct chanserv_output *chanserv_add(char *source, char *target, char *cmd, char
 	struct chanserv_output *result = NULL;
 	char str [STRING_LONG] = { 0 }, topic [STRING_LONG] = {0};
 
-	if (!args)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Add what?");
 		
 	/* Save topic since we're chopping args[0] off later. */
@@ -274,10 +274,14 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+	char	topic	[STRING_LONG] = {0};
 
 	if (!args)
 		return result;
-	set_autotopic (source, target, args[0]);
+	if (db_argstostr(topic, args, 0, ' ') < 1)
+		return result;
+
+	set_autotopic (source, target, topic);
 
 	return result;
 }
@@ -324,8 +328,8 @@ struct chanserv_output *chanserv_chan_info(char *source, char *target, char *cmd
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
-		show_chaninfo (source, target, target);
+	if (!args || !args[0])
+		return result;
 	else
 		/* If args[0] is not a valid channel name, just use the current channel */
 		show_chaninfo (source, ((*args[0] == '#' || *args[0] == '&' || *args[0] == '+') ? args[0] : target), target);
@@ -396,6 +400,7 @@ struct chanserv_output *chanserv_data_search(char *source, char *target, char *c
 
 	if (!args)
 		return chanserv_asprintf(NULL, "What should I be %sing for?", cmd);
+	printf ("args[0] = %s\n", args[0]);
 	datasearch (source, args[0], target);
 
 	return result;
@@ -905,12 +910,14 @@ struct chanserv_output *chanserv_login(char *source, char *target, char *cmd, ch
 
 struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
+	int i  = 0;
 	struct chanserv_output *result = NULL;
 
-	if(args[0] == NULL)
+	if(!args || !args[0])
 		return result;
 
-	return chanserv_asprintf(NULL, " %s", mask_from_nick(args[0], target));
+	return chanserv_asprintf(NULL, " %s", 
+		(invoked == MSG_INVOKE) ? mask_from_nick(args[0], "#*") : mask_from_nick(args[0], target)); 
 }
 
 //#ifndef	WIN32
@@ -2030,7 +2037,9 @@ void chanserv(char *source, char *target, char *buf)
     	    return;
 
 	if (*target != '#' && *target != '&' && *target != '+')
+	{
 		input_type = MSG_INVOKE;
+	}
 	else if (strcasecmp (cmd, NICK_COMMA) == 0 || 
                  strcasecmp (cmd, COLON_NICK) == 0 || 
                  strcasecmp (cmd, BCOLON_NICK) == 0 || 
@@ -2169,13 +2178,14 @@ void chanserv(char *source, char *target, char *buf)
 				
 			    /* Check for more arguments needed, but don't
 			     * bail out, we'll take care of it later. */
-			    if ((i < j) && (!args[i]))
+			    if ((i < j) && (args[i] == NULL))
 			    {
 				more_needed = 1;
 				break;
 			    }
 			}
-		        args[i++] = NULL;
+			if (more_needed != 1)
+			        args[i++] = NULL;
 		     }
 		     else
 			return;

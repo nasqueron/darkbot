@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.59)
+AC_PREREQ(2.63)
 AC_INIT([Darkbot],[8rc3],[darkbot-devel@lists.sourceforge.net])
 AC_COPYRIGHT([Copyright 1996-2008 Darkbot Development Team])
 AC_REVISION($Revision$)
@@ -11,15 +11,15 @@ AC_CONFIG_SRCDIR([../source/parse.c])
 # Preserve 8.3 file format for MS-DOS compatibility.
 AC_CONFIG_HEADERS([config.h:config-h.in])
 
-AM_INIT_AUTOMAKE([foreign 1.9 -Wall -Werror subdir-objects no-dependencies])
+AM_INIT_AUTOMAKE([foreign 1.10 -Wall -Werror subdir-objects no-dependencies])
 
 # Checks for programs.
-AC_GNU_SOURCE
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
+AC_USE_SYSTEM_EXTENSIONS
 
 gl_USE_SYSTEM_EXTENSIONS
 
@@ -51,7 +51,6 @@ AC_FUNC_REALLOC
 # FIXME: change all select()'s to cater to the detected results of AC_FUNC_SELECT_ARGTYPES.
 # Probably not a lot can be done with the results actually.
 AC_FUNC_SELECT_ARGTYPES
-AC_TYPE_SIGNAL
 AC_FUNC_LSTAT
 AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_FUNC_STAT

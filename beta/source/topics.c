@@ -133,6 +133,7 @@ set_autotopic (char *source, char *target, char *topic)
 		del_autotopic (target);
 		return;
 	}
+	
 	if (strlen (topic) >= 400)	/* make sure no overflow */
 		topic[400] = '\0';
 	if (exist == 0)

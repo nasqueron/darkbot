@@ -280,7 +280,7 @@ prepare_bot (void)
 			default:
 				esc = 1;
 				printf
-					(".: Connected to %s:%ld! [%ld]\t\r", BS, BP, (long) getpid ());
+					(".: Connected to %s:%ld! [%ld]\t\n", BS, BP, (long) getpid ());
 
 				fflush (stdout);
 				db_sleep (5);

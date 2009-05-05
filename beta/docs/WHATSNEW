@@ -6,6 +6,10 @@
     ******************************************************* 
      
 
+Darkbot 8rc4: April 30, 2009
+	- Fixed autotopic only using first word of input.
+ 	- Fixed crash on ADD command and probably others when msg
+          with no arguments.
 Darkbot 8rc3: Sep 17 2008
 	- Fixed USERLIST and SETINFO commands crashing with no args. 
  	  There's probably more of these to come.
