@@ -431,7 +431,7 @@ struct chanserv_output *chanserv_delete(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (args[0] == NULL || !args)
 		return chanserv_asprintf(NULL, "%s what?", cmd);
 	if (strlen (args[0]) > MAX_TOPIC_SIZE)
 		args[0][MAX_TOPIC_SIZE] = '\0';
@@ -463,7 +463,7 @@ struct chanserv_output *chanserv_deluser(char *source, char *target, char *cmd, 
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Enter the user@host to delete!");
 	delete_user_ram (source, args[0]);
 
@@ -477,7 +477,7 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 	char 	str [STRING_LONG] = {0}, chan[STRING_LONG] = {0};
 
 	/* Make sure first arg, which should be target chan, is there. */
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	    return result;
 	
 	strncpy (chan, args[0], sizeof (chan));
@@ -512,7 +512,7 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 	struct chanserv_output *result = NULL;
 	char chan [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	    return result;
 
 	strncpy (chan, args[0], sizeof (chan));
@@ -568,7 +568,7 @@ struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_display(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	display_url(target, source, args[0]);
 
@@ -638,7 +638,7 @@ struct chanserv_output *chanserv_idle(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 	long unixtime = 0;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	if (strcasecmp (args[0], source) == 0)
 		return chanserv_asprintf(NULL, "Don't be lame.");
@@ -668,7 +668,7 @@ struct chanserv_output *chanserv_ignore(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
     	    return chanserv_asprintf(NULL, "Ignore who?");
 	if ( add_ignore_user_ram(args[0]) > 0 )
     	    result = chanserv_asprintf(result, "Ignoring %s.", args[0]);
@@ -707,7 +707,7 @@ struct chanserv_output *chanserv_isop(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	result = chanserv_asprintf(NULL, "%s is %san op in channel %s.", args[0], is_op(args[0], target) ? "" : "not ", target);
 
@@ -718,7 +718,7 @@ struct chanserv_output *chanserv_join(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		S ("JOIN %s\n", target);
 	else
 	{
@@ -740,7 +740,7 @@ struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, cha
 	char server [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 	long sn = 0;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 
 	strncpy (server, args[0], sizeof (server));
@@ -770,7 +770,7 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 	char 	chan[STRING_LONG] = {0}, nick[STRING_LONG] = {0},
 		reason [STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "Specify a nick/channel!");
 
 	if (invoked == MSG_INVOKE)
@@ -872,7 +872,7 @@ struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	
 	return chanserv_asprintf(NULL, "It was %d chars long.", strlen (args[0]));
@@ -883,7 +883,7 @@ struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, ch
 	struct chanserv_output *result = NULL;
 	char *uh;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	uh = uh_from_nick(args[0], target);
 	if (uh)
@@ -901,7 +901,7 @@ struct chanserv_output *chanserv_login(char *source, char *target, char *cmd, ch
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 	do_login (source, args[0]);
 
@@ -1245,7 +1245,7 @@ struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, 
 	struct chanserv_output *result = NULL;
 	char   topic [STRING_LONG] = {0}, str [STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Replace what?");
 
 	if (strlen(args[0]) > MAX_TOPIC_SIZE)
@@ -1285,7 +1285,7 @@ struct chanserv_output *chanserv_reserved_1(char *source, char *target, char *cm
 {
 	struct chanserv_output *result = NULL;
 
-        if (args[0] == NULL)
+        if (!args || !args[0])
             return result;
         call_reserved_1(source, target, args[0]);
 
@@ -1296,7 +1296,7 @@ struct chanserv_output *chanserv_reserved_2(char *source, char *target, char *cm
 {
 	struct chanserv_output *result = NULL;
 
-        if (args[0] == NULL)
+        if (!args || !args[0])
             return result;
         call_reserved_2(source, target, args[0]);
 
@@ -1322,7 +1322,7 @@ struct chanserv_output *chanserv_search(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	{
 		if (strcasecmp(cmd, "FIND") == 0)
 			result = chanserv_asprintf(NULL, "%s?", TRY_FIND);
@@ -1339,7 +1339,7 @@ struct chanserv_output *chanserv_seen(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	{
 		count_seen(source, target);
 		return result;
@@ -1356,7 +1356,7 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 	struct chanserv_output *result = NULL;
 	struct setup_parameter *param = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 
 	param = set_parameter(args[0]);
@@ -1486,7 +1486,7 @@ struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, 
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Specify a nick!");
 	if (strcasecmp (args[0], Mynick) == 0)
 		result = chanserv_asprintf(result, "How about I not do that?");
@@ -1502,7 +1502,7 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 	char	str	[STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "Tell who?");
 	if (args[1] == NULL)
 	    return chanserv_asprintf(NULL, "What do you want me to tell %s?", args[0]);
@@ -1555,7 +1555,7 @@ struct chanserv_output *chanserv_unignore(char *source, char *target, char *cmd,
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
     	    return chanserv_asprintf(NULL, "Unignore who?");
 	if ( delete_ignore_user_ram (args[0]) > 0 )
     	    result = chanserv_asprintf(result, "Unignoring %s.", args[0]);
@@ -1575,7 +1575,7 @@ struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd,
 	/* Check if anything was given as input and only do stuff 
 	 * (in this function, anyway) if so. */
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return result;
 
 	/* Make sure current time is available while acquiring it. */
@@ -1773,7 +1773,7 @@ struct chanserv_output *chanserv_wakeup(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Show weather from where?");
 	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 
@@ -1787,7 +1787,7 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 	char str [STRING_LONG] = {0};
 	char *ptr3 = NULL;
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "You were asking?");
 	if (args[1] == NULL)
 		return result;
@@ -1815,7 +1815,7 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 	struct chanserv_output *result = NULL;
 	char str	[STRING_LONG] = {0};
 
-	if (args[0] == NULL)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Whisper to who?");
 	if (args[1] == NULL)
 		return chanserv_asprintf(NULL, "What do you want me to whisper to %s?", args[0]);

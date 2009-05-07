@@ -6,6 +6,12 @@
     ******************************************************* 
      
 
+Darkbot 8rc4: May 07, 2009 
+ 	- Fixed several commands that crashed not checking for
+	  a null argument array. The fix I did looks sort of 
+ 	  retarded, but I found if i didn't check args[0] and args
+	  both, it would crash on different command types.
+	  Go figure. This fix works and I'll work on bettering it.
 Darkbot 8rc4: April 30, 2009
 	- Fixed extensions.m4 file from discriminating against
 	  me using a newer version of automake than 1.9.6, and
