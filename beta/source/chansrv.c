@@ -1503,7 +1503,7 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 
 	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "Tell who?");
-	if (args[1] == NULL)
+	if (!args[1])
 	    return chanserv_asprintf(NULL, "What do you want me to tell %s?", args[0]);
 	if (strcasecmp (args[1], Mynick) == 0)
 	    return result;			/* don't bother telling myself about stuff */
