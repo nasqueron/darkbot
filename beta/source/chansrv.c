@@ -1160,8 +1160,11 @@ struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *
 
 	/* Fill argument buffer, if it's empty we return a message to 
  	 * the user asking for input. */
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "What do you want to add?");
+	
+	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	    return result;
 
 	if (invoked == MSG_INVOKE)
 	{
