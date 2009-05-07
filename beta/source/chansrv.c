@@ -206,10 +206,6 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	if ((args[0] == NULL) || (args[1] == NULL) || (strlen(args[0]) < 2))
 		return result;
 
-	/* Check for valid numbers. */
-	if (strspn (args[0], NUMBER_LIST) != strlen (args[0]))
-		return chanserv_asprintf(NULL, "Time must be a number.");
-
 	if (*args[0] == 'd')
 	{
 		/* Days. */
