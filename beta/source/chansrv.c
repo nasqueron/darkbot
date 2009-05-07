@@ -1460,6 +1460,8 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 {
 	struct chanserv_output *result = NULL;
 
+	if (!args || !args[0])
+		return result = chanserv_asprintf (NULL, "Syntax: %s <nick>", cmd);
 	get_stats(target, args[0]);
 	return result;
 }
