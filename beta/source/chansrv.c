@@ -598,7 +598,7 @@ struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if(args[0] == NULL)
+	if(!args || !args[0])
     	    return chanserv_asprintf(NULL, "Google what?");
 	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 
@@ -936,7 +936,7 @@ struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, ch
 {
 	struct chanserv_output *result = NULL;
 
-        if(args[0] == NULL)
+        if(!args || !args[0])
             return chanserv_asprintf(NULL, "Metar what?");
         web_post_query (cmd, source, userhost, target, args[0], strlen(args[0]));
 
@@ -949,7 +949,7 @@ struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 
 	// If no nick was specified...
-	if(args[0] == NULL)
+	if(!args || !args[0])
 		return chanserv_asprintf(NULL, "Specify a nick!");
 	
 	// If the nick specified contains illegal characters...
@@ -1472,7 +1472,7 @@ struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char
 {
 	struct chanserv_output *result = NULL;
 
-        if(args[0] == NULL)
+        if(!args || !args[0])
             return chanserv_asprintf(NULL, "Taf what?");
         web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 

@@ -7,6 +7,8 @@
      
 
 Darkbot 8rc4: May 07, 2009 
+	- Fixed NICK, METAR, TAR commands from crashing with
+	  no arguments.
 	- Fixed stats command crashing with no arguments.
 	- Fixed alarmclock function.
 	- Fixed permbans command not outputting help for null
