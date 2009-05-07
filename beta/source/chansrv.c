@@ -1201,13 +1201,16 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 	char str [STRING_LONG] = {0};
 
 	/* Check for arguments */
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+
+	if (!args || !args[0])
 	{
 		snprintf(temp, sizeof (temp), "ls %s/*.rdb | wc\n", RDB_DIR);
 		result = chanserv_asprintf(result, "RDB: %s.", run_program(temp));
 	}
 	else
 	{
+		if ((db_argstostr (str, args, 0, ' ')) < 1)
+			return result;
 		if (strspn(str, SAFE_LIST) != strlen(str))
 			return chanserv_asprintf(NULL, "Rdb files are made up of letters and or numbers, no other text is accepted.");
 		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, str);

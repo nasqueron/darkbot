@@ -6,7 +6,8 @@
     ******************************************************* 
      
 
-Darkbot 8rc4: May 07, 2009 
+Darkbot 8rc4: May 07, 2009
+	- Fixed TELL and RDB commands.
 	- Fixed NICK, METAR, TAR commands from crashing with
 	  no arguments.
 	- Fixed stats command crashing with no arguments.
