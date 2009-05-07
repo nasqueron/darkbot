@@ -542,10 +542,14 @@ struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char
 	char 	 str [STRING_LONG] = {0};
 	long	 unixtime = 0;
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if (!args || !args[0])
 		Snow("QUIT :K\2\2illed (%s (cause I say so!))\n", source);
 	else
+	{
+		if ((db_argstostr (str, args, 0, ' ')) < 1)
+			return result;
 		Snow("QUIT :K\2\2illed (%s (%s))\n", source, str);
+	}
 
 	db_sleep (1);
 
