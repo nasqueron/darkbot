@@ -1054,8 +1054,9 @@ struct chanserv_output *chanserv_perm_ban(char *source, char *target, char *cmd,
 	struct chanserv_output *result = NULL;
 	char   reason [STRING_LONG] = {0}, host [STRING_LONG] = {0};
 
-	if (!args[0])
-		return result;
+	if (!args || !args[0])
+		return result = chanserv_asprintf(result, "Type !help permbans");
+
 	strncpy (host, args[0], sizeof host);
 	args++;
 
