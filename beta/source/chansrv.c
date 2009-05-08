@@ -1015,10 +1015,12 @@ struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char 
 
 struct chanserv_output *chanserv_os_show(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
+	struct chanserv_output *result = NULL;
 	char temp[1024] = { 0 };
+	char *reply = NULL;	
 
 #ifdef	WIN32
-	snprintf (temp, sizeof (temp), "cmd /c ver;uname\n");
+	snprintf (temp, sizeof (temp), "cmd /c ver\n");
 #else				
 	snprintf (temp, sizeof (temp), "uname\n");
 #endif
