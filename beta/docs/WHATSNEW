@@ -9,7 +9,7 @@
 Darkbot 8rc4: May 09, 2009
 	- Fixed retarded error in MEM command where I was trying
           to change the contents of a const variable.
-	- Made OS, MEM commands check for too many arguments.
+	- Made OS, MEM, CMDCHAR, and CPU commands check for too many arguments.
 	- Fixed OS command on Windows.
 	- Fixed chanserv_random_stuff.
 	- Fixed TELL, RDB, and DIE commands crashing with
