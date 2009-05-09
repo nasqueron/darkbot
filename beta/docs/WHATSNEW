@@ -6,7 +6,8 @@
     ******************************************************* 
      
 
-Darkbot 8rc4: May 07, 2009
+Darkbot 8rc4: May 09, 2009
+	- Made OS command check for too many arguments.
 	- Fixed OS command on Windows.
 	- Fixed chanserv_random_stuff.
 	- Fixed TELL, RDB, and DIE commands crashing with

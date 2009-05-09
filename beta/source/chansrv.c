@@ -1928,7 +1928,7 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, 0, chanserv_op,		{"OP", NULL, NULL, NULL, NULL}, "[#channel] <nicks>", "Add channel operator status to users."},
 #endif
-    {INFO_COMMAND,    0, 0, 0, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, "Show the operating system that bot is running on."},
+    {INFO_COMMAND,    0, 0, 1, chanserv_os_show,		{"OS", NULL, NULL, NULL, NULL}, NULL, "Show the operating system that bot is running on."},
     {PASSWORD_COMMAND, 0, 2, 0, chanserv_password,		{"PASSWORD", "PASS", "PASSWD", NULL, NULL}, "<old password> <new password>", "Change your bot access list password."},
     {DANGER_COMMAND,  3, 0, 0, chanserv_performs,		{"PERFORMS", NULL, NULL, NULL, NULL}, NULL, "Perform the tasks in the perform.ini startup script."},
 #ifdef ENABLE_CHANNEL
