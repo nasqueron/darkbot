@@ -924,11 +924,11 @@ struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
-	const char *ptr = NULL;
 
 	snprintf(temp, sizeof (temp), "ps u -p %d\n", getpid());
 	
-	if ((ptr = run_program (temp)) == NULL)
+	const char *ptr = run_program (temp);
+	if (ptr == NULL)
 		return chanserv_asprintf(NULL, "Unable to gather data for mem output.\n");
 	else
 		return chanserv_asprintf(NULL, "ps: %s", ptr);
@@ -1919,7 +1919,7 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {INFO_COMMAND,    0, 1, 0, chanserv_mask,		{"MASK", NULL, NULL, NULL, NULL}, "<nick>", "Show the users user@host mask."},
 //#ifndef	WIN32
-    {INFO_COMMAND,    3, 0, 0, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, "Shows some memory usage and process statistics."},
+    {INFO_COMMAND,    3, 0, 1, chanserv_memory,		{"MEM", "RAM", NULL, NULL, NULL}, NULL, "Shows some memory usage and process statistics."},
 //#endif
 #ifdef ENABLE_METAR
     {NORMAL_COMMAND,  0, 1, 0, chanserv_metar,		{"METAR", NULL, NULL, NULL, NULL}, "<city or code>", "Get raw METAR weather data."},
