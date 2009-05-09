@@ -337,7 +337,7 @@ struct chanserv_output *chanserv_chan_users(char *source, char *target, char *cm
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		show_chanusers (source, target);
 	else
 		/* If args[0] is not a valid channel name, just use the current channel. */
@@ -350,7 +350,7 @@ struct chanserv_output *chanserv_char(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		return result;
 
 	return chanserv_asprintf(NULL, "%c -> %d.", args[0][0], args[0][0]);
