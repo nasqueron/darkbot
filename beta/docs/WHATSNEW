@@ -7,6 +7,9 @@
      
 
 Darkbot 8rc4: May 10, 2009
+	- Sleep command now checks for too many args, this is part
+	  of the command structure now, so more commands are to follow
+	  probably.
 	- MSG_INVOKE'd commands now also check for too many arguments.
 	- Commands with less arguments than expected now show
 	  help messages again.
