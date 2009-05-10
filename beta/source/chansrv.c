@@ -181,14 +181,14 @@ struct chanserv_output *chanserv_add_user(char *source, char *target, char *cmd,
 	char temp[1024] = { 0 };
 	long sn = 0;
 
-	if (!args[3])
+	if (!args || !args[0] || !args[1] || !args[2] || !args[3])
 		return result;
 	sn = atoi(args[2]);
 	if (sn > 10 || sn <= 0)
 		return result;
 	if (strlen(args[1]) < 7)
 		return result;
-	sprintf(temp, "I haven't used \2%cSETINFO\2 yet!", *CMDCHAR);
+	snprintf(temp, sizeof (temp), "I haven't used \2%cSETINFO\2 yet!", *CMDCHAR);
 	add_helper(args[0], mask_from_nick(args[1], target), sn, 0, temp, args[3], 0);
 	save_changes();
 
@@ -337,7 +337,7 @@ struct chanserv_output *chanserv_chan_users(char *source, char *target, char *cm
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args || !args[0])
+	if (!args)
 		show_chanusers (source, target);
 	else
 		/* If args[0] is not a valid channel name, just use the current channel. */
@@ -350,7 +350,7 @@ struct chanserv_output *chanserv_char(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args || !args[0])
+	if (!args)
 		return result;
 
 	return chanserv_asprintf(NULL, "%c -> %d.", args[0][0], args[0][0]);
@@ -615,7 +615,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 	char str [STRING_LONG] = {0};
 
-	if (!args)
+	if (!args || !args[0])
 	{
 	    result = chanserv_asprintf(result, "I can be triggered by various forms of speech, all which must be addressed to me, in one of the following formats:  %s %s %s or even %s .  In my database, you can find a topic by saying my nick, <topic> .  eg; \37%s nuke\37 .  To do a search on a word, or partial text, just type: search <text> or dsearch <text> , eg; \37search nuke\37.", 
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
@@ -2008,8 +2008,8 @@ void chanserv(char *source, char *target, char *buf)
 	struct chanserv_output *result = NULL;
 	char *cmd = NULL, *userhost = NULL, oldbuf[BUFSIZ] = {"NULL"},
 	     *ptr = NULL;
-	int i = 0, j, found = -1, command = 0, wakeup = 0, exempt = 0,
-      	    more_needed = 0, too_many = 0, check_too_many = 0;
+	int i = 0, j = 0, found = -1, command = 0, wakeup = 0, exempt = 0,
+      	    more_needed = 0, too_many = 0, check_too_many = 0, arg_count = 0;
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
@@ -2176,7 +2176,7 @@ void chanserv(char *source, char *target, char *buf)
 		k = count_char (ptr, ' ');
 
 		/* Number of arguments expected. */
-		j = chanserv_commands[found].arg_count;
+		arg_count = chanserv_commands[found].arg_count;
 
 		if (k > 0)
 		{
@@ -2186,17 +2186,13 @@ void chanserv(char *source, char *target, char *buf)
 			for (i = 0; i < k; i++)
 			{
 			    args[i] = strtok(NULL, " ");
-				
-			    /* Check for more arguments needed, but don't
-			     * bail out, we'll take care of it later. */
-			    if ((i < j) && (args[i] == NULL))
-			    {
-				more_needed = 1;
-				break;
-			    }
 			}
-			if (more_needed != 1)
-			        args[i++] = NULL;
+			args[i++] = NULL;
+
+	   	        /* Check for more arguments needed, but don't
+			 * bail out, we'll take care of it later. */
+			 if (i < arg_count)
+			     more_needed = 1;
 		     }
 		     else
 			return;
@@ -2204,9 +2200,11 @@ void chanserv(char *source, char *target, char *buf)
 		   /* Check for too many args on special cases. */
 		   if (check_too_many == 1)
 		   {
-		      if ((input_type == ADDRESS_INVOKE) && (k > (j+1)))
+		      if ((input_type == ADDRESS_INVOKE) && (k > (arg_count+1)))
 		   	  too_many = 1;
-		      if ((k > j) && (input_type == DIRECT_INVOKE))
+		      if ((k > arg_count) && (input_type == DIRECT_INVOKE))
+			  too_many = 1;
+		      if ((k > arg_count) && (input_type == MSG_INVOKE))
 			  too_many = 1;
 		   }
 		}
@@ -2255,6 +2253,10 @@ void chanserv(char *source, char *target, char *buf)
 			}
 			/* No matching database entry. */
 			return;
+		}
+		else if ((more_needed == 1) && chanserv_commands[found].syntax)
+		{
+		        result = chanserv_show_help(cmd, check_access(userhost, (input_type == MSG_INVOKE) ? "#*" : target, 0, source));
 		}
 		else
 		{
@@ -2326,14 +2328,6 @@ void chanserv(char *source, char *target, char *buf)
 		    }
 		    chanserv_output_free(result);
 		}
-		else if (more_needed && (chanserv_commands[found].syntax))
-		{
-			if (input_type == MSG_INVOKE)
-			    S("NOTICE %s :SYNTAX - %s%s %s\n", source, command ? "!" : "", cmd, chanserv_commands[found].syntax);
-			else
-			    S("PRIVMSG %s :%s: SYNTAX - %s%s %s\n", target, source, command ? "!" : "", cmd, chanserv_commands[found].syntax);
-		}
-
 		free(args);
 	    }
 	}

@@ -6,7 +6,11 @@
     ******************************************************* 
      
 
-Darkbot 8rc4: May 09, 2009
+Darkbot 8rc4: May 10, 2009
+	- MSG_INVOKE'd commands now also check for too many arguments.
+	- Commands with less arguments than expected now show
+	  help messages again.
+	- Fixed crash error on ADDUSER command.
 	- Fixed retarded error in MEM command where I was trying
           to change the contents of a const variable.
 	- Made OS, MEM, CMDCHAR, and CPU commands check for too many arguments.
