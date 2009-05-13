@@ -7,6 +7,8 @@
      
 
 Darkbot 8rc4: May 13, 2009
+	- Added the "You must specify a search string" message to
+	  RANDQ and RANDQ commands with no arguments.
 	- RANDQ and RANDQ commands doesn't crash anymore without
  	  arguments. I changed the command parser a small amount, 
 	  so these may pop up a little until all commands have

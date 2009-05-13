@@ -1138,7 +1138,7 @@ struct chanserv_output *chanserv_random_quote(char *source, char *target, char *
 	struct chanserv_output *result = NULL;
 
 	if (!args || !args[0])
-		return result;
+		return result = chanserv_asprintf (NULL, "You must specify a search string.");
 
 	// RANDQ_NORMAL
 	do_randq(args[0], RANDQ_NORMAL, target, source);
@@ -1151,7 +1151,7 @@ struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char
 	struct chanserv_output *result = NULL;
 
 	if (!args || !args[0])
-		return result;
+		return result = chanserv_asprintf (NULL, "You must specify a search string.");
 
 	// RANDQ_CASE
 	do_randq(args[0], RANDQ_CASE, target, source);
