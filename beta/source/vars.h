@@ -336,6 +336,14 @@ enum setup_type
    ST_STRING = 2
 };
 
+enum chanserv_invoke_type
+{
+   DIRECT_INVOKE = 0,   // command
+   ADDRESS_INVOKE = 1,  // bot: command
+   MSG_INVOKE = 2,      // /msg bot command
+   CHAR_INVOKE = 3      // !command
+};
+
 extern struct setup_parameter
 {
     enum setup_type	type;
