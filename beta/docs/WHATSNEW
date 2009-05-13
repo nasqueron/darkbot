@@ -7,13 +7,14 @@
      
 
 Darkbot 8rc4: May 13, 2009
+	- Fixed DIE, NICK, METAR, PART, RANDQ, RANDQ2, RDB, STATS, TAR, 
+          TELL commands crashing with no args. I made a small change to 
+          the initial command parsing function which rendered some things 
+	  improper and made many functions crash because they were no 
+	  longer receiving the arguments they expected before the change.
 	- INFO2 command now outputs correctly in privmsg.
 	- Added the "You must specify a search string" message to
 	  RANDQ and RANDQ commands with no arguments.
-	- RANDQ and RANDQ commands doesn't crash anymore without
- 	  arguments. I changed the command parser a small amount, 
-	  so these may pop up a little until all commands have
-	  been transitioned. -Ron
 	- Sleep command now checks for too many args, this is part
 	  of the command structure now, so more commands are to follow
 	  probably.
@@ -26,11 +27,6 @@ Darkbot 8rc4: May 13, 2009
 	- Made OS, MEM, CMDCHAR, and CPU commands check for too many arguments.
 	- Fixed OS command on Windows.
 	- Fixed chanserv_random_stuff.
-	- Fixed TELL, RDB, and DIE commands crashing with
-          no args.
-	- Fixed NICK, METAR, TAR commands from crashing with
-	  no arguments.
-	- Fixed stats command crashing with no arguments.
 	- Fixed alarmclock function.
 	- Fixed permbans command not outputting help for null
 	  input. More to come.

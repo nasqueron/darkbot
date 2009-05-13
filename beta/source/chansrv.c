@@ -840,7 +840,7 @@ struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, ch
 	char	chan	[STRING_LONG] = {0},
 		reason  [STRING_LONG] = {0};
 
-	if (!args[0])
+	if (!args || !args[0])
 		S ("PART %s\n", target);
 	else
 	{
