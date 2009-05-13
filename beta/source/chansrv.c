@@ -195,8 +195,8 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	time_t 	sn = 0, unixtime = 0;
 	long	i = 0;
 
-	if ((args[0] == NULL) || (args[1] == NULL) || (strlen(args[0]) < 2))
-		return result;
+	if (!args || !args[0] || !args[1] || (strlen(args[0]) < 2))
+		return chanserv_asprintf(NULL, "Syntax: <time type: \2d/h/m/s\2><time> <text to say>");
 
 	if (*args[0] == 'd')
 	{
@@ -1192,10 +1192,13 @@ struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char
 	struct chanserv_output *result = NULL;
 	char 	str [STRING_LONG] = {0};
 
+	if (!args || !args[0])
+		return result;
+
 	if ((db_argstostr (str, args, 0, ' ')) < 1)
 		return result;
 
-	S("%s\n", str);
+	Snow("%s\n", str);
 
 	return result;
 }
@@ -1232,16 +1235,20 @@ struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 	long sn2 = 0, sn = 0;
+	char	str [STRING_LONG] = {0};
 
-	if (args[0] == NULL || args[1] == NULL || args[2] == NULL)
+	if (!args || !args[0] || !args[1] || !args[2])
 		return result;
 	sn = atoi (args[0]);
 	sn2 = atoi (args[1]);
+	if ((db_argstostr (str, args, 2, ' ')) < 1)
+		return result;
+
 	while (sn > 0)
 	{
-		S ("%s\n", args[2]);
-		sn--;
+		S ("%s\n", str);
 		db_sleep (sn2);
+		sn--;
 	}
 
 	return result;
