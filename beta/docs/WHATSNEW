@@ -6,7 +6,11 @@
     ******************************************************* 
      
 
-Darkbot 8rc4: May 10, 2009
+Darkbot 8rc4: May 13, 2009
+	- RANDQ and RANDQ commands doesn't crash anymore without
+ 	  arguments. I changed the command parser a small amount, 
+	  so these may pop up a little until all commands have
+	  been transitioned. -Ron
 	- Sleep command now checks for too many args, this is part
 	  of the command structure now, so more commands are to follow
 	  probably.

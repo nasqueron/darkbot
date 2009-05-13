@@ -698,7 +698,7 @@ struct chanserv_output *chanserv_info_size(char *source, char *target, char *cmd
 	struct stat statbuf;
 
 	if (stat (URL2, &statbuf) == 0)
-	    result = chanserv_asprintf(NULL, "My database file is presently %ld byte%s in size.", statbuf.st_size, statbuf.st_size == 1 ? "" : "s");
+	    result = chanserv_asprintf(NULL, "My database file is presently %ld byte%s in size.", statbuf.st_size, ((statbuf.st_size == 1) ? "" : "s"));
 
 	return result;
 }
@@ -1137,6 +1137,9 @@ struct chanserv_output *chanserv_random_quote(char *source, char *target, char *
 {
 	struct chanserv_output *result = NULL;
 
+	if (!args || !args[0])
+		return result;
+
 	// RANDQ_NORMAL
 	do_randq(args[0], RANDQ_NORMAL, target, source);
 
@@ -1146,6 +1149,9 @@ struct chanserv_output *chanserv_random_quote(char *source, char *target, char *
 struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+
+	if (!args || !args[0])
+		return result;
 
 	// RANDQ_CASE
 	do_randq(args[0], RANDQ_CASE, target, source);
@@ -1901,7 +1907,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  1, 1, 0, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<nick>", "Get bot to ignore a user."},
     {INFO_COMMAND,    0, 0, 1, chanserv_info,		{"INFO", NULL, NULL, NULL, NULL}, NULL, "Shows some information about bot and it's activity."},
     {INFO_COMMAND,    0, 0, 1, chanserv_info_2,		{"INFO2", NULL, NULL, NULL, NULL}, NULL, "Shows when the bot was compiled, and lines processed since startup."},
-    {INFO_COMMAND,    2, 0, 0, chanserv_info_size,		{"INFOSIZE", "DBSIZE", NULL, NULL, NULL}, NULL, "Show size of the database."},
+    {INFO_COMMAND,    2, 0, 1, chanserv_info_size,	{"INFOSIZE", "DBSIZE", NULL, NULL, NULL}, NULL, "Show size of the database."},
     {INFO_COMMAND,    0, 1, 0, chanserv_isop,		{"ISOP", NULL, NULL, NULL, NULL}, "<nick>", "Is user a channel op?"},
     {DANGER_COMMAND,  2, 1, 0, chanserv_join,		{"JOIN", "J", NULL, NULL, NULL}, "<#channel>", "Get bot to join a channel."},
     {INFO_COMMAND,    0, 0, 1, chanserv_joins_show,	{"JOINS?", NULL, NULL, NULL, NULL}, NULL, "Shows the number of user joins bot has seen in this channel since startup."},
