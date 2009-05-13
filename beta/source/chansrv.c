@@ -15,14 +15,6 @@ enum chanserv_command_type
     PASSWORD_COMMAND = 4
 };
 
-enum chanserv_invoke_type
-{
-   DIRECT_INVOKE = 0,   // command
-   ADDRESS_INVOKE = 1,  // bot: command
-   MSG_INVOKE = 2,      // /msg bot command
-   CHAR_INVOKE = 3      // !command
-};
-
 struct chanserv_command
 {
     enum chanserv_command_type	 type;
@@ -272,7 +264,7 @@ struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd
 	struct chanserv_output *result = NULL;
 	char	topic	[STRING_LONG] = {0};
 
-	if (!args)
+	if (!args || !args[0])
 		return result;
 	if (db_argstostr(topic, args, 0, ' ') < 1)
 		return result;
@@ -310,7 +302,7 @@ struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		return result;
 	if (strlen(args[0]) > 200)
 		args[0][200] = '\0';
@@ -337,7 +329,7 @@ struct chanserv_output *chanserv_chan_users(char *source, char *target, char *cm
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		show_chanusers (source, target);
 	else
 		/* If args[0] is not a valid channel name, just use the current channel. */
@@ -350,7 +342,7 @@ struct chanserv_output *chanserv_char(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		return result;
 
 	return chanserv_asprintf(NULL, "%c -> %d.", args[0][0], args[0][0]);
@@ -375,7 +367,7 @@ struct chanserv_output *chanserv_cycle(char *source, char *target, char *cmd, ch
 	int i = 0;
 	
 	/* Check for channel list parameter being specified. */
-	if (!args[0])
+	if (!args | !args[0])
 	{
 		S ("PART %s\n", target);
 		S ("JOIN %s\n", target);
@@ -394,7 +386,7 @@ struct chanserv_output *chanserv_data_search(char *source, char *target, char *c
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "What should I be %sing for?", cmd);
 	printf ("args[0] = %s\n", args[0]);
 	datasearch (source, args[0], target);
@@ -412,7 +404,7 @@ struct chanserv_output *chanserv_delban(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (!args)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Enter the user@host to purge!");
 	if (del_permban(source, args[0]) == 1)
 		S("MODE %s -b %s\n", target, args[0]);
@@ -427,7 +419,7 @@ struct chanserv_output *chanserv_delete(char *source, char *target, char *cmd, c
 {
 	struct chanserv_output *result = NULL;
 
-	if (args[0] == NULL || !args)
+	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "%s what?", cmd);
 	if (strlen (args[0]) > MAX_TOPIC_SIZE)
 		args[0][MAX_TOPIC_SIZE] = '\0';
@@ -688,7 +680,7 @@ struct chanserv_output *chanserv_info(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_info_2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	show_info2 (target, source);
+	show_info2 ((invoked == MSG_INVOKE) ? source : target, source, invoked);
 	return result;
 }
 

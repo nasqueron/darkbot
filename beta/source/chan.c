@@ -290,11 +290,12 @@ info (const char *source, char *target)
  *   this is a read only method.
  */
 void
-show_info2 (const char *target, const char *source)
+show_info2 (const char *target, const char *source, enum chanserv_invoke_type invoked)
 {
-	S ("PRIVMSG %s :%s, compiled on %s. "
+	S ("%s %s :%s, compiled on %s. " 
 	   "I have processed %ld lines of text since startup...\n",
-	   target, source, __DATE__, NUMLINESSEEN);
+	   (invoked == MSG_INVOKE) ? "NOTICE" : "PRIVMSG", target, 
+	   source, __DATE__, NUMLINESSEEN);
 }
 
 /**

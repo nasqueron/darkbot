@@ -10,7 +10,7 @@ char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
 void	show_seen				(char *, char *, char *),
 	count_seen				(char *, char *), 
-	show_info2				(const char *, const char *);
+	show_info2				(const char *, const char *, enum chanserv_invoke_type);
 
 long	save_seen				(char *, char *, char *);
 void	do_randomtopic				(int, char *, char *, char *, char *);
