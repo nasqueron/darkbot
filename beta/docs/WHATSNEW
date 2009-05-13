@@ -12,6 +12,8 @@ Darkbot 8rc4: May 13, 2009
           the initial command parsing function which rendered some things 
 	  improper and made many functions crash because they were no 
 	  longer receiving the arguments they expected before the change.
+	- Fixed CHAR_INVOKE'd commands to do nothing if given too many
+	  arguments. 
 	- INFO2 command now outputs correctly in privmsg.
 	- Added the "You must specify a search string" message to
 	  RANDQ and RANDQ commands with no arguments.

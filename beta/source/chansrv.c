@@ -2204,6 +2204,8 @@ void chanserv(char *source, char *target, char *buf)
 			  too_many = 1;
 		      if ((k > arg_count) && (input_type == MSG_INVOKE))
 			  too_many = 1;
+		      if ((k > arg_count) && (input_type == CHAR_INVOKE))
+			  return;
 		   }
 		}
 
