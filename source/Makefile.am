@@ -17,21 +17,21 @@ AM_CPPFLAGS = -I $(db_src) -I $(cm_src) -DDATABASEDIR='"$(databasedir)"' -DSOURC
 
 ## Compatability library.
 noinst_LIBRARIES = compat/libcompat.a
-compat_libcompat_a_SOURCES = $(cm_src)/dummy.c
+compat_libcompat_a_SOURCES = dummy.c
 compat_libcompat_a_LIBADD = @LIBOBJS@
 
 ## Darkbot server.
 bin_PROGRAMS = darkbot convertdb
-darkbot_SOURCES = $(db_src)/chan.c $(db_src)/general.c $(db_src)/permbans.c $(db_src)/reserved.c $(db_src)/sockets.c \
-                  $(db_src)/users.c $(db_src)/chansrv.c $(db_src)/helpers.c $(db_src)/quiz.c $(db_src)/seen.c $(db_src)/stats.c \
-                  $(db_src)/vars.c $(db_src)/comm.c $(db_src)/main.c $(db_src)/random.c $(db_src)/server.c $(db_src)/topics.c $(db_src)/web.c \
-                  $(db_src)/parse.c $(db_src)/raw.c $(db_src)/signals.c $(db_src)/url.c \
-                  $(db_src)/langs/*.h \
-                  $(db_src)/prototypes.h $(db_src)/vars.h
+darkbot_SOURCES = chan.c general.c permbans.c reserved.c sockets.c \
+                  users.c chansrv.c helpers.c quiz.c seen.c stats.c \
+                  vars.c comm.c main.c random.c server.c topics.c web.c \
+                  parse.c raw.c signals.c url.c \
+                  langs/*.h \
+                  prototypes.h vars.h
 darkbot_LDADD = compat/libcompat.a
 
 ## Utility programs.
-convertdb_SOURCES = $(db_src)/convertdb.c
+convertdb_SOURCES = convertdb.c
 convertdb_LDADD = compat/libcompat.a
 dist_bin_SCRIPTS = $(db_scripts)/AddServer $(db_scripts)/AddUser $(db_scripts)/check-integrity $(db_scripts)/dbcron $(db_scripts)/download-databases \
                   $(db_scripts)/kill.darkbot $(db_scripts)/live-update $(db_scripts)/restart.darkbot $(db_scripts)/Setup
