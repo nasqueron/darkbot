@@ -3,7 +3,8 @@
 sh clean.sh
 
 mkdir build && \
-cp source/configure.ac source/Makefile.am source/compat/*.h source/compat/*.c build && \
+cp source/configure.ac source/Makefile.am build && \
+mkdir build/compat && \
 mkdir build/dat && \
 cp dat/*.ini dat/*.db build/dat && \
 mkdir build/dat/rdb && \
