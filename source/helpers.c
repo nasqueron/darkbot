@@ -427,7 +427,7 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 						else if (c->greetz[length] == '%')
 						{
 							i++;
-							snprintf (temp, sizeof (temp), "%u%s", c->num_join, data);
+							snprintf (temp, sizeof (temp), "%u%s",(unsigned int)  c->num_join, data);
 						}
 						else if (c->greetz[length] == '$')
 						{

@@ -194,7 +194,7 @@ show_banlist (const char *nick)
 
 		snprintf (tmp, sizeof (tmp), "%s", DATA);
 		snprintf (DATA, sizeof(DATA), "%s %s:%u", 
-			  tmp, c->uh, c->counter);
+			  tmp, c->uh, (unsigned int) c->counter);
 		memset (tmp, 0, sizeof (tmp));
 
 		/* Only show at max 6 bans per message sent. */
