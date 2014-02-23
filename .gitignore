@@ -1,0 +1,8 @@
+/beta/build
+/beta/source/.dirstamp
+/beta/source/*.o
+/beta/source/compat/.dirstamp
+/beta/source/compat/*.o
+/beta/dat/autotopic.ini
+/beta/dat/info2.db.bak*
+/beta/dat/seen.db
