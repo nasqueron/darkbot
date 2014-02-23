@@ -1,6 +1,9 @@
 #define STRING_SHORT    512
 #define STRING_LONG     2048
 
+#define FLAG_CHANOP	0x0001
+#define FLAG_CHANVOICE	0x0002
+
 extern int wsock;
 extern int sockerr;
 extern int optlen;
@@ -41,7 +44,9 @@ extern long ram_load_time;
 extern long AIL9;
 extern long AIL666;
 extern long AIL8;
+#ifdef ENABLE_QUIZ
 extern long AIL13;
+#endif
 extern long LastInput;
 extern long AIL10;
 extern long MARK_CHANGE;
@@ -50,16 +55,18 @@ extern long lcn1;
 extern long lcn2;
 extern long lcn4;
 extern long lcn3;
-extern long SeeN;
+extern bool SeeN;
 extern long DebuG;
+#ifdef ENABLE_QUIZ
 extern long quiz_timer;
 extern long quiz_line;
 extern bool quiz_answer;
 extern bool quiz_halt;
 extern long recent_questions[10];
+#endif
 extern char NICK_COMMA[32];
 extern char COLON_NICK[33];
-extern char BPASS[32];
+extern char BPASS[STRING_SHORT];
 extern char pass_data[512];
 extern char pass_pass[STRING_SHORT];
 extern char rword[STRING_SHORT];
@@ -84,7 +91,9 @@ extern char URL2[STRING_SHORT];
 extern char DBTIMERS_PATH[STRING_SHORT];
 extern char LOG_DIR[STRING_SHORT];
 extern char RDB_DIR[STRING_SHORT];
+#ifdef ENABLE_STATS
 extern char STATS_FILE[STRING_SHORT];
+#endif
 extern char SEEN_FILE[STRING_SHORT];
 extern char BACKUP_DUP[STRING_SHORT];
 extern char ADD_DELETES[STRING_SHORT];
@@ -119,6 +128,93 @@ extern char VHOST[STRING_SHORT];
 extern char REALNAME[STRING_SHORT];
 extern char privmsg_log[STRING_SHORT];
 
+extern long CONNECT_WAIT_TIMEOUT;
+extern bool PERFORM_TIMER;
+extern char DEFAULT_UMODE[STRING_SHORT];
+extern bool ANTI_IDLE;
+extern bool DISPLAY_SYNC;
+
+extern bool SORT;
+extern bool FIND_DUPS;
+extern bool SAVE_DUPS;
+extern bool GENERAL_QUESTIONS;
+extern bool ALLOW_ADD_IN_MSG;
+extern bool ALLOW_DEL_IN_MSG;
+extern bool MSG_RESPONSES;
+
+extern bool LOG_ADD_DELETES;
+extern bool LOG_PRIVMSG;
+
+extern long SLEEP_TIME;
+extern char GOSLEEP_ACTION[STRING_SHORT];
+extern char WAKEUP_ACTION[STRING_SHORT];
+
+extern long LASTCOMM_TIME;
+extern long OUTPUT1_COUNT;
+extern long OUTPUT1_DELAY;
+extern long OUTPUT2_COUNT;
+extern long OUTPUT2_DELAY;
+extern long OUTPUT3_DELAY;
+extern long OUTPUT_PURGE_COUNT;
+
+extern char EXISTING_ENTRY[STRING_SHORT];
+extern char NO_ENTRY[STRING_SHORT];
+//extern char CANT_FIND[STRING_SHORT];	/* ... */
+extern char NO_TOPIC[STRING_SHORT];	/* ... */
+extern char TRY_FIND[STRING_SHORT];
+extern char WHUT[STRING_SHORT];
+extern bool RANDOM_WHUT;
+extern char DUNNO_Q[STRING_SHORT];
+extern bool RANDOM_DUNNO;
+
+#ifdef ENABLE_RANDOM
+//extern bool RANDOM_STUFF;
+extern long RAND_STUFF_TIME;
+extern long RAND_IDLE;
+//extern long RAND_LEVEL;
+//extern bool RANDQ;
+extern bool BACKUP_RANDOMSTUFF;
+#endif
+
+extern bool JOIN_GREET;
+extern long SLASTCOMM_TIME;
+#ifdef ENABLE_CHANNEL
+extern bool VOICE_USERS_ON_JOIN;
+extern bool OP_USERS_ON_LOGIN;
+#endif
+
+extern bool DO_WHOIS;
+extern long MAX_LASTSEEN;
+extern char SEEN_REPLY[STRING_SHORT];
+
+extern char COMPLAIN_REASON[STRING_SHORT];
+#ifdef ENABLE_CHANNEL
+extern bool BITCH_ABOUT_DEOP;
+extern char BITCH_DEOP_REASON[STRING_SHORT];
+
+extern long AUTOTOPIC_TIME;
+extern char DEFAULT_KICK[STRING_SHORT];
+extern bool KICK_ON_BAN;
+
+extern bool KICK_ON_CHANNEL_NOTICE;
+extern bool BAN_ON_CHANNEL_NOTICE;
+extern bool BAN_BY_HOST;
+
+extern bool FLOOD_KICK;
+extern char FLOOD_REASON[STRING_SHORT];
+#endif
+
+#ifdef ENABLE_QUIZ
+extern long QUIZ_TIMER;
+extern long QUIZ_REPEAT_TIMER;
+#endif
+
+extern bool HELP_GREET;
+extern bool AUTOHELP_GUESTS;
+
+extern char mySetinfo[STRING_SHORT];
+extern char myVariables[STRING_SHORT];
+
 extern struct rusage r_usage;
 
 extern struct ignorelist
@@ -136,12 +232,13 @@ extern struct sendq
  *sendqhead, *sendqtail;
 
 extern struct userlist
-{								/* internal userlist */
+{					/* internal userlist */
 	char chan[STRING_SHORT];
 	char nick[STRING_SHORT];
 	char uh[STRING_SHORT];
-	long level;					/* auth */
-	short global;				/* Global user? */
+	long flags;			/* op/voice/etc */
+	long level;			/* auth */
+	short global;			/* Global user? */
 	long idle;
 	struct userlist *next;
 }
@@ -185,7 +282,7 @@ extern struct old
 	int value;
 	int kick;
 }
-ood[STRING_SHORT];
+ ood[STRING_SHORT];
 
 extern struct sl124
 {
@@ -196,6 +293,7 @@ extern struct sl124
 }
  *sh124;
 
+#ifdef ENABLE_STATS
 extern struct statslist
 {
 	char nick[STRING_SHORT];
@@ -207,6 +305,7 @@ extern struct statslist
 	struct statslist *next;
 }
  *statshead;
+#endif
 
 extern struct	randstats
 {
@@ -214,10 +313,9 @@ extern struct	randstats
 	size_t	Rand_Stuff;
 	size_t	Rand_Idle;
 	size_t	refnum;
-	size_t	nCount;		// Number of times we outputted to this channel.
-
+	size_t	nCount;		/* Number of times we outputted to this channel. */
 	struct	randstats	*next;
-//	struct	randstats	*prev;
+/*	struct	randstats	*prev; */
 }	
  *randstatshead;
 
@@ -228,4 +326,32 @@ extern struct webinfo
 	int port;
 	char url[STRING_SHORT];
 }
- GOOGLE_webinfo, METAR_webinfo, TAF_webinfo;
+ GOOGLE_webinfo, METAR_webinfo, TAF_webinfo, WEATHER_webinfo;
+
+
+enum setup_type
+{
+   ST_BOOLEAN = 0,
+   ST_INTEGER = 1,
+   ST_STRING = 2
+};
+
+enum chanserv_invoke_type
+{
+   DIRECT_INVOKE = 0,   // command
+   ADDRESS_INVOKE = 1,  // bot: command
+   MSG_INVOKE = 2,      // /msg bot command
+   CHAR_INVOKE = 3      // !command
+};
+
+extern struct setup_parameter
+{
+    enum setup_type	type;
+    int			access;         /* Access level required to change the value. */
+    size_t		max_size;
+    char		*parameter[5];
+    char		*summary;
+    void		*value;         /* Where the value is stored. */
+    void 		*(*func) (struct setup_parameter *parameter, char *ptr);  /* Optional function that can do other things with the value, and veto the change by returning NULL. */
+}
+parameters[];

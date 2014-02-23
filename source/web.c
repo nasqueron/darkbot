@@ -1,7 +1,18 @@
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
-#include "stdio.h"
+
+#if defined ENABLE_GOOGLE || defined ENABLE_METAR || defined ENABLE_TAF || defined ENABLE_WEATHER
+
+static void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
+static int 	web_open_socket				(char *host, int port);
+static int 	web_write_server 			(int filedes, char *format,...);
+static int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
+static int 	google_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	weather_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
+
 int
 web_post_query(char *trigger, char *source, char *uh, char *target, char *query, int size)
 {
@@ -9,17 +20,21 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     char *mem = NULL;
     struct webinfo *wi = NULL;
     
-    if(stricmp (trigger, GOOGLE_webinfo.trigger) == 0)
+    if(strcasecmp (trigger, GOOGLE_webinfo.trigger) == 0)
     {
 	wi = (struct webinfo *) &GOOGLE_webinfo;
     }
-    else if(stricmp (trigger, METAR_webinfo.trigger) == 0)
+    else if(strcasecmp (trigger, METAR_webinfo.trigger) == 0)
     { 
 	wi = (struct webinfo *) &METAR_webinfo;
     }
-    else if(stricmp (trigger, TAF_webinfo.trigger) == 0)
+    else if(strcasecmp (trigger, TAF_webinfo.trigger) == 0)
     { 
 	wi = (struct webinfo *) &TAF_webinfo;
+    }
+    else if(strcasecmp (trigger, WEATHER_webinfo.trigger) == 0)
+    {
+        wi = (struct webinfo *) &WEATHER_webinfo;
     }
     else
     {
@@ -69,7 +84,7 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     return SUCCESS;
 }
 
-void
+static void
 init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port)
 {
     struct hostent *hostinfo;
@@ -85,7 +100,7 @@ init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port)
     name->sin_addr = *(struct in_addr *) hostinfo->h_addr;
 }
 
-int
+static int
 web_open_socket(char *host, int port)
 {
     extern void init_sockaddr (struct sockaddr_in *name, char *host, unsigned short int port);
@@ -126,7 +141,7 @@ web_open_socket(char *host, int port)
 	FD_ZERO(&set);
 	FD_SET(wsock, &set);
 
-	switch(select(FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+	switch(select(FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		return ERR_TIMED_OUT;
@@ -167,7 +182,7 @@ web_open_socket(char *host, int port)
     return SUCCESS;
 }
 
-int
+static int
 web_write_server (int filedes, char *format,...)
 {
     int	nbytes = 0;
@@ -187,7 +202,7 @@ web_write_server (int filedes, char *format,...)
 	FD_ZERO(&set);
 	FD_SET(filedes, &set);
 
-	switch (select(FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+	switch (select(FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		close(filedes);
@@ -196,7 +211,7 @@ web_write_server (int filedes, char *format,...)
 	    case -1:
 		if (!alarmed)
                 {
-		    sleep(RECHECK);
+		    db_sleep(RECHECK);
 		}
                 else
                 {
@@ -217,7 +232,7 @@ web_write_server (int filedes, char *format,...)
     }
 }
 
-int
+static int
 web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 {
     int nbytes = 0;
@@ -241,7 +256,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 	FD_ZERO(&set);
 	FD_SET(filedes, &set);
 
-	switch(select(FD_SETSIZE, &set, (fd_set *) 0, (fd_set *) 0, &timeout))
+	switch(select(FD_SETSIZE, &set, (fd_set *) NULL, (fd_set *) NULL, &timeout))
         {
 	    case 0:
 		close(filedes);
@@ -283,25 +298,177 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     close(filedes);
 
     
-    if(stricmp (host, GOOGLE_webinfo.trigger) == 0)
+    if(strcasecmp (host, GOOGLE_webinfo.trigger) == 0)
     {
 	google_parse_query(source, uh, target, mem);
     }
-    else if(stricmp (host, METAR_webinfo.trigger) == 0)
+    else if(strcasecmp (host, METAR_webinfo.trigger) == 0)
     { 
 	metar_parse_query(source, uh, target, mem);
     }
-    else if(stricmp (host, TAF_webinfo.trigger) == 0)
+    else if(strcasecmp (host, TAF_webinfo.trigger) == 0)
     { 
 	taf_parse_query(source, uh, target, mem);
+    }
+    else if (strcasecmp (host, WEATHER_webinfo.trigger) == 0)
+    {
+        weather_parse_query (source, uh, target, mem);
     }
 
     free(mem);
     
     return SUCCESS;
 }
+static int
+weather_parse_query (char *source, char *uh, char *target, char *data)
+{
+	char	*s1 = NULL, *s2 = NULL;
+	char	*tmp = NULL, *temp = NULL, *city = NULL;
+	char 	*humid = NULL, *dew = NULL;
+	char 	*wind = NULL, *pres = NULL, *cond = NULL;
+	char	*vis = NULL, *cloud = NULL, *wind2 = NULL;
+	char	*sunr = NULL, *suns = NULL;
 
-int
+	char	sub1[] = "<b>";
+	char	sub2[] = "<span class=\"nowrap\"><b>";
+
+	
+	if ((s1 = strstr (data, "Observed at")) != NULL)
+	{
+		s2 += 8;
+		if ((s2 = strstr (s1, sub1)) != NULL)
+		{
+			city = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}
+	}
+
+	if ((s1 = strstr (data, "Temperature")) != NULL)
+	{
+		if ((s2 = strstr(s1, sub1)) != NULL)
+		{
+			s2 += strlen (sub1);
+
+			temp = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}
+	}
+
+	if ((s1 = strstr (data, "Humidity")) != NULL)
+	{	
+		if ((s2 = strstr(s1, sub1)) != NULL)
+		{
+			s2 += strlen (sub1);
+			
+			humid = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+		}		
+	}	
+ 
+        if ((s1 = strstr (data, "Dew Point")) != NULL)
+ 	{
+        	 if ((s2 = strstr(s1, sub1)) != NULL)
+        	 {
+                	s2 += strlen (sub1);
+
+                 	dew = strtok (s2, "</b>");
+                 	data = strtok (NULL, "");
+		} 
+        }
+
+        if ((s1 = strstr (data, "Wind")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        wind = strtok (s2, "</b>");
+			data = strtok (NULL, "");
+			
+			if ((tmp = strstr (data, sub2)) != NULL)
+			{
+			 	tmp += strlen (sub2);
+				wind2 = strtok (tmp, "</b>");
+				data = strtok (NULL, "");
+			}
+		
+                }
+        }
+        
+	if ((s1 = strstr (data, "Pressure")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        pres = strtok (s2, "</b>");
+           	
+			data = strtok (NULL, "");			
+                }
+        }
+
+        if ((s1 = strstr (data, "Conditions")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        cond = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+
+        if ((s1 = strstr (data, "Visibility")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        vis = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                 }
+        }
+        
+	if ((s1 = strstr (data, "Clouds")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        cloud = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+        
+	if ((s1 = strstr (data, "Sunrise")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        sunr = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+        
+	if ((s1 = strstr (data, "Sunset")) != NULL)
+        {
+                 if ((s2 = strstr(s1, sub1)) != NULL)
+                 {
+                        s2 += strlen (sub1);
+
+                        suns = strtok (s2, "</b>");
+                        data = strtok (NULL, "");
+                }
+        }
+
+	/* Display stuff to target. */
+	S ("PRIVMSG %s :%s: Temperature (%s%cF) Humidity (%s) DewPoint (%s%cF) Wind (%s at %smph) Pressure (%s in) Conditions (%s) Visibility (%s miles) Clouds (%sft) Sunrise (%s) Sunset (%s)\n", 
+			target, city, temp, 176, humid, dew, 176, wind, wind2, pres, 
+			cond, vis, cloud, sunr, suns);
+
+}
+static int
 google_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -345,7 +512,9 @@ google_parse_query(char *source, char *uh, char *target, char *data)
         }
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), url);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {
@@ -355,7 +524,7 @@ google_parse_query(char *source, char *uh, char *target, char *data)
     return SUCCESS;
 }
 
-int
+static int
 metar_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -395,7 +564,9 @@ metar_parse_query(char *source, char *uh, char *target, char *data)
         snprintf(metardata, sizeof(metardata), "%s", s1);
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), metardata);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {
@@ -405,7 +576,7 @@ metar_parse_query(char *source, char *uh, char *target, char *data)
     return SUCCESS;
 }
 
-int
+static int
 taf_parse_query(char *source, char *uh, char *target, char *data)
 {
     char *s1 = NULL;
@@ -445,7 +616,9 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
         snprintf(tafdata, sizeof(tafdata), "%s", s1);
         
         S("PRIVMSG %s :%s%s\n", target, rand_reply(source), tafdata);
+#ifdef	ENABLE_STATS
         add_stats (source, uh, 1, time (NULL), time (NULL));
+#endif
     }
     else
     {
@@ -454,3 +627,5 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
     }
     return SUCCESS;
 }
+
+#endif

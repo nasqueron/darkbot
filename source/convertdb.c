@@ -1,33 +1,27 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-// If you are compiling this on a non cygwin environment it's bin should
-// be placed on scripts directory and being so userlist relative path
-// should be "../dat/userlist.db" and "../dat/temp.db".
+#include "defines.h"
+
+#define STRING_SHORT    512
+char DAT_DIR[STRING_SHORT] = { 0 };
+
+// FIXME: This may not be compatible with putting all exes into $prefix/bin.
 // Under cygwin the executable should be placed on Darkbot's root dir
 // due to the necessity of cygwin dynamic library.  
-// So... comment next 2 defines and uncomment the following 2 if you are
-// not compiling convertdb with cygwin. Also change what is commented
-// on "dat/userlist.db dat/backup.db" a couple lines bellow.
-// There is already a compiled bin on /scripts for unixes
-#define USERFILE	"dat/userlist.db"
-#define TMPFILE     "dat/temp.db"
-// #define USERFILE        "../dat/userlist.db"
-// #define TMPFILE     "../dat/temp.db"
 
-
-
-char *crypt (const char *key, const char *salt);
-
-int main(int argc, char *argv[]){    FILE *in, *out;
+int main(int argc, char *argv[])
+{
+    FILE *in, *out;
     char *ptr = NULL;
-	char *salt = "8fei3k";
+    const char *salt = "8fei3k";
+    char userlist[STRING_SHORT] = { 0 };
+    char tempfile[STRING_SHORT] = { 0 };
+    char temp[STRING_SHORT] = { 0 };
     char channel[1024] = { 0 };
     char uh[1024] = { 0 };
     char level[10] = { 0 };
     char joins[10] = { 0 };
     char pass[1024] = { 0 };
     char setinfo[1024] = { 0 };
+    struct stat st;
 
     printf("\nDarkbot USERLIST.DB < 7f0 conversion utility.\n");
     printf("IMPORTANT :: READ THIS!\n\n");
@@ -53,40 +47,60 @@ int main(int argc, char *argv[]){    FILE *in, *out;
         }
     }
     
-    printf("Converting ...\n");
+#ifdef DATABASEDIR
+	strncpy (DAT_DIR, DATABASEDIR, sizeof (DAT_DIR));
+#else
+	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
+#endif
+#ifdef SOURCEDIR
+	/* Check if this is being run from the build directory before being installed. */
+	snprintf(temp, sizeof(temp), "%s/dat/setup.ini", SOURCEDIR);
+	if (stat(temp, &st) >= 0)
+	{
+	    snprintf(temp, sizeof(temp), "%s/dat", SOURCEDIR);
+	    strncpy(DAT_DIR, temp, sizeof (DAT_DIR));
+	}
+#endif
 
-    if((in = fopen(USERFILE, "r")) == NULL)
+    snprintf(userlist, sizeof(userlist), "%s/userlist.db", DAT_DIR);
+    snprintf(tempfile, sizeof(tempfile), "%s/temp.db", DAT_DIR);
+
+    printf("Converting %s ...\n", userlist);
+
+    if((in = fopen(userlist, "r")) == NULL)
     {
-        printf("\nCan't open %s for reading!\n", USERFILE);
+        printf("\nCan't open %s for reading!\n", userlist);
         return EXIT_FAILURE;
-    }    if((out = fopen(TMPFILE, "wt")) == NULL)
+    }    if((out = fopen(tempfile, "wt")) == NULL)
     {
-        printf("\nCan't open %s for writing!\n", TMPFILE);
+        printf("\nCan't open %s for writing!\n", tempfile);
         return EXIT_FAILURE;
     }
 
-// Comment next line and uncomment the following one if you are
-// not compiling convertdb with cygwin.
-    system("cp dat/userlist.db dat/backup.db");    while(!feof(in))
-//    system("cp ../dat/userlist.db ../dat/backup.db");    while(!feof(in))
+    snprintf(temp, sizeof(temp), "cp %s %s/backup.db", userlist, DAT_DIR);
+    system(temp);
 
+    while(!feof(in))
     {
 	    fscanf(in, "%s %s %s %s %s %[^\n]s", channel, uh, level, joins, pass, setinfo);
 
-        if ((ptr = crypt (pass, salt)) == NULL)
+#ifdef ENABLE_ENCRYPT
+        if ((ptr = crypt(pass, salt)) == NULL)
         {
             printf("\ncrypt() error\n");
             return EXIT_FAILURE;
         }
+#endif
         if(!feof(in))
             fprintf(out, "%s %s %s %s %s %s\n", channel, uh, level, joins, ptr, setinfo);
     }
     fclose(in);
     fclose(out);
 
-    remove(USERFILE);
-    rename(TMPFILE, USERFILE);
+    remove(userlist);
+    rename(tempfile, userlist);
 
     printf("Conversion Complete.\n");
-    
-    return EXIT_SUCCESS;}
+
+    return EXIT_SUCCESS;
+}

@@ -33,6 +33,27 @@ check_files (void)
 
 }
 
+
+void *check_nick_parameter(struct setup_parameter *parameter, char *ptr)
+{
+    if (strspn (ptr, LEGAL_NICK_TEXT) != strlen (ptr))
+    {
+	printf("The nickname %s contains illegal characters.", ptr);
+	return NULL;
+    }
+
+    strncpy (s_Mynick, ptr, sizeof (s_Mynick));
+    snprintf(NICK_COMMA, sizeof (NICK_COMMA), "%s,", s_Mynick);
+    snprintf(COLON_NICK, sizeof (COLON_NICK), "%s:", s_Mynick);
+    snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", s_Mynick);
+    S("NICK %s\n", s_Mynick);
+
+    if(LOG_PRIVMSG)
+	snprintf (privmsg_log, sizeof (privmsg_log), "%s%s-privmsg.log", LOG_DIR, s_Mynick);
+
+    return ptr;
+}
+
 /**
  * 6/23/00 Dan:
  * - Initialized all variables
@@ -45,20 +66,20 @@ raw_now (char *type)
 	char str[STRING_LONG] = { 0 }, *dat = NULL, *ptr = NULL, *tmp1 =
 		NULL, *tmp2 = NULL, *tmp3 = NULL;
 
-	if (stricmp (type, "PERMBAN") == 0)
+	if (strcasecmp (type, "PERMBAN") == 0)
 		if ((fp = fopen (PERMBAN, "r")) == NULL)
 			return;
-	if (stricmp (type, "DEOP") == 0)
+	if (strcasecmp (type, "DEOP") == 0)
 		if ((fp = fopen (DEOP, "r")) == NULL)
 			return;
-	if (stricmp (type, "SERVERS") == 0)
+	if (strcasecmp (type, "SERVERS") == 0)
 		if ((fp = fopen (SERVERS, "r")) == NULL)
 		{
 			printf ("%s not found. You must create the file with format:\n", SERVERS);
 			printf ("server port ...this list can be as long as you want.\n");
 			exit (0);
 		}
-	if (stricmp (type, "SETUP") == 0)
+	if (strcasecmp (type, "SETUP") == 0)
 		if ((fp = fopen (SETUP, "r")) == NULL)
 		{
 			printf ("Unable to locate %s! You must run configure!.\n", SETUP);
@@ -66,65 +87,16 @@ raw_now (char *type)
 		}
 	while (!feof (fp))
 	{
-		if (stricmp (type, "SETUP") == 0)
+		if (strcasecmp (type, "SETUP") == 0)
 		{
-			SeeN = 1;
+			SeeN = true;
 			while (fgets (str, STRING_LONG, fp))
 			{
 				stripline (str);
-
-				/* Allow comments */
-				if (*str == '#') 
-					continue;
-
-				dat = strtok (str, "");
-				if ((ptr = strchr (dat, '=')) != NULL)
-					*ptr++ = '\0';
-				if (stricmp (dat, "NICK") == 0)
-				{
-					strncpy (Mynick, ptr, sizeof (Mynick));
-					strncpy (s_Mynick, ptr, sizeof (s_Mynick));
-#if	LOG_PRIVMSG == 1
-					snprintf (privmsg_log, sizeof (privmsg_log),
-							  "%s%s-privmsg.log", LOG_DIR, Mynick);
-#endif
-				}
-				else if (stricmp (dat, "USERID") == 0)
-				{
-					strncpy (UID, ptr, sizeof (UID));
-				}
-				else if (stricmp (dat, "CHAN") == 0)
-				{
-					strncpy (CHAN, ptr, sizeof (CHAN));
-				}
-				else if (stricmp (dat, "SEEN") == 0)
-				{
-					SeeN = atoi (ptr);
-				}
-				else if (stricmp (dat, "VHOST") == 0)
-				{
-					strncpy (VHOST, ptr, sizeof (VHOST));
-				}
-				else if (stricmp (dat, "REALNAME") == 0)
-				{
-					strncpy (REALNAME, ptr, sizeof (REALNAME));
-				}
-				else if (stricmp (dat, "CMDCHAR") == 0)
-				{
-					*CMDCHAR = *ptr;
-				}
+				set_parameter(str);
 			}
-#ifdef	VERB
-			printf ("   - botnick(%s),", Mynick);
-			printf ("userid(%s),", UID);
-			printf ("channel(%s),", CHAN);
-			printf ("realname(%s)\n", REALNAME);
-			printf ("   - cmdchar(%c),", *CMDCHAR);
-			printf ("vhost(%s),", VHOST);
-			printf ("seen(%s)\n", SeeN == 1 ? "On" : "Off");
-#endif
 		}
-		else if (stricmp (type, "PERMBAN") == 0)
+		else if (strcasecmp (type, "PERMBAN") == 0)
 		{
 			while (fgets (str, STRING_LONG, fp))
 			{
@@ -132,7 +104,7 @@ raw_now (char *type)
 
 				/* Allow comments */
 
-				if (*str != '#')
+				if (*str == '#')
 			        	continue;
 
 				tmp1 = strtok (str, " ");
@@ -149,30 +121,35 @@ raw_now (char *type)
 				add_permban (tmp1, counter, tmp3);
 			}
 		}
-		else if (stricmp (type, "SERVERS") == 0)
+		else if (strcasecmp (type, "SERVERS") == 0)
 		{
-#ifndef	WIN32
 			printf ("Loading %s file ", SERVERS);
-#endif
 			while (fgets (str, STRING_LONG, fp))
 			{
-				/* Allow comments */
+				/* Ignore comment lines */
 
-				if (*str == '#')
+				if (*str == '#' || *str == '/')
 					continue;
 
-				i++;
 				printf (".");
 				fflush (stdout);
 				stripline (str);
-				tmp1 = strtok (str, " ");
-				if (tmp1 == NULL)
-				{
-					printf ("Found error in %s! Aboring! please re-run configure!\n", SERVERS);
-					exit (0);
-				}
+				
+				/* Watch out for blank lines. Since fgets 
+				   returns on NULL, we're checking for NULL 
+				   within the fget'd data, which would indicate
+				   a line containing NULL data in the file, not
+				   EOF (Wrote this as a reminder). Ignore these 
+				   lines and move on.
+				 */
+
+				if ((tmp1 = strtok (str, " ")) == NULL)
+					continue;
 				else
 					tmp2 = strtok (NULL, " ");
+
+				i++;
+
 				if (tmp2 == NULL)
 				{
 					printf ("%s has no matching port in %s!\n", tmp1, SERVERS);
@@ -182,7 +159,14 @@ raw_now (char *type)
 				tmp3 = strtok (NULL, "");
 				add_s25 (tmp1, atoi (tmp2), tmp3);
 			}
-			printf ("done(%d).\n", (int) i);
+			
+			if (i > 0)
+				printf ("done(%d).\n", (int) i);
+			else
+			{
+				printf ("ERROR! No servers found in %s! Please edit this file. Aborting!\n", SERVERS);
+				exit (0);
+			}
 		}
 		else if (fgets (str, STRING_LONG, fp))
 			S ("%s\n", str);
@@ -194,7 +178,9 @@ void
 run_perform (void)
 {
 	FILE *fp;
-	char str[STRING_LONG] = { 0 };
+	char str	[STRING_LONG] = {0},
+	     temp	[STRING_LONG] = {0};
+	size_t	len = 0;
 
 	if ((fp = fopen (PERFORM, "r")) == NULL)
 		return;
@@ -205,8 +191,30 @@ run_perform (void)
 
 		if (*str == '#') 
 			continue;
+		
+		len = strlen (str);
+		memset (data, 0, sizeof (data));
 
-		S ("%s\n", str);
+		while (len > 0)
+		{
+			len--;
+			if ((str[len] == '~') && (str[len-1] == 'B'))
+			{
+				len--;
+				snprintf (temp, sizeof (temp), "%s%s", Mynick, data);
+			}
+			else
+			{
+				snprintf (temp, sizeof (temp), "%c%s", str[len], data);
+			}
+
+			strncpy (data, temp, sizeof (data));
+		}
+
+		if (data != NULL)
+		{
+			S ("%s\n", data);
+		}
 	}
 	fclose (fp);
 }

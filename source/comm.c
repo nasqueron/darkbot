@@ -115,13 +115,13 @@ setinfo_lastcomm (char *rest)
 								 * to artifically raise join counters */
 	long c_uptime = 0;
 
-	if (stricmp (rest, slc1) == 0)
+	if (strcasecmp (rest, slc1) == 0)
 		return 1;				/* don't reply if already asked in LASTCOMM_TIME sec */
-	if (stricmp (rest, slc2) == 0)
+	if (strcasecmp (rest, slc2) == 0)
 		return 1;
-	if (stricmp (rest, slc3) == 0)
+	if (strcasecmp (rest, slc3) == 0)
 		return 1;
-	if (stricmp (rest, slc4) == 0)
+	if (strcasecmp (rest, slc4) == 0)
 		return 1;
 	if (*slc1 == '0')
 	{							/* init lastcomms */
@@ -180,13 +180,13 @@ do_lastcomm (char *nick, char *target, char *rest)
 {
 	long c_uptime = 0;
 
-	if (stricmp (rest, lc1) == 0)
+	if (strcasecmp (rest, lc1) == 0)
 		return 1;				/* don't reply if already asked in LASTCOMM_TIME sec */
-	if (stricmp (rest, lc2) == 0)
+	if (strcasecmp (rest, lc2) == 0)
 		return 1;
-	if (stricmp (rest, lc3) == 0)
+	if (strcasecmp (rest, lc3) == 0)
 		return 1;
-	if (stricmp (rest, lc4) == 0)
+	if (strcasecmp (rest, lc4) == 0)
 		return 1;
 	if (*lc1 == '0')
 	{							/* init lastcomms */
@@ -248,9 +248,9 @@ prepare_bot (void)
 	while (!esc)
 	{
 		gs26 ();
-		printf (".: Connecting to %s:%ld                             \r", BS, BP);
+		printf (".: Connecting to %s:%ld\t\r", BS, BP);
 		fflush (stdout);
-		sleep (2);
+		db_sleep (2);
 
 		socketfd = create_connection (BS, VHOST, BP);
 
@@ -258,15 +258,15 @@ prepare_bot (void)
 		{
 
 			case ERR_TIMED_OUT:
-				printf (".: Connection to %s:%ld timed out!                       \r", BS, BP);
+				printf (".: Connection to %s:%ld timed out!\t\r", BS, BP);
 				fflush (stdout);
-				sleep (2);
+				db_sleep (2);
 				break;
 
 			case ERR_CONN_REFUSED:
-				printf (".: Connection to %s:%ld was refused!                     \r", BS, BP);
+				printf (".: Connection to %s:%ld was refused!\t\r", BS, BP);
 				fflush (stdout);
-				sleep (2);
+				db_sleep (2);
 				break;
 
 			case ERR_NOT_ADDR:
@@ -280,10 +280,10 @@ prepare_bot (void)
 			default:
 				esc = 1;
 				printf
-					(".: Connected to %s:%ld! [%ld]                  \r", BS, BP, (long) getpid ());
+					(".: Connected to %s:%ld! [%ld]\t\n", BS, BP, (long) getpid ());
 
-				sleep (5);
 				fflush (stdout);
+				db_sleep (5);
 				break;
 		}
 	}
@@ -348,8 +348,9 @@ create_connection (char *server, char *virtualhost, long port)
 
 	if(!(hostname = gethostbyname (server)))
 	{
-		printf ("\n");
-		herror ("hostname");
+		printf ("\nCan't create the connection!\n");
+		// FIXME: This is obsolete, and solaris doesn't know about it.
+//		herror ("hostname");
 		exit (EXIT_FAILURE);
 	}
 
@@ -361,14 +362,10 @@ create_connection (char *server, char *virtualhost, long port)
 
 	if (fcntl (sock, F_SETFL, O_NONBLOCK) < 0)
 	{
-		if ((errno != EINPROGRESS) && (errno != ENOENT))
-		{
-			printf ("\n");
-			perror ("fcntl");
-			exit (EXIT_FAILURE);
-		}
+		printf ("\n");
+		perror ("fcntl");
+		exit (EXIT_FAILURE);
 	}
-
 	
 	if (connect (sock, (struct sockaddr *) &name, sizeof (name)) < 0)
 	{
@@ -395,7 +392,7 @@ create_connection (char *server, char *virtualhost, long port)
 		FD_SET (sock, &set);
 
 		/* select will let us know when our socket is ready (connected) */
-		switch (select (FD_SETSIZE, (fd_set *) 0, &set, (fd_set *) 0, &timeout))
+		switch (select (FD_SETSIZE, (fd_set *) NULL, &set, (fd_set *) NULL, &timeout))
 		{
 				/* if select returns 0, our timeout was reached */
 			case 0:

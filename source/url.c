@@ -17,7 +17,7 @@ check_existing_url (const char *source, char *topic, char *target)
 	{
 		stripline (b);
 		subj = strtok (b, " ");
-		if (stricmp (subj, topic) == 0)
+		if (strcasecmp (subj, topic) == 0)
 		{
 			fclose (fp);
 			return 1;
@@ -108,7 +108,7 @@ display_url (char *target, char *nick, char *topic)
 		stripline (b);
 		subj = strtok (b, " ");
 		ptr = strtok (NULL, "");
-		if (stricmp (subj, topic) == 0 || !match_wild (subj, topic) == 0)
+		if (strcasecmp (subj, topic) == 0 || !match_wild (subj, topic) == 0)
 		{
 			QUESTIONS++;
 			S ("PRIVMSG %s :Raw data for %s is: %s\n", target, topic, ptr);
@@ -139,7 +139,7 @@ delete_url (const char *nick, char *topic, char *target)
 		snprintf (DATA, sizeof (DATA), "%s/%s.rdb", RDB_DIR, topic);
 		if (strspn (topic, LEGAL_TEXT) != strlen (topic))
 		{
-			if (stricmp (nick, target) == 0)
+			if (strcasecmp (nick, target) == 0)
 				S ("NOTICE %s :%s, rdb files are made up of letters and or numbers, no other text is accepted.\n", nick, nick);
 			else
 				S ("PRIVMSG %s :%s, rdb files are made up of letters and or numbers, no other text is accepted.\n", target, nick);
@@ -148,7 +148,7 @@ delete_url (const char *nick, char *topic, char *target)
 
 		if ((fp = fopen (DATA, "r")) == NULL)
 		{
-			if (stricmp (nick, target) == 0)
+			if (strcasecmp (nick, target) == 0)
 				S ("NOTICE %s :%s, %s.rdb does not exist.\n", nick, nick, topic);
 			else
 				S ("PRIVMSG %s :%s, %s.rdb does not exist.\n", target, nick, topic);
@@ -158,7 +158,7 @@ delete_url (const char *nick, char *topic, char *target)
 		fclose (fp);
 		remove(DATA);
 
-		if (stricmp (nick, target) == 0)
+		if (strcasecmp (nick, target) == 0)
 			S ("NOTICE %s :I have unlinked %s.\n", nick, DATA);
 		else
 			S ("PRIVMSG %s :I have unlinked %s.\n", target, DATA);
@@ -185,11 +185,11 @@ delete_url (const char *nick, char *topic, char *target)
 		subj = strtok (b, " ");
 		ptr = strtok (NULL, "");
 		i++;
-		if (stricmp (subj, topic) == 0)
+		if (strcasecmp (subj, topic) == 0)
 		{
 			FOUND = 1;
 			DELETIONS++;
-			if (stricmp (nick, target) == 0)
+			if (strcasecmp (nick, target) == 0)
 				L029n (nick, nick, i, topic);
 			else
 				L029 (target, nick, i, topic);
@@ -205,7 +205,7 @@ delete_url (const char *nick, char *topic, char *target)
 	
 	if (FOUND == 0)
 	{
-		if (stricmp (nick, target) == 0)
+		if (strcasecmp (nick, target) == 0)
 			L030n (nick, nick, topic);
 		else
 			L030 (target, nick, topic);
@@ -247,7 +247,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 		ptr = strtok (NULL, "");
 		if (ptr == NULL)
 			continue;
-		if (stricmp (subj, topic) == 0 || !match_wild (subj, topic) == 0)
+		if (strcasecmp (subj, topic) == 0 || !match_wild (subj, topic) == 0)
 		{
 			QUESTIONS++;
 			if (floodpro == 1)
@@ -433,7 +433,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 					ptr8[1] = tolower (ptr8[1]);
 					if (ptr8[0] == 'p' && ptr8[1] == 'r')
 						F = 1;
-					if (ptr8[0] == 'k' && ptr8[1] == 'i')
+					if (ptr8[0] == 'k' && ptr8[1] == 'i' && !is_op(nick, target))
 						F = 1;
 					if (ptr8[0] == 'n' && ptr8[1] == 'o')
 						F = 1;
@@ -449,29 +449,30 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 			if (toggle == 0)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				if (A == 0)
 				{
 					if ((*target == '#') || (*target == '+') || (*target == '&'))
 						S ("PRIVMSG %s :%s%s\n", target, rand_reply (nick), Data);
 					else
 					{
-						strncpy (temp, rand_reply (target), sizeof (temp));
-						S ("NOTICE %s :%s %s\n", target, topic, Data);
+						S ("NOTICE %s :%s%s\n", target, rand_reply(target), temp, Data);
 					}
 				}
 				else if ((*target == '#') || (*target == '+') || (*target == '&'))
 					S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
 				else
 				{
-					S ("NOTICE %s :%s\n", target, Data);
+					S ("NOTICE %s :%s%s\n", target, rand_reply(target), Data);
 				}
 			}
 			else if (A == 0)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				if ((*target == '#') || (*target == '+') || (*target == '&'))
 					S ("PRIVMSG %s :%s\n", target, Data);
 				else
@@ -481,17 +482,18 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 			else if ((*target == '#') || (*target == '+') || (*target == '&'))
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
+#endif
 				S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
 			}
-#if			MSG_RESPONSES == ON
-			else
+			else if (MSG_RESPONSES)
 			{
+#ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
-
+#endif
 				S ("NOTICE %s :%s\n", target, Data);
 			}
-#endif
 			fclose (fp);
 			return;
 		}						/* Subject match */
@@ -510,13 +512,14 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			}
 		}
 		if ((*target == '#') || (*target == '+') || (*target == '&'))
-#if     RANDOM_DUNNO == 1
-			do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
-#else
-			S ("PRIVMSG %s :%s, %s\n", target, nick, DONNO_Q);
-#endif
+		{
+			if (RANDOM_DUNNO == true)
+			    do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
+			else
+			    S ("PRIVMSG %s :%s, %s\n", target, nick, DUNNO_Q);
+		}
 		else
-			S ("NOTICE %s :%s, %s\n", nick, nick, DONNO_Q);
+			S ("NOTICE %s :%s, %s\n", nick, nick, DUNNO_Q);
 	}
 }
 
@@ -557,9 +560,9 @@ datasearch (const char *nick, char *topic, char *target)
 
 	if (strlen (topic) > MAX_TOPIC_SIZE)
 		topic[MAX_TOPIC_SIZE] = '\0';
-	
+
 	strlwr (topic);
-	
+
 	if ((fp = fopen (URL2, "r")) == NULL)
 	{
 		L003 (nick, URL2);

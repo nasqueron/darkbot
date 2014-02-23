@@ -19,7 +19,7 @@ del_autotopic (const char *chan)
 	bool toggle = false;
 	size_t x = 0;
 
-	unlink (TMP_FILE);
+	remove (TMP_FILE);
 	fp = fopen (AUTOTOPIC_F, "r");
 	if (NULL == fp)
 	{
@@ -34,7 +34,7 @@ del_autotopic (const char *chan)
 		r_chan = strtok (b, " ");
 		r_data = strtok (NULL, "");
 
-		if (stricmp (r_chan, chan) == 0)
+		if (strcasecmp (r_chan, chan) == 0)
 		{
 			/* Found the channel */
 			toggle = true;
@@ -49,8 +49,8 @@ del_autotopic (const char *chan)
 	if (x == 1 && toggle)
 	{
 		/* The autotopic file is now empty */
-		unlink (AUTOTOPIC_F);
-		unlink (TMP_FILE);
+		remove (AUTOTOPIC_F);
+		remove (TMP_FILE);
 		return;
 	}
 
@@ -64,7 +64,7 @@ del_autotopic (const char *chan)
 	{
 		/* We were unable to find the channel, just
 		 * return */
-		unlink (TMP_FILE);
+		remove (TMP_FILE);
 	}
 }
 
@@ -104,7 +104,7 @@ ifexist_autotopic (char *chan)
 		if (*b == '/')
 			continue;
 		r_chan = strtok (b, " ");
-		if (stricmp (r_chan, chan) == 0)
+		if (strcasecmp (r_chan, chan) == 0)
 		{
 			fclose (fp);
 			return 1;			/* exists */
@@ -133,6 +133,7 @@ set_autotopic (char *source, char *target, char *topic)
 		del_autotopic (target);
 		return;
 	}
+	
 	if (strlen (topic) >= 400)	/* make sure no overflow */
 		topic[400] = '\0';
 	if (exist == 0)
@@ -154,7 +155,7 @@ revert_topic (char *input)
 	char *ptr = NULL, b[STRING_SHORT] = { 0 };
 
 	ptr = strtok (input, "+");
-
+	
 	snprintf (f_tmp, sizeof (f_tmp), "%s", ptr);
 
 	if (ptr != NULL)

@@ -10,6 +10,7 @@ sig_alrm (int notUsed)
 	check_dbtimers ();			/* timers :) */
 	AIL8 += AIL;
 
+#ifdef ENABLE_QUIZ
 	if (quiz_halt == 1)
 	{
 		AIL13++;
@@ -32,6 +33,8 @@ sig_alrm (int notUsed)
 		else
 			quiz_timer++;
 	}
+#endif
+
 	if (AIL8 >= SEND_DELAY)
 	{
 		AIL8 = 0;
@@ -41,11 +44,9 @@ sig_alrm (int notUsed)
 	if (LastInput >= 500)
 	{
 		LastInput = 0;
-#if CHECK_STONED == 1
+#ifdef ENABLE_STONED_CHECK
 		L088 (BS);
-#ifdef	WIN32
 		printf ("\nNo response from %s in 5 mins, reconnecting...\n", BS);
-#endif
 		prepare_bot ();
 		register_bot ();
 #endif
@@ -71,7 +72,7 @@ sig_alrm (int notUsed)
 	if (AIL9 >= 30)
 	{
 		AIL9 = 0;
-		if (stricmp (s_Mynick, Mynick) != 0)
+		if (strcasecmp (s_Mynick, Mynick) != 0)
 		{
 			S ("NICK %s\n", s_Mynick);
 			strncpy (Mynick, s_Mynick, sizeof (Mynick));
@@ -92,7 +93,7 @@ sig_alrm (int notUsed)
 	}
 	AIL2 += AIL;
 	AIL3 += AIL;
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 	Rand_Idle++;
 	if (RAND_IDLE <= Rand_Idle)
 	{
@@ -108,23 +109,24 @@ sig_alrm (int notUsed)
 		get_rand_stuff_time ();
 	}
 #endif
+#ifdef ENABLE_CHANNEL
 	if (AIL3 >= AUTOTOPIC_TIME)
 	{
 		AIL3 = 0;
 		do_autotopics ();
 	}
+#endif
 	AIL5 += AIL;
 	if (AIL5 >= 600)
 	{
-#ifdef	ANTI_IDLE
-		S ("PRIVMSG ! :\2\n");
-#endif
+		if (ANTI_IDLE)
+		    S ("PRIVMSG ! :\2\n");
 		AIL5 = 0;
 	}
 	if (AIL2 >= 300)
 	{
 		AIL2 = 0;
-#if STATUS == 1
+#ifdef ENABLE_STATUS
 		S ("LUSERS\n");
 #endif
 		S ("MODE %s %s\n", Mynick, DEFAULT_UMODE);
@@ -132,10 +134,8 @@ sig_alrm (int notUsed)
 		reset_ ();
 		save_changes ();
 
-#if PERFORM_TIMER == 1
-                run_perform ();
-#endif
-
+		if (PERFORM_TIMER)
+            	    run_perform ();
 	}
 }
 
@@ -155,11 +155,12 @@ sig_segv (int notUsed)
 		  uptime2 / 3600 == 1 ? "" : "s", (uptime2 / 60) % 60, (uptime2 / 60) % 60 == 1 ? "" : "s");
 	db_sleep (2);
 	p = getpid ();
+        // FIXME: Not sure about this, maybe we can live without the fork, maybe without the kills.
 	if (fork () > 0)
 	{
 		db_log ("error.log", "Caught SIGSEGV.. Sent kill -3 and kill -9...\n");
-		kill (p, 3);
-		kill (p, 9);
+		kill (p, 3);  /* SIGQUIT - terminate process and dump core. */
+		kill (p, 9);  /* SIGKILL */
 	}
 	db_sleep (1);
 	exit (0);

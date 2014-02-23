@@ -88,7 +88,7 @@ Process time: %1.4lf sec%s\n",a,b,c,d,e,f,g,h,i,j,k,l)
 #define	L071(a,b,c,d) S("PRIVMSG %s :There %s %d permban%s loaded into ram.\n",a,b,c,d)
 #define	L073(a,b,c) S("PRIVMSG %s :%s, %d seconds left till randstuff\n",a,b,c)
 #define	L074(a,b,c)	S("PRIVMSG %s :%s: it was %d chars long.\n",a,b,c)
-#define	L075(a,b,c,d) S("PRIVMSG %s :%s, There is currently %d item%s in Que.\n",a,b,c,d)
+#define	L075(a,b,c,d) S("PRIVMSG %s :%s, There is currently %d item%s in queue.\n",a,b,c,d)
 #define	L076(a,b) S("PRIVMSG %s :I have seen %d joins thus far.\n",a,b)
 #define	L077(a,b,c,d,e)	S("PRIVMSG %s :There %s %d server%s in my server list. I am currently on \
 server #%d.\n",a,b,c,d,e)
@@ -110,5 +110,5 @@ hints)\n",a,b,c,d,e)
 hints)\n",a,b,c,d,e)
 #define	L088(a) S("QUIT :%s is stoned!\n",a)
 #define	L089(a)	S("PRIVMSG %s :\1ACTION wakes up...\1\n",a)
-#define	L090(a,b) S("PRIVMSG %s :I'm being flooded. Dumping output Que. \
+#define	L090(a,b) S("PRIVMSG %s :I'm being flooded. Dumping output queue. \
 %d items deleted.\n",a,b)

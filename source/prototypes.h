@@ -1,27 +1,24 @@
 /* ------------ Below are function declarations --------------- */
-#if		STATUS == 1
+
+#ifdef ENABLE_STATUS
 void	parse_252				(char *), 
 	parse_251				(char *), 
 	parse_255				(char *);
 #endif
 
-#ifndef	WIN32
-inline	size_t min				(const size_t, const size_t);
-#endif
-
-char	*db_strndup				(const char *, size_t);
 char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
 void	show_seen				(char *, char *, char *),
 	count_seen				(char *, char *), 
-	show_info2				(const char *, const char *);
+	show_info2				(const char *, const char *, enum chanserv_invoke_type);
 
 long	save_seen				(char *, char *, char *);
 void	do_randomtopic				(int, char *, char *, char *, char *);
 
 
+int	get_random_integer			(int max);
 
-#ifdef	RANDOM_STUFF
+#ifdef ENABLE_RANDOM
 
 void	do_random_stuff				(void),
 	check_idle_channels			(void),
@@ -31,7 +28,7 @@ void	do_random_stuff				(void),
 	do_autotopics				(void);
 #endif
 
-#ifdef	RANDQ
+#ifdef	ENABLE_RANDQ
 void	do_randq				(char *, const int, const char *, const char *);
 #endif
 
@@ -43,13 +40,13 @@ void	datasearch				(const char *, char *, char *),
 long	verify_pass				(char *, char *, char *, char *), 
 	ifexist_autotopic			(char *);
 
-#if	DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 void	save_permbans				(void);
 #endif
 
 void	do_quit					(const char *, long);
 
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
 void	do_math					(const char *, char *, char *);
 #endif
 
@@ -60,12 +57,13 @@ void	delete_user_ram				(char *, char *),
 	delete_url				(const char *, char *, char *),
 	update_setinfo				(const char *, const char *, const char *);
 
-#if	DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 void	add_permban				(const char *, size_t, const char *);
 int	del_permban				(const char *, const char *);
 #endif
 
 int	check_existing_url			(const char *, char *, char *);
+void	*check_nick_parameter			(struct setup_parameter *parameter, char *ptr);
 void	show_helper_list			(const char *, long),
 	set_paths				(void),
 	show_banlist				(const char *), 
@@ -86,7 +84,6 @@ void	info					(const char *, char *),
 	load_helpers				(void),
 	scan_chan_users				(char *, char *, char *), 
 	do_login				(char *, char *);
-int	stricmp					(const char *, const char *);
 long	do_lastcomm				(char *, char *, char *), 
 	setinfo_lastcomm			(char *);
 void	parse					(char *), 
@@ -124,9 +121,8 @@ void	trailing_blanks				(char *),
 	clear_sendq				(long, long);
 
 char	L[524], 
-	*random_word				(char **);
-
-char	*db_stristr				(char *, char *);
+	*random_word				(char **),
+	*plural					(size_t);
 
 int	socketfd, 
 	alarmed,	
@@ -145,33 +141,35 @@ void	show_chanusers				(const char *, const char *);
 
 const 	char		*run_program		(const char *);
 
-#if SNPRINTF_SUPPORT == 1
-int	snprintf				(char *, size_t, const char *, ...);
-#endif
-
 void	do_autotopics				(void);
+
+#ifdef ENABLE_STATS
 void	add_stats				(char *, char *, long, long, long);
 void	load_stats				(void);
 void	get_stats				(char *, char *);
+#endif
+
+#ifdef ENABLE_QUIZ
 void	run_quiz_question			(char *);
 void	run_quiz_answer				(void);
+#endif
 void	check_files				(void);
-char	*crypt					(const char *, const char *);
 void	run_perform				(void);
-void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
 int 	web_post_query				(char *trigger, char *source, char *uh, char *target, char *query, int size);
-int 	web_open_socket				(char *host, int port);
-int 	web_write_server 			(int filedes, char *format,...);
-int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
-int 	google_parse_query			(char *source, char *uh, char *target, char *data);
-int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
-int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
 int	add_ignore_user_ram			(char *);
 int	delete_ignore_user_ram			(char *);
 int	check_ignore_user_ram			(char *);
+int	check_exempt				(char *);
 void	call_reserved_1				(char *, char *, char *);
 void	call_reserved_2				(char *, char *, char *);
 size_t	count_char				(const char *, const char);
+bool	isBoolean				(char *aBoolean);
+void	db_sleep				(unsigned long seconds);
 void	reverse					(char *);
 char	*mask_from_nick				(char *, const char *);
 char	*uh_from_nick				(char *, const char *);
+int	db_argstostr				(char *, char **, size_t, char);
+long	is_op					(char *, const char *);
+void	do_op					(char *, const char *, long);
+
+struct setup_parameter *set_parameter		(char *input);

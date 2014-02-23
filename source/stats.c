@@ -2,6 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
+#ifdef ENABLE_STATS
 void
 get_stats (char *target, char *user)
 {
@@ -28,7 +29,7 @@ get_stats (char *target, char *user)
 		}
 		else
 		{
-			if (stricmp (c->nick, user) == 0)
+			if (strcasecmp (c->nick, user) == 0)
 			{
 				added_time = c->added_time;
 				last_time = c->last_time;
@@ -62,7 +63,7 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 
 	while (c)
 	{
-		if (stricmp (c->nick, nick) == 0)
+		if (strcasecmp (c->nick, nick) == 0)
 		{
 			strncpy (c->uh, uh, sizeof (c->uh));
 			c->total++;
@@ -92,6 +93,8 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 		n->next = statshead;
 		statshead = n;
 	}
+	
+	free (n);
 }
 
 void
@@ -161,3 +164,4 @@ load_stats (void)
 	if (DebuG == 1)
 		db_sleep (2);
 }
+#endif

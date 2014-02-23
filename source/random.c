@@ -2,7 +2,19 @@
 #include "vars.h"
 #include "prototypes.h"
 
-#ifdef		RANDOM_STUFF
+int get_random_integer(int max)
+{
+    int result;
+
+    result = ((float) max) * (rand() / (RAND_MAX + 1.0));
+    if (result >= max)  // Paranoid check.
+	result = max - 1;
+
+    return result;
+}
+
+
+#ifdef ENABLE_RANDOM
 void		add_randomstuff		(char *source, char *target, char *data)
 {
 	char		*ptr = NULL;
@@ -11,14 +23,15 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	int			toggle = 1;
 	
 	
-#ifdef	BACKUP_RANDOMSTUFF
-#	ifndef		WIN32	
-	// Backup randomstuff file to a temporary file.
-	unlink(RAND_BACKUP_FILE);
-	snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
-	system(file);
-#	endif
-#endif
+//#ifndef	WIN32	
+	if (BACKUP_RANDOMSTUFF)
+	{
+	    // Backup randomstuff file to a temporary file.
+	    unlink(RAND_BACKUP_FILE);
+	    snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
+	    system(file);
+	}
+//#endif
 
 	if(*data == '~')
 	{
@@ -53,11 +66,10 @@ void		add_randomstuff		(char *source, char *target, char *data)
 
 void		get_rand_stuff_time			(void)
 {
-	Rand_Stuff = rand () % RAND_STUFF_TIME + 2;
+	Rand_Stuff = 2 + get_random_integer(RAND_STUFF_TIME);
 	if (Rand_Stuff < RAND_STUFF_TIME / 2)
 		Rand_Stuff = RAND_STUFF_TIME;
 }
-
 
 void		do_random_stuff					(void)
 {
@@ -72,10 +84,8 @@ void		do_random_stuff					(void)
 	if ((nRandStuffs = count_lines(RAND_FILE)) < 1)
 		return;
 
-	// Get a random line number to display. If nLine is more than the number of RandStuffs,
-	// nLine becomes equal to the number of RandStuffs.
-	if ((nLine = 1 + (size_t) ((float)nRandStuffs * rand() / (RAND_MAX + 1.0))) > nRandStuffs)
-		nLine = nRandStuffs;
+	// Get a random line number to display.
+	nLine = 1 + (size_t) get_random_integer(nRandStuffs);
 
 	// If nLine is less than 1, nLine becomes equal to 1
 	if(nLine < 1)
@@ -92,13 +102,11 @@ void		do_random_stuff					(void)
 
 	while(fgets(szBuffer, STRING_LONG, fp))
 	{
-		// Ignore comments that start with a /
-		if ((*szBuffer == '/') || 
-		    (*szBuffer == '\n') ||
-       		    (*szBuffer == '\0'))
-			continue;	
-
-		nIndex++;
+		// Ignore lines that start with a /, treat as comments.
+		if((*szBuffer != '/') && (*szBuffer != '\n'))
+			nIndex++;
+		else
+			continue;
 
 		stripline(szBuffer);
 
@@ -166,7 +174,7 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 	// This ends up being the response, if we're doing a dunno, or whut reply, and the file
 	// containing the random responses can't be opened.
 
-	pDefault = (type == DUNNOR ? DONNO_Q : WHUT);
+	pDefault = (type == DUNNOR ? DUNNO_Q : WHUT);
 
 	if(file != NULL)
 		snprintf(file2, sizeof(file2), "%s/%s.rdb", RDB_DIR, file);
@@ -198,14 +206,8 @@ void	do_randomtopic	(int type, char *target, char *file, char *nick, char *topic
 	
 	/* db_sleep(1) */
 
-	// Get line number that we are searching for in the file. If it ends up less than 
-	// 1, for some reason, set it to 1.
-
-	if ((nLine = (size_t) ((float)nRandTopics * rand() / (RAND_MAX+1.0))) < 1)
-		nLine = 1;
-
-	if(nLine > nRandTopics)
-		nLine = nRandTopics;
+	// Get line number that we are searching for in the file.
+	nLine = 1 + (size_t) get_random_integer(nRandTopics);
 
 	while(fgets(szBuffer2, STRING_LONG, fp))
 	{
@@ -437,8 +439,7 @@ char	*rand_reply	(const char *nick)
 	FILE		*fp = 0;
 	char		temp	[STRING_SHORT] = {0};
 	size_t		nIndex = 0, nRandTopics = 0, nLine = 0,
-				nLength = 0;
-
+	nLength = 0;
 
 	// Count how many lines are in the RAND_SAY file, if can't be
 	// counted, just return.
@@ -446,7 +447,7 @@ char	*rand_reply	(const char *nick)
 		return(0);
 
 	// set nLine to be a random number between 1 and nRandTopics.
-	nLine = 1 + (size_t) ((float)nRandTopics * rand() / (RAND_MAX+1.0));
+	nLine = 1 + (size_t) get_random_integer(nRandTopics);
 
 	// If the RAND_SAY file can't be opened, just return.
 	if((fp = fopen(RAND_SAY, "r")) == NULL)
@@ -509,7 +510,7 @@ char	*rand_reply	(const char *nick)
 	return(" ");
 }
 
-#if		RANDQ == ON
+#ifdef ENABLE_RANDQ
 
 /* 
  * do_randq():
@@ -580,7 +581,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 
 			/*
 			 * If type is specified as being case sensitive, use strstr,
-			 * otherwise, use db_stristr
+			 * otherwise, use strcasestr
 			 */
 
 			if (type == RANDQ_CASE) 
@@ -593,7 +594,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 			}
 			else /* if (type == RANDQ_NORMAL) */
 			{
-				if (db_stristr(szBuffer, text) != 0)
+				if (strcasestr(szBuffer, text) != 0)
 				{
 					nNumMatches++;
 					db_log(RANDQ_TEMPFILE, "%s\n", szBuffer);
@@ -613,7 +614,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 		return;
 	}
 
-	nLine = 1 + (size_t) ((float)nNumMatches * rand() / (RAND_MAX + 1.0));
+	nLine = 1 + (size_t) get_random_integer(nNumMatches);
 	
 	// If we can't open the temporary file, complain about it.
 	if((fp = fopen(RANDQ_TEMPFILE, "r")) == 0)

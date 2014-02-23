@@ -10,22 +10,40 @@ int
 main (int argc, char **argv)
 {
 	char temp[STRING_SHORT] = { 0 };
+	char exe[STRING_SHORT] = { 0 };
 	struct timeval timeout;
 	int		i = 0;
 	fd_set fdvar;
-
-#if (SGI == 1) || (NEED_LIBC5 == 1)
+	struct stat st;
+#ifdef SA_NOCLDSTOP
 	struct sigaction newact;
 #endif
+
 #ifdef	DEBUG
 	DebuG = 1;
 #endif
 
-	temp[0] = temp[0];			/* hide warning for WIN32 compile */
-
 	get_s ();
 	srand (time (0));
 	uptime = time (NULL);
+
+	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
+	strncpy (exe, argv[0], sizeof (exe));  /* Coz basename() may modify it's argument. */
+
+#ifdef DATABASEDIR
+	strncpy (DAT_DIR, DATABASEDIR, sizeof (DAT_DIR));
+#else
+	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
+#endif
+#ifdef SOURCEDIR
+	/* Check if this is being run from the build directory before being installed. */
+	snprintf(temp, sizeof(temp), "%s/dat/setup.ini", SOURCEDIR);
+	if (stat(temp, &st) >= 0)
+	{
+	    snprintf(temp, sizeof(temp), "%s/dat", SOURCEDIR);
+	    strncpy(DAT_DIR, temp, sizeof (DAT_DIR));
+	}
+#endif
 
 	/* Parse the command line arguements, if there are any. */
 	if (argv[1] != NULL)
@@ -36,7 +54,7 @@ main (int argc, char **argv)
 			{
 				if (argv[i][1] == 'S')
 				{
-					SeeN = 1;
+					SeeN = true;
 				}
 				else if (argv[i][1] == 'D')
 				{
@@ -59,7 +77,7 @@ main (int argc, char **argv)
 		}
 	}
 	
-	if (SeeN == 1)
+	if (SeeN)
 	{
 		printf ("\nSEEN ENABLED.\n");
 	}
@@ -68,12 +86,11 @@ main (int argc, char **argv)
 		printf ("\nDEBUG ENABLED.\n");
 	}
 
-	strncpy (DARKBOT_BIN, argv[0], sizeof (DARKBOT_BIN));
-	strncpy (DAT_DIR, "dat", sizeof (DAT_DIR));
-
 	set_paths ();
 
-#if (SGI == 1) || (NEED_LIBC5 == 1)
+/* This is the best way to deternmine if sigaction() can be used.  
+ * sigaction() is more portable than signal(), so use it if we can. */
+#ifdef SA_NOCLDSTOP
 	newact.sa_handler = sig_alrm;
 	sigemptyset (&newact.sa_mask);
 	newact.sa_flags = 0;
@@ -86,28 +103,24 @@ main (int argc, char **argv)
 	sigemptyset (&newact.sa_mask);
 	newact.sa_flags = 0;
 	sigaction (SIGHUP, &newact, NULL);
-#else /* ----------------------- */
+#else
 	signal (SIGALRM, sig_alrm);
 	signal (SIGSEGV, sig_segv);
 	signal (SIGHUP, sig_hup);
 #endif
-#ifndef	WIN32
-#ifdef	FORK
-	if (fork ())
-		exit (0);
-#endif
-#endif
-#ifdef	RANDOM_STUFF
+
+#ifdef ENABLE_RANDOM
 	get_rand_stuff_time ();
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * * * Darkbot, (c) 2006  ver. 7 final 3 * * * * * * * * * *  \n");
+	printf ("  * * * * * * * * Darkbot (c) 1996 v8 Release Candidate 4 * * * * * * * * *  \n");
 	printf ("  *                         The IRC Talking Robot                         *  \n");
 	printf ("  *                                                                       *  \n"); 
 	printf ("  *           Creator/Author: Jason <jason@superlink.net>                 *  \n");
 	printf ("  *             Project Administrator: juice <juice@freezedown.org>          *  \n");
 	printf ("  *             Last major code changes: ron <ron@freezedown.org>            *  \n");
+	printf ("  *             Last major code changes: onefang <onefang@gmail.com>      *  \n");
 	printf ("  *      Please check docs/contributors for a list of collaborators       *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *        Eventual malfunction,  suggestions or patches use only         *  \n");
@@ -121,32 +134,26 @@ main (int argc, char **argv)
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 
 #ifndef	WIN32
-#ifndef DISALLOW_COUNT
+# ifdef ENABLE_VERSION_CHECK
 	snprintf (temp, sizeof (temp), "lynx -source http://www.freezedown.org/cgi/laun.cgi?%s &", dbVersion);
 	system (temp);
-#endif
-	/* Added the cast to getpid() to remove warnings on Solaris */
-	sprintf (temp, "echo \"%d\" > %s.pid", (int) getpid (), DARKBOT_BIN);
-	system (temp);
-#endif
-#ifndef	WIN32
+# endif
 	db_sleep (2);
-#endif
-#ifndef	WIN32
-#ifdef	SORT
-	printf ("Sorting database...\n");
-	snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
-	system (temp);
-#endif
+	if (SORT)
+	{
+	    printf ("Sorting database...\n");
+	    snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
+	    system (temp);
+	}
 #endif
 	load_helpers ();
+#ifdef	ENABLE_STATS
 	load_stats ();
+#endif
 	check_files ();
 	raw_now ("SERVERS");
 	raw_now ("SETUP");
 	raw_now ("PERMBAN");
-#ifndef	WIN32
-#endif
 	alarm (AIL);
 	prepare_bot ();
 	register_bot ();
@@ -157,7 +164,7 @@ main (int argc, char **argv)
 		timeout.tv_usec = USEC;
 		FD_ZERO (&fdvar);
 		FD_SET (socketfd, &fdvar);
-		switch (select (NFDBITS, &fdvar, (fd_set *) 0, (fd_set *) 0, &timeout))
+		switch (select (NFDBITS, &fdvar, (fd_set *) NULL, (fd_set *) NULL, &timeout))
 		{
 			case 0:
 				break;
@@ -181,7 +188,9 @@ void	set_paths	(void)
 	snprintf (DBTIMERS_PATH, sizeof (DBTIMERS_PATH), "%s/%s", DAT_DIR, DEFAULT_DBTIMERS_PATH);
 	snprintf (LOG_DIR, sizeof (LOG_DIR), "%s/%s", DAT_DIR, DEFAULT_LOG_DIR);
 	snprintf (RDB_DIR, sizeof (RDB_DIR), "%s/%s", DAT_DIR, DEFAULT_RDB_DIR);
+#ifdef	ENABLE_STATS
 	snprintf (STATS_FILE, sizeof (STATS_FILE), "%s/%s", DAT_DIR, DEFAULT_STATS_FILE);
+#endif
 	snprintf (SEEN_FILE, sizeof (SEEN_FILE), "%s/%s", DAT_DIR, DEFAULT_SEEN_FILE);
 	snprintf (URL2, sizeof (URL2), "%s/%s", DAT_DIR, DEFAULT_URL2);
 	snprintf (BACKUP_DUP, sizeof (BACKUP_DUP), "%s/%s", DAT_DIR, DEFAULT_BACKUP_DUP);

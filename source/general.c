@@ -1,7 +1,27 @@
-
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
+
+#if HAVE_DIRENT_H
+# include <dirent.h>
+# define NAMLEN(dirent) strlen((dirent)->d_name)
+#else
+# define dirent direct
+# define NAMLEN(dirent) (dirent)->d_namlen
+# if HAVE_SYS_NDIR_H
+#  include <sys/ndir.h>
+# endif
+# if HAVE_SYS_DIR_H
+#  include <sys/dir.h>
+# endif
+# if HAVE_NDIR_H
+#  include <ndir.h>
+# endif
+#endif
+
+#if !HAVE_NANOSLEEP
+# include "timespec.h"
+#endif
 
 /**
  * Removed trailing newline and carriage returns.
@@ -57,21 +77,22 @@ strlwr (char *buf)
 	return buf;
 }
 
-// stristr: case insensitive strstr.
-char	*db_stristr		(char *pHaystack, char *pNeedle)
+/**
+ * Convert a character array to all uppercase.
+ * 6/23/00 Dan:
+ * - Rewrote to be more compact and a bit more efficient
+ */
+char *
+strupr (char *buf)
 {
-	char	szHaystack	[STRING_LONG] = {0};
-	char	szNeedle	[STRING_LONG] =	{0};
-	
-	strcpy(szHaystack, pHaystack);
-	strcpy(szNeedle, pNeedle);
+	char *ptr = buf;
 
-	strlwr(szHaystack);
-	strlwr(szNeedle);
-
-	return(strstr(szHaystack, szNeedle));
+	for (; ptr && *ptr; ++ptr)
+	{
+		*ptr = toupper (*ptr);
+	}
+	return buf;
 }
-
 
 /* 
  * Added cast to str[i -1] to prevent warnings on Solaris.
@@ -95,41 +116,18 @@ trailing_blanks (char *str)
 }
 
 
-#ifndef WIN32
-int
-stricmp (const char *s1, const char *s2)
-{
-	return strcasecmp (s1, s2);
-}
-#else
-int
-stricmp (const char *s1, const char *s2)
-{
-	register int c = 0;
-
-	while ((c = tolower (*s1)) == tolower (*s2))
-	{
-		if (c == 0)
-			return 0;
-		s1++;
-		s2++;
-	}
-	if (c < tolower (*s2))
-		return -1;
-	return 1;
-}
-#endif
-
 void
 save_changes (void)
 {
 	long i = 0;
 	struct helperlist *c;
+#ifdef	ENABLE_STATS
 	struct statslist *d;
 
-	c = helperhead;
 	d = statshead;
-	unlink (TMP_FILE);
+#endif
+	c = helperhead;
+	remove (TMP_FILE);
 	while (c != NULL)
 	{
 		i++;
@@ -139,6 +137,7 @@ save_changes (void)
 	}
 	rename (TMP_FILE, HELPER_LIST);
 
+#ifdef	ENABLE_STATS
 	while (d != NULL)
 	{
 		i++;
@@ -147,23 +146,7 @@ save_changes (void)
 		d = d->next;
 	}
 	rename (TMP_FILE, STATS_FILE);
-}
-
-void
-save_setup (void)
-{
-#ifdef	WIN32
-	printf ("*** Writing setup file: %s (%s)\n", SETUP, date ());
 #endif
-	unlink (TMP_FILE);
-	db_log (TMP_FILE, "NICK=%s\n", s_Mynick);
-	db_log (TMP_FILE, "USERID=%s\n", UID);
-	db_log (TMP_FILE, "CHAN=%s\n", CHAN);
-	db_log (TMP_FILE, "VHOST=%s\n", VHOST);
-	db_log (TMP_FILE, "REALNAME=%s\n", REALNAME);
-	db_log (TMP_FILE, "CMDCHAR=%c\n", *CMDCHAR);
-	db_log (TMP_FILE, "SEEN=%d\n", SeeN);
-	rename (TMP_FILE, SETUP);
 }
 
 char *
@@ -177,46 +160,6 @@ date (void)
 	return strbuff;
 }
 
-/**
- * Allocate a new character array.  Copy into it at most
- * maxBytes bytes.
- */
-char *
-db_strndup (const char *dupMe, size_t maxBytes)
-{
-	char *ptr = NULL;
-	char *retMe = NULL;
-
-	/* Configure maxBytes to be the number of bytes to copy */
-	maxBytes = min (strlen (dupMe), maxBytes);
-	/* Allocate the return buffer. */
-	retMe = malloc (maxBytes + 1);
-	/* Was the allocation successful? */
-	if (NULL == retMe)
-	{
-		return NULL;
-	}
-
-	/*
-	 * ptr will point to the byte to which to copy the next
-	 * source byte.
-	 */
-	ptr = retMe;
-	/*
-	 * Continue while dupMe is valid and we are < maxBytes number
-	 * of bytes copied. This is typecase here because size_t is
-	 * unsigned, so comparing against > 0 *should* produce a
-	 * warning :)
-	 */
-	while (dupMe && (int) maxBytes-- > 0)
-	{
-		*ptr++ = *dupMe++;
-	}
-
-	/* Be sure to NULL terminate the array */
-	*ptr = 0;
-	return retMe;
-}
 
 int
 match_wild (const char *pattern, const char *str)
@@ -253,14 +196,6 @@ match_wild (const char *pattern, const char *str)
 		}						/* switch */
 	}
 }
-
-#ifndef WIN32
-size_t
-min (const size_t a, const size_t b)
-{
-	return ((a < b) ? a : b);
-}
-#endif
 
 char **
 tokenize (char *theString, size_t * numTokens)
@@ -301,7 +236,6 @@ get_s (void)
 	}
 }
 
-#ifndef WIN32
 const char *
 run_program (const char *input)
 {
@@ -310,9 +244,19 @@ run_program (const char *input)
 	read_fp = popen (input, "r");
 	if (read_fp != NULL)
 	{
-		while ( fgets(f_tmp, sizeof(f_tmp), read_fp) );
+		int length = 0;
 
-        pclose (read_fp);
+		while ( fgets(f_tmp + length, sizeof(f_tmp - length), read_fp) )
+		{
+			length = strlen(f_tmp);
+			while ((f_tmp[length - 1] == '\n') || (f_tmp[length - 1] == '\r'))
+			{
+				f_tmp[length - 1] = '\0';
+				length--;
+			}
+		}
+
+		pclose (read_fp);
 		if (f_tmp)
 		{
 			return f_tmp;
@@ -321,7 +265,6 @@ run_program (const char *input)
 	}
 	return NULL;
 }
-#endif
 
 /**
  * 6/22/00 Dan
@@ -339,9 +282,9 @@ get_rand_nick (const char *chan)
 	for (; c != NULL; c = c->next)
 	{
 		/* Check if this user is on the channel */
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
 		{
-			if (stricmp (Mynick, c->nick) != 0)
+			if (strcasecmp (Mynick, c->nick) != 0)
 			{
 				strncpy (f_tmp, c->nick, sizeof (f_tmp));
 				i++;
@@ -349,12 +292,12 @@ get_rand_nick (const char *chan)
 		}
 	}
 
-	x = rand () % i + 2;
+	x = 2 + get_random_integer(i);
 	i = 0;						/* reinit! */
 
 	for (c = userhead; c != NULL; c = c->next)
 	{
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
 		{
 			i++;
 			if (i == x)
@@ -363,7 +306,7 @@ get_rand_nick (const char *chan)
 				{
 					return f_tmp;
 				}
-				if (stricmp (Mynick, c->nick) != 0)
+				if (strcasecmp (Mynick, c->nick) != 0)
 				{
 					strncpy (f_tmp, c->nick, sizeof (f_tmp));
 					return f_tmp;
@@ -394,18 +337,15 @@ check_dbtimers (void)
 	while ((entry = readdir (dp)) != NULL)
 	{
 		stat (entry->d_name, &statbuf);
-
 		if (S_ISDIR (statbuf.st_mode) && *entry->d_name == '.')
 		{
 			continue;			/* it's a dir, ignore it */
 		}
-		
-		if (S_ISDIR (statbuf.st_mode) && stricmp (entry->d_name, "CVS") == 0)
+		if (S_ISDIR (statbuf.st_mode) && strcasecmp(entry->d_name, "CVS") == 0)
 		{
-			/* Ignore the CVS directory. */
+			/* Ignore the CVS directory */
 			continue;
 		}
-
 		i = time (NULL);
 		if (i >= atoi (entry->d_name))
 		{
@@ -421,27 +361,12 @@ check_dbtimers (void)
 				S (output);
 			}
 			fclose (fp);
-			unlink (filename);
+			remove (filename);
 		}
 	}
+        // FIXME: if CLOSEDIR_VOID is not defined, check the return value.
 	closedir (dp);
 }
-
-#if SNPRINTF_SUPPORT == 1
-int
-snprintf (char *buff, size_t size, const char *fmt, ...)
-{
-	static char temp[BUFSIZ];	// a temp (large buffer)
-	int result;
-	va_list ap;
-	va_start (ap, fmt);
-	result = vsprintf (temp, fmt, ap);
-	strncpy (buff, temp, size - 1);	// copy at most n
-	buff[size - 1] = '\0';		// ensure \0 at end
-	va_end (ap);
-	return result;
-}
-#endif
 
 int
 add_ignore_user_ram (char *nick)
@@ -452,7 +377,7 @@ add_ignore_user_ram (char *nick)
 
     while (c)
 	{
-		if (stricmp (c->nick, nick) == 0)
+		if (strcasecmp (c->nick, nick) == 0)
 		{
 			return 1;
 		}
@@ -486,7 +411,7 @@ check_ignore_user_ram (char *nick)
 
     while (c)
 	{
-        if (stricmp (c->nick, nick) == 0)
+        if (strcasecmp (c->nick, nick) == 0)
 		{
 			return 1;
 		}
@@ -505,7 +430,7 @@ delete_ignore_user_ram (char *nick)
 
 	while (pNode)
 	{
-		if (stricmp (pNode->nick, nick) == 0)
+		if (strcasecmp (pNode->nick, nick) == 0)
 		{
 			if (pPrev != NULL)
 			{
@@ -523,7 +448,7 @@ delete_ignore_user_ram (char *nick)
     return 0;
 }
 
-// Count lines in a given filename.
+/* Count lines in a given filename. */
 size_t			count_lines	(char *filename)
 {
 	FILE	*fp = NULL;
@@ -540,7 +465,7 @@ size_t			count_lines	(char *filename)
 
 	while(fgets(b, STRING_LONG, fp))
 	{
-			// Ignore comments!
+			/* Ignore comments! */
 			if((*b != '/') && (*b != '\n'))
 				lines++;
 			
@@ -554,7 +479,7 @@ size_t			count_lines	(char *filename)
 	return(lines);
 }
 
-// Self explanatory.
+/* Self explanatory. */
 void    reverse  (char   *pString)
 {
         size_t  nLength = strlen(pString);
@@ -569,8 +494,10 @@ void    reverse  (char   *pString)
 }
 	
 
-// Count how many times the character nChar exists in szStuff
-// return that number.
+/* Count how many times the character nChar exists in szStuff
+ * return that number. 
+ */
+
 size_t		count_char		(const char *pStuff, const char nChar)
 {
 	char	szStuff [STRING_LONG] = {0};
@@ -586,4 +513,83 @@ size_t		count_char		(const char *pStuff, const char nChar)
 	}
 
 	return(nCount);
+}
+
+/* I wrote this for my matrix-RAD.net project, this is translated from the Java.
+ *
+ * Try to turn all sorts of string things into a boolean.  Only the first character is considered.
+ */
+
+// true   1 yes ack  ok   one  positive absolutely affirmative  'ah ha' 'shit yeah' 'why not'
+static const char *IS_TRUE =  "t1aopswy";
+// false  0 no  nack nope zero negative nah 'no way' 'get real' 'uh uh' 'fuck off' 'bugger off'
+static const char *IS_FALSE = "f0bgnuz";
+bool isBoolean(char *aBoolean)
+{
+    bool result = false;
+
+    if ((aBoolean != NULL) && (aBoolean[0] != '\0'))
+    {
+	char test = aBoolean[0];
+
+	result = (strchr(IS_TRUE, tolower(test)) != NULL);
+    }
+
+    return result;
+}
+
+void db_sleep(unsigned long seconds)
+{
+    struct timespec req, rem;
+
+    req.tv_sec = seconds;
+    nanosleep(&req, &rem);
+}
+
+/* plural(): This function returns "s", or "" (empty string),
+ * depending on the plurality of the number specified by 'i'. 
+ * Used for beautification purposes in output that involves 
+ * showing a numeric count of objects.
+ */
+
+char	*plural 	(size_t i)
+{
+	/* We only need to return "" if 'i' is equal to 1 or -1. */
+	if (i == 1 || i == -1)
+		return ("");
+
+	/* Everything else is considered plural. */
+	return ("s");
+}
+
+/* db_argstostr(): This function takes char **args and fills the buffer
+ * pointed to by 'str' with a 'delim' delimited string of each element 
+ * in the argument buffer. A pointer to 'str' is returned for value 
+ * checking. 
+ */
+
+int	db_argstostr(char *str, char **args, size_t startarg, char delim)
+{
+	int i = 0, j = 0, tc = 0;
+
+	/* Bail out if no args. */
+	if (args[0] == NULL)
+		return (0);
+	
+	/* Iterate words. */
+	for (i = startarg; args[i]; i++)
+	{
+		/* Go through the letters and fill str buffer. */
+		for (j = 0; args[i][j]; j++)
+		{
+			str[tc++] = args[i][j];
+
+			if (args[i+1] && !(args[i][j+1]))
+				str[tc++] = delim;
+		}
+	}
+
+	str[tc] = '\0';
+	
+	return (tc);
 }

@@ -1,55 +1,307 @@
 
     *******************************************************
     Warnings, errors, malfunctions, code patches, suggestions
-    Support Forum: http://forum.freezedown.org
-    *******************************************************
+    Support Forum: http://www.freezedown.org/forum
+    (order is reverse-chronologic)
+    ******************************************************* 
+     
 
-Darkbot 7f3: Jun 3, 2005
- 	- Restart and rehash commands should now work on all operating
-	  systems.
+Darkbot 8rc4: May 13, 2009
+	- Fixed DIE, NICK, METAR, PART, RANDQ, RANDQ2, RDB, STATS, TAR, 
+          TELL commands crashing with no args. I made a small change to 
+          the initial command parsing function which rendered some things 
+	  improper and made many functions crash because they were no 
+	  longer receiving the arguments they expected before the change.
+	- Fixed CHAR_INVOKE'd commands to do nothing if given too many
+	  arguments. 
+	- INFO2 command now outputs correctly in privmsg.
+	- Added the "You must specify a search string" message to
+	  RANDQ and RANDQ commands with no arguments.
+	- Sleep command now checks for too many args, this is part
+	  of the command structure now, so more commands are to follow
+	  probably.
+	- MSG_INVOKE'd commands now also check for too many arguments.
+	- Commands with less arguments than expected now show
+	  help messages again.
+	- Fixed crash error on ADDUSER command.
+	- Fixed retarded error in MEM command where I was trying
+          to change the contents of a const variable.
+	- Made OS, MEM, CMDCHAR, and CPU commands check for too many arguments.
+	- Fixed OS command on Windows.
+	- Fixed chanserv_random_stuff.
+	- Fixed alarmclock function.
+	- Fixed permbans command not outputting help for null
+	  input. More to come.
+ 	- Fixed several commands that crashed not checking for
+	  a null argument array. The fix I did looks sort of 
+ 	  retarded, but I found if i didn't check args[0] and args
+	  both, it would crash on different command types.
+	  Go figure. This fix works and I'll work on bettering it.
+Darkbot 8rc4: April 30, 2009
+	- Fixed extensions.m4 file from discriminating against
+	  me using a newer version of automake than 1.9.6, and
+  	  removed a few automake warnings.
+	- Fixed autotopic only using first word of input.
+ 	- Fixed crash on ADD command and probably others when msg
+          with no arguments.
+Darkbot 8rc3: Sep 17 2008
+	- Fixed USERLIST and SETINFO commands crashing with no args. 
+ 	  There's probably more of these to come.
+	- Topics can now start with these commands that check for too
+          many arguments. Say you want to do:
 
-        - Changed check_dbtimers() so it ignores the CVS directory,
-          which contains information for the CVS server.  This
-          fixes a situation that seems to have only presented itself
-          in FreeBSD, where it thinks the CVS directory is a
-          timer, and sends out random garble every few seconds.
+             dbtest add info+things hey N~, I don't have info on things.
 
-	- Fixed randq.  I broke it when I added the -I switch.
+          Before this, a parsing error would invoke the "info" command. 
+          This has been fixed, and the bot will now either not respond
+          to these inquiries if they don't exist in it's database, or
+          provide the desired reply. 
+	- Added "too_many" parameter into the chanserv_command struct.
+          This specifies to the command parser if a command sent to the
+	  bot should be checked for having too many arguments. This 
+          particular change helps fix a number of issues which would 
+          cause headache, and will be fine tuned more thoroughly when
+          I get the chance.
+	- More parser errors fixed. Added ILN in additon to ILC.
+	- add stats function now has subsequent call to free() 
+	  after the malloc() call. (Duh? What happened to that?)
+	- Fixed ILC. Oops on my part for breaking it.
+	- Part command no longer tries to output "I left the room" 
+	  message to the channel it parts.
+	- Updated TODO.
+	- Changed all command function parsing. Things should hopefully
+	  work more correctly again.
+	- HLIST (Helperlist) command now allows multiple arguments.
+	  For instead if you want to list all users level 3 and level 3,
+	  you would do !HLIST 3 2.
+	- Fixed tell command to tell people about topics without having
+          do delimit them with '+' signs, so it runs like normal text now
+  	  for multi-word topics.
+	- Fixed sleep command. It now actually sleeps for the specified
+	  amount of time, if any is specified. 
+	- Part message now accepted as a parameter to PART command.
+	- More work on unixtime function. It now has more complex error
+	  checking for strtol. More work on this to come. 
+	- Renamed pluralize function to plural.
 
-	- If the beta doesn't work on your system, run "autoreconf"
- 	  if you have the autotools distribution.  Then, run "make".
+Darkbot 8rc3: Jan 16 2008
+	- Alarmclock function uses time_t variable now instead of long. 
+	  Also now accepts arguments specified in seconds.
 
-	- Added a new beta version to the beta subdirectory in the
-	  repository.  This should work pretty well for most people,
-	  and I recommend using it if it compiles on your system. 
-	  If there are any problems, report them.  A lot of the 
-	  source/config.h defines aren't implemented yet, but as my
- 	  ability to fill that part in increases, they will also be
-	  implemented.  
+	- Bot no longer crashing during start if there's blank lines in 
+	  the servers file. It now ignores blank lines and comments 
+	  starting with '#' and '/'.  If the server file is blank, it 
+	  aborts and tells the user to edit the file.
+
+	- Added pluralize() function for beautification purposes. See more 
+	  in general.c.
+	
+
+Darkbot 8rc2: June 07, 2007
+	- The STATS command, and all overhead produced by this command 
+	  can now be disabled during compile like so:
+		./configure --disable-stats 
+		OR
+		./configure --enable-stats=no
+
+	- Changed the RANDOMSTUFF command to be a NORMAL_COMMAND, so you 
+	  can use this command with ADDRESS_INVOKE again (address the bot
+	  directly).
+
+	- Added a little thing at the top of docs/WHATSNEW that indicates 
+	  which order the lines therein consist of according to when the 
+	  changes they represent were implemented. Made this sound more 
+	  technical than it should for no reason at all.
+
+        - If the input type is ADDRESS_INVOKE (the bot was called upon by  
+          name), the bot responds anyway now, because it's going to output 
+          an "I don't know" response if the topic doesn't exist. This doesn't 
+          happen with  DIRECT_INVOKE because the text may have been normal 
+	  channel conversation that was mistakenly parsed as a command.
+
+	- Commands which require 0 parameters now act accordingly again 
+	  when supplied with too many arguments. In other words, "dbtest 
+ 	  info things" would trigger the info command before. Now, it	
+	  uses check_existing_url and outputs a response if the topic 
+	  exists, otherwise, it just ignores it.  
+	  
+
+Darkbot 8rc2: December 09, 2006
+	- Updated server and user lists.
+	- More fixes to random whut.
+	- Tweaked random number generation.
+	- Consistant random number generation throughout the code.
+
+Darkbot 8rc2: December 04, 2006
+	- Fixed some variable checking that was checking for integers
+	  instead of bool values (random whut is fixed by this, flood 
+          kick)
+	- Fixed Makefile.am file to produce DOS 8.3 file format
+	  compliant config.h pre-file, and the copyright thingo	
+          in the same file.
+
+Darkbot 8rc2: October 11, 2006
+	- Fixed some divide by zero errors.
+	- Cleaned up the logging.
+	- Cleaned up the output of the build system.
+	- Cleaned up the parameter names.
+	- Cleaned up some help text.
+	- Script for building minimal darkbot.
+	- Disabled more channel code.
+	- Started documenting what darkbot works on.
+
+Darkbot 8rc2: June 11, 2006
+	- Added docs/SETUP.
+
+Darkbot 8rc2: May 31, 2006
+	- A busy month.
+	- Completed the autofoo.
+	- Added compat directory full of replacement functions for
+	  when autofoo decides that the users OS is missing stuff.
+	- Added a testing mode for developers.
+	- Cleaned up most OS dependant things so that they now work 
+	  everywhere.
+	- Converted some defines.h things into ./configure --enable-X
+	  --with-X=Y things.
+	- Added !set foo=bar infrastructure and command.  The contents
+	  of setup.ini is now under the control of generic, array based
+	  code.  To add things to setup.ini, just add them to the array.
+	- Added setup.ini parameters to the internal help system.
+	- Moved the rest of defines.h to setup.ini.
+	- General clean up and lots of minor things that get fixed in 
+	  passing.
+	- Added docs/HACKING.
+	- Re arranged some files.
+	- New building scripts.
+	- Darkbot and convertdb are much cleverer about finding the data
+	  files.
+	- Cleaned up vars.c and vars.h.
+	- Have the help system deal with the command character as needed.
+
+Darkbot 8rc2: May 04, 2006
+	- Cleaned generated files out of cvs and updated .cvsignore 
+	  files to match.
+
+Darkbot 8rc2: Apr 21, 2006
+	- Added most of the help command summaries.
+
+Darkbot 8rc2: Apr 19, 2006
+	- Fine tuned what commands can be done where.  In particular
+	  any password related commands can only be done in private 
+	  now.
+	- Made some commands behave consistantly no matter where they 
+	  are invoked from.
+	- Added HELP COMMANDS.
+	- Don't try to send oversize messages, split at a space.
+
+Darkbot 8rc2: Apr 16, 2006
+	- Rewrote chansrv.c to use an array of pointers instead
+	  of a huge if-else-if.
+	- Added patch from nak that stops ops from kicking 
+	  themselves via a topic kick.
+	- Added HELP <command>.
+	- Added isop <nick>.
+	- Added level <nick>.
+
+Darkbot 8rc2: Mar 09, 2006
+	- Added !WEATHER <zipcode> command. 
+
+Darkbot 8rc2: Nov 07, 2005
+	- Fixed spelling errors, the word 'queue' was mispelled
+	  throughout the code and in comments.
+	- I apparently broke show_banlist() a few releases back 
+	  trying to eliminate a type conversion warning, so it's
+	  fixed again.
+	- B~ (bot nickname) variable can now be used in perform.ini
+	- OS command now works on windows.
+	- Fixed google command. A search string used to determine
+	  successful replies was changed by google.
+	- Changed "ugly" message responses.
+	- Restart and rehash commands should now work on all operating
+	  systems, including Windows.
+
+Darkbot 8rc1: Mar 04, 2005
+	- Removed an unneeded line in main.c, that was used to "hide"
+	  warnings on WIN32, which is a very bad idea.
+	- Changed check_dbtimers() so it ignores the CVS directory,
+	  which contains information for the CVS server.  This
+	  fixes a situation that seems to have only presented itself
+	  in FreeBSD, where it thinks the CVS directory is a 
+	  timer, and sends out random garble every few seconds.
+	
+	- configure.ac and source/Makefile.am; very minor updates.
+
+	- Fixed randq, which I accidentally broke when adding the
+	  -I switch. This also fixes some problems that turned up
+	  on FreeBSD.
+
+	- Fixed a warning that came up in permbans.c about mixing 
+	  types when compiling on OS X.  I changed %d on line 198 
+	  to %ud.
+
+	- configure now checks for clock_t.
+
+ 	- configure now automatically checks for snprintf, and 
+	  uses a replacement if it's not found.
+
+	- docs/INSTALL.txt is now INSTALL in the toplevel dir.
+	  Another thing for automake to stop complaining about.
+
+	- The original configure script is now located in the
+	  scripts directory, and is called "Setup". 
+
+	- docs/contributors.txt is now called AUTHORS in the
+	  top level of the distribution.  Another thing automake
+	  complains about.  I also worked on the appearance of 
+	  this file, hopefully it looks a little better now.
+
+	- README.txt in the toplevel is now called "README". 
+	  Automake complains about this file also, if it's not
+	  found.
+
+	- This file is now called ChangeLog, and has been moved
+	  to the toplevel distribution dir.  The reason for this 
+	  is that automake complains, if it can't find this file.
+
+	- configure now checks for the presence of windows.h, 
+	  and defines WIN32, if it's found.  This removes the
+	  need to do "make win".  Until I add the noconsole 
+	  option again, you can run darkbot with no console by
+	  doing "./darkbot &" in your cygwin shell.
+
+	- The configure.ac file is not yet complete, and most
+	  of the definitions listed in config.h are not completely
+	  implemented into the code yet.  If you have problems, 
+	  please let me know, and these files will become completely
+	  implemented as demand is met.
+
+	- Included premade Makefiles and configure script.
+
+	- Added "make convertdb", which will compile the database
+	  conversion utility, which encrypts the passwords in your
+	  userlist.db file.
+
+	- I added a Makefile.am in the toplevel, and in the source
+	  directory.  These files are used in conjunction with 
+	  GNU Automake to produce a Makefile.
+
+        - Added Makefile.ams and configure.ac for autoconf/automake.
 
 Darbkot 7f2: April 05, 2004
 
-	- Fixed a possible crash scenario in do_random_stuff().
+        - Fixed the google function.  Google changed some text that
+          the bot was using to tell if the search was successful.
 
-	- You can now use !GOOGLE for google searches.
+Darkbot 7f1: Mar 06th, 2004
 
-	- Hopefully fixed a bug that happened on BSD machines causing 
-	  weirdness.  Changed a strcpy to strncpy.
+	- Made a short dirty fix for "!randq *" crashing the bot.
+	  If you do a randq query consisting entirely of * and ? 
+	  characters, the bot will now just spit out a random quote.
+	  This needs to be fixed better, obviously, but this will 
+	  keep peoples' bots from crashing until the issue can be
+	  properly addressed.
 
-	- Fixed the google function.  Google changed some text that 
-	  the bot was using to tell if the search was successful. 
-	 
-Darkbot 7f1: March 30, 2004
-
-	- Fixed a bug that happened while make tried to cp the binary
-	  to the toplevel distribution directory.  It now compiles the
-	  binary directory to the toplevel, and no longer needs to use
- 	  "cp".
-
-	- You can make color specific responses now.  Please let me
-	  know if any problems arise from this.
-
-	- Made a quick fix to a bug which caused crashing in randq.
+	- Changed unlink() calls to remove().  remove() is ANSI C.
 
 	- Private message responses no longer have that "sent by" 
 	  thing on them.  It was annoying, and pointless.
@@ -57,10 +309,6 @@ Darkbot 7f1: March 30, 2004
 	- Renamed the log() function db_log() to avoid a conflict
 	  with a function internal with gcc.  Apparently this only
 	  affects newer versions of gcc.  
-
-	- Added "make convertdb", which will compile the database
-	  conversion utility, which encrypts the passwords in your
-	  userlist.db file.
 
 	- Removed two unused variables in convertdb.c.  I also changed
 	  'unlink' to 'remove', to comply with the ANSI standard.

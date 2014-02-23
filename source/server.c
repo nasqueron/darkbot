@@ -19,7 +19,7 @@ gs26 (void)
 		{
 			strncpy (BS, c->name, sizeof (BS));
 			BP = c->port;
-			strncpy (BPASS, c->pass, sizeof (BPASS));			
+			strncpy (BPASS, c->pass, sizeof (BPASS));
 		}
 		c = c->next;
 	}

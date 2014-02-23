@@ -2,7 +2,7 @@
 #include "vars.h"
 #include "prototypes.h"
 
-#ifdef	DO_MATH_STUFF
+#ifdef	ENABLE_MATH
 
 /* Changed input to be unsigned instead of signed. This
  * suppressed warning messages when compiling on Solaris.
@@ -117,29 +117,25 @@ cf (char *host, char *nick, char *chan)
 	if (ood[f_n].value)
 		return 1;
 	ood[f_n].count++;
-	if ((time (NULL) - ood[f_n].time) > ft)
+	if ((time (NULL) - ood[f_n].time) > FT)
 		ood[f_n].count = 0;
-	else if ((time (NULL) - ood[f_n].time) <= ft && ood[f_n].count >= fr)
+	else if ((time (NULL) - ood[f_n].time) <= FT && ood[f_n].count >= FR)
 	{
 		ood[f_n].value = true;
 		if (!ood[f_n].kick)
 		{
 			ood[f_n].kick = 1;
-#ifdef	FLOOD_KICK
 			if (*chan == '#' || *chan == '&')
 			{
+#ifdef ENABLE_CHANNEL
+			    if (FLOOD_KICK == true)
 				L018 (chan, nick, FLOOD_REASON, fc, host);
-			}
-			else
-				L019 (CHAN, fc, host);
-#else
-			if (*chan == '#' || *chan == '&')
-			{
-				L019 (CHAN, fc, host);
-			}
-			else
-				L019 (CHAN, fc, host);
+			    else
 #endif
+				L019 (CHAN, fc, host);
+			}
+			else
+			    L019 (CHAN, fc, host);
 		}
 		return 1;
 	}
@@ -191,11 +187,8 @@ info (const char *source, char *target)
 	char b[STRING_LONG] = { 0 };
 	size_t topics = 0, dup = 0;
 	time_t t2time = 0, c_uptime = 0;
-
-#ifdef FIND_DUPS
 	char *ptr = NULL, *subj = NULL;
-    char last[STRING_LONG] = { 0 };
-#endif
+	char last[STRING_LONG] = { 0 };
 	t2time = time (NULL);
 	unlink (TMP_URL);
 	starttime = clock ();
@@ -208,38 +201,36 @@ info (const char *source, char *target)
 	while (fgets (b, STRING_LONG, fp))
 	{
 		topics++;
-#ifdef	FIND_DUPS
-		if(*b == '\n')
-            continue;
+		if (FIND_DUPS)
+		{
+		    if(*b == '\n')
+        		continue;
 
-        stripline (b);
-		subj = strtok (b, " ");
-		ptr = strtok (NULL, "");
-		strlwr (subj);
-		if (stricmp (last, subj) == 0)
-		{
+    		    stripline (b);
+		    subj = strtok (b, " ");
+		    ptr = strtok (NULL, "");
+		    strlwr (subj);
+		    if (strcasecmp (last, subj) == 0)
+		    {
 			dup++;
-#ifdef	SAVE_DUPS
-			db_log (BACKUP_DUP, "%s %s\n", subj, ptr);
-#endif
-		}
-		else
-		{
+			if (SAVE_DUPS)
+			    db_log (BACKUP_DUP, "%s %s\n", subj, ptr);
+		    }
+		    else
+		    {
 			db_log (TMP_URL, "%s %s\n", subj, ptr);
+		    }
+		    strncpy (last, subj, sizeof (last));
+		    last[sizeof (last) - 1] = '\0';
 		}
-		strncpy (last, subj, sizeof (last));
-		last[sizeof (last) - 1] = '\0';
-#endif
 	}
 
 	fclose (fp);
 	rename (TMP_URL, URL2);
-#ifdef	FIND_DUPS
-	if (dup > 0)
+	if ((FIND_DUPS) && (dup > 0))
 	{
 		L025 (target, dup);
 	}
-#endif
 	c_uptime = time (NULL) - uptime;
 	topics -= dup;
 	if (c_uptime > 86400)
@@ -287,7 +278,9 @@ info (const char *source, char *target)
 																   starttime) /
 																  CLOCKS_PER_SEC) == 1) ? "" : "s");
 	}
-/*    get_stats(target, NULL); */
+//#ifdef  ENABLE_STATS
+//   get_stats(target, NULL); */
+//#endif
 }
 
 /**
@@ -297,11 +290,12 @@ info (const char *source, char *target)
  *   this is a read only method.
  */
 void
-show_info2 (const char *target, const char *source)
+show_info2 (const char *target, const char *source, enum chanserv_invoke_type invoked)
 {
-	S ("PRIVMSG %s :%s, compiled on %s. "
+	S ("%s %s :%s, compiled on %s. " 
 	   "I have processed %ld lines of text since startup...\n",
-	   target, source, __DATE__, NUMLINESSEEN);
+	   (invoked == MSG_INVOKE) ? "NOTICE" : "PRIVMSG", target, 
+	   source, __DATE__, NUMLINESSEEN);
 }
 
 /**
@@ -318,7 +312,7 @@ return_useridle (const char *chan, const char *who, int toggle)
 
 	for (; c != NULL; c = c->next)
 	{
-		if (!stricmp (who, c->nick) && !stricmp (chan, c->chan))
+		if (!strcasecmp (who, c->nick) && !strcasecmp (chan, c->chan))
 		{
 			if (toggle == 1)
 			{
@@ -341,7 +335,7 @@ process_nick (char *nick, char *newnick)
 	newnick++;
 	while (c)
 	{
-		if (stricmp (nick, c->nick) == 0)
+		if (strcasecmp (nick, c->nick) == 0)
 		{
 			strncpy (c->nick, newnick, sizeof (c->nick));
 		}
@@ -363,7 +357,7 @@ show_chaninfo (const char *nick, const char *chan, const char *target)
 	for (; c != NULL; c = c->next)
 	{
 		++totalUsers;
-		if (!stricmp (chan, c->chan))
+		if (!strcasecmp (chan, c->chan))
 			++foundUsers;
 	}
 	S ("PRIVMSG %s :%s, I see %d users in %s (%d users total in ram)\n",
@@ -385,7 +379,7 @@ void    show_chanusers  (const char *nick, const char *chan)
         
     for (; c != NULL; c = c->next)
     {
-		if (stricmp (chan, c->chan) == 0)
+		if (strcasecmp (chan, c->chan) == 0)
         {
 			++foundUsers;
 			
@@ -457,6 +451,7 @@ do_modes (char *source, char *data)
 		if (mode[i] == 'o')
 		{
 			nick = strtok (NULL, " ");
+			do_op(nick, chan, PM);	/* flag this member as having been (De)OP'd/ */
 			continue;
 		}
 		if (mode[i] == 'v')
@@ -509,7 +504,7 @@ do_quit (const char *nick, long toggle)
 		/* delete user */
 		while (pNode)
 		{
-			if (stricmp (pNode->nick, nick) == 0)
+			if (strcasecmp (pNode->nick, nick) == 0)
 			{
 				/* found a match, remove it */
 				save_seen (pNode->nick, pNode->uh, pNode->chan);
@@ -540,7 +535,7 @@ do_quit (const char *nick, long toggle)
 		/* delete channel */
 		while (pNode)
 		{
-			if (stricmp (pNode->chan, nick) == 0)
+			if (strcasecmp (pNode->chan, nick) == 0)
 			{
 				/* found a match, remove it */
 				save_seen (pNode->nick, pNode->uh, pNode->chan);

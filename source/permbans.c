@@ -26,7 +26,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 	}
 
 	memset (n, 0, sizeof (struct permbanlist));
-	n->uh = db_strndup (uh, STRING_SHORT);
+	n->uh = strndup (uh, STRING_SHORT);
 	if (NULL == n->uh)
 	{
 		db_log ("error.log", "add_permban> Memory allocation failure\n");
@@ -35,7 +35,7 @@ add_permban (const char *uh, size_t counter, const char *reason)
 		return;
 	}
 
-	n->reason = db_strndup (reason, STRING_SHORT);
+	n->reason = strndup (reason, STRING_SHORT);
 	if (NULL == n->reason)
 	{
 		db_log ("error.log", "add_permban> Memory allocation failure\n");
@@ -66,7 +66,7 @@ check_permban (const char *uh, const char *chan, const char *nick)
 	struct permbanlist *c = permbanhead;
     size_t len = 0;
 
-    len = min ( STRING_SHORT, strlen (uh) );
+    len = MIN(STRING_SHORT, strlen(uh));
 
 	strncpy (tmpBuf, uh, len);
     tmpBuf[len] = '\0';
@@ -84,7 +84,7 @@ check_permban (const char *uh, const char *chan, const char *nick)
 	return false;
 }
 
-#if DO_CHANBOT_CRAP == 1
+#ifdef ENABLE_CHANNEL
 
 /**
  * Remove a permban based on nickname and user@host.
@@ -103,10 +103,11 @@ del_permban (const char *nick, const char *uh)
 {
 	bool foundBan = false;
 	struct permbanlist *pNode = permbanhead, *pPrev = 0;
+	int	i = 0;
 
 	while (pNode)
 	{
-		if (stricmp (pNode->uh, uh) == 0)
+		if (strcasecmp (pNode->uh, uh) == 0)
 		{
 			L002 (nick, PERMBAN_counter, uh);
 			PERMBAN_counter--;
@@ -137,9 +138,7 @@ del_permban (const char *nick, const char *uh)
 	}
 	return foundBan;
 }
-#endif
 
-#if DO_CHANBOT_CRAP == 1
 
 /**
  * Save the permban list to file.
@@ -154,17 +153,13 @@ save_permbans (void)
 	const struct permbanlist *c = permbanhead;
 
 	remove (TMP_FILE);
-	remove (PERMBAN);
 
-#ifdef	WIN32
 	printf ("*** Writing permbans: %s (%s)\n", PERMBAN, date ());
-#endif
 
 	for (; c != NULL; c = c->next)
 	{
 		db_log (TMP_FILE, "%s %d %s\n", c->uh, c->counter, c->reason);
 	}
-
 	rename (TMP_FILE, PERMBAN);
 
 	if (PERMBAN_counter == 0)
@@ -188,7 +183,7 @@ void
 show_banlist (const char *nick)
 {
 	char DATA[STRING_SHORT * 7] = { 0 };
-	char tmp [STRING_SHORT] = { 0 };
+	char tmp [STRING_SHORT * 7] = { 0 };
 	size_t i = 0,	x = 0;
 	const struct permbanlist *c = 0;
 
@@ -196,21 +191,29 @@ show_banlist (const char *nick)
 	{
 		i++;
 		++x;
-		snprintf (tmp, sizeof(tmp), "%s", DATA);
-		snprintf (DATA, (sizeof(DATA) + sizeof(tmp)), "%s %s:%d", 
-			tmp, c->uh, c->counter);
-		memset (tmp, 0, sizeof(tmp));
 
-		//if (i > 8)
-		if (i > 6)
+		snprintf (tmp, sizeof (tmp), "%s", DATA);
+		snprintf (DATA, sizeof(DATA), "%s %s:%u", 
+			  tmp, c->uh, c->counter);
+		memset (tmp, 0, sizeof (tmp));
+
+		/* Only show at max 6 bans per message sent. */
+		if (i >= 6)
 		{
 			S ("NOTICE %s :%s\n", nick, DATA);
 			i = 0;
 			memset (DATA, 0, sizeof (DATA));
-			db_sleep (2);
 		}
 	}
-	S ("NOTICE %s :%s\n", nick, DATA);
+
+	/* If 'i' never reaches 6 on the last pass through the while loop,
+	 * and there are bans yet to be shown, act accordingly.
+	 */
+
+	if (i > 0)
+	{
+		S ("NOTICE %s :%s\n", nick, DATA);
+	}
+	
 	S ("NOTICE %s :End of PERMBAN list; %d ban%s found.\n", nick, x, (x == 1) ? "" : "s");
 }
-

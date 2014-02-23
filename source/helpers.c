@@ -14,9 +14,9 @@ add_helper (const char *chan,
 {
 	struct	helperlist *n = 0;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
-	char	*salt = "8fei3k";
-	
+#ifdef ENABLE_ENCRYPT
+	const char *salt = "8fei3k";
+
 	if ( mode == 0 )
     {
         if ((ptr = crypt (pass, salt)) == NULL)	/* encrypt password */
@@ -27,7 +27,7 @@ add_helper (const char *chan,
 #else
 	ptr = (char *)pass;
 #endif
-    
+
 
 	n = malloc (sizeof (struct helperlist));
 	if (n == NULL)
@@ -52,7 +52,7 @@ add_helper (const char *chan,
 	strncpy (n->pass, ptr, sizeof (n->pass));
 	n->num_join = num_join;
 	n->level = level;
-	strncpy (n->greetz, greetz, min (sizeof (n->greetz) - 1, strlen (greetz)));
+	strncpy (n->greetz, greetz, MIN(sizeof(n->greetz) - 1, strlen(greetz)));
 	n->next = helperhead;
 	helperhead = n;
 }
@@ -78,7 +78,7 @@ show_helper_list (const char *nick, long level)
 	size_t	i = 0,	x = 0;
 	const	struct	helperlist *c = NULL;
 
-	
+
 	for (c = helperhead; c != NULL; c = c->next)
 	{
 		// If we're displaying users at all levels...
@@ -105,7 +105,7 @@ show_helper_list (const char *nick, long level)
 
 	if (x != 0)
 		S ("NOTICE %s :%s\n", nick, DATA);
-	
+
 	S ("NOTICE %s :End of Helper Userlist; %d user%s found.\n", 
 		nick, x, 
 		(x == 1) ? "" : "s");
@@ -124,9 +124,7 @@ load_helpers (void)
 		printf ("Please run ./configure to setup your darkbot.\n");
 		exit (0);
 	}
-#ifndef	WIN32
 	printf ("Loading %s file ", HELPER_LIST);
-#endif
 	while (fgets (b, STRING_LONG, fp))
 	{
 		if (b == NULL)
@@ -185,7 +183,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 {
 	struct	helperlist *c;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	char	*salt = "8fei3k";
 #endif
 
@@ -193,7 +191,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 	strlwr (uh);
 
 
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	if ((ptr = crypt (pass, salt)) == NULL)	/* encrypt old password */
 		return;
 #else
@@ -206,7 +204,7 @@ set_pass (char *nick, char *uh, char *pass, char *newpass)
 		{
 			if (strcmp (c->pass, ptr) == 0 || strcmp (c->pass, "0") == 0)
 			{
-#if				ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 				if ((ptr = crypt (newpass, salt)) == NULL)	/* encrypt new password */
 					return;
 #else
@@ -233,14 +231,14 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 {
 	struct	helperlist *c;
 	char	*ptr = NULL;
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	char	*salt = "8fei3k";
 #endif
 
 	c = helperhead;
 	strlwr (uh);
 
-#if	ENCRYPT_PASSWORDS == ON
+#ifdef ENABLE_ENCRYPT
 	if ((ptr = crypt (pass, salt)) == NULL)
 		return 0;
 #else
@@ -261,7 +259,7 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 				if (*chan == '*')
 					return c->level;
 
-				if (stricmp (c->chan, chan) == 0)
+				if (strcasecmp (c->chan, chan) == 0)
 					return c->level;
 
 				return 0;		/* don't match chan access */
@@ -311,7 +309,7 @@ get_pass (char *data)
 		temp = strtok (NULL, " ");
 		snprintf (b, sizeof (b), "%s %s", b, temp);
 	}
-	if (stricmp (b, pass_pass) == 0)
+	if (strcasecmp (b, pass_pass) == 0)
 	{
 		strncpy (pass_data, "0", sizeof (pass_data));
 		return 1;
@@ -332,7 +330,7 @@ do_login (char *nick, char *pass)
 	c = userhead;
 	while (c)
 	{
-		if (stricmp (nick, c->nick) == 0)
+		if (strcasecmp (nick, c->nick) == 0)
 		{
 			x = verify_pass (c->nick, c->chan, c->uh, pass);
 			if (x > 0)
@@ -340,11 +338,14 @@ do_login (char *nick, char *pass)
 				i++;
 				if (c->level == 0 && x >= 2)
 				{
-#if OP_USERS_ON_LOGIN == 1
+#ifdef ENABLE_CHANNEL
+				    if (OP_USERS_ON_LOGIN)
+				    {
 					/* only if not already authed */
 					S ("MODE %s +ov %s %s\n", c->chan, c->nick, c->nick);
+				    }
 #endif
-					D = 1;
+				    D = 1;
 				}
 				c->level = x;
 				snprintf (b, sizeof (b), "%s[%d] %s", c->chan, (int) c->level, Data);
@@ -380,11 +381,11 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 	{							/* get access level */
 		while (c2)
 		{
-			if (stricmp (c2->uh, uh) == 0)
+			if (strcasecmp (c2->uh, uh) == 0)
 			{
-				if (((stricmp (c2->chan, chan) == 0) || (stricmp ("#*", chan) == 0)))	/* privmsg */
+				if (((strcasecmp (c2->chan, chan) == 0) || (strcasecmp ("#*", chan) == 0)))	/* privmsg */
 				{
-					if (stricmp (c2->nick, nick) == 0)
+					if (strcasecmp (c2->nick, nick) == 0)
 					{
 						return c2->level;
 					}
@@ -405,7 +406,7 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 					return 0;
 				}
 				if (c->chan[1] != '*')
-					if (stricmp (c->chan, chan) != 0)
+					if (strcasecmp (c->chan, chan) != 0)
 						return 0;
 				c->num_join++;
 				if (*c->greetz == '+')
@@ -444,30 +445,31 @@ check_access (char *uh, char *chan, int toggle, char *nick)
 							continue;
 						strncpy (data, temp, sizeof (data));
 					}			/* While */
-#if JOIN_GREET == 1
-					if (i == 0)
+					if (JOIN_GREET)
 					{
+					    if (i == 0)
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :%ld\2!\2\37(\37%s\37)\37\2:\2 %s\n",
 							   chan, c->num_join, nick, c->greetz);
 						}
-					}
-					else if (A == 1)
-					{
+					    }
+					    else if (A == 1)
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :\1ACTION %s\1\n", chan, data);
 						}
-					}
-					else
-					{
+					    }
+					    else
+					    {
 						if (setinfo_lastcomm (uh) == 0)
 						{
 							S ("PRIVMSG %s :%s\n", chan, data);
 						}
+					    }
 					}
-#endif
 					return c->level;
 				}
 			}
