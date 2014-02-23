@@ -12,7 +12,7 @@ main (int argc, char **argv)
 	char temp[STRING_SHORT] = { 0 };
 	char exe[STRING_SHORT] = { 0 };
 	struct timeval timeout;
-	int		i = 0;
+	int  ret, i = 0;
 	fd_set fdvar;
 	struct stat st;
 #ifdef SA_NOCLDSTOP
@@ -136,14 +136,14 @@ main (int argc, char **argv)
 #ifndef	WIN32
 # ifdef ENABLE_VERSION_CHECK
 	snprintf (temp, sizeof (temp), "lynx -source http://www.freezedown.org/cgi/laun.cgi?%s &", dbVersion);
-	system (temp);
+	ret = system (temp);
 # endif
 	db_sleep (2);
 	if (SORT)
 	{
 	    printf ("Sorting database...\n");
 	    snprintf (temp, sizeof (temp), "sort %s -o %s\n", URL2, URL2);
-	    system (temp);
+	    ret = system (temp);
 	}
 #endif
 	load_helpers ();

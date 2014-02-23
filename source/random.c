@@ -20,7 +20,7 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	char		*ptr = NULL;
 	char		file	[STRING_LONG] = {0};
 	size_t		nLines = 0;
-	int			toggle = 1;
+	int		ret, toggle = 1;
 	
 	
 //#ifndef	WIN32	
@@ -29,7 +29,7 @@ void		add_randomstuff		(char *source, char *target, char *data)
 	    // Backup randomstuff file to a temporary file.
 	    unlink(RAND_BACKUP_FILE);
 	    snprintf(file, sizeof(file), "cp %s %s\n", RAND_FILE, RAND_BACKUP_FILE);
-	    system(file);
+	    ret = system(file);
 	}
 //#endif
 

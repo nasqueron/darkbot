@@ -279,9 +279,10 @@ struct chanserv_output *chanserv_autotopic(char *source, char *target, char *cmd
 struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	char temp[1024] = { 0 };
+	int ret;
 
 	snprintf(temp, sizeof (temp), "/bin/cp -f %s %s_`date +%%F_%%R.bak`\n", URL2, URL2);
-	system (temp);
+	ret = system(temp);
 
 	return chanserv_asprintf(NULL, "Backed up database.");
 }
@@ -1321,11 +1322,12 @@ struct chanserv_output *chanserv_restart(char *source, char *target, char *cmd, 
 {
 	struct chanserv_output *result = NULL;
 	char temp[1024] = { 0 };
+	int ret;
 
 	S("QUIT :Restarting %s ...\n", dbVersion);
 	db_sleep(2);
 	snprintf(temp, sizeof (temp), "%s", DARKBOT_BIN);
-	system(temp);
+	ret = system(temp);
 	db_sleep(1);
 	exit(0);
 

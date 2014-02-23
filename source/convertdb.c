@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     char pass[1024] = { 0 };
     char setinfo[1024] = { 0 };
     struct stat st;
+    int ret;
 
     printf("\nDarkbot USERLIST.DB < 7f0 conversion utility.\n");
     printf("IMPORTANT :: READ THIS!\n\n");
@@ -78,11 +79,11 @@ int main(int argc, char *argv[])
     }
 
     snprintf(temp, sizeof(temp), "cp %s %s/backup.db", userlist, DAT_DIR);
-    system(temp);
+    ret = system(temp);
 
     while(!feof(in))
     {
-	    fscanf(in, "%s %s %s %s %s %[^\n]s", channel, uh, level, joins, pass, setinfo);
+	ret =fscanf(in, "%s %s %s %s %s %[^\n]s", channel, uh, level, joins, pass, setinfo);
 
 #ifdef ENABLE_ENCRYPT
         if ((ptr = crypt(pass, salt)) == NULL)

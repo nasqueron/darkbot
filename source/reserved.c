@@ -17,10 +17,11 @@ call_reserved_1 ( char *source, char *target, char *param )
 	if ( ( fp = popen ( buffer, "r" ) ) == NULL )
         return;
 
-    fgets ( input, sizeof ( input ), fp );
-
-    if ( strlen ( input ) > 0 )
-        S ( "PRIVMSG %s :%s%s\n", target, rand_reply(source), input );
+    if (fgets(input, sizeof(input), fp))
+    {
+	if (strlen(input) > 0)
+	    S("PRIVMSG %s :%s%s\n", target, rand_reply(source), input);
+    }
 
     pclose ( fp );
 }
@@ -37,13 +38,13 @@ call_reserved_2 ( char *source, char *target, char *param )
 
     snprintf ( buffer, sizeof ( buffer ), "./cdecl -a -q declare \"%s\"\n", param );
 
-	if ( ( fp = popen ( buffer, "r" ) ) == NULL )
+	if ((fp = popen(buffer, "r")) == NULL)
         return;
 
-    fgets ( input, sizeof ( input ), fp );
-
-    if ( strlen ( input ) > 0 )
-        S ( "PRIVMSG %s :%s%s\n", target, rand_reply(source), input );
-
-    pclose ( fp );
+    if (fgets(input, sizeof(input), fp))
+    {
+	if (strlen(input) > 0)
+	    S("PRIVMSG %s :%s%s\n", target, rand_reply(source), input);
+    }
+    pclose(fp);
 }

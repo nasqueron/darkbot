@@ -170,10 +170,11 @@ void
 sig_hup (int notUsed)
 {
 	char temp[STRING_LONG];
+	int ret;
 
 	S ("QUIT :SIGHUP - Restarting %s ...\n", dbVersion);
 	snprintf (temp, sizeof (temp), "sleep 2; %s", DARKBOT_BIN);
-	system (temp);
+	ret = system (temp);
 	db_sleep (1);
 	exit (0);
 }
