@@ -1,8 +1,4 @@
 build
-/source/.dirstamp
-/source/*.o
-/source/compat/.dirstamp
-/source/compat/*.o
 /dat/autotopic.ini
 /dat/info2.db.bak*
 /dat/seen.db
