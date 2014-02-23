@@ -74,7 +74,7 @@ void
 show_helper_list (const char *nick, long level)
 {
 	char	DATA	[STRING_SHORT * 7] = { 0 };
-	char	tmp		[STRING_SHORT] = { 0 };
+	char	tmp	[STRING_SHORT] = { 0 };
 	size_t	i = 0,	x = 0;
 	const	struct	helperlist *c = NULL;
 
@@ -86,18 +86,15 @@ show_helper_list (const char *nick, long level)
 		{
 			i++; x++;
 
-			snprintf (tmp, sizeof(tmp), "%s", DATA);
-			snprintf (DATA, (sizeof(DATA) + sizeof(tmp)),
-				"%s %s[%s:%ld:%d]",
-				tmp, c->uh, c->chan, c->level, c->num_join);
-
-			memset (tmp, 0, sizeof(tmp));
+			snprintf (tmp, sizeof(tmp) - 1, "%s[%s:%ld:%d] ",
+				c->uh, c->chan, (long int) c->level, (int) c->num_join);
+			strncat(DATA, tmp, sizeof(DATA) - 1);
 
 			if (i > 6)
 			{
 				i = 0;
 				S ("NOTICE %s :%s\n", nick, DATA);
-				memset (DATA, 0, sizeof(DATA));
+				DATA[0] = 0;
 				db_sleep(2);
 			}
 		}
