@@ -1424,7 +1424,6 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 		return;
 	
 	update_setinfo (userhost, str, source);
-	save_changes();
 	return (result);
 }	
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
