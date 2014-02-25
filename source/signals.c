@@ -2,6 +2,8 @@
 #include "vars.h"
 #include "prototypes.h"
 
+// FIXME: This needs a rewrite.  Should not do all that stuff inside a signal handler, but pass the work to the main loop instead via a single bool.
+
 void
 sig_alrm (int notUsed)
 {
