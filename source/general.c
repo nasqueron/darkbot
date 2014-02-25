@@ -542,6 +542,7 @@ void db_sleep(unsigned long seconds)
 {
     struct timespec req, rem;
 
+    memset(&req, 0, sizeof(struct timespec));
     req.tv_sec = seconds;
     nanosleep(&req, &rem);
 }
