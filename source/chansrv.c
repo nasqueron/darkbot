@@ -198,25 +198,25 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	if (!args || !args[0] || !args[1] || (strlen(args[0]) < 2))
 		return chanserv_asprintf(NULL, "Syntax: <time type: \2d/h/m/s\2><time> <text to say>");
 
-	if (*args[0] == 'd')
+	if (tolower(*args[0]) == 'd')
 	{
 		/* Days. */
 		sn = 86400;
 		args[0]++;
 	}
-	else if (*args[0] == 'h')
+	else if (tolower(*args[0]) == 'h')
 	{
 		/* Hours */
 		sn = 3600;
 		args[0]++;
 	}
-	else if (*args[0] == 'm')
+	else if (tolower(*args[0]) == 'm')
 	{
 		/* Minutes */
 		sn = 60;
 		args[0]++;
 	}
-	else if (*args[0] == 's')
+	else if (tolower(*args[0]) == 's')
 	{
 		/* Seconds */
 		sn = 1;
@@ -232,7 +232,7 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 			DBTIMERS_PATH, 
 			(atoi (args[0]) * sn) + time (NULL));
 	
-	db_log(temp, "PRIVMSG %s :\2ALARMCLOCK\2 by %s!%s: %s", target, source, userhost, args[1]);
+	db_log(temp, "PRIVMSG %s :\2ALARMCLOCK\2 by %s!%s: %s", source, source, userhost, args[1]);
 	
 	unixtime = atoi (args[0]) * sn;
 	
