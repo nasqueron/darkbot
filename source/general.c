@@ -132,7 +132,7 @@ save_changes (void)
 	{
 		i++;
 		db_log (TMP_FILE, "%s %s %d %d %s %s\n",
-			 c->chan, c->uh, c->level, c->num_join, c->pass, c->greetz);
+			 c->chan, c->uh, (int) c->level, (int) c->num_join, c->pass, c->greetz);
 		c = c->next;
 	}
 	rename (TMP_FILE, HELPER_LIST);
