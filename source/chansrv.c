@@ -2187,7 +2187,7 @@ void chanserv(char *source, char *target, char *buf)
 
 		if (k > 0)
 		{
-		    args = calloc(k, sizeof(char *));
+		    args = calloc(k + 1, sizeof(char *));
 		    if (args)
 		    {
 			for (i = 0; i < k; i++)
