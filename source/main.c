@@ -185,9 +185,14 @@ main (int argc, char **argv)
 
 void	set_paths	(void)
 {
+	int ret;
+
 	snprintf (DBTIMERS_PATH, sizeof (DBTIMERS_PATH), "%s/%s", DAT_DIR, DEFAULT_DBTIMERS_PATH);
+	ret = mkdir(DBTIMERS_PATH, S_IRWXU);
 	snprintf (LOG_DIR, sizeof (LOG_DIR), "%s/%s", DAT_DIR, DEFAULT_LOG_DIR);
+	ret = mkdir(LOG_DIR, S_IRWXU);
 	snprintf (RDB_DIR, sizeof (RDB_DIR), "%s/%s", DAT_DIR, DEFAULT_RDB_DIR);
+	ret = mkdir(RDB_DIR, S_IRWXU);
 #ifdef	ENABLE_STATS
 	snprintf (STATS_FILE, sizeof (STATS_FILE), "%s/%s", DAT_DIR, DEFAULT_STATS_FILE);
 #endif
