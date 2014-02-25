@@ -13,7 +13,7 @@ databasedir = $(localstatedir)/@PACKAGE@
 
 ## Setup options for other programs.
 ACLOCAL_AMFLAGS = -I ../m4
-AM_CPPFLAGS = -I $(db_src) -I $(cm_src) -DDATABASEDIR='"$(databasedir)"' -DSOURCEDIR='"@srcdir@"'
+AM_CPPFLAGS = -g -I $(db_src) -I $(cm_src) -DDATABASEDIR='"$(databasedir)"' -DSOURCEDIR='"@srcdir@"'
 
 ## Compatability library.
 noinst_LIBRARIES = compat/libcompat.a
