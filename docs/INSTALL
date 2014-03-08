@@ -18,7 +18,9 @@
 	Note: There are many builds of Linux out in the world today. The coders try and 
 	build Darkbot to be run on as many as possible but some times it doesn't work 
 	out that way.  If there is a problem with compiling Darkbot on your Linux build,
-	please let us know. 
+	please let us know.  The same goes for other Operating Systems, Windows, Mac OS 
+	X, BSD, etc.  In particular, if make complains that it can't find source files, 
+	try gmake.
 
 	Help can be found for Darkbot either by irc, or from our web page. 
 
