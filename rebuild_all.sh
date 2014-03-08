@@ -1,7 +1,7 @@
 #! /bin/sh
 
-make='gmake'
-if [ -z "$(which gmake 1>/dev/null 2>&1)" ]; then make='make'; fi
+make='make'
+if which gmake; then make='gmake'; fi
 
 sh autogen.sh
 
