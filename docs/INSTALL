@@ -37,6 +37,19 @@
 
 	###############################################################
 
+	The build instructions are out of date, but things are still in flux at the 
+	moment.  The build and configuration instructions will be rewritten once 
+	things settle down.  For now, here's the quick version -
+
+	make sure you have the usual autotools installed
+	download source code from https://sourceforge.net/p/darkbot/darkbot/
+	build.sh
+	darkbot should now be installed in your home directory
+	in your home directory, edit darkbot/var/servers.ini
+	in your home directory, edit darkbot/var/setup.ini
+
+	###############################################################
+
 	Follow the order of events described here, and you'll have your Darkbot up and 
 	running!
 
