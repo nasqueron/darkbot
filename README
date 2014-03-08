@@ -1,25 +1,37 @@
 Darkbot, Talking Robot - Copyright (c) 1996 Darkbot Project
 
-- To configure your Darkbot8rc1 or older on Unixes, run ./configure script.
-- To build your Darkbot8rc2 and newer on Unixes, run ./build.sh script.
-- To configure on Windows edit files in dat folder.
+- To build your Darkbot on Unixes (or cygwin), 
+  run the ./build.sh script.
 
-- For full  documentation  and  step  by  step configuration help,
-please check Darkbot's help page  at  http://www.freezedown.org/help
+- For full documentation and step by step configuration help,
+please check Darkbot's help page at http://www.freezedown.org/help
 
 - Read docs/WHATSNEW for added/latest features and changes.
-_ Read docs/README_UTILS for info on shell utilities and all files in
+- Read docs/README_UTILS for info on shell utilities and all files in
 scripts dir.
 
-- If you are running a Darkbot with version  release prior to  7.0
+- If you are running a Darkbot with version release prior to 7.0
 use convertdb to convert your userlist.db to an encrypted password
-format. Users will need to set their passwords on IRC which initial
-value would be 0(zero). convertdb script and all integrated Darkbot
+format.  Users will need to set their passwords on IRC which initial
+value would be 0(zero).  convertdb script and all integrated Darkbot
 utility scripts are on scripts directory.
 
-- If your  bot  is  stupid,  and you want  it  to know some general
-stuff, download pre-made databases from Darkbot site. You should be
+- If your bot is stupid, and you want it to know some general
+stuff, download pre-made databases from the Darkbot site.  You should be
 aware of database mechanics before installing and running any database.
+
+Darkbot should compile and run on a lot of operating systems (OS). 
+Please note that the darkbot team is small, most of the time there's
+only one developer actively working on it, in their spare time.  So we
+can't support every version of every OS under the sun, we just don't
+have the time for them all.  Some OS's are free to install, some cost
+money, some cost a lot of money.  So, we have to draw the line
+somewhere.  The general principle is that we support the oldest stable
+release that is still supported by the OS maker from BSD (FreeBSD,
+OpenBSD, and Mac OS X), Linux (Debian and Ubuntu), and Windows.  The
+assumption is that later versions should be backwards compatible enough. 
+Also, it should be easy to get these running on a VM, preferably qemu. 
+More Linux varieties might be added, especially RPM based ones.
 
 This program is provided free for non-commercial use only.   Any
 commercial use  of this source code or binaries compiled thereof
@@ -28,7 +40,7 @@ Distribution of  modified source code or binaries compiled from
 modified source code  for  any platform is expressly  forbidden!
 All code patches to be applied to the program are donations to
 the project and must remain under this terms and conditions.
-No code with copyright statments other than the ones ruled by this
+No code with copyright statements other than the ones ruled by this
 project is accepted unless agreed by all parties in writing.
 All Darkbot program  and  information is provided as is  without
 warranty of any kind.  In any event shall Darkbot project or any
@@ -39,11 +51,10 @@ Contact juice@freezedown.org with any questions regarding the use
 of this program.
 
 Darkbot is a creation of Jason Hamilton  [ Jason@superlink.net ]
-and has been coded  by  several contributors  who  donates their
-code patches to the project. Please  read  file  contributors on
-docs directory with  a list of who  makes this program possible.
+and has been coded by several contributors who donates their
+code patches to the project.  Please read file contributors in
+docs directory with a list of who makes this program possible.
 
 
 Project Administrator
 juice (juice@freezedown.org)
-
