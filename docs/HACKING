@@ -6,15 +6,17 @@ assumption changes, we know what to change.
 SOFTWARE REQUIREMENTS FOR DEVELOPERS
 
 None of this stuff is required for ordinary users, this is what is
-required to build from the cvs version.  Most people should be able to
-build from the distributed tarball (if there is one).
+required to build from the git version.  Most people should be able to
+build from the distributed tarball (if there is one).  Later versions of
+these should work to.
 
 GNU M4   1.4
 autoconf 2.59 or 2.60
 automake 1.9
 perl     5.005_3
 
-automake 1.10 is specifically not supported.
+automake 1.10 is specifically not supported.  Though it seems to work fine now.
+
 
 AUTOCONF, AUTOMAKE, AND FRIENDS (AUTOFOO)
 
@@ -51,7 +53,7 @@ code.
 
 rebuild_all.sh - calls autogen.sh to configure everything, then builds
 everything from scratch.  This script is meant for developers installing
-from cvs.
+from git.
 
 testing.sh - Same as build.sh, but turns on testing mode, for developers
 only.
@@ -95,16 +97,25 @@ The --enable-testing option to configure will force the compiling of all
 libcompat source code, as well as all other optional code so that it can
 be tested.
 
-Working cvs version on -
-Linux CentOS 4.2
-Linux Fedora Core 3
-Linux Fedora Core 5
-Linux SuSE 9.3
-FreeBSD 6.1
+
+TESTED
+
+All of these are 32 bit x86, unless otherwise stated.
+
+Working git version on -
+Linux CentOS 4.2 (maybe, not tested recently)
+Linux Debian old-stable 6.0.9 squeeze
+Linux Fedora Core 3 (maybe, not tested recently)
+Linux Fedora Core 5 (maybe, not tested recently)
+Linux SuSE 9.3 (maybe, not tested recently)
+Linux Ubuntu 12.04 64 bit
+FreeBSD 8.3
 Latest cygwin
 Old cygwin (from the freezedown.org web site)
+OpenBSD 5.3
+Mac OS X 10.7
 
-Failed cvs version on -
+Failed git version on -
 Linux Debian 3.1 sarge, it's too old, we require more up to date autotools.
 Linux Fedora Core 2, it's too old, we require more up to date autotools.
 FreeBSD 5.4, doesn't seem to have autotools at all.
@@ -127,5 +138,5 @@ Solaris 9
 Windows cygwin NT 5.1 (WinXP, cygwin 1.5 I think).
 
 Failed distributed version on -
-Older cygwin from darkbot site.
-Windows SFU.
+Older cygwin from darkbot site
+Windows SFU
