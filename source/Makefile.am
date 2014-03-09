@@ -25,9 +25,9 @@ bin_PROGRAMS = darkbot convertdb
 darkbot_SOURCES = chan.c general.c permbans.c reserved.c sockets.c \
                   users.c chansrv.c helpers.c quiz.c seen.c stats.c \
                   vars.c comm.c main.c random.c server.c topics.c web.c \
-                  parse.c raw.c signals.c url.c \
+                  parse.c raw.c signals.c tree.c url.c xmlame.c \
                   langs/*.h \
-                  prototypes.h vars.h
+                  prototypes.h tree.h vars.h
 darkbot_LDADD = compat/libcompat.a
 
 ## Utility programs.
