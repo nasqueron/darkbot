@@ -93,8 +93,7 @@ add_stats (char *nick, char *uh, long total, long added_time, long last_time)
 		n->next = statshead;
 		statshead = n;
 	}
-	
-	free (n);
+	save_changes ();
 }
 
 void
@@ -160,7 +159,6 @@ load_stats (void)
 	}
 	printf ("done(%d), ", (int) i);
 	fclose (fp);
-	save_changes ();
 	if (DebuG == 1)
 		db_sleep (2);
 }
