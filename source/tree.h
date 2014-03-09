@@ -45,21 +45,22 @@ struct _Tree
 extern              "C"
 {
 # endif
-   Tree *tree_new(char *buffer);
-   Tree *tree_add(Tree * tree, const char *element);
-   void  tree_track(Tree * tree, void *element);
-   Tree *tree_extend(Tree * tree, const char *element);
-   Tree *tree_insert(Tree * tree, int before, void *element, Tree_Element_Type type);
-   Tree *tree_merge(Tree * tree, int before, Tree *element);
-   Tree *tree_add_child(Tree * tree, Tree *element);
-   void  tree_remove(Tree * tree, int element);
-   int   tree_exist(Tree * tree, char *element);
-   int   tree_foreach(Tree * tree, int level, int (*func) (const void *data, Tree *tree, int element, int level), const void *data);
-   void  tree_dump(Tree * tree, int level);
-   void  tree_del(Tree * tree);
+  Tree *tree_new(char *buffer);
+  Tree *tree_add(Tree * tree, const char *element);
+  void  tree_track(Tree * tree, void *element);
+  Tree *tree_extend(Tree * tree, const char *element);
+  Tree *tree_insert(Tree * tree, int before, void *element, Tree_Element_Type type);
+  Tree *tree_merge(Tree * tree, int before, Tree *element);
+  Tree *tree_add_child(Tree * tree, Tree *element);
+  void  tree_remove(Tree * tree, int element);
+  int   tree_exist(Tree * tree, char *element);
+  int   tree_foreach(Tree * tree, int level, int (*func) (const void *data, Tree *tree, int element, int level), const void *data);
+  void  tree_dump(Tree * tree, int level);
+  void  tree_del(Tree * tree);
 
-   Tree *xmlame_new(char *buffer);
-   Tree *xmlame_get(char *file);
+  Tree *xmlame_new(char *buffer);
+  Tree *xmlame_get(char *file);
+  Tree *xmlame_from_string(char *data);
 # ifdef __cplusplus
 }
 # endif

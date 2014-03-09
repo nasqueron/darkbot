@@ -1,4 +1,5 @@
 #include "defines.h"
+#include "tree.h"
 #include "vars.h"
 #include "prototypes.h"
 
@@ -11,6 +12,7 @@ static int 	web_read_server				(char *source, char *uh, char *target, int filede
 static int 	google_parse_query			(char *source, char *uh, char *target, char *data);
 static int 	weather_parse_query			(char *source, char *uh, char *target, char *data);
 static int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	_metar_parse				(const void *data, Tree *tree, int element, int level);
 static int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
 
 int
@@ -65,7 +67,7 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
         ptr++;
     }
 
-    if(web_write_server(wsock, "GET %s%s HTTP/1.0\n\n", wi->url, mem) != SUCCESS)
+    if(web_write_server(wsock, "GET %s%s HTTP/1.0\r\nHost: %s:%d\r\nUser-Agent: Darkbot\r\nAccept: text/plain\r\n\r\n", wi->url, mem, wi->host, wi->port) != SUCCESS)
     {
 	free (mem);
         return ERR_WRITE_SOCKET;
@@ -319,6 +321,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     
     return SUCCESS;
 }
+
 static int
 weather_parse_query (char *source, char *uh, char *target, char *data)
 {
@@ -524,108 +527,144 @@ google_parse_query(char *source, char *uh, char *target, char *data)
     return SUCCESS;
 }
 
-static int
-metar_parse_query(char *source, char *uh, char *target, char *data)
+struct _metar_data
 {
-    char *s1 = NULL;
-    char *s2 = NULL;
-    char metardata[STRING_LONG] = { 0 };
-    int i = 0;
- 
-    if((s1 = strstr(data, "The observation is:")) != NULL)
-    {
-	/* skip the next 3 html tags */
-	while(i<3)
-	{
-	    while(*s1 != '>')
-	    {
-		s1++;
-	    }
-	    s1++;
-	    i++;
-	}
-	while((*s1 == 0x0D) || (*s1 == 0x0A))
-	{
-	    s1++;
-	}
-        if((s2 = strchr(s1, '<')) != NULL)
-        {
-            *s2 = '\0';
-        }
-	s2 = s1;
-	while (*s2 != '\0')
-	{
-	    if ((*s2 == 0x0D) || (*s2 == 0x0A))
-	    {
-		*s2 = ' '; 
-	    }
-	    s2++;
-	}
-        snprintf(metardata, sizeof(metardata), "%s", s1);
-        
-        S("PRIVMSG %s :%s%s\n", target, rand_reply(source), metardata);
+  char *temp, *city, *time, *humid, *dew, *wind, *pres, *cond, *vis, *cloud, *wind2, *sunr, *suns;
+};
+
+static int metar_parse_query(char *source, char *uh, char *target, char *data)
+{
+  char *s1 = NULL;
+  char *s2 = NULL;
+  char metardata[STRING_LONG] = { 0 };
+  int i = 0;
+  struct _metar_data _data;
+  Tree *result_xml = xmlame_from_string(data);
+
+  if (result_xml)
+  {
+    memset(&_data, 0, sizeof(struct _metar_data));
+    tree_foreach(result_xml, 0, _metar_parse, &_data);
+    /* Display stuff to target. */
+    S ("PRIVMSG %s :%s: Observation time (%s) Temperature (%s%cC) DewPoint (%s%cC) Wind (%s%c at %sknots) Visibility (%s statute miles)\n", 
+	target, _data.city, _data.time, _data.temp, 176, _data.dew, 176, _data.wind, 176, _data.wind2, _data.vis);
 #ifdef	ENABLE_STATS
-        add_stats (source, uh, 1, time (NULL), time (NULL));
+    add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
-    }
-    else
+    E_FN_DEL(tree_del, (result_xml));
+  }
+  else
+  {
+    S("PRIVMSG %s :Sorry, no METAR data available.\n", target);
+    return ERR_NO_DOCUMENTS;
+  }
+  return SUCCESS;
+}
+
+// There's more that can be decoded, see -
+// http://www.aviationweather.gov/adds/dataserver/metars/MetarFieldDescription.php
+// http://www.aviationweather.gov/adds/dataserver/tafs/TafsFieldDescription.php
+
+static int _metar_parse(const void *data, Tree *tree, int element, int level)
+{
+  struct _metar_data *_data = (struct _metar_data *)data;
+  char   temp[PATH_MAX];
+  int    result = 0;
+
+  if (tree->elements[element].type == TREE_ELEMENT_TYPE_STRING)
+  {
+    char *string;
+
+    string = (char *)tree->elements[element].element;
+    if (strcmp(string, "<station_id") == 0)
     {
-        S("PRIVMSG %s :Sorry, no METAR data available.\n", target);
-        return ERR_NO_DOCUMENTS;
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->city = tree->buffers[tree->buffers_size - 1];
+      result = 1;
     }
-    return SUCCESS;
+    else if (strcmp(string, "<observation_time") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->time = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<issue_time") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->time = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<temp_c") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->temp = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<dewpoint_c") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->dew = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<wind_dir_degrees") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->wind = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<wind_speed_kt") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->wind2 = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+    else if (strcmp(string, "<visibility_statute_mi") == 0)
+    {
+      sprintf(temp, "%s", (char *)tree->elements[element + 1].element);
+      tree_extend(tree, temp);
+      _data->vis = tree->buffers[tree->buffers_size - 1];
+      result = 1;
+    }
+  }
+
+  return result;
 }
 
 static int
 taf_parse_query(char *source, char *uh, char *target, char *data)
 {
-    char *s1 = NULL;
-    char *s2 = NULL;
-    char tafdata[STRING_LONG] = { 0 };
-    int i = 0;
- 
-    if((s1 = strstr(data, "The observation is:")) != NULL)
-    {
-	/* skip the next 4 html tags */
-	while(i<4)
-	{
-	    while(*s1 != '>')
-	    {
-		s1++;
-	    }
-	    s1++;
-	    i++;
-	}
-	while((*s1 == 0x0D) || (*s1 == 0x0A))
-	{
-	    s1++;
-	}
-        if((s2 = strchr(s1, '<')) != NULL)
-        {
-            *s2 = '\0';
-        }
-	s2 = s1;
-	while (*s2 != '\0')
-	{
-	    if ((*s2 == 0x0D) || (*s2 == 0x0A) || (*s2 == 0x09))
-	    {
-		*s2 = ' '; 
-	    }
-	    s2++;
-	}
-        snprintf(tafdata, sizeof(tafdata), "%s", s1);
-        
-        S("PRIVMSG %s :%s%s\n", target, rand_reply(source), tafdata);
+  char *s1 = NULL;
+  char *s2 = NULL;
+  char metardata[STRING_LONG] = { 0 };
+  int i = 0;
+  struct _metar_data _data;
+  Tree *result_xml = xmlame_from_string(data);
+
+  if (result_xml)
+  {
+    memset(&_data, 0, sizeof(struct _metar_data));
+    tree_foreach(result_xml, 0, _metar_parse, &_data);
+    /* Display stuff to target. */
+    S ("PRIVMSG %s :%s: Issue time (%s) Wind (%s%c at %sknots) Visibility (%s statute miles)\n", 
+	target, _data.city, _data.time, _data.wind, 176, _data.wind2, _data.vis);
 #ifdef	ENABLE_STATS
-        add_stats (source, uh, 1, time (NULL), time (NULL));
+    add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
-    }
-    else
-    {
-        S("PRIVMSG %s :Sorry, no TAF data available.\n", target);
-        return ERR_NO_DOCUMENTS;
-    }
-    return SUCCESS;
+    E_FN_DEL(tree_del, (result_xml));
+  }
+  else
+  {
+    S("PRIVMSG %s :Sorry, no TAF data available.\n", target);
+    return ERR_NO_DOCUMENTS;
+  }
+  return SUCCESS;
 }
 
 #endif

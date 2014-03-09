@@ -247,8 +247,8 @@ struct statslist *statshead = NULL;
 
 struct webinfo
  GOOGLE_webinfo = { "GOOGLE", "www.google.com", 80, "/search?q=" } ,
- METAR_webinfo = { "METAR", "weather.noaa.gov", 80, "/cgi-bin/mgetmetar.pl?cccc=" } ,
- TAF_webinfo = { "TAF", "weather.noaa.gov", 80, "/cgi-bin/mgettaf.pl?cccc=" } ,
+ METAR_webinfo = { "METAR", "www.aviationweather.gov", 80, "/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=3&mostRecent=true&stationString=" } ,
+ TAF_webinfo = { "TAF", "www.aviationweather.gov", 80, "/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=3&mostRecent=true&stationString=" } ,
  WEATHER_webinfo = { "WEATHER", "mobile.wunderground.com", 80, "/cgi-bin/findweather/getForecast?brand=mobile&query=" };
 
 

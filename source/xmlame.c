@@ -50,6 +50,16 @@ Tree *xmlame_get(char *file)
   return tree;
 }
 
+Tree *xmlame_from_string(char *data)
+{
+  Tree  *tree = NULL;
+
+  tree = xmlame_new(data);
+  if (tree)
+    _xmlame_parse(tree, data);
+  return tree;
+}
+
 static char *_xmlame_parse(Tree * tree, char *buffer)
 {
   while (*buffer != '\0')
