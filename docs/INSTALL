@@ -37,69 +37,55 @@
 
 	###############################################################
 
-	The build instructions are out of date, but things are still in flux at the 
-	moment.  The build and configuration instructions will be rewritten once 
-	things settle down.  For now, here's the quick version -
-
-	make sure you have the usual autotools installed
-	download source code from https://sourceforge.net/p/darkbot/darkbot/
-	build.sh
-	darkbot should now be installed in your home directory
-	in your home directory, edit darkbot/var/servers.ini
-	in your home directory, edit darkbot/var/setup.ini
-
-	###############################################################
-
 	Follow the order of events described here, and you'll have your Darkbot up and 
 	running!
 
-	DOWNLOAD
-	Download to your shell compressed archive from
-	http://www.freezedown.org/
+	There are two ways to install Darkbot, from a git checkout, or from a source 
+	tarball.  If you are using git, make sure you have the usual autotools installed, 
+	and GNU make (which might be called gmake for your operating system).
 
-	INSTALLATION 
-	De-compress the downloaded archive (tar -zxvf *.tar.gz)
+	INSTALL FROM A SOURCE TARBALL -
+	Download to your shell compressed archive from -
+	https://sourceforge.net/projects/darkbot/files/
+	De-compress the downloaded archive (tar -zxvf *.tar.gz) -
 
-	tar -zxvf darkbot-6f6.tar.gz
+	tar -zxvf darkbot-8rc4.tar.gz
 
-	- Change to the newly created directory
+	INSTALL FROM GIT -
+	Clone the git source repository from -
+	git clone git://git.code.sf.net/p/darkbot/darkbot darkbot-darkbot
 
-	Note: For older Darkbots, this dir will be (darkbot6f6), for new or beta builds,
-	it will be (darkbot)
+	FOR BOTH -
+	Change to the newly created directory.
 
-	cd darkbot6f6 or cd darkbot
+	BASIC CONFIGURATION -
+	For a basic configuration you can just run the build.sh script -
+	
+	./build.sh
 
-	BASIC CONFIGURATION
+	Which will start the build process, and install the result to $HOME/darkbot.
+	In that directory you will need to edit two files at least -
 
-	Starting configuration process. 
-	./configure
+	darkbot/var/servers.ini, change it to have the name of the IRC server/s you wish 
+	your Darkbot to join.
 
-	You do need to run ./configure - Darkbot does not build itself into your system 
-	without that step. 
+	darkbot/var/setup.ini, at the very least you should change BOT_NICK so that all 
+	the Darkbots don't have the same IRC nick name.  DEFAULT_CHANNEL should also be 
+	changed to what ever IRC channel you want your bot to be in.  None of the other 
+	stuff really needs to be changed.
+
+
+	ADVANCED CONFIGURATION -
+	If you are using git, then run the autogen.sh script, otherwise don't.  Change to 
+	the build directory, then run -
+
+	./configure --help
+
 	We are not going into detail and repeating the instructions shown when you run 
-	./configure, because they are self-explanatory. 
-	Most of the doubts and frequently asked questions on that, only rely on Linux, 
-	and not Darkbot matters. For instance, the default text editor is pico, but you 
-	can use any other text-mode editor that comes with your distribution, like vi, 
-	less, Emacs, XEmacs, NEdit or others. "That stripping thing" on the end of 
-	compilation process - it shrinks a little bit the size of the executable, and 
-	some extra and non necessary codes are removed; makes no difference on Darkbot's 
-	performance, so do whatever you want with it.
+	./configure, because they are self-explanatory.  It's just the usual thing you 
+	expect when using autotools configure scripts.  Run the configure script again 
+	with your chosen options, then "make" and "make install" as usual.
 
-	At any point during the configuration process you can abort (by pressing CTRL + 
-	C or other way your system or editor allows) and start again. 
-	If for some reason you have an error and the compilation process is not 
-	completed, correct the error and after saving your changes type 'make'. 
-	If you want to run Darkbot after answering 'no' to run on the end of 
-	compilation process just type './darkbot'.
-
-	Have this in mind: Darkbot should work if you follow ./configure instructions. 
-	So, if isn't working, try again and read those carefully.
-	If you want to personalize more or change specific items to your Darkbot after 
-	./configure you have two choices: run 'configure' again or you can edit the 
-	files. All files on darkbot\dat\ are offline hand editable and all have basic 
-	syntax examples in it. Do not leave empty lines and disconnect your Darkbot from 
-	IRC before editing configuration files.
 
 	OFFLINE CONFIGURATION SETTINGS 
 	(follow the samples in the files and don't leave any empty lines)
@@ -135,7 +121,7 @@
 	!deluser command) 
 
 	[setup.ini]
-	Open darkbot\dat\setup.ini.
+	Open darkbot\dat\setup.ini.  See the SETUP file for more details.
 	This is the file you need to edit to setup your Darkbot's nickname, username, 
 	realname, default channel to join, virtual host, command character prefix and 
 	seen users switch. Change the contents of the file as you need overwriting 
