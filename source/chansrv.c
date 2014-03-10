@@ -590,19 +590,6 @@ struct chanserv_output *chanserv_darkbot(char *source, char *target, char *cmd, 
 	return chanserv_asprintf(NULL, "%s reporting! My cmdchar is %c.", dbVersion, *CMDCHAR);
 }
 
-#ifdef ENABLE_GOOGLE
-struct chanserv_output *chanserv_google(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	struct chanserv_output *result = NULL;
-
-	if(!args || !args[0])
-    	    return chanserv_asprintf(NULL, "Google what?");
-	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
-
-	return result;
-}
-#endif
-
 struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1798,6 +1785,19 @@ struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, 
 }
 #endif
 
+#ifdef ENABLE_WEBSEARCH
+struct chanserv_output *chanserv_websearch(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
+{
+	struct chanserv_output *result = NULL;
+
+	if(!args || !args[0])
+    	    return chanserv_asprintf(NULL, "Web snearch for what?");
+	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
+
+	return result;
+}
+#endif
+
 struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1899,9 +1899,6 @@ struct chanserv_command chanserv_commands[] =
 #endif
     {INFO_COMMAND,    0, 0, 0, chanserv_darkbot,		{"\2\2DARKBOT", NULL, NULL, NULL, NULL}, NULL, ""},
     {DANGER_COMMAND,  0, 1, 0, chanserv_reserved_1,	{RESERVED1, NULL, NULL, NULL, NULL}, "<>", ""},
-#ifdef ENABLE_GOOGLE
-    {NORMAL_COMMAND,  0, 1, 0, chanserv_google,		{"GOOGLE", NULL, NULL, NULL, NULL}, "<text>", "Look up the text on google."},
-#endif
     {INFO_COMMAND,    0, 0, 0, chanserv_help,		{"HELP", NULL, NULL, NULL, NULL}, "[command]", "Show some help text to the user."},
     {INFO_COMMAND,    0, 1, 0, chanserv_idle,		{"IDLE", NULL, NULL, NULL, NULL}, "<nick>", "Shows how long the user has been idle."},
     {DANGER_COMMAND,  1, 1, 0, chanserv_ignore,		{"IGNORE", NULL, NULL, NULL, NULL}, "<nick>", "Get bot to ignore a user."},
@@ -2003,6 +2000,9 @@ struct chanserv_command chanserv_commands[] =
     {SAFE_COMMAND, SLEEP_LEVEL, 0, 0, chanserv_wakeup,	{"WAKEUP", NULL, NULL, NULL, NULL}, NULL, "Reactivates bot from sleep mode."},
 #ifdef ENABLE_WEATHER
     {NORMAL_COMMAND,  0, 1, 0, chanserv_weather,		{"WEATHER", NULL, NULL, NULL, NULL}, "<city or code>", "Get decoded weather data."},
+#endif
+#ifdef ENABLE_WEBSEARCH
+    {NORMAL_COMMAND,  0, 1, 0, chanserv_websearch,	{"WEBSEARCH", NULL, NULL, NULL, NULL}, "<text>", "Look up the text on the web using duckduckgo.com."},
 #endif
     {SAFE_COMMAND,    0, 2, 0, chanserv_where,		{"WHAT", "WHO", "WHERE", NULL, NULL}, "<IS> [A|AN] <topic>", "Recall a topic."},
     {SAFE_COMMAND,    0, 2, 0, chanserv_whisper,		{"WHISPER", NULL, NULL, NULL, NULL}, "<nick> [ABOUT] <topic>", "Get bot to recall a topic to a user privately."},

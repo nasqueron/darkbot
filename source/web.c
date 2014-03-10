@@ -3,13 +3,14 @@
 #include "vars.h"
 #include "prototypes.h"
 
-#if defined ENABLE_GOOGLE || defined ENABLE_METAR || defined ENABLE_TAF || defined ENABLE_WEATHER
+#if defined ENABLE_WEBSEARCH || defined ENABLE_METAR || defined ENABLE_TAF || defined ENABLE_WEATHER
 
 static void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
 static int 	web_open_socket				(char *host, int port);
 static int 	web_write_server 			(int filedes, char *format,...);
 static int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
-static int 	google_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	websearch_parse_query			(char *source, char *uh, char *target, char *data);
+static int 	_websearch_parse			(const void *data, Tree *tree, int element, int level);
 static int 	weather_parse_query			(char *source, char *uh, char *target, char *data);
 static int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
 static int 	_metar_parse				(const void *data, Tree *tree, int element, int level);
@@ -22,9 +23,9 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     char *mem = NULL;
     struct webinfo *wi = NULL;
     
-    if(strcasecmp (trigger, GOOGLE_webinfo.trigger) == 0)
+    if(strcasecmp (trigger, WEBSEARCH_webinfo.trigger) == 0)
     {
-	wi = (struct webinfo *) &GOOGLE_webinfo;
+	wi = (struct webinfo *) &WEBSEARCH_webinfo;
     }
     else if(strcasecmp (trigger, METAR_webinfo.trigger) == 0)
     { 
@@ -67,6 +68,7 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
         ptr++;
     }
 
+    // TODO - we really should URL encode mem.
     if(web_write_server(wsock, "GET %s%s HTTP/1.0\r\nHost: %s:%d\r\nUser-Agent: Darkbot\r\nAccept: text/plain\r\n\r\n", wi->url, mem, wi->host, wi->port) != SUCCESS)
     {
 	free (mem);
@@ -300,22 +302,14 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     close(filedes);
 
     
-    if(strcasecmp (host, GOOGLE_webinfo.trigger) == 0)
-    {
-	google_parse_query(source, uh, target, mem);
-    }
+    if(strcasecmp (host, WEBSEARCH_webinfo.trigger) == 0)
+	websearch_parse_query(source, uh, target, mem);
     else if(strcasecmp (host, METAR_webinfo.trigger) == 0)
-    { 
 	metar_parse_query(source, uh, target, mem);
-    }
     else if(strcasecmp (host, TAF_webinfo.trigger) == 0)
-    { 
 	taf_parse_query(source, uh, target, mem);
-    }
     else if (strcasecmp (host, WEATHER_webinfo.trigger) == 0)
-    {
         weather_parse_query (source, uh, target, mem);
-    }
 
     free(mem);
     
@@ -471,60 +465,56 @@ weather_parse_query (char *source, char *uh, char *target, char *data)
 			cond, vis, cloud, sunr, suns);
 
 }
-static int
-google_parse_query(char *source, char *uh, char *target, char *data)
+
+static int websearch_parse_query(char *source, char *uh, char *target, char *data)
 {
-    char *s1 = NULL;
-    char *s2 = NULL;
-    char *s3 = NULL;
-    char *s4 = NULL;
-    char url[STRING_LONG] = { 0 };
-    char sub1[] = "<p class=g><a href=";
- 
-    if(strstr(data, "did not match any documents") != NULL)
-    {
-        S("PRIVMSG %s :Sorry, your search did not match any documents.\n", target);
-        return ERR_NO_DOCUMENTS;
-    }
+  char url[STRING_LONG] = { 0 };
+  Tree *result_xml = xmlame_from_string(data);
 
-    if((s1 = strstr(data, "Results ")) != NULL)
-    {
-        if((s2 = strstr(s1, sub1)) != NULL)
-        {
-            s2 += strlen(sub1);
-
-            if((s4 = strstr(s2, "http")) == NULL)
-            {
-                S("PRIVMSG %s :Try again later.\n", target);
-                return ERR_NO_DOCUMENTS;
-            }
-            if((s3 = strchr(s4, '\"')) != NULL)
-            {
-                *s3 = '\0';
-            }
-            if((s3 = strstr(s4, "&e=")) != NULL)
-            {
-                *s3 = '\0';
-            }
-            snprintf(url, sizeof(url), "%s", s4);
-        }
-        if(url[0] != 'h')
-        {
-            S("PRIVMSG %s :Try again later.\n", target);
-            return ERR_NO_DOCUMENTS;
-        }
-        
-        S("PRIVMSG %s :%s%s\n", target, rand_reply(source), url);
+  if (result_xml)
+  {
+tree_dump(result_xml, 0);
+    tree_foreach(result_xml, 0, _websearch_parse, &url);
+    S("PRIVMSG %s :%s%s\n", target, rand_reply(source), url);
 #ifdef	ENABLE_STATS
-        add_stats (source, uh, 1, time (NULL), time (NULL));
+    add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
-    }
-    else
+  }
+  else
+  {
+    S("PRIVMSG %s :Sorry, your search did not match any documents.\n", target);
+    return ERR_NO_DOCUMENTS;
+  }
+  return SUCCESS;
+}
+
+static int _websearch_parse(const void *data, Tree *tree, int element, int level)
+{
+  char  *url = (char *)data;
+  int    result = 0;
+
+  if (tree->elements[element].type == TREE_ELEMENT_TYPE_STRING)
+  {
+    char *string;
+
+    string = (char *)tree->elements[element].element;
+    if ((strlen(url) + strlen(string) + 3) < STRING_LONG)
     {
-        S("PRIVMSG %s :Sorry, your search did not match any documents.\n", target);
-        return ERR_NO_DOCUMENTS;
+      if (strncmp(string, "http://", 7) == 0)
+      {
+        strcat(url, string);
+        strcat(url, " ");
+        result = 1;
+      }
+      else if (strncmp(string, "https://", 8) == 0)
+      {
+        strcat(url, string);
+        strcat(url, " ");
+        result = 1;
+      }
     }
-    return SUCCESS;
+  }
+  return result;
 }
 
 struct _metar_data
@@ -534,10 +524,6 @@ struct _metar_data
 
 static int metar_parse_query(char *source, char *uh, char *target, char *data)
 {
-  char *s1 = NULL;
-  char *s2 = NULL;
-  char metardata[STRING_LONG] = { 0 };
-  int i = 0;
   struct _metar_data _data;
   Tree *result_xml = xmlame_from_string(data);
 
@@ -561,7 +547,7 @@ static int metar_parse_query(char *source, char *uh, char *target, char *data)
   return SUCCESS;
 }
 
-// There's more that can be decoded, see -
+// TODO - There's more that can be decoded, see -
 // http://www.aviationweather.gov/adds/dataserver/metars/MetarFieldDescription.php
 // http://www.aviationweather.gov/adds/dataserver/tafs/TafsFieldDescription.php
 
@@ -640,10 +626,6 @@ static int _metar_parse(const void *data, Tree *tree, int element, int level)
 static int
 taf_parse_query(char *source, char *uh, char *target, char *data)
 {
-  char *s1 = NULL;
-  char *s2 = NULL;
-  char metardata[STRING_LONG] = { 0 };
-  int i = 0;
   struct _metar_data _data;
   Tree *result_xml = xmlame_from_string(data);
 

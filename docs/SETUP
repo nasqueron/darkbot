@@ -685,12 +685,12 @@ What do you want your Darkbot to say when someone is flooding it?
 
 ================ MISCELLANEOUS ================ 
  
-PARAMATER	GOOGLE
+PARAMATER	WEBSEARCH
 DEFAULT		true
 TYPE		Boolean, Compile time
 EXAMPLE		
 
-Google search feature.
+Web search feature.
 
 
 PARAMATER	METAR
