@@ -319,6 +319,12 @@ extern struct	randstats
 }	
  *randstatshead;
 
+struct chanserv_output
+{
+    char                         *output;
+    struct chanserv_output       *next;
+};
+
 extern struct webinfo
 {
 	char trigger[STRING_SHORT];

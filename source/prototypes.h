@@ -155,7 +155,7 @@ void	run_quiz_answer				(void);
 #endif
 void	check_files				(void);
 void	run_perform				(void);
-int 	web_post_query				(char *trigger, char *source, char *uh, char *target, char *query, int size);
+struct chanserv_output *web_post_query		(char *trigger, char *source, char *uh, char *target, char *query, int size);
 int	add_ignore_user_ram			(char *);
 int	delete_ignore_user_ram			(char *);
 int	check_ignore_user_ram			(char *);
@@ -173,3 +173,6 @@ long	is_op					(char *, const char *);
 void	do_op					(char *, const char *, long);
 
 struct setup_parameter *set_parameter		(char *input);
+
+struct chanserv_output *chanserv_asprintf(struct chanserv_output *output, const char *format, ...);
+

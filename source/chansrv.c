@@ -27,11 +27,6 @@ struct chanserv_command
     char                        *summary;
 };
 
-struct chanserv_output
-{
-    char                         *output;
-    struct chanserv_output       *next;
-};
 
 struct chanserv_output *chanserv_show_help(char *cmd, int user_level);
 
@@ -922,7 +917,7 @@ struct chanserv_output *chanserv_metar(char *source, char *target, char *cmd, ch
 
         if(!args || !args[0])
             return chanserv_asprintf(NULL, "Metar what?");
-        web_post_query (cmd, source, userhost, target, args[0], strlen(args[0]));
+        result = web_post_query (cmd, source, userhost, target, args[0], strlen(args[0]));
 
 	return result;
 }
@@ -1479,7 +1474,7 @@ struct chanserv_output *chanserv_taf(char *source, char *target, char *cmd, char
 
         if(!args || !args[0])
             return chanserv_asprintf(NULL, "Taf what?");
-        web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
+        result = web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 
 	return result;
 }
@@ -1777,9 +1772,10 @@ struct chanserv_output *chanserv_wakeup(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_weather(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+
 	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Show weather from where?");
-	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
+	result = web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 
 	return result;
 }
@@ -1791,8 +1787,8 @@ struct chanserv_output *chanserv_websearch(char *source, char *target, char *cmd
 	struct chanserv_output *result = NULL;
 
 	if(!args || !args[0])
-    	    return chanserv_asprintf(NULL, "Web snearch for what?");
-	web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
+    	    return chanserv_asprintf(NULL, "Web search for what?");
+	result = web_post_query(cmd, source, userhost, target, args[0], strlen(args[0]));
 
 	return result;
 }

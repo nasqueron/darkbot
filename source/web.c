@@ -8,17 +8,17 @@
 static void	init_sockaddr				(struct sockaddr_in *, char *, unsigned short int);
 static int 	web_open_socket				(char *host, int port);
 static int 	web_write_server 			(int filedes, char *format,...);
-static int 	web_read_server				(char *source, char *uh, char *target, int filedes, char *host);
-static int 	websearch_parse_query			(char *source, char *uh, char *target, char *data);
+static struct chanserv_output *web_read_server		(char *source, char *uh, char *target, int filedes, char *host, struct chanserv_output *output);
+static struct chanserv_output *websearch_parse_query	(char *source, char *uh, char *target, char *data, struct chanserv_output *output);
 static int 	_websearch_parse			(const void *data, Tree *tree, int element, int level);
-static int 	weather_parse_query			(char *source, char *uh, char *target, char *data);
-static int 	metar_parse_query			(char *source, char *uh, char *target, char *data);
+static struct chanserv_output *weather_parse_query	(char *source, char *uh, char *target, char *data, struct chanserv_output *output);
+static struct chanserv_output *metar_parse_query	(char *source, char *uh, char *target, char *data, struct chanserv_output *output);
 static int 	_metar_parse				(const void *data, Tree *tree, int element, int level);
-static int 	taf_parse_query				(char *source, char *uh, char *target, char *data);
+static struct chanserv_output *taf_parse_query		(char *source, char *uh, char *target, char *data, struct chanserv_output *output);
 
-int
-web_post_query(char *trigger, char *source, char *uh, char *target, char *query, int size)
+struct chanserv_output *web_post_query(char *trigger, char *source, char *uh, char *target, char *query, int size)
 {
+    struct chanserv_output *result = NULL;
     char *ptr = NULL;
     char *mem = NULL;
     struct webinfo *wi = NULL;
@@ -41,21 +41,21 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     }
     else
     {
-	return SUCCESS;
+	return result;
     }
     
     size++; // for null
 
     if((ptr = calloc(size, sizeof(char))) == NULL)
     {
-        return ERR_CANT_MALLOC;
+        return chanserv_asprintf(result, "ERR_CANT_MALLOC");
     }
     mem = ptr;
 
     if(web_open_socket(wi->host, wi->port) != SUCCESS)
     {
 	free (mem);
-        return ERR_OPEN_SOCKET;
+        return chanserv_asprintf(result, "ERR_OPEN_SOCKET");
     }
     snprintf(ptr, size + 1, "%s", query);
 
@@ -72,20 +72,17 @@ web_post_query(char *trigger, char *source, char *uh, char *target, char *query,
     if(web_write_server(wsock, "GET %s%s HTTP/1.0\r\nHost: %s:%d\r\nUser-Agent: Darkbot\r\nAccept: text/plain\r\n\r\n", wi->url, mem, wi->host, wi->port) != SUCCESS)
     {
 	free (mem);
-        return ERR_WRITE_SOCKET;
+        return chanserv_asprintf(result, "ERR_WRITE_SOCKET");
     }
 
     /* i'm passing the trigger instead of the host to web_read_server 
        because the hostnames could be equal (see METAR & TAF) */
-    if(web_read_server(source, uh, target, wsock, wi->trigger) != SUCCESS)
-    {
-	free (mem);
-        return ERR_READ_SOCKET;
-    }
+    result = web_read_server(source, uh, target, wsock, wi->trigger, result);
+
     close(wsock);
     free (mem);
 
-    return SUCCESS;
+    return result;
 }
 
 static void
@@ -236,8 +233,7 @@ web_write_server (int filedes, char *format,...)
     }
 }
 
-static int
-web_read_server(char *source, char *uh, char *target, int filedes, char *host)
+static struct chanserv_output *web_read_server(char *source, char *uh, char *target, int filedes, char *host, struct chanserv_output *output)
 {
     int nbytes = 0;
     int esc = 0;
@@ -248,9 +244,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
     fd_set set;
 
     if((mem = calloc(sizeof(packet) + 1, sizeof(char))) == NULL)
-    {
-        return ERR_READ_SOCKET;
-    }
+        return chanserv_asprintf(output, "ERR_READ_SOCKET");
     alarm(0);
 
     while(!esc)
@@ -266,7 +260,7 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 		close(filedes);
 		alarm(AIL);
                 free (mem);
-		return ERR_SERVER_BUSY;
+		return chanserv_asprintf(output, "ERR_SERVER_BUSY");
 
 	    case -1:
 		break;
@@ -285,39 +279,35 @@ web_read_server(char *source, char *uh, char *target, int filedes, char *host)
 	if((ptr = realloc(mem, strlen(mem) + sizeof(packet) + 1)) == NULL)
         {
             free ( mem );
-            return ERR_CANT_MALLOC;
+            return chanserv_asprintf(output, "ERR_CANT_MALLOC");
 	}
         else
-        {
 	    mem = ptr;
-        }
 	memset(packet, 0, sizeof(packet));
     }
 
     if(nbytes < 0)
     {
 	free ( mem );
-        return ERR_SERVER_BUSY;
+        return chanserv_asprintf(output, "ERR_SERVER_BUSY");
     }
     close(filedes);
 
-    
     if(strcasecmp (host, WEBSEARCH_webinfo.trigger) == 0)
-	websearch_parse_query(source, uh, target, mem);
+	output = websearch_parse_query(source, uh, target, mem, output);
     else if(strcasecmp (host, METAR_webinfo.trigger) == 0)
-	metar_parse_query(source, uh, target, mem);
+	output = metar_parse_query(source, uh, target, mem, output);
     else if(strcasecmp (host, TAF_webinfo.trigger) == 0)
-	taf_parse_query(source, uh, target, mem);
+	output = taf_parse_query(source, uh, target, mem, output);
     else if (strcasecmp (host, WEATHER_webinfo.trigger) == 0)
-        weather_parse_query (source, uh, target, mem);
+        output = weather_parse_query (source, uh, target, mem, output);
 
     free(mem);
     
-    return SUCCESS;
+    return output;
 }
 
-static int
-weather_parse_query (char *source, char *uh, char *target, char *data)
+static struct chanserv_output *weather_parse_query (char *source, char *uh, char *target, char *data, struct chanserv_output *output)
 {
 	char	*s1 = NULL, *s2 = NULL;
 	char	*tmp = NULL, *temp = NULL, *city = NULL;
@@ -460,32 +450,28 @@ weather_parse_query (char *source, char *uh, char *target, char *data)
         }
 
 	/* Display stuff to target. */
-	S ("PRIVMSG %s :%s: Temperature (%s%cF) Humidity (%s) DewPoint (%s%cF) Wind (%s at %smph) Pressure (%s in) Conditions (%s) Visibility (%s miles) Clouds (%sft) Sunrise (%s) Sunset (%s)\n", 
-			target, city, temp, 176, humid, dew, 176, wind, wind2, pres, 
-			cond, vis, cloud, sunr, suns);
+	output = chanserv_asprintf(output, "%s: Temperature (%s%cF) Humidity (%s) DewPoint (%s%cF) Wind (%s at %smph) Pressure (%s in) Conditions (%s) Visibility (%s miles) Clouds (%sft) Sunrise (%s) Sunset (%s)", 
+			city, temp, 176, humid, dew, 176, wind, wind2, pres, cond, vis, cloud, sunr, suns);
 
+	return output;
 }
 
-static int websearch_parse_query(char *source, char *uh, char *target, char *data)
+static struct chanserv_output * websearch_parse_query(char *source, char *uh, char *target, char *data, struct chanserv_output *output)
 {
   char url[STRING_LONG] = { 0 };
   Tree *result_xml = xmlame_from_string(data);
 
   if (result_xml)
   {
-tree_dump(result_xml, 0);
     tree_foreach(result_xml, 0, _websearch_parse, &url);
-    S("PRIVMSG %s :%s%s\n", target, rand_reply(source), url);
+    output = chanserv_asprintf(output, "%s%s", rand_reply(source), url);
 #ifdef	ENABLE_STATS
     add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
   }
   else
-  {
-    S("PRIVMSG %s :Sorry, your search did not match any documents.\n", target);
-    return ERR_NO_DOCUMENTS;
-  }
-  return SUCCESS;
+    output = chanserv_asprintf(output, "Sorry, your search did not match any documents.");
+  return output;
 }
 
 static int _websearch_parse(const void *data, Tree *tree, int element, int level)
@@ -522,7 +508,7 @@ struct _metar_data
   char *temp, *city, *time, *humid, *dew, *wind, *pres, *cond, *vis, *cloud, *wind2, *sunr, *suns;
 };
 
-static int metar_parse_query(char *source, char *uh, char *target, char *data)
+static struct chanserv_output *metar_parse_query(char *source, char *uh, char *target, char *data, struct chanserv_output *output)
 {
   struct _metar_data _data;
   Tree *result_xml = xmlame_from_string(data);
@@ -531,20 +517,16 @@ static int metar_parse_query(char *source, char *uh, char *target, char *data)
   {
     memset(&_data, 0, sizeof(struct _metar_data));
     tree_foreach(result_xml, 0, _metar_parse, &_data);
-    /* Display stuff to target. */
-    S ("PRIVMSG %s :%s: Observation time (%s) Temperature (%s%cC) DewPoint (%s%cC) Wind (%s%c at %sknots) Visibility (%s statute miles)\n", 
-	target, _data.city, _data.time, _data.temp, 176, _data.dew, 176, _data.wind, 176, _data.wind2, _data.vis);
+    output = chanserv_asprintf(output, "%s: Observation time (%s) Temperature (%s%cC) DewPoint (%s%cC) Wind (%s%c at %sknots) Visibility (%s statute miles)", 
+	_data.city, _data.time, _data.temp, 176, _data.dew, 176, _data.wind, 176, _data.wind2, _data.vis);
 #ifdef	ENABLE_STATS
     add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
     E_FN_DEL(tree_del, (result_xml));
   }
   else
-  {
-    S("PRIVMSG %s :Sorry, no METAR data available.\n", target);
-    return ERR_NO_DOCUMENTS;
-  }
-  return SUCCESS;
+    output = chanserv_asprintf(output, "Sorry, no METAR data available.");
+  return output;
 }
 
 // TODO - There's more that can be decoded, see -
@@ -623,8 +605,7 @@ static int _metar_parse(const void *data, Tree *tree, int element, int level)
   return result;
 }
 
-static int
-taf_parse_query(char *source, char *uh, char *target, char *data)
+static struct chanserv_output *taf_parse_query(char *source, char *uh, char *target, char *data, struct chanserv_output *output)
 {
   struct _metar_data _data;
   Tree *result_xml = xmlame_from_string(data);
@@ -633,20 +614,16 @@ taf_parse_query(char *source, char *uh, char *target, char *data)
   {
     memset(&_data, 0, sizeof(struct _metar_data));
     tree_foreach(result_xml, 0, _metar_parse, &_data);
-    /* Display stuff to target. */
-    S ("PRIVMSG %s :%s: Issue time (%s) Wind (%s%c at %sknots) Visibility (%s statute miles)\n", 
-	target, _data.city, _data.time, _data.wind, 176, _data.wind2, _data.vis);
+    output = chanserv_asprintf(output, "%s: Issue time (%s) Wind (%s%c at %sknots) Visibility (%s statute miles)", 
+	_data.city, _data.time, _data.wind, 176, _data.wind2, _data.vis);
 #ifdef	ENABLE_STATS
     add_stats (source, uh, 1, time (NULL), time (NULL));
 #endif
     E_FN_DEL(tree_del, (result_xml));
   }
   else
-  {
-    S("PRIVMSG %s :Sorry, no TAF data available.\n", target);
-    return ERR_NO_DOCUMENTS;
-  }
-  return SUCCESS;
+    output = chanserv_asprintf(output, "Sorry, no TAF data available.");
+  return output;
 }
 
 #endif
