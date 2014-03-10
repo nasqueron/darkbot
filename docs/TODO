@@ -10,7 +10,6 @@ Features and bugs are also being tracked via the sf.net
 trackers at http://sourceforge.net/projects/darkbot
 ----------------------------------------------------------
 
-
 - Freenode uses different identd syntax n=blah@host, update
   masking to use this and remove the n= part.
 
@@ -59,15 +58,10 @@ trackers at http://sourceforge.net/projects/darkbot
   according to the action going on, for each specific 
   channel.
 
-- Fix broken commands.  weather.
-
 - Write things to replace the stuff that Windows can't do.
   Backup command, etc.
 
 - Make the output of the MEM command more useful and friendly.
-
-- Make the google command (and maybe all other web 
-  lookup commands) more robust.
 
 - Add internet movie database (http://www.imdb.com) and 
   slashdot news (http://slashdot.org) searches.
@@ -88,8 +82,6 @@ onefang's TO-DO List For Darkbot
 Add a show parameters command.
 
 Deal with scripts/dbcron one way or another.
-
-Update the INSTALL instructions.
 
 Double check the in code summaries for setup parameters.
 
@@ -116,11 +108,12 @@ Make the replaceable params in responses consistant.  X~ and %X.
 If possible, make all !set foo=bar stuff change the current state of the
 bot rather than requiring a restart.
 
-Scripting or modules.  Scripting using embryo is a really good option. 
+Scripting or modules.  Scripting using Lua is a really good option. 
 A limited subset could be used for the calc command as well.
 
 Find a cross pratform Windows/unix GUI toolkit we can live with and
-create a GUI for darkbot admin.
+create a GUI for darkbot admin.  LCB wants a web based one.  I just want
+to make it modular, and allow different front ends.
 
 Make multiple random responses easier to setup.
   admin: bot add foo bar | baz | some other response
