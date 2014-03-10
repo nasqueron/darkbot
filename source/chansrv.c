@@ -1411,7 +1411,7 @@ struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, ch
 	/* Copy arguments to buffer, if there is one convert to long
 	 * and use it as the sleep time in seconds. */
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (str, args, 0, '\0')) < 1)
 		Sleep_Time = SLEEP_TIME;
 	else if ((Sleep_Time = strtol (str, (char **) NULL, 10)) < 1)
 		Sleep_Time = SLEEP_TIME;
@@ -1957,7 +1957,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, 0, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", "Switch bot to a different server."},
     {DANGER_COMMAND,  3, 1, 0, chanserv_set,		{"SET", NULL, NULL, NULL, NULL}, "<parameter>[=<new value>]", "Set or show the value of a setup.ini parameter.  Usually requires a restart."},
     {DANGER_COMMAND,  1, 1, 0, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
-    {SAFE_COMMAND, SLEEP_LEVEL, 0, 1, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, "[period]", "Deactivate bot for a period."},
+    {SAFE_COMMAND, SLEEP_LEVEL, 1, 1, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, "[period]", "Deactivate bot for a period."},
 #ifdef ENABLE_STATS
     {INFO_COMMAND,    0, 0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
 #endif
