@@ -518,8 +518,9 @@ char	*rand_reply	(const char *nick)
  *  Types = RANDQ_NORMAL, RANDQ_CASE, RANDQ_RAND
  */
 
-void		do_randq		(char *text, const int type, const char *target, const char *nick)
+struct chanserv_output *do_randq(char *text, const int type, const char *target, const char *nick)
 {
+	struct chanserv_output *result = NULL;
 	FILE		*fp = 0;
 	size_t		nLine = 0, length = 0, nNumMatches = 0,
 				nIndex2 = 0, nIndex3 = 0;
@@ -534,29 +535,21 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 	if (type == RANDQ_RAND)
 	{
 		do_random_stuff ();
-		return;
+		return result;
 	}
 
     if (text == NULL)
 	{
-		if(((nNumMatches = count_lines(RAND_FILE)) == -1) || 
-			(nNumMatches == 0))
-		{
-			S ("privmsg %s :%s, There are no randomstuffs, or %s cannot be accessed.\n", 
-				target, nick, RAND_FILE);
-			
-			return;
-		}
+		if(((nNumMatches = count_lines(RAND_FILE)) == -1) || (nNumMatches == 0))
+			return chanserv_asprintf(NULL, "There are no randomstuffs, or %s cannot be accessed.", RAND_FILE);
 		
-		S("privmsg %s :%s, there %s %d randomstuff%s\n", 
-			target,
-			nick,
+		result = chanserv_asprintf(result, "there %s %d randomstuff%s", 
 			nNumMatches == 1 ? "is" : "are",
 			nNumMatches,
 			nNumMatches == 1 ? "." : "s."
 		);
 
-		return;
+		return result;
 	}
 
 	/* Remove the temporary file. */
@@ -564,11 +557,7 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 	remove(RANDQ_TEMPFILE);
 
 	if((fp = fopen(RAND_FILE, "r")) == NULL)
-	{
-		S("privmsg %s :%s, I was unable to open %s for reading.\n",
-			target, nick, RAND_FILE);
-		return;
-	}
+		return chanserv_asprintf(result, "I was unable to open %s for reading.", RAND_FILE);
 
 	while(!feof(fp))
 	{
@@ -608,21 +597,13 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 
 	// If no matches are present, return that.
 	if(nNumMatches == 0)
-	{
-		S("privmsg %s :%s, I didn't find any matches for your search.\n",
-			target,	nick);
-		return;
-	}
+		return chanserv_asprintf(result, "I didn't find any matches for your search.");
 
 	nLine = 1 + (size_t) get_random_integer(nNumMatches);
 	
 	// If we can't open the temporary file, complain about it.
 	if((fp = fopen(RANDQ_TEMPFILE, "r")) == 0)
-	{
-		S("privmsg %s :%s, I was unable to open %s for reading.\n", 
-			target, nick, RANDQ_TEMPFILE);
-		return;
-	}
+		return chanserv_asprintf(result, "I was unable to open %s for reading.", RANDQ_TEMPFILE);
 
 	while(!feof(fp))
 	{
@@ -670,19 +651,14 @@ void		do_randq		(char *text, const int type, const char *target, const char *nic
 					b2 = data;
 					b2++;
 				
-					S("privmsg %s :\1ACTION %s (%d/%d)\1\n", 
-							target, b2, nLine, nNumMatches);
-					return;
+					return chanserv_asprintf(result, "\1ACTION %s (%d/%d)\1\n", b2, nLine, nNumMatches);
 				}
 				else
-				{
-					S("privmsg %s :(%d/%d): %s\n", 
-							target, nLine, nNumMatches, data);
-					return;
-				}
+					return chanserv_asprintf(result, "(%d/%d): %s\n", nLine, nNumMatches, data);
 			}
 		}
 	}
 	fclose(fp);
+	return result;
 }
 #endif

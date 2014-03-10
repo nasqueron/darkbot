@@ -1095,37 +1095,25 @@ struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, cha
 #ifdef ENABLE_RANDQ
 struct chanserv_output *chanserv_quote(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-
-	do_randq(args[0], RANDQ_RAND, target, source);
-
-	return result;
+	return do_randq(args[0], RANDQ_RAND, target, source);
 }
 
 struct chanserv_output *chanserv_random_quote(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-
 	if (!args || !args[0])
-		return result = chanserv_asprintf (NULL, "You must specify a search string.");
+		return chanserv_asprintf (NULL, "You must specify a search string.");
 
 	// RANDQ_NORMAL
-	do_randq(args[0], RANDQ_NORMAL, target, source);
-
-	return result;
+	return do_randq(args[0], RANDQ_NORMAL, target, source);
 }
 
 struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-
 	if (!args || !args[0])
-		return result = chanserv_asprintf (NULL, "You must specify a search string.");
+		return chanserv_asprintf (NULL, "You must specify a search string.");
 
 	// RANDQ_CASE
-	do_randq(args[0], RANDQ_CASE, target, source);
-
-	return result;
+	return do_randq(args[0], RANDQ_CASE, target, source);
 }
 #endif
 

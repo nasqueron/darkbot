@@ -29,7 +29,7 @@ void	do_random_stuff				(void),
 #endif
 
 #ifdef	ENABLE_RANDQ
-void	do_randq				(char *, const int, const char *, const char *);
+struct chanserv_output *do_randq		(char *, const int, const char *, const char *);
 #endif
 
 struct chanserv_output *display_url		(char *, char *, char *);
