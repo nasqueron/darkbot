@@ -1414,20 +1414,19 @@ struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, ch
 	char str [STRING_LONG] = {0};
 
 	Sleep_Toggle = 1;
-					
+
 	/* Copy arguments to buffer, if there is one convert to long
-  	 * and use it as the sleep time in seconds. */
+	 * and use it as the sleep time in seconds. */
 
 	if ((db_argstostr (str, args, 0, ' ')) < 1)
 		Sleep_Time = SLEEP_TIME;
 	else if ((Sleep_Time = strtol (str, (char **) NULL, 10)) < 1)
 		Sleep_Time = SLEEP_TIME;
 
-	S ("PRIVMSG %s :%s\n", target, GOSLEEP_ACTION);
 	strncpy (sleep_chan, target, sizeof (sleep_chan));
 
 	/* If the user has specified a custom length of time to sleep for, send
-	 * a notice reminding the user how long the bot will be asleep, in a 
+	 * a notice reminding the user how long the bot will be asleep, in a
 	 * more readible format.
 	 */
 	if (Sleep_Time != SLEEP_TIME)
@@ -1451,6 +1450,8 @@ struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, ch
 				Sleep_Time % 60,
 				Sleep_Time % 60 == 1 ? "" : "s");
 	}
+	else
+	    S ("PRIVMSG %s :%s\n", target, GOSLEEP_ACTION);
 
 	return result;
 }
@@ -1963,7 +1964,7 @@ struct chanserv_command chanserv_commands[] =
     {DANGER_COMMAND,  3, 1, 0, chanserv_jump,		{"SERVER", "JUMP", NULL, NULL, NULL}, "<server> [port]", "Switch bot to a different server."},
     {DANGER_COMMAND,  3, 1, 0, chanserv_set,		{"SET", NULL, NULL, NULL, NULL}, "<parameter>[=<new value>]", "Set or show the value of a setup.ini parameter.  Usually requires a restart."},
     {DANGER_COMMAND,  1, 1, 0, chanserv_setinfo,		{"SETINFO", NULL, NULL, NULL, NULL}, "<new user greeting|0>", "Set your greeting from the bot when you join a channel."},
-    {SAFE_COMMAND, SLEEP_LEVEL, 0, 1, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, NULL, "Deactivate bot for a period."},
+    {SAFE_COMMAND, SLEEP_LEVEL, 0, 1, chanserv_sleep,	{"SLEEP", "HUSH", NULL, NULL, NULL}, "[period]", "Deactivate bot for a period."},
 #ifdef ENABLE_STATS
     {INFO_COMMAND,    0, 0, 0, chanserv_stats,		{"STATS", NULL, NULL, NULL, NULL}, "[nick]", "Shows statistics about questions answered."},
 #endif
