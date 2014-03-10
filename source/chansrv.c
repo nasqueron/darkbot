@@ -2272,6 +2272,8 @@ void chanserv(char *source, char *target, char *buf)
 		{
 		    struct chanserv_output *output = result;
 
+// TODO - This is not working for actions.
+
 		    i = 1;
 		    while (output)
 		    {
