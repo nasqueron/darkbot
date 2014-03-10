@@ -3,9 +3,9 @@
 #include "prototypes.h"
 
 #ifdef ENABLE_QUIZ
-void
-run_quiz_question (char *target)
+struct chanserv_output *run_quiz_question (char *target)
 {
+	struct chanserv_output *result = NULL;
 	FILE *fp;
 	int i = 0;
 	int j = 0;
@@ -65,7 +65,7 @@ run_quiz_question (char *target)
 		return;
 	}
 
-	S ("PRIVMSG %s :%s\n", target, ptr);
+	result = chanserv_asprintf(result, ptr);
 	strncpy (quiz_target, target, sizeof (quiz_target));
 	quiz_answer = 1;			/* switch on timer */
 
@@ -104,5 +104,6 @@ run_quiz_answer (void)
 	S ("PRIVMSG %s :%s\n", quiz_target, ptr);
 
 	fclose (fp);
+	return result;
 }
 #endif

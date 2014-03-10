@@ -70,8 +70,7 @@ add_helper (const char *chan,
  * - Added reinitialization of DATA using memset() (changed from
  *   strcpy(DATA,""))
  */
-void
-show_helper_list (const char *nick, long level)
+struct chanserv_output *show_helper_list(struct chanserv_output *output, const char *nick, long level)
 {
 	char	DATA	[STRING_SHORT * 7] = { 0 };
 	char	tmp	[STRING_SHORT] = { 0 };
@@ -93,7 +92,7 @@ show_helper_list (const char *nick, long level)
 			if (i > 6)
 			{
 				i = 0;
-				S ("NOTICE %s :%s\n", nick, DATA);
+				output = chanserv_asprintf(output, DATA);
 				DATA[0] = 0;
 				db_sleep(2);
 			}
@@ -101,11 +100,10 @@ show_helper_list (const char *nick, long level)
 	}							/* for() */
 
 	if (x != 0)
-		S ("NOTICE %s :%s\n", nick, DATA);
+		output = chanserv_asprintf(output, DATA);
 
-	S ("NOTICE %s :End of Helper Userlist; %d user%s found.\n", 
-		nick, x, 
-		(x == 1) ? "" : "s");
+	output = chanserv_asprintf(output, "End of Helper Userlist; %d user%s found.", x, (x == 1) ? "" : "s");
+	return output;
 }
 
 void

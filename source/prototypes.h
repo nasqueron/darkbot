@@ -8,8 +8,8 @@ void	parse_252				(char *),
 
 char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
-void	show_seen				(char *, char *, char *),
-	count_seen				(char *, char *);
+void	count_seen				(char *, char *);
+struct chanserv_output *show_seen		(char *, char *, char *);
 struct chanserv_output *show_info2		(const char *, const char *, enum chanserv_invoke_type);
 
 long	save_seen				(char *, char *, char *);
@@ -64,8 +64,8 @@ int	del_permban				(const char *, const char *);
 
 int	check_existing_url			(const char *, char *, char *);
 void	*check_nick_parameter			(struct setup_parameter *parameter, char *ptr);
-void	show_helper_list			(const char *, long),
-	set_paths				(void),
+struct chanserv_output *show_helper_list	(struct chanserv_output *output, const char *, long);
+void	set_paths				(void),
 	chanserv				(char *, char *, char *),
 	raw_now					(char *),
 	find_url				(const char *, char *, char *), 
@@ -146,11 +146,11 @@ void	do_autotopics				(void);
 #ifdef ENABLE_STATS
 void	add_stats				(char *, char *, long, long, long);
 void	load_stats				(void);
-void	get_stats				(char *, char *);
+struct chanserv_output *get_stats		(char *, char *);
 #endif
 
 #ifdef ENABLE_QUIZ
-void	run_quiz_question			(char *);
+struct chanserv_output *run_quiz_question	(char *);
 void	run_quiz_answer				(void);
 #endif
 void	check_files				(void);

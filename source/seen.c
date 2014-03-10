@@ -25,9 +25,9 @@ count_seen (char *source, char *target)
 	L004 (target, source, nCount);
 }
 
-void
-show_seen (char *nick, char *source, char *target)
+struct chanserv_output *show_seen (char *nick, char *source, char *target)
 {
+	struct chanserv_output *result = NULL;
 	FILE	*fp = 0;
 	char	temp[STRING_LONG] = { 0 }, *intime = NULL, *r_nick = NULL, *uh =
 			NULL, *chan = NULL, *ptr = NULL;
@@ -72,15 +72,15 @@ show_seen (char *nick, char *source, char *target)
 			unixtime = time (NULL) - atoi (intime);
 
 			if (unixtime > 86400)
-				S ("PRIVMSG %s :%s, I last saw %s (%s) %d day%s, %02d:%02d ago in %s\n", target,
+				result = chanserv_asprintf(result, "%s, I last saw %s (%s) %d day%s, %02d:%02d ago in %s",
 				   source, r_nick, uh, unixtime / 86400, (unixtime / 86400 == 1) ? "" : "s",
 				   (unixtime / 3600) % 24, (unixtime / 60) % 60, chan);
 			else if (unixtime > 3600)
-				S ("PRIVMSG %s :%s, I last saw %s (%s) %d hour%s, %d min%s ago in %s\n", target,
+				result = chanserv_asprintf(result, "%s, I last saw %s (%s) %d hour%s, %d min%s ago in %s",
 				   source, r_nick, uh, unixtime / 3600, unixtime / 3600 == 1 ? "" : "s",
 				   (unixtime / 60) % 60, (unixtime / 60) % 60 == 1 ? "" : "s", chan);
 			else
-				S ("PRIVMSG %s :%s, I last saw %s (%s) %d minute%s, %d sec%s ago in %s\n", target,
+				result = chanserv_asprintf(result, "PRIVMSG %s :%s, I last saw %s (%s) %d minute%s, %d sec%s ago in %s",
 				   source, r_nick, uh, unixtime / 60, unixtime / 60 == 1 ? "" : "s", unixtime % 60,
 				   unixtime % 60 == 1 ? "" : "s", chan);
 			fclose (fp);
@@ -89,6 +89,7 @@ show_seen (char *nick, char *source, char *target)
 	}
 	fclose (fp);
 	L006 (target, source, nick, SEEN_REPLY);
+	return result;
 }
 
 long

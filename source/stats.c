@@ -3,9 +3,9 @@
 #include "prototypes.h"
 
 #ifdef ENABLE_STATS
-void
-get_stats (char *target, char *user)
+struct chanserv_output *get_stats (char *target, char *user)
 {
+	struct chanserv_output *result = NULL;
 	struct statslist *c;
 	char temp[50] = { 0 };
 	char *ptr = NULL;
@@ -36,7 +36,7 @@ get_stats (char *target, char *user)
 				strncpy (temp, ctime (&added_time), sizeof (temp));
 				if ((ptr = strchr (temp, '\n')) != NULL)
 					*ptr = '\0';
-				S ("PRIVMSG %s :%s has asked %ld questions since %s, %s's last question was asked on %s", target, user, c->total, temp, user, ctime (&last_time));
+				result = chanserv_asprintf(result, "%s has asked %ld questions since %s, %s's last question was asked on %s", user, c->total, temp, user, ctime (&last_time));
 				return;
 			}
 		}
@@ -44,12 +44,13 @@ get_stats (char *target, char *user)
 	}
 	if (user)
 	{
-		S ("PRIVMSG %s :I have no data on %s\n", target, user);
+		result = chanserv_asprintf(result, "I have no data on %s\n", user);
 	}
 	else
 	{
-		S ("PRIVMSG %s :There have been %ld questions asked by %ld people, since I began recording on %s", target, total, NUM_USER, ctime (&oldtime));
+		result = chanserv_asprintf(result, "There have been %ld questions asked by %ld people, since I began recording on %s", total, NUM_USER, ctime (&oldtime));
 	}
+	return result;
 }
 
 void

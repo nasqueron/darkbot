@@ -1085,7 +1085,7 @@ struct chanserv_output *chanserv_quiz(char *source, char *target, char *cmd, cha
 	struct chanserv_output *result = NULL;
 
 	if (quiz_halt == 0)
-		run_quiz_question (target);
+		result = run_quiz_question (target);
 
 	return result;
 }
@@ -1337,7 +1337,7 @@ struct chanserv_output *chanserv_seen(char *source, char *target, char *cmd, cha
 	}
 	if (return_useridle (target, args[0], 1) == 1)
 		return chanserv_asprintf(NULL, "%s is right here in the channel!", args[0]);
-	show_seen(args[0], source, target);
+	result = show_seen(args[0], source, target);
 
 	return result;
 }
@@ -1400,7 +1400,8 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 	
 	update_setinfo (userhost, str, source);
 	return (result);
-}	
+}
+
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1456,7 +1457,7 @@ struct chanserv_output *chanserv_stats(char *source, char *target, char *cmd, ch
 
 	if (!args || !args[0])
 		return result = chanserv_asprintf (NULL, "Syntax: %s <nick>", cmd);
-	get_stats(target, args[0]);
+	result = get_stats(target, args[0]);
 	return result;
 }
 #endif
@@ -1660,14 +1661,14 @@ struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd
 	
 	if (!args)
 	{
-		show_helper_list (source, 0);
-		return result;
+		result = show_helper_list(result, source, 0);
 	}
 	else
 	{
 		int level = 0;
+
 		for (i = 0; args[i]; i++)
-			show_helper_list (source, atoi (args[i]));
+			result = show_helper_list(result, source, atoi (args[i]));
 	}
 
 	return result;
