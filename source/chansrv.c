@@ -840,11 +840,15 @@ struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, ch
 struct chanserv_output *chanserv_length(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
+	char	str	[STRING_LONG] = {0};
 
 	if (!args || !args[0])
 		return result;
-	
-	return chanserv_asprintf(NULL, "It was %d chars long.", strlen (args[0]));
+
+	if ((db_argstostr (str, args, 0, ' ')) == 0)
+		strcpy(str, args[0]);
+
+	return chanserv_asprintf(NULL, "It was %d characters long.", strlen (str));
 }
 
 struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
