@@ -574,7 +574,7 @@ int	db_argstostr(char *str, char **args, size_t startarg, char delim)
 	int i = 0, j = 0, tc = 0;
 
 	/* Bail out if no args. */
-	if (args[0] == NULL)
+	if ((NULL == args) || (NULL == args[0]))
 		return (0);
 	
 	/* Iterate words. */
