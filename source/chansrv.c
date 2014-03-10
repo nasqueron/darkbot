@@ -28,6 +28,7 @@ struct chanserv_command
 };
 
 
+static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type);
 struct chanserv_output *chanserv_show_help(char *cmd, int user_level);
 
 
@@ -553,7 +554,7 @@ struct chanserv_output *chanserv_display(char *source, char *target, char *cmd, 
 	struct chanserv_output *result = NULL;
 	if (!args || !args[0])
 		return result;
-	display_url(target, source, args[0]);
+	result = display_url(target, source, args[0]);
 
 	return result;
 }
@@ -1510,9 +1511,9 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 	
 		strlwr(str);
 		if (invoked == MSG_INVOKE)
-		    show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
+		    result = show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
 		else
-		    show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
+		    result = show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
 	}
 	else
 	{
@@ -1522,9 +1523,9 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 		strlwr(str);
 
 		if (invoked == MSG_INVOKE)
-		    show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
+		    result = show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
 		else
-		    show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
+		    result = show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
 	}
 
 	return result;
@@ -1810,10 +1811,10 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 	{
 		if ((db_argstostr (str, args, 2, ' ')) < 1)
 		    return chanserv_asprintf(NULL, "%s %s %s? Mind rephrasing that?  (Type %cHELP for syntax hints).", cmd, args[0], args[1], *CMDCHAR);
-		show_url (source, get_multiword_topic (str), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
+		result = show_url (source, get_multiword_topic (str), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
 	}
 	else
-		show_url (source, get_multiword_topic (args[1]), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
+		result = show_url (source, get_multiword_topic (args[1]), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
 
 	return result;
 }
@@ -1834,12 +1835,12 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 		if ((db_argstostr (str, args, 2, ' ')) < 1)
 			return chanserv_asprintf(NULL, "Whisper to %s about what?", args[0]);
 		strlwr(str);
-		show_url(source, get_multiword_topic(str), args[0], 1, 0, userhost, 1);
+		result = show_url(source, get_multiword_topic(str), args[0], 1, 0, userhost, 1);
 	}
 	else
 	{
 		strlwr (args[1]);
-		show_url(source, get_multiword_topic(args[1]), args[0], 1, 0, userhost, 1);
+		result = show_url(source, get_multiword_topic(args[1]), args[0], 1, 0, userhost, 1);
 	}
 
 	return result;
@@ -2245,13 +2246,13 @@ void chanserv(char *source, char *target, char *buf)
 //				|| (input_type == ADDRESS_INVOKE)
 //				|| (input_type == MSG_INVOKE))
 			{	
-				show_url(source, ptr, 
+				result = show_url(source, ptr, 
 					((input_type == MSG_INVOKE) 
 					? source : target), 1, 0, userhost, 0);
-				return;	
 			}
+			else
 			/* No matching database entry. */
-			return;
+				return;
 		}
 		else if ((more_needed == 1) && chanserv_commands[found].syntax)
 		{
@@ -2271,63 +2272,9 @@ void chanserv(char *source, char *target, char *buf)
 
 		if (result)
 		{
-		    struct chanserv_output *output = result;
-
-// TODO - This is not working for actions.
-
-		    i = 1;
-		    while (output)
-		    {
-			char *s, *s2, c;
-			int length, len;
-
-/* RFC2812 says max packet length is 512, including CR-LF at end.
- * Also a colon and a space at the beginning.
- */
-//#define MAX_IRC_LEN 507  // This doesn't work.
-#define MAX_IRC_LEN 475    // This works.
-
-			s = output->output;
-			length = strlen(s);
-			if (input_type == MSG_INVOKE)
-			{
-			    len = 12 + strlen(source);
-			    while ((len + length) > MAX_IRC_LEN)
-			    {
-			        c = s[MAX_IRC_LEN - len];
-				s[MAX_IRC_LEN - len] = '\0';
-				s2 = strrchr(s, ' ');
-				*s2 = '\0';
-				S("NOTICE %s :%s\n", source, s);
-				db_sleep(2);
-				*s2 = ' ';
-				s[MAX_IRC_LEN - len] = c;
-				s = s2 + 1;
-				length = strlen(s);
-			    }
-			    S("NOTICE %s :%s\n", source, s);
-			}
-			else
-			{
-			    len = 16 + strlen(target) + strlen(source);
-			    while ((len + length) > MAX_IRC_LEN)
-			    {
-			        c = s[MAX_IRC_LEN - len];
-				s[MAX_IRC_LEN - len] = '\0';
-				s2 = strrchr(s, ' ');
-				*s2 = '\0';
-				S("PRIVMSG %s :%s: %s\n", target, source, s);
-				db_sleep(2);
-				*s2 = ' ';
-				s[MAX_IRC_LEN - len] = c;
-				s = s2 + 1;
-				length = strlen(s);
-			    }
-			    S("PRIVMSG %s :%s: %s\n", target, source, s);
-			}
-			output = output->next;
-		    }
-		    chanserv_output_free(result);
+			i = 1;
+			show_output(source, target, result, input_type);
+			result = NULL;
 		}
 		free(args);
 	    }
@@ -2348,13 +2295,77 @@ void chanserv(char *source, char *target, char *buf)
 	    }
 	    else if ((GENERAL_QUESTIONS) && (cmd))
 	    {
-		show_url(source, get_multiword_topic(cmd), 
+		result = show_url(source, get_multiword_topic(cmd), 
 		    (input_type == MSG_INVOKE) ? source : target, 
 		    (! (input_type == DIRECT_INVOKE)), 
 		    (input_type == DIRECT_INVOKE), 
 		    userhost, 0);
+		if (result)
+		{
+			show_output(source, (input_type == MSG_INVOKE) ? source : target, result, input_type);
+			result = NULL;
+		}
 	    }
 	}
+}
+
+static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type)
+{
+    struct chanserv_output *output = result;
+
+// TODO - This is not working for actions.
+    while (output)
+    {
+	char *s, *s2, c;
+	int length, len;
+
+/* RFC2812 says max packet length is 512, including CR-LF at end.
+ * Also a colon and a space at the beginning.
+ */
+//#define MAX_IRC_LEN 507  // This doesn't work.
+#define MAX_IRC_LEN 475    // This works.
+
+	s = output->output;
+	length = strlen(s);
+	if (input_type == MSG_INVOKE)
+	{
+	    len = 12 + strlen(source);
+	    while ((len + length) > MAX_IRC_LEN)
+	    {
+	        c = s[MAX_IRC_LEN - len];
+		s[MAX_IRC_LEN - len] = '\0';
+		s2 = strrchr(s, ' ');
+		*s2 = '\0';
+		S("NOTICE %s :%s\n", source, s);
+		db_sleep(2);
+		*s2 = ' ';
+		s[MAX_IRC_LEN - len] = c;
+		s = s2 + 1;
+		length = strlen(s);
+	    }
+	    S("NOTICE %s :%s\n", source, s);
+	}
+	else
+	{
+	    len = 16 + strlen(target) + strlen(source);
+	    while ((len + length) > MAX_IRC_LEN)
+	    {
+	        c = s[MAX_IRC_LEN - len];
+		s[MAX_IRC_LEN - len] = '\0';
+		s2 = strrchr(s, ' ');
+		*s2 = '\0';
+		S("PRIVMSG %s :%s: %s\n", target, source, s);
+		db_sleep(2);
+		*s2 = ' ';
+		s[MAX_IRC_LEN - len] = c;
+		s = s2 + 1;
+		length = strlen(s);
+	    }
+	    S("PRIVMSG %s :%s: %s\n", target, source, s);
+	}
+	output = output->next;
+    }
+    chanserv_output_free(result);
 }
 
 struct chanserv_output *chanserv_show_help(char *cmd, int user_level)

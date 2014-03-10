@@ -32,8 +32,8 @@ void	do_random_stuff				(void),
 void	do_randq				(char *, const int, const char *, const char *);
 #endif
 
+struct chanserv_output *display_url		(char *, char *, char *);
 void	datasearch				(const char *, char *, char *),
-	display_url				(char *, char *, char *), 
 	set_pass				(char *, char *, char *, char *),
 	do_modes				(char *, char *), 
 	process_nick				(char *, char *);
@@ -69,8 +69,8 @@ void	set_paths				(void),
 	chanserv				(char *, char *, char *),
 	raw_now					(char *),
 	find_url				(const char *, char *, char *), 
-	save_changes				(void),
-	show_url				(char *, char *, char *, long, long, char *, long);
+	save_changes				(void);
+struct chanserv_output *show_url		(char *, char *, char *, long, long, char *, long);
 struct chanserv_output *show_banlist		(const char *);
 char	*strlwr					(char *), 
 	*rand_reply				(const char *), 

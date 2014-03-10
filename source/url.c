@@ -87,9 +87,9 @@ find_url (const char *nick, char *topic, char *target)
 		L024 (target, i, nick, DATA);
 }
 
-void
-display_url (char *target, char *nick, char *topic)
+struct chanserv_output *display_url (char *target, char *nick, char *topic)
 {
+	struct chanserv_output *result = NULL;
 	FILE *fp;
 	long x = 0;
 	char b[STRING_LONG] = { 0 }, *subj = NULL, *ptr = NULL;
@@ -97,10 +97,8 @@ display_url (char *target, char *nick, char *topic)
 	strlwr (topic);
 	if ((fp = fopen (URL2, "r")) == NULL)
 	{
-		S ("%s %s :%s, there was an error displaying data for \"%s\".\n",
-			(target == nick) ? "notice" : "privmsg", target, 
-			nick, topic);
-		return;
+		result = chanserv_asprintf(result, "there was an error displaying data for \"%s\".", topic);
+		return result;
 	}
 	while (fgets (b, STRING_LONG, fp))
 	{
@@ -111,13 +109,14 @@ display_url (char *target, char *nick, char *topic)
 		if (strcasecmp (subj, topic) == 0 || !match_wild (subj, topic) == 0)
 		{
 			QUESTIONS++;
-			S ("PRIVMSG %s :Raw data for %s is: %s\n", target, topic, ptr);
+			result = chanserv_asprintf(result, "Raw data for %s is: %s", topic, ptr);
 			fclose (fp);
-			return;
+			return result;
 		}						/* Subject match */
 	}
 	fclose (fp);
-	S ("PRIVMSG %s :%s, I do not know of any topic named %s\n", target, nick, topic);
+	result = chanserv_asprintf(result, "I do not know of any topic named %s\n", topic);
+	return result;
 }
 
 void
@@ -214,9 +213,9 @@ delete_url (const char *nick, char *topic, char *target)
 
 
 
-void
-show_url (char *nick, char *topic, char *target, long donno, long floodpro, char *uh, long no_pipe)
+struct chanserv_output *show_url (char *nick, char *topic, char *target, long donno, long floodpro, char *uh, long no_pipe)
 {
+	struct chanserv_output *result = NULL;
 	FILE *fp;
 	long x = 0, length = 0, toggle = 0, A = 0, gotit = 0, D = 0, F = 0, Tog = 0;
 	char b[STRING_LONG] = { 0 }, *subj = NULL, *ptr = NULL;
@@ -235,7 +234,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 	{
 		if (donno == 1)
 			L003 (nick, URL2);
-		return;
+		return result;
 	}
 	while (fgets (b, STRING_LONG, fp))
 	{
@@ -254,7 +253,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 				if (cf (uh, nick, nick))
 				{
 					fclose (fp);
-					return;
+					return result;
 				}
 			gotit = 1;
 			if (*ptr == '+')
@@ -265,11 +264,11 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			else if (*ptr == '-')
 			{
 				if (strstr (nick, "|") != NULL)
-					return;
+					return result;
 				if (no_pipe == 1)
 				{
 					fclose (fp);
-					return;
+					return result;
 				}
 				ptr++;
 				D = 1;
@@ -279,7 +278,7 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 				ptr++;
 				fclose (fp);
 				do_randomtopic (NORMALR, target, ptr, nick, topic);
-				return;
+				return result;
 			}
 			length = strlen (ptr);
 			if (length > 3)
@@ -445,8 +444,9 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 					ptr8 = strtok (NULL, "|");
 				}
 				fclose (fp);
-				return;
+				return result;
 			}
+	// TODO - It's entirely possible that some of these need to be targeted to NOTICE / PRIVMSG.
 			if (toggle == 0)
 			{
 #ifdef				ENABLE_STATS
@@ -455,17 +455,17 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 				if (A == 0)
 				{
 					if ((*target == '#') || (*target == '+') || (*target == '&'))
-						S ("PRIVMSG %s :%s%s\n", target, rand_reply (nick), Data);
+						result = chanserv_asprintf(result, "%s%s", rand_reply (nick), Data);
 					else
 					{
-						S ("NOTICE %s :%s%s\n", target, rand_reply(target), temp, Data);
+						result = chanserv_asprintf(result, "%s%s", rand_reply(target), temp, Data);
 					}
 				}
 				else if ((*target == '#') || (*target == '+') || (*target == '&'))
-					S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
+					result = chanserv_asprintf(result, "\1ACTION %s\1", Data);
 				else
 				{
-					S ("NOTICE %s :%s%s\n", target, rand_reply(target), Data);
+					result = chanserv_asprintf(result, "%s%s", rand_reply(target), Data);
 				}
 			}
 			else if (A == 0)
@@ -474,10 +474,10 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 #endif
 				if ((*target == '#') || (*target == '+') || (*target == '&'))
-					S ("PRIVMSG %s :%s\n", target, Data);
+					result = chanserv_asprintf(result, Data);
 				else
 				{
-					S ("NOTICE %s :%s\n", target, Data);
+					result = chanserv_asprintf(result, Data);
 				}
 			}
 			else if ((*target == '#') || (*target == '+') || (*target == '&'))
@@ -485,17 +485,17 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 #ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 #endif
-				S ("PRIVMSG %s :\1ACTION %s\1\n", target, Data);
+				result = chanserv_asprintf(result, "\1ACTION %s\1\n", Data);
 			}
 			else if (MSG_RESPONSES)
 			{
 #ifdef				ENABLE_STATS
 				add_stats (nick, uh, 1, time (NULL), time (NULL));
 #endif
-				S ("NOTICE %s :%s\n", target, Data);
+				result = chanserv_asprintf(result, Data);
 			}
 			fclose (fp);
-			return;
+			return result;
 		}						/* Subject match */
 	}
 	fclose (fp);
@@ -507,8 +507,8 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			if (topic[0] == 'i' && topic[1] == 'l' && topic[2] == 'c')
 			{
 				if ((*target == '#') || (*target == '+') || (*target == '&'))
-					S ("PRIVMSG %s :%s, I found no matching ILC for that channel.\n", target, nick);
-				return;
+					result = chanserv_asprintf(result, "I found no matching ILC for that channel.");
+				return result;
 			}
 		}
 		if ((*target == '#') || (*target == '+') || (*target == '&'))
@@ -516,11 +516,12 @@ show_url (char *nick, char *topic, char *target, long donno, long floodpro, char
 			if (RANDOM_DUNNO == true)
 			    do_randomtopic (DUNNOR, target, DUNNO_FILE, nick, topic);
 			else
-			    S ("PRIVMSG %s :%s, %s\n", target, nick, DUNNO_Q);
+			    result = chanserv_asprintf(result, DUNNO_Q);
 		}
 		else
-			S ("NOTICE %s :%s, %s\n", nick, nick, DUNNO_Q);
+			result = chanserv_asprintf(result, DUNNO_Q);
 	}
+	return result;
 }
 
 char *
