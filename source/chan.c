@@ -8,8 +8,7 @@
  * suppressed warning messages when compiling on Solaris.
  */
 
-void
-do_math (const char *who, char *target, char *math)
+struct chanserv_output *do_math (const char *who, char *target, char *math)
 {
 	char number_string[STRING_SHORT] = { 0 };
 	char op = 0;
@@ -97,7 +96,7 @@ do_math (const char *who, char *target, char *math)
 				return;
 		}
 	}
-	S ("PRIVMSG %s :%s\2:\2 %f\n", target, who, result);
+	return chanserv_asprintf(NULL, "%f\n", result);
 }
 #endif
 
@@ -289,13 +288,9 @@ info (const char *source, char *target)
  * - Changed both method arguments to be pointers to const data,
  *   this is a read only method.
  */
-void
-show_info2 (const char *target, const char *source, enum chanserv_invoke_type invoked)
+struct chanserv_output *show_info2 (const char *target, const char *source, enum chanserv_invoke_type invoked)
 {
-	S ("%s %s :%s, compiled on %s. " 
-	   "I have processed %ld lines of text since startup...\n",
-	   (invoked == MSG_INVOKE) ? "NOTICE" : "PRIVMSG", target, 
-	   source, __DATE__, NUMLINESSEEN);
+    return chanserv_asprintf(NULL, "Compiled on %s. I have processed %ld lines of text since startup...", __DATE__, NUMLINESSEEN);
 }
 
 /**
@@ -348,20 +343,18 @@ process_nick (char *nick, char *newnick)
  * - All method arguments are now pointer to const
  * - A for loop is now used instead of a while loop
  */
-void
-show_chaninfo (const char *nick, const char *chan, const char *target)
+struct chanserv_output *show_chaninfo (const char *nick, const char *chan, const char *target)
 {
-	size_t totalUsers = 0, foundUsers = 0;
-	const struct userlist *c = userhead;
+    size_t totalUsers = 0, foundUsers = 0;
+    const struct userlist *c = userhead;
 
-	for (; c != NULL; c = c->next)
-	{
-		++totalUsers;
-		if (!strcasecmp (chan, c->chan))
-			++foundUsers;
-	}
-	S ("PRIVMSG %s :%s, I see %d users in %s (%d users total in ram)\n",
-	   	target, nick, foundUsers, chan, totalUsers);
+    for (; c != NULL; c = c->next)
+    {
+	++totalUsers;
+	if (!strcasecmp (chan, c->chan))
+	    ++foundUsers;
+    }
+    return chanserv_asprintf(NULL, "I see %d users in %s (%d users total in ram)", foundUsers, chan, totalUsers);
 }
 
 /* 
@@ -370,10 +363,11 @@ show_chaninfo (const char *nick, const char *chan, const char *target)
  * Each message sent to the target should be no more than about 200 characters in length.
  */
 
-void    show_chanusers  (const char *nick, const char *chan)
+struct chanserv_output *show_chanusers  (const char *nick, const char *chan)
 {
+    struct chanserv_output *result = NULL;
     struct userlist *c = userhead;
-    char   DATA[256] = {0};
+    char   DATA[512] = {0};
     size_t foundUsers = 0, len = 0;
 
     for (; c != NULL; c = c->next)
@@ -381,14 +375,14 @@ void    show_chanusers  (const char *nick, const char *chan)
 	if (strcasecmp (chan, c->chan) == 0)
         {
 	    ++foundUsers;
-	    strncat(DATA, c->nick, sizeof(DATA) - 1);
-	    strncat(DATA, " ", sizeof(DATA) - 1);
+	    strcat(DATA, c->nick);
+	    strcat(DATA, " ");
 	    /* Add the length of the new nick and room for a space to the length of the current buffer. */
 	    len += (strlen(c->nick) + 1);
 
 	    if (len >= 200)
 	    {
-		S ("NOTICE %s :%s\n", nick, DATA);
+		result = chanserv_asprintf(result, DATA);
 		len = 0;
 		DATA[0] = 0;
 		db_sleep (2);
@@ -398,10 +392,11 @@ void    show_chanusers  (const char *nick, const char *chan)
 
     /* If there's any leftover data in our buffer after we've reached the end of the list send that as well. */
     if (len > 0)
-	S ("NOTICE %s :%s\n", nick, DATA);
+	result = chanserv_asprintf(result, "%s", DATA);
 
     /* Even if no users were found... */
-    S ("NOTICE %s :End of CHANUSERS list; %d user%s found.\n", nick, foundUsers, (foundUsers == 1 ? "" : "s"));
+    result = chanserv_asprintf(result, "End of CHANUSERS list; %d user%s found.", foundUsers, (foundUsers == 1 ? "" : "s"));
+    return result;
 }
 
 void

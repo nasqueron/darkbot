@@ -9,8 +9,8 @@ void	parse_252				(char *),
 char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
 void	show_seen				(char *, char *, char *),
-	count_seen				(char *, char *), 
-	show_info2				(const char *, const char *, enum chanserv_invoke_type);
+	count_seen				(char *, char *);
+struct chanserv_output *show_info2		(const char *, const char *, enum chanserv_invoke_type);
 
 long	save_seen				(char *, char *, char *);
 void	do_randomtopic				(int, char *, char *, char *, char *);
@@ -47,7 +47,7 @@ void	save_permbans				(void);
 void	do_quit					(const char *, long);
 
 #ifdef	ENABLE_MATH
-void	do_math					(const char *, char *, char *);
+struct chanserv_output *do_math			(const char *, char *, char *);
 #endif
 
 void	parse_who				(char *);
@@ -66,12 +66,12 @@ int	check_existing_url			(const char *, char *, char *);
 void	*check_nick_parameter			(struct setup_parameter *parameter, char *ptr);
 void	show_helper_list			(const char *, long),
 	set_paths				(void),
-	show_banlist				(const char *), 
 	chanserv				(char *, char *, char *),
-	raw_now					(char *), 
+	raw_now					(char *),
 	find_url				(const char *, char *, char *), 
 	save_changes				(void),
 	show_url				(char *, char *, char *, long, long, char *, long);
+struct chanserv_output *show_banlist		(const char *);
 char	*strlwr					(char *), 
 	*rand_reply				(const char *), 
 	*date					(void),
@@ -136,8 +136,8 @@ void	register_bot				(void);
 void	prepare_bot				(void);
 int	create_connection			(char *, char *, long);
 int	Snow					(const char *, ...);
-void	show_chaninfo				(const char *, const char *, const char *);
-void	show_chanusers				(const char *, const char *);
+struct chanserv_output *show_chaninfo		(const char *, const char *, const char *);
+struct chanserv_output *show_chanusers		(const char *, const char *);
 
 const 	char		*run_program		(const char *);
 

@@ -169,51 +169,24 @@ save_permbans (void)
 
 /**
  * 6/22 Dan
- * - Changed DATA to be 512 bytes, a power of 2
- * - DATA now initialized properly
  * - c is now a pointer to const, this is a read only method
- * - c is now initialized where declared
- * - Changed type of i, x to size_t, these variables should be
- *   unsigned.
+ * - Changed type of x to size_t, this variable should be unsigned.
  * - Changed while loop to for loop.
- * - Changed reinitialization of DATA to use memset()
  */
 
-void
-show_banlist (const char *nick)
+struct chanserv_output *show_banlist (const char *nick)
 {
-	char DATA[STRING_SHORT * 7] = { 0 };
-	char tmp [STRING_SHORT * 7] = { 0 };
+	struct chanserv_output *result = NULL;
 	size_t i = 0,	x = 0;
 	const struct permbanlist *c = 0;
 
+// TODO - the original used NOTICE.  Don't think the current output stuff supports forcing NOTICE, but it should.
 	for (c = permbanhead; c != NULL; c = c->next)
 	{
-		i++;
 		++x;
-
-		snprintf (tmp, sizeof (tmp), "%s", DATA);
-		snprintf (DATA, sizeof(DATA), "%s %s:%u", 
-			  tmp, c->uh, (unsigned int) c->counter);
-		memset (tmp, 0, sizeof (tmp));
-
-		/* Only show at max 6 bans per message sent. */
-		if (i >= 6)
-		{
-			S ("NOTICE %s :%s\n", nick, DATA);
-			i = 0;
-			memset (DATA, 0, sizeof (DATA));
-		}
+		result = chanserv_asprintf(result, "%s:%u ", c->uh, (unsigned int) c->counter);
 	}
 
-	/* If 'i' never reaches 6 on the last pass through the while loop,
-	 * and there are bans yet to be shown, act accordingly.
-	 */
-
-	if (i > 0)
-	{
-		S ("NOTICE %s :%s\n", nick, DATA);
-	}
-	
-	S ("NOTICE %s :End of PERMBAN list; %d ban%s found.\n", nick, x, (x == 1) ? "" : "s");
+	result = chanserv_asprintf(result, "End of PERMBAN list, %d ban%s found.", x, (x == 1) ? "" : "s");
+	return result;
 }

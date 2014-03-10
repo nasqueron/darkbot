@@ -286,10 +286,7 @@ struct chanserv_output *chanserv_backup(char *source, char *target, char *cmd, c
 #ifdef ENABLE_CHANNEL
 struct chanserv_output *chanserv_ban_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-
-	show_banlist (source);
-	return result;
+	return show_banlist(source);
 }
 #endif
 
@@ -302,9 +299,7 @@ struct chanserv_output *chanserv_calc(char *source, char *target, char *cmd, cha
 		return result;
 	if (strlen(args[0]) > 200)
 		args[0][200] = '\0';
-	do_math(source, target, args[0]);
-
-	return result;
+	return do_math(source, target, args[0]);
 }
 #endif
 
@@ -316,7 +311,7 @@ struct chanserv_output *chanserv_chan_info(char *source, char *target, char *cmd
 		return result;
 	else
 		/* If args[0] is not a valid channel name, just use the current channel */
-		show_chaninfo (source, ((*args[0] == '#' || *args[0] == '&' || *args[0] == '+') ? args[0] : target), target);
+		result = show_chaninfo (source, ((*args[0] == '#' || *args[0] == '&' || *args[0] == '+') ? args[0] : target), target);
 
 	return result;
 }
@@ -326,10 +321,10 @@ struct chanserv_output *chanserv_chan_users(char *source, char *target, char *cm
 	struct chanserv_output *result = NULL;
 
 	if (!args || !args[0])
-		show_chanusers (source, target);
+		result = show_chanusers (source, target);
 	else
 		/* If args[0] is not a valid channel name, just use the current channel. */
-		show_chanusers (source, ((*args[0] == '#' || *args[0] == '&' || *args[0] == '+') ? args[0] : target));
+		result = show_chanusers (source, ((*args[0] == '#' || *args[0] == '&' || *args[0] == '+') ? args[0] : target));
 
 	return result;
 }
@@ -662,9 +657,7 @@ struct chanserv_output *chanserv_info(char *source, char *target, char *cmd, cha
 
 struct chanserv_output *chanserv_info_2(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	struct chanserv_output *result = NULL;
-	show_info2 ((invoked == MSG_INVOKE) ? source : target, source, invoked);
-	return result;
+	return show_info2((invoked == MSG_INVOKE) ? source : target, source, invoked);
 }
 
 struct chanserv_output *chanserv_info_size(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
