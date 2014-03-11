@@ -28,7 +28,7 @@ struct chanserv_command
 };
 
 
-static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type);
+static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type, int question);
 struct chanserv_output *chanserv_show_help(char *cmd, int user_level);
 
 
@@ -2265,7 +2265,7 @@ void chanserv(char *source, char *target, char *buf)
 		if (result)
 		{
 			i = 1;
-			show_output(source, target, result, input_type);
+			show_output(source, target, result, input_type, 0);
 			result = NULL;
 		}
 		free(args);
@@ -2294,14 +2294,14 @@ void chanserv(char *source, char *target, char *buf)
 		    userhost, 0);
 		if (result)
 		{
-			show_output(source, (input_type == MSG_INVOKE) ? source : target, result, input_type);
+			show_output(source, (input_type == MSG_INVOKE) ? source : target, result, input_type, 1);
 			result = NULL;
 		}
 	    }
 	}
 }
 
-static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type)
+static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type, int question)
 {
     struct chanserv_output *output = result;
 
@@ -2346,14 +2346,20 @@ static void show_output(char *source, char *target, struct chanserv_output *resu
 		s[MAX_IRC_LEN - len] = '\0';
 		s2 = strrchr(s, ' ');
 		*s2 = '\0';
-		S("PRIVMSG %s :%s: %s\n", target, source, s);
+		if ((('#' == target[0]) && (ADDRESS_INVOKE != input_type)) || (question))
+		    S("PRIVMSG %s :%s\n", target, s);
+		else
+		    S("PRIVMSG %s :%s: %s\n", target, source, s);
 		db_sleep(2);
 		*s2 = ' ';
 		s[MAX_IRC_LEN - len] = c;
 		s = s2 + 1;
 		length = strlen(s);
 	    }
-	    S("PRIVMSG %s :%s: %s\n", target, source, s);
+	    if ((('#' == target[0]) && (ADDRESS_INVOKE != input_type)) || (question))
+		S("PRIVMSG %s :%s\n", target, s);
+	    else
+		S("PRIVMSG %s :%s: %s\n", target, source, s);
 	}
 	output = output->next;
     }
