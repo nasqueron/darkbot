@@ -9,15 +9,15 @@
  ***	Darkbot (c) 2002
  *	The Internet Relay Chat Talking Robot
  * 
- ***	Darkbot Creator  -   Jason Hamilton (play) Jason@superlink.net
- *	Project Administrator  -   LuizCB (Pincel) LuizCB@darkbot.info
- *      Recent Code Modifications -     Ron (`ron) ron@freezedown.org
+ ***	Darkbot Creator       : Jason Hamilton (play) Jason@superlink.net
+ *	Project Administrator : LuizCB (lcb) LuizCB@dusers.sourceforge.net
+ *      Lead Developer        : David Seikel (onefang) onefang@users.sourceforge.net
  *
- *	Official Sites: http://www.freezedown.org 
+ *	Official Site: http://darkbot.sourceforge.net 
  *	 		http://darkbot.sourceforge.net
  * 
  ***	For any questions, suggestions, malfunctions, etc
- *	Use our support forum at http://forum.freezedown.org
+ *	Use our support area at http://darkbot.sourceforge.net
  *
  * 	*******************************---******************************* */
 /*
@@ -83,7 +83,7 @@ to do a search on a word, or partial text, just type:  <mynick>, search \
 #define	L101(a,b,c,d) S("NOTICE %s :I can also be triggered with even more \
 human formats: \37%s who is bill gates?\37  .. You can also phrase it \
 in a question: \37%s where is msie?\37 ...For more info \
-about me, visit http://www.freezedown.org\n",a,b,c,d)
+about me, visit http://darkbot.sourceforge.net\n",a,b,c,d)
 
 #define	L102(a,b,c,d) S("NOTICE %s :Welcome to %s, %s. Before \
 asking your question, type %cHELP for a list of help topics.\n", a,b,c,d)

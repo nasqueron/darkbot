@@ -351,7 +351,7 @@ struct chanserv_output *show_url (char *nick, char *topic, char *target, long do
 					else if (ptr[length] == 'W')
 					{			/* WWW page */
 						toggle++;
-						snprintf (temp, sizeof (temp), "http://freezedown.org%s", Data);
+						snprintf (temp, sizeof (temp), "http://darkbot.sourceforge.net%s", Data);
 					}
 					else if (ptr[length] == 'S')
 					{			/* server */

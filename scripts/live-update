@@ -23,7 +23,7 @@ USAGE () {
       receive live updates from Darkbot's site.
   * - Settings for verbose: 0=stealth/silent; 1=minimal messages (default,
       no prompts if no updates present); 2=all available messages\n
-  Support: http://forum.freezedown.org\n"
+  Support: http://darkbot.sourceforge.net\n"
 exit 1
 }
 
@@ -221,7 +221,7 @@ fi #source exists
 REMOTE1 () {
 # download command line
 DLD_PRG_COMMLINE () {
-updater="http://updater.darkbot.info"
+updater="http://darkbot.sourceforge.net/project_utils"
 #updater="http://192.168.1.10/ongoing/.livupd"
 if [ "$dld_prg" = "lynx" ]; then
 lynx -source "$updater" > $TMP-livupd

@@ -55,7 +55,7 @@
 #define	L052(a)	S("NOTICE %s :A Tari9a: SETUSER <howia jadida> (Yatattalab I3adat Atachghil)\n",a)
 #define	L053(a,b) S("NOTICE %s :al hawia al asslia l'aan: %s\n",a,b)
 #define	L054(a)	S("NOTICE %s :A Tari9a: SETNICK <La9ab Jadid>\n",a)
-#define	L055(a)	S("NOTICE %s :A Tari9a: ADDUSER <#9anate> <*user@*.host> <Daraja> <Kalimate Morour>. ie; ADDUSER #darkbot *bot@*.darkbot.info 3 kalimate Morourih... Ista3mil #* Ida Aradta i3ta2aho Madkhal Fi Jamee3 al 9anawate.\n",a)
+#define	L055(a)	S("NOTICE %s :A Tari9a: ADDUSER <#9anate> <*user@*.host> <Daraja> <Kalimate Morour>. ie; ADDUSER #darkbot *bot@*.UPDATE.THIS.PLEASE 3 kalimate Morourih... Ista3mil #* Ida Aradta i3ta2aho Madkhal Fi Jamee3 al 9anawate.\n",a)
 #define	L056(a)	sprintf(temp, "Lam astakhdim \2%cSETINFO\2 Ba3d!",a)
 #define	L057(a,b,c)	S("NOTICE %s :Odifa Al Mostakhdem: %s - level %d\n",a,b,c)
 #define	L058(a,b,c)	S("NOTICE %s :A Tari9a: %c%s <user@host> [Sabab]\n",a,b,c)

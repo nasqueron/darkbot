@@ -24,10 +24,10 @@
 
 	Help can be found for Darkbot either by irc, or from our web page. 
 
-	Irc: Servers irc.freezedown.org, eu.undernet.org, us.undernet.org
+	Irc: Server chat.freenode.net
 	Channel: #darkbot
 
-	Web page: http://www.freezedown.org Forum: http://www.freezedown.org/forum/
+	Web site: http://darkbot.sourceforge.net
 
 	We do not support any Darkbot code that has been downloaded from any site other 
 	then the official one.  Any code that has been modified by anyone other than an 
@@ -173,13 +173,13 @@
 	- to send a notice to you
 	NOTICE YourNick :be ready to feed me :p
 
-	- to authenticate on Superchat.org
-	PRIVMSG serv@superchat.org :login #darkbot blahblah
+	- to authenticate on Freenode's Services
+	PRIVMSG NickServ :IDENTIFY username password
 
 	- to authenticate on Undernet's CService
 	PRIVMSG x@channels.undernet.org :login username password
 
-	- to have bot X giving op to your Darkbot
+	- to have bot X giving op to your Darkbot on Undernet
 	PRIVMSG X :op #channel_here username
 
 	- to login and get Ops on a eggdrop
@@ -205,11 +205,11 @@
 
 	NOTICE Your_nick : I lost Ops :(
 
+        PRIVMSG NickServ :IDENTIFY username password
+
 	PRIVMSG x@channels.undernet.org :login username password
 
-	PRIVMSG X :op username
-
-	PRIVMSG serv@superchat.org :login #darkbot blahblah
+	PRIVMSG Network_Channel_Service_Here :op username
 
 	chanserv op #channel_here Darkbot
 
@@ -217,20 +217,20 @@
 
 	[servers.ini] 
 	Changing or adding servers to Darkbot.
-	By default Darkbot connects to one of UnderNets servers
-	us.undernet.org 6667
-	eu.undernet.org 6667
+	By default Darkbot connects to one of Freenode servers
+	chat.freenode.net 6667
+	irc.freenode.net 6667
 
 	Open and edit darkbot\dat\servers.ini. You can list as many servers as you want, 
 	so if it's disconnected, it'll switch to others. Do not leave empty lines. Do 
-	not mix servers, like us.undernet.org and dal.net. Save and exit.
+	not mix servers, like freenode.net and dal.net. Save and exit.
 
 	GOING ONLINE
 
 	Write on your shell './darkbot' in order to have it connect to the Internet.
 	Wait a little bit and if you didn't change servers.ini in order to use another 
-	network, Darkbot will join channel #Darkbot at Undernet.org. (To join this 
-	network type in your IRC client /server us.undernet.org and /join #darkbot)
+	network, Darkbot will join channel #Darkbot at Freenode.net. (To join this 
+	network type in your IRC client /server chat.freenode.net and /join #darkbot)
 	If you did change the servers.ini and the CHAN= in the setup.ini then Darkbot 
 	will join that server and channel that you set there. 
 	If another nick Darkbot is already there, your Darkbot will take nick Darkbot0, 
@@ -290,8 +290,8 @@
 	Set auto topic
 	Auto-topic function makes Darkbot repeat channel's topic you specify every 30 
 	seconds (default). To do so type, for example,
-	!AUTOTOPIC Visit http://www.freezedown.org for complete Darkbot 
-information.
+	!AUTOTOPIC Visit http://darkbot.sourceforge.net for complete Darkbot 
+        information.
 
 	Set virtual host
 	If you want to set a virtual host to Darkbot type (must be a registered domain 
@@ -394,7 +394,7 @@ information.
 	My Darkbot don't connect at all.
 
 	- Run Darkbot with minimal configuration (no hand editing at all) to see if 
-	connects to Undernet.org and goes to channel #darkbot. If you go there, Darkbot 
+	connects to chat.freenode.net and goes to channel #darkbot. If you go there, Darkbot 
 	should react with a short answer if you write it's nick.
 
 	- if not, install Darkbot again from the original compressed file. If problem 

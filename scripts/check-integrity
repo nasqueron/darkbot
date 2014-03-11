@@ -27,7 +27,7 @@ exs:
 $0 all               Starts utility in full mode
 $0 info2             Checks info2.db in normal operation
 $0 userlist -quick   Checks userlist.db bypassing pauses\n
-   Support: http://forum.freezedown.org\n"
+   Support: http://darkbot.sourceforge.net\n"
 exit 1
 }
 
@@ -133,7 +133,7 @@ $0 -report.
 If you are in a rush type  $0 -quick (fast mode).\n
 If  you get wrong results on final counts due  to  unpredictable
 characters or symbols you might have on your  files please  help
-us correct the problem by participating it on the forum.\n
+us correct the problem by participating it on the web page.\n
 For detailed information about this utility  read  README_UTILS.\n
 To bypass this introduction write $0 -nointro		 
 To abort all operations at any time press CTRL + C"
@@ -437,7 +437,7 @@ echo -e "##### WARNING #####\nWrong result: Removed \
 "$duptopics_uniques" topics.
  Check the corresponding section  of  this file  and compare the results  with
  your $ORIG_FILE file. Data with unpredictable characters might be causing
- the difference. If you discover the cause please contact us at the forum
+ the difference. If you discover the cause please contact us at the official site
  and if possible attach the file."
 fi >> $TMP-DUP_TOPICS.rep.head
 echo -e "===== Removed DUPLICATE TOPICS from "$ORIG_FILE"" > \
@@ -1200,7 +1200,7 @@ grep 'CHAN' $TMP-DB.WORK.FILE | tr -d ' ' > $TMP-DB.WORK.FILE.chan
 fi >> $TMP-DB.WORK.FILE.tmp
 	
 if [ ! "`grep 'REALNAME=' $TMP-DB.WORK.FILE | cut -d= -f2`" ]; then
-echo "REALNAME=Download me from http://www.freezedown.org"
+echo "REALNAME=Download me from http://darkbot.sourceforge.net"
 Missing_Parm="$Missing_Parm""REALNAME "
 else
 grep 'REALNAME' $TMP-DB.WORK.FILE

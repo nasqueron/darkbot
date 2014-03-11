@@ -5,8 +5,8 @@
 All shell utilities mentioned here with exception to 'configure' must be
 in /scripts directory.
 
-For support, malfunctions, suggestions, please visit our forum. 
-http://forum.freezedown.org
+For support, malfunctions, suggestions, please visit
+http://darkbot.sourceforge.net
 
 ----------------------------------------------------------------------
 
@@ -218,7 +218,7 @@ it's final results on the  integrity-report  file  or  by typing
 If you are in a rush type ./check-integrity -quick
 If  you get wrong results on final counts due  to  unpredictable
 characters or symbols you might have on your  files please  help
-us correct the problem by participating it on the forum.
+us correct the problem by participating it on the official site.
 To abort all operations at any time press CTRL + C
 
 ----------------------------------------------------------------------
@@ -360,7 +360,7 @@ utility will not work. There is no reason to waste time and bandwidth
 on an adultered program.  The same will happen if you move or  remove
 source files from their original locations.
 
-For support, use the forum at http://forum.freezedown.org
+For support, check the the site at http://darkbot.sourceforge.net
 
 
 ----------------------------------------------------------------------

@@ -30,7 +30,7 @@ if [ -z "$NICK" ]; then NICK="Darkbot"; fi
 if [ -z "$USERID" ]; then USERID="darkbot"; fi
 if [ -z "$CHAN" ]; then CHAN="#Darkbot"; fi
 if [ -z "$REALNAME" ]; then REALNAME="Get info about me at \
-http://www.freezedown.org "; fi
+http://darkbot.sourceforge.net "; fi
 if [ -z "$CMDCHAR" ]; then CMDCHAR="!"; fi
 if [ -z "$VHOST" ]; then VHOST="0"; fi
 if [ -z "$AUTOTOPIC" ]; then AUTOTOPIC="0"; fi
@@ -355,7 +355,7 @@ $PNCFG
      "$srv_entry_s"
      
      Select one of the following 4 options:
-1) - Write only one server or use the default [irc.freezedown.org] `if [ ! -z \
+1) - Write only one server or use the default [chat.freenode.net] `if [ ! -z \
 "$srv_num_entries" ] && [ "$srv_num_entries" != "0" ]; then \
 echo -e "\n     ${lparen}This option will overwrite \
 the existent "$entry_s" on your servers file${rparen}"; fi`
@@ -374,14 +374,14 @@ do
 
 clear
 echo -e "\n$PNCFG\n* SERVERS *\n
-- Enter the server your Darkbot should connect to [irc.freezedown.org]: "
+- Enter the server your Darkbot should connect to [chat.freenode.net]: "
 read SERVER
 if [ -z "$SERVER" ]; then
-echo -e "    No server specified. defaulting to irc.freezedown.org
+echo -e "    No server specified. defaulting to chat.freenode.net
     You can add servers by running scripts/AddServer
     or by editing dat/servers.ini\n"
 sleep 2
-SERVER=irc.freezedown.org
+SERVER=chat.freenode.net
 PORT=6667
 fi
 done
@@ -620,7 +620,7 @@ case $CHOICE in
     PRIVMSG $CHAN :hello!
                 
     (Note the :colon after $CHAN, it is required)
-    Check  http://www.freezedown.org for examples
+    Check  http://darkbot.sourceforge.net for examples
 
     The first .ini you will need to setup, is the perform.ini.
     Perform  list is a set of commands you'd like your Darkbot
@@ -700,8 +700,8 @@ echo "
     debug' following it's instructions and  if  Darkbot crashes
     type  'backtrace'  to  find  out  exactly  why it happened.
     
-    If you need further assistance  use  the  support forum  at
-    http://forum.freezedown.org providing detailed information.
+    If you need  further assistance  use  the  support area  of
+    http://darkbot.sourceforge.net  for  detailed  information.
                                
           Linux/BSD/Unix/Win users type:    make
           "	

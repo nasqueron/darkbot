@@ -122,7 +122,7 @@ char dbVersion[STRING_SHORT] = { 0 };
 char strbuff[STRING_SHORT] = { 0 };
 char f_tmp[STRING_LONG] = { 0 };
 char UID[STRING_SHORT] = "database";
-char BS[STRING_SHORT] = "irc.undernet.org";
+char BS[STRING_SHORT] = "irc.freenode.net";
 char CMDCHAR[2] = "!";
 char CHAN[STRING_SHORT] = "#darkbot";
 char s_Mynick[STRING_SHORT] = "darkbot";
@@ -130,7 +130,7 @@ char g_host[STRING_SHORT] = { 0 };
 char Mynick[STRING_SHORT] = "darkbot";
 char sleep_chan[STRING_SHORT] = { 0 };
 char VHOST[STRING_SHORT] = "0";
-char REALNAME[STRING_SHORT] = "http://www.freezedown.org";
+char REALNAME[STRING_SHORT] = "http://darkbot.sourceforge.net";
 char privmsg_log[STRING_SHORT] = { 0 };
 
 long CONNECT_WAIT_TIMEOUT = 10;

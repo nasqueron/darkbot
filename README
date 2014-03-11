@@ -4,7 +4,7 @@ Darkbot, Talking Robot - Copyright (c) 1996 Darkbot Project
   run the ./build.sh script.
 
 - For full documentation and step by step configuration help,
-please check Darkbot's help page at http://www.freezedown.org/help
+please check Darkbot's help page at http://darkbot.sourceforge.net
 
 - Read docs/WHATSNEW for added/latest features and changes.
 - Read docs/README_UTILS for info on shell utilities and all files in
@@ -47,14 +47,9 @@ warranty of any kind.  In any event shall Darkbot project or any
 of it's collaborators be liable for any damages whatsoever.
 If you do not agree with the above user disclaimer, please do not
 use the program and delete all Darkbot files.
-Contact juice@freezedown.org with any questions regarding the use
-of this program.
 
 Darkbot is a creation of Jason Hamilton  [ Jason@superlink.net ]
 and has been coded by several contributors who donates their
 code patches to the project.  Please read file contributors in
 docs directory with a list of who makes this program possible.
 
-
-Project Administrator
-juice (juice@freezedown.org)

@@ -89,7 +89,7 @@ CTRL+C aborts at all times.
 To launch the utility write $0. For a quick server entry write: 
 $0 server port (ex:  $0 irc.server.here 6667 )\n
 Comments, suggestions?
-Support: http://forum.freezedown.org\n"
+Support: http://darkbot.sourceforge.net\n"
 if [ -n "$insider" ]; then echo "[ Hit ENTER to continue ]"; read PTR; fi
 }
 
@@ -270,7 +270,7 @@ DLD_PRG_COMMLINE
 # cp $TMP.rem.servers servers.ini # debug only
 done
 unset testRemote
-testRemote=$(grep undernet $TMP.rem.servers)
+testRemote=$(grep freenode $TMP.rem.servers)
 if [ -z "$testRemote" ]; then
  echo -e "$PNAS\n I can't obtain the remote servers list at this time"
  LASTACTION="Remote (external) server list unreachable."
@@ -286,7 +286,7 @@ clear
 echo -n "$PNAS
 * External Server List *
 
-Write the name of the IRC network (ex: Undernet): "
+Write the name of the IRC network (ex: Freenode): "
 read NETW_NAME
 if [ ! -z "$NETW_NAME" ]; then
 grep -i "$NETW_NAME": $TMP.rem.servers | cut -d: -f3-4 | sed s/GROUP// > $TMP.NETW_NAME

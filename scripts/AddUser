@@ -79,7 +79,7 @@ To launch the utility write $0. For a quick user entry write:
 $0 userid@host level Ex:  $0 *whateverid@*host.domain.net 2
 (It will add an user with access level 2 to all channels).\n
 Comments, suggestions? 
-Support: http://forum.freezedown.org\n"
+Support: http://darkbot.sourceforge.net\n"
 if [ -n "$insider" ]; then echo "[ Hit ENTER to continue ]"; read PTR; fi
 }
 

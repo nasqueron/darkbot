@@ -131,7 +131,7 @@ echo -e "\n\nDarkbot crontab utility\n\nCrontab job created successfully!
 To check if everything is okay, kill your bot if it is connected to IRC.
 It should automatically restart in 10 minutes.\n
 Suggestions, improvements?
-Support: http://forum.freezedown.org\n\n"
+Support: http://darkbot.sourceforge.net\n\n"
 else
 echo -e "\nDarkbot's Crontab Utility.
 WARNING!!!!\nDarkbot's binary not found.

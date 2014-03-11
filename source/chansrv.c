@@ -592,7 +592,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 		NICK_COMMA, COLON_NICK, BCOLON_NICK, Mynick, NICK_COMMA);
 	    if (cf (userhost, source, target))
 		return result;
-	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://www.freezedown.org/ .",
+	    result = chanserv_asprintf(result, "I can also be triggered with even more human formats: \37%s who is bill gates?\37 .  You can also phrase it as a question: \37%s where is msie?\37 .  For a list of commands use \37help commands\37 .  For a list of setup parameters use \37help parameters\37 .  For more info about me, visit http://darkbot.sourceforge.net .",
 		NICK_COMMA, NICK_COMMA, NICK_COMMA);
 	    return (result);
 	}
@@ -1693,7 +1693,7 @@ struct chanserv_output *chanserv_version(char *source, char *target, char *cmd, 
 	if (cf (userhost, source, target))
 		return result;
 
-	return chanserv_asprintf(NULL, "\1VERSION Hi, I'm a Darkbot. Download me from http://www.darkbot.org\1.");
+	return chanserv_asprintf(NULL, "\1VERSION Hi, I'm a Darkbot. Download me from http://darkbot.sourceforge.net\1.");
 }
 #endif
 
