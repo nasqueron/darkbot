@@ -2200,6 +2200,18 @@ void chanserv(char *source, char *target, char *buf)
 			  return;
 		   }
 		}
+		else
+		{
+		    args = calloc(1, sizeof(char *));
+		    if (args)
+		    {
+			args[0] = NULL;
+			if (0 < arg_count)
+			    more_needed = 1;
+		    }
+		    else
+			return;
+		}
 
 		if (too_many == 1)
 		{
@@ -2258,8 +2270,7 @@ void chanserv(char *source, char *target, char *buf)
 			 * this far, we assume it's a normal command with
 			 * arguments to be parsed.
 			 */
-			
-	    		result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
+			result = chanserv_commands[found].func(source, target, cmd, args, input_type, userhost);
 		}
 
 		if (result)
