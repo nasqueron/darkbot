@@ -34,13 +34,13 @@ struct chanserv_output *show_seen (char *nick, char *source, char *target)
 	time_t	unixtime = 0;
 
 	if ((nick == NULL) || (strlen(nick) > MAX_NICK_LENGTH))
-		return;
+		return result;
 
 	// Looking for yourself, eh?
 	if (strcasecmp (nick, source) == 0)
 	{
 		L005 (target, source);
-		return;
+		return result;
 	}
 
 	if ((ptr = strchr (nick, '?')) != NULL)
@@ -49,7 +49,7 @@ struct chanserv_output *show_seen (char *nick, char *source, char *target)
 	if ((fp = fopen (SEEN_FILE, "r")) == NULL)
 	{
 		L003 (source, SEEN_FILE);
-		return;
+		return result;
 	}
 
 	while (fgets (temp, STRING_LONG, fp))
@@ -84,7 +84,7 @@ struct chanserv_output *show_seen (char *nick, char *source, char *target)
 				   source, r_nick, uh, unixtime / 60, unixtime / 60 == 1 ? "" : "s", unixtime % 60,
 				   unixtime % 60 == 1 ? "" : "s", chan);
 			fclose (fp);
-			return;
+			return result;
 		}
 	}
 	fclose (fp);
