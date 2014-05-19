@@ -119,10 +119,9 @@ parse (char *line)
 		}
 		else if (strcasecmp (cmd, "432") == 0 || strcasecmp (cmd, "468") == 0)
 		{						/* Invalid nick/user */
+			// TODO - Should send this to the user requesting the nick change.
 			s2 = strtok (NULL, "");
-			printf ("Server Reported error %s\n\nDarkbot exiting.\n", s2);
-			db_sleep (2);
-			exit (0);
+			printf ("Server reported error %s\n", s2);
 		}
 		else if ((strcasecmp (cmd, "376") == 0) || (strcasecmp(cmd, "422") == 0))
 		{
@@ -179,6 +178,10 @@ parse (char *line)
 			s2 = strtok (NULL, " ");
 			if (*s2 != '*')
 			{
+// TODO - I dunno about these ones, so log them for now.  Probably should go through process_nick().
+#ifdef	DEBUG2
+db_log ("darkbot_debug.log", " 433 *: %s -> %s\n", Mynick, s2);
+#endif
 				strncpy (Mynick, s2, sizeof (Mynick));
 				snprintf (NICK_COMMA, sizeof (NICK_COMMA), "%s,", Mynick);
 				snprintf (COLON_NICK, sizeof (COLON_NICK), "%s:", Mynick);
@@ -187,6 +190,9 @@ parse (char *line)
 			}
 			else
 			{
+#ifdef	DEBUG2
+db_log ("darkbot_debug.log", " 433: %s\n", Mynick);
+#endif
 				Snow ("NICK %s%d\n", Mynick, xtried);
 				xtried++;
 				if (xtried > 15)

@@ -932,15 +932,10 @@ struct chanserv_output *chanserv_nick(char *source, char *target, char *cmd, cha
 	// If the nick specified contains illegal characters...
 	if(strspn(args[0], LEGAL_NICK_TEXT) != strlen(args[0]))
 		return chanserv_asprintf(NULL, "The nickname %s contains illegal characters.", args[0]);
+	if (isdigit(args[0][0]))
+		return chanserv_asprintf(NULL, "The nickname %s should not start with a digit.", args[0]);
 
-	strncpy(Mynick, args[0], sizeof (Mynick));
-	strncpy(s_Mynick, Mynick, sizeof (s_Mynick));
-	snprintf(NICK_COMMA, sizeof (NICK_COMMA), "%s,", Mynick);
-	snprintf(COLON_NICK, sizeof (COLON_NICK), "%s:", Mynick);
-	snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", Mynick);
-	// FIXME: This should be sent before the NICK attempt, and/or complain if the NICK doesn't work.
-	result = chanserv_asprintf(result, "Attempting to /nick %s.", Mynick);
-	S("NICK %s\n", Mynick);
+	S("NICK %s\n", args[0]);
 
 	return result;
 }

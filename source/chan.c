@@ -336,6 +336,16 @@ process_nick (char *nick, char *newnick)
 		}
 		c = c->next;
 	}
+
+	// Check if it's our own bot nick being changed.
+	if (strcasecmp(nick, Mynick) == 0)
+	{
+		strncpy(Mynick, newnick, sizeof (Mynick));
+		strncpy(s_Mynick, Mynick, sizeof (s_Mynick));
+		snprintf(NICK_COMMA, sizeof (NICK_COMMA), "%s,", Mynick);
+		snprintf(COLON_NICK, sizeof (COLON_NICK), "%s:", Mynick);
+		snprintf(BCOLON_NICK, sizeof (BCOLON_NICK), "%s\2:\2", Mynick);
+	}
 }
 
 /**
