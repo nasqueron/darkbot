@@ -983,6 +983,3 @@ Darkbot 7 (alpha 2): Dec 16th, 2001
     - There is a bug/feature where if a nick has a pipe (|) and
     requests a topic that has raw - commands, it ignores
     them - looking in to this.
-
-
-
