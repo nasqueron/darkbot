@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "I speak Greek."
 #define	L001(a,b) S("PRIVMSG %s :Den exis vali kodiko, gian na valis grapse: \2/msg %s PASS \
 <palioskodikos> <kainourioskodikos>\2 (epidi auti ine i prota sou fora pou vazi kodiko, \

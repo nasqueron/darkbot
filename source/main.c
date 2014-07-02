@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
@@ -114,21 +125,26 @@ main (int argc, char **argv)
 #endif
 
 	printf ("\n\n\n");
-	printf ("  * * * * * * * * Darkbot (c) 1996 v8 Release Candidate 4 * * * * * * * * *  \n");
+	printf ("  * * * * * * * * * * Darkbot v8  Release Candidate 4 * * * * * * * * * * *  \n");
 	printf ("  *                       The IRC Talking Robot                           *  \n");
-	printf ("  *                                                                       *  \n"); 
+	printf ("  *                                                                       *  \n");
 	printf ("  *      Creator/Author       : Jason <jason@superlink.net>               *  \n");
 	printf ("  *      Project Administrator: LuizCB <LuizCB@users.sourceforge.net>     *  \n");
 	printf ("  *      Lead Devekloper      : onefang <onefang@users.sourceforge.net>   *  \n");
-	printf ("  *      Please check docs/contributors for a list of collaborators       *  \n");
+	printf ("  *      Please check docs/AUTHORS for a list of collaborators            *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *       Eventual malfunction,  suggestions or patches use only          *  \n");
 	printf ("  *       Darkbot official site @  http:/darkbot.sourceforge.net          *  \n");
 	printf ("  *                                                                       *  \n");
-	printf ("  * By running this installation  you agree that this program is provided *  \n");
-	printf ("  * free for non-commercial use only;  -  Distribution of modified source *  \n");
-	printf ("  * code or binaries compiled from modified source code for any  platform *  \n");
-	printf ("  * or OS  is expressly forbidden.  -   This program is only available at *  \n");
+	printf ("  *       Copyright (C) 1996 Darkbot Project.                             *  \n");
+	printf ("  *                                                                       *  \n");
+	printf ("  *This program is free software, you can redistribute it and/or modify it*  \n");
+	printf ("  *under the terms of the GNU General Public License version 2.  This     *  \n");
+	printf ("  *program is distributed in the hope that it will be useful, but without *  \n");
+	printf ("  *any warranty, without even the implied warranty of merchantability or  *  \n");
+	printf ("  *fitness for a particular purpose.  See the COPYING file for details.   *  \n");
+	printf ("  *                                                                       *  \n");
+	printf ("  *       This program is only available at -                             *  \n");
 	printf ("  *                   http://darkbot.sourceforge.net                      *  \n");
 	printf ("  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  \n");
 

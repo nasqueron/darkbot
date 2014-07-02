@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "Falo português e um pouco de inglês."
 #define	L001(a,b) S("PRIVMSG %s :Não foi ainda definida a senha, para o fazer: \2/msg %s PASS \
 <senha_anterior> <senha_nova>\2 (já que esta é a primeira vez que a senha é configurada, usar '0' como senha anterior)\n",a,b)

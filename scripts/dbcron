@@ -1,12 +1,22 @@
 #! /bin/sh
-PID=0624233000
 # Darkbot utility to auto generate crontab.
+
+# Copyright (C) 1996 Darkbot Project.
+
+# This program is free software, you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2.  This
+# program is distributed in the hope that it will be useful, but without
+# any warranty, without even the implied warranty of merchantability or
+# fitness for a particular purpose.  See the COPYING file for details.
+
+
 # Just run this script and a new one with the same name will be created
 # with the actual path of your Darkbot installation. At the same time 
 # a crontab job will be created with 10 mins interval.
 
 # to do: user defined timers on command line utility launch
 
+PID=0624233000
 MAKE_DBCRON () {
 cat > dbcron << EOF[DBCRON]
 #! /bin/sh

@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2002 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 /* @configure_input@ */
 
 #ifdef 	HAVE_CONFIG_H
@@ -6,7 +17,6 @@
 
 
 /* defines.h
- ***	Darkbot (c) 2002
  *	The Internet Relay Chat Talking Robot
  * 
  ***	Darkbot Creator       : Jason Hamilton (play) Jason@superlink.net

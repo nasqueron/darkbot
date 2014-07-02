@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "Iz be speakin' Ebonic"
 #define	L001(a,b) S("PRIVMSG %s :Yo, you aint be havin no passwerd yet, to be settin one..: \2/msg %s PASS \
 <oldpass> <newpass>\2 (since you aint be havin one yet, you bes' be usin '0' as yo' old pass)\n",a,b)

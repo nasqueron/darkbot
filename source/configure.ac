@@ -1,8 +1,17 @@
+# Copyright (C) 1996 Darkbot Project.
+
+# This program is free software, you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2.  This
+# program is distributed in the hope that it will be useful, but without
+# any warranty, without even the implied warranty of merchantability or
+# fitness for a particular purpose.  See the COPYING file for details.
+
+
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.63)
 AC_INIT([Darkbot],[8rc4],[darkbot-devel@lists.sourceforge.net])
-AC_COPYRIGHT([Copyright 1996-2008 Darkbot Development Team])
+AC_COPYRIGHT([Copyright (C) 1996 Darkbot Project])
 AC_REVISION($Revision$)
 AC_CONFIG_AUX_DIR([auxdir])
 AC_CONFIG_LIBOBJ_DIR([../source/compat])

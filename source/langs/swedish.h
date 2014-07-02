@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "Jag talar svenska."
 #define	L001(a,b) S("PRIVMSG %s :Du har inte satt något lösenord, för att sätta ett lösenord: \2/msg %s PASS \ <gammalt lösendord> <nytt lösenord>\2 (Eftersom det här är den första gången du sätter ett lösenord, använd '0' som ditt gamla lösenord)\n",a,b)
 #define	L002(a,b,c) S("NOTICE %s :Tog bort den permanenta bannlysningen #%d, %s.\n",a,b,c)

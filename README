@@ -1,4 +1,14 @@
-Darkbot, Talking Robot - Copyright (c) 1996 Darkbot Project
+Darkbot, Talking Robot
+
+Copyright (C) 1996 Darkbot Project.
+
+This program is free software, you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2.  This
+program is distributed in the hope that it will be useful, but without
+any warranty, without even the implied warranty of merchantability or
+fitness for a particular purpose.  See the COPYING file for the full
+license.
+
 
 - To build your Darkbot on Unixes (or cygwin), 
   run the ./build.sh script.
@@ -33,15 +43,6 @@ assumption is that later versions should be backwards compatible enough.
 Also, it should be easy to get these running on a VM, preferably qemu. 
 More Linux varieties might be added, especially RPM based ones.
 
-This program is provided free for non-commercial use only.   Any
-commercial use  of this source code or binaries compiled thereof
-requires the prior written consent of the project administrator.
-Distribution of  modified source code or binaries compiled from
-modified source code  for  any platform is expressly  forbidden!
-All code patches to be applied to the program are donations to
-the project and must remain under this terms and conditions.
-No code with copyright statements other than the ones ruled by this
-project is accepted unless agreed by all parties in writing.
 All Darkbot program  and  information is provided as is  without
 warranty of any kind.  In any event shall Darkbot project or any
 of it's collaborators be liable for any damages whatsoever.
@@ -50,5 +51,5 @@ use the program and delete all Darkbot files.
 
 Darkbot is a creation of Jason Hamilton  [ Jason@superlink.net ]
 and has been coded by several contributors who donates their
-code patches to the project.  Please read file contributors in
+code patches to the project.  Please read file AUTHORS in
 docs directory with a list of who makes this program possible.

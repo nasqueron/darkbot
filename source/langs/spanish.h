@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "I speak Spanish."
 #define	L001(a,b) S("PRIVMSG %s :No has elegido una contraseña, para poner una \
 contraseña: \2/msg %s PASS <oldpass> <newpass>\2 (Como es tu primera \

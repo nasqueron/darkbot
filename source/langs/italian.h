@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define I_SPEAK "Io parlo italiano."
 #define L001(a,b) S("PRIVMSG %s :Non hai ancora una password settata, per farlo: \2/msg %s PASS \
 <vecchiapass> <nuovapass>\2 (siccome e' la prima volta che lo fai, usa '0' come vecchia password)\n",a,b)

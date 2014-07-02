@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "我說中文."
 #define	L001(a,b) S("PRIVMSG %s : 你還沒有設置密碼. 要設置密碼,請打: \2/msg %s PASS \
 <舊密碼> <新密碼>\2 (如果是第一次設置密碼,舊密碼應填為 0 )\n",a,b)

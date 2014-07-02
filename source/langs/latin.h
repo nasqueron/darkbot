@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 1996 Darkbot Project.
+
+ * This program is free software, you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2.  This
+ * program is distributed in the hope that it will be useful, but without
+ * any warranty, without even the implied warranty of merchantability or
+ * fitness for a particular purpose.  See the COPYING file for details.
+ */
+
+
 #define	I_SPEAK "I speak Latin"
 #define	L001(a,b) S("PRIVMSG %s :Non posuisti tesserae, ut ponere tesserae: \2/msg %s PASS \
 <tessera senex> <tessera nova>\2 (quod hoc est tempus primum tuum ponendo tesseram, uti '0' \
