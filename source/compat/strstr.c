@@ -17,7 +17,7 @@ length, the function returns @var{string}.
 */
 
 
-/* FIXME:  The above description is ANSI compiliant.  This routine has not
+/* FIXME:  The above description is ANSI compliant. This routine has not
    been validated to comply with it.  -fnf */
 
 #include "defines.h"

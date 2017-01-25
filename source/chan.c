@@ -466,7 +466,7 @@ do_modes (char *source, char *data)
 		}
 		if (mode[i] == 'l' && PM == 1)
 		{						/* don't parse if -limit
-								 * since no parms */
+								 * since no params */
 			nick = strtok (NULL, " ");
 			continue;
 		}

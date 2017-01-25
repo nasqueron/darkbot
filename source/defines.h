@@ -32,15 +32,15 @@
  * 	*******************************---******************************* */
 /*
  ***	NOTES - READ before you start:
- *** 	Lines beginning by # (hash) are peprocessor directives, they are not
+ *** 	Lines beginning by # (hash) are preprocessor directives, they are not
  * 	comments. You should NOT remove them.
  *** 	#defines should only be changed to ON, OFF, #define, #undef
  * 	or it's value defined on the very right end.
  *** 	Areas between " " are messages Darkbot will send. Do not remove " ".
- *** 	Double slash characters on de beginning of a line or slaches followed
- *	or preceded by * on the beginning and end of lines envolving some
+ *** 	Double slash characters on de beginning of a line or slashes followed
+ *	or preceded by * on the beginning and end of lines evolving some
  *	portion of text are comment characters combinations with help
- *	information for the delelopers or users. They do not have any effect
+ *	information for the developers or users. They do not have any effect
  *	in the behavior of the program.
  *
  	,-----------------------------------------------------------------,

@@ -123,7 +123,7 @@ clear_sendq (long count, long toggle)
 long
 setinfo_lastcomm (char *rest)
 {								/* Disallows joins to more than one channel (or the same chan)
-								 * to artifically raise join counters */
+								 * to artificially raise join counters */
 	long c_uptime = 0;
 
 	if (strcasecmp (rest, slc1) == 0)

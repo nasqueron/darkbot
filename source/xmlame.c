@@ -19,7 +19,7 @@
  *
  * This is NOT a real XML parser.  It assumes the XML file is properly formed, and smallish.
  *
- * The final '>' of a tag is replaced with a '\0', but it's existance can be implied.
+ * The final '>' of a tag is replaced with a '\0', but it's existence can be implied.
  */
 
 static char *_xmlame_parse(Tree * tree, char *buffer);

@@ -24,7 +24,7 @@ trackers at http://sourceforge.net/projects/darkbot
   logged in with access to the bot.
 
 - Add googlesque queries to search command, so you can 
-  excluse words from searches.
+  exclude words from searches.
 - plural functions still needs to be implemented in spots,
   about half of the functions use a different parsing  
   mechanism that still works, because I hadn't thought of 
@@ -103,7 +103,7 @@ that command.
 Merge all the scripts plus convertdb into darkbot so that all admin
 stuff can be done from IRC, command line, or text UI.
 
-Make the replaceable params in responses consistant.  X~ and %X.
+Make the replaceable params in responses consistent.  X~ and %X.
 
 If possible, make all !set foo=bar stuff change the current state of the
 bot rather than requiring a restart.
@@ -111,7 +111,7 @@ bot rather than requiring a restart.
 Scripting or modules.  Scripting using Lua is a really good option. 
 A limited subset could be used for the calc command as well.
 
-Find a cross pratform Windows/unix GUI toolkit we can live with and
+Find a cross platform Windows/unix GUI toolkit we can live with and
 create a GUI for darkbot admin.  LCB wants a web based one.  I just want
 to make it modular, and allow different front ends.
 
@@ -122,10 +122,10 @@ Make multiple random responses easier to setup.
 
 Menu in PM.  Plain one liner, colour one liner, multiple lines, colour multiple lines.
   user: /msg bot menu
-  >bot<: Main menu - 1) factiod comands, 2) user commands, 3) channel commands, B) backup one menu, Q) quit menu.
+  >bot<: Main menu - 1) factoid commands, 2) user commands, 3) channel commands, B) backup one menu, Q) quit menu.
   user: /msg bot menu big
   >bot<: Main menu - 
-  >bot<:   1) factiod comands
+  >bot<:   1) factoid comands
   >bot<:   2) user commands
   >bot<:   3) channel commands
   >bot<:   B) backup one menu
@@ -145,7 +145,7 @@ onefang about bah".  Allow memos to yourself.  Fix alarm and tie that in
 as well, alarms to others and to self.  Limit memos & alarms to karma
 memos & alarms per hour to limit abuse.
 
-Allow unlogged in users to create factiods, and change these factoids, plus
+Allow unlogged in users to create factoids, and change these factoids, plus
 make additions to factoids.
   luser: blah is humbug.
   user: blah?
@@ -164,7 +164,7 @@ wtf, add a karma system.
   Use no karma and negative karma as extra security levels.  No karma = -1, negative karma = (karma / 100) - 2
 
 Keep track of how much she has been fed, deny taking food from strangers
-(low/no karama users).  This implies that botsnack become an information command.
+(low/no karma users).  This implies that botsnack become an information command.
 
 data include files.
   Keep track of what database include files are not used for a while, and unload
@@ -180,7 +180,7 @@ Keep track of unanswered questions, for two reasons -
   question if an answer arrives.
 
 Implement the Porter-Stemmer algorithm to improve English-language
-searching as per the drupal module of the same name.  It reduces each
+searching as per the Drupal module of the same name.  It reduces each
 word in the index to its basic root or stem (e.g. 'blogging' to 'blog')
 so that variations on a word ('blogs', 'blogger', 'blogging', 'blog')
 are considered equivalent when searching.  This generally results in

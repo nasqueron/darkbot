@@ -13,7 +13,7 @@
 
 #include "tree.h"
 
-/* Just a quick and dirty tree implemtation that will likely get replaced by 
+/* Just a quick and dirty tree implementation that will likely get replaced by
  * something much saner at a later date.  I wrote most of this while falling
  * asleep.  It will probably scare me when I wake up.  B-)
  *
@@ -23,7 +23,7 @@
  * They only store strings.
  * There is no insertion or deletion, only append.
  * Append order must be maintained.
- * The trees will only ever be accessed sequentially, from begining to end.
+ * The trees will only ever be accessed sequentially, from beginning to end.
  * The tree data will come in two ways, all in one big string, or a bunch of 
  * seperate strings, one per element.  Any particular tree might have both.
  *
