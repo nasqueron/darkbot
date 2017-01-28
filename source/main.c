@@ -130,7 +130,7 @@ main (int argc, char **argv)
 	printf ("  *                                                                       *  \n");
 	printf ("  *      Creator/Author       : Jason <jason@superlink.net>               *  \n");
 	printf ("  *      Project Administrator: LuizCB <LuizCB@users.sourceforge.net>     *  \n");
-	printf ("  *      Lead Devekloper      : onefang <onefang@users.sourceforge.net>   *  \n");
+	printf ("  *      Lead Developer       : onefang <onefang@users.sourceforge.net>   *  \n");
 	printf ("  *      Please check docs/AUTHORS for a list of collaborators            *  \n");
 	printf ("  *                                                                       *  \n");
 	printf ("  *       Eventual malfunction,  suggestions or patches use only          *  \n");
