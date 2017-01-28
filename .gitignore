@@ -2,3 +2,4 @@ build
 /dat/autotopic.ini
 /dat/info2.db.bak*
 /dat/seen.db
+clean
