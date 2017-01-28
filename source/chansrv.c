@@ -178,20 +178,20 @@ struct chanserv_output *chanserv_add_user(char *source, char *target, char *cmd,
 {
 	struct chanserv_output *result = NULL;
 	char temp[1024] = { 0 };
-	long sn = 0;
+	long level = 0;
 
 	if (!args || !args[0] || !args[1] || !args[2] || !args[3])
 		return result;
-	sn = atoi(args[2]);
-	if (sn > 10 || sn <= 0)
+	level = atoi(args[2]);
+	if (level > 10 || level <= 0)
 		return result;
 	if (strlen(args[1]) < 7)
 		return result;
 	snprintf(temp, sizeof (temp), "I haven't used \2%cSETINFO\2 yet!", *CMDCHAR);
-	add_helper(args[0], mask_from_nick(args[1], target), sn, 0, temp, args[3], 0);
+	add_helper(args[0], mask_from_nick(args[1], target), level, 0, temp, args[3], 0);
 	save_changes();
 
-	return chanserv_asprintf(NULL, "Added user: %s - level %d.", mask_from_nick(args[1], target), sn);
+	return chanserv_asprintf(NULL, "Added user: %s - level %d.", mask_from_nick(args[1], target), level);
 }
 
 struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -199,7 +199,7 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	struct 	chanserv_output *result = NULL;
 
 	char 	temp[1024] = { 0 };
-	time_t 	sn = 0, unixtime = 0;
+	time_t 	seconds = 0, unixtime = 0;
 	long	i = 0;
 
 	if (!args || !args[0] || !args[1] || (strlen(args[0]) < 2))
@@ -208,25 +208,25 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 	if (tolower(*args[0]) == 'd')
 	{
 		/* Days. */
-		sn = 86400;
+		seconds = 86400;
 		args[0]++;
 	}
 	else if (tolower(*args[0]) == 'h')
 	{
 		/* Hours */
-		sn = 3600;
+		seconds = 3600;
 		args[0]++;
 	}
 	else if (tolower(*args[0]) == 'm')
 	{
 		/* Minutes */
-		sn = 60;
+		seconds = 60;
 		args[0]++;
 	}
 	else if (tolower(*args[0]) == 's')
 	{
 		/* Seconds */
-		sn = 1;
+		seconds = 1;
 		args[0]++;
 	}
 	else
@@ -237,11 +237,11 @@ struct chanserv_output *chanserv_alarm(char *source, char *target, char *cmd, ch
 
 	snprintf(temp, sizeof (temp), "%s/%ld", 
 			DBTIMERS_PATH, 
-			(atoi (args[0]) * sn) + time (NULL));
+			(atoi (args[0]) * seconds) + time (NULL));
 	
 	db_log(temp, "PRIVMSG %s :\2ALARMCLOCK\2 by %s!%s: %s", source, source, userhost, args[1]);
 	
-	unixtime = atoi (args[0]) * sn;
+	unixtime = atoi (args[0]) * seconds;
 	
 	if (unixtime > 86400)
 		result = chanserv_asprintf(NULL, "alarmclock set to go off in %d day%s, %02d:%02d.", 
@@ -463,7 +463,7 @@ struct chanserv_output *chanserv_deluser(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char 	str [STRING_LONG] = {0}, chan[STRING_LONG] = {0};
+	char 	users_to_deop [STRING_LONG] = {0}, chan[STRING_LONG] = {0};
 
 	/* Make sure first arg, which should be target chan, is there. */
 	if (!args || !args[0])
@@ -474,23 +474,23 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 	/* Chop of first arg, since we have a copy as chan. */
 	args++;
 
-	db_argstostr (str, args, 0, ' ');
+	db_argstostr (users_to_deop, args, 0, ' ');
 
 	if ((invoked == MSG_INVOKE) || (*chan == '#'))
 	{
 	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		if (str[0] == '\0')
+		if (users_to_deop[0] == '\0')
 			return result;
-		S ("MODE %s -oooooo %s\n", chan, str);
+		S ("MODE %s -oooooo %s\n", chan, users_to_deop);
 	    }
 	}
 	else
 	{
-	    if (str[0] == '\0')
+	    if (users_to_deop[0] == '\0')
 		S ("MODE %s -oooooo %s\n", target, chan);
 	    else
-		S ("MODE %s -oooooo %s %s\n", target, chan, str);
+		S ("MODE %s -oooooo %s %s\n", target, chan, users_to_deop);
 	}
 
 	return result;
@@ -499,30 +499,30 @@ struct chanserv_output *chanserv_deop(char *source, char *target, char *cmd, cha
 struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char chan [STRING_LONG] = {0}, str [STRING_LONG] = {0};
+	char chan [STRING_LONG] = {0}, users_to_devoice [STRING_LONG] = {0};
 
 	if (!args || !args[0])
 	    return result;
 
 	strncpy (chan, args[0], sizeof (chan));
 	args++;
-	db_argstostr (str, args, 0, ' ');
+	db_argstostr (users_to_devoice, args, 0, ' ');
 
 	if ((invoked == MSG_INVOKE) || (*chan == '#'))
 	{
 	    if (check_access (userhost, chan, 0, source) >= 3)
 	    {
-		if (str[0] == '\0')
+		if (users_to_devoice[0] == '\0')
 			return result;
-		S ("MODE %s -vvvvvv %s\n", chan, str);
+		S ("MODE %s -vvvvvv %s\n", chan, users_to_devoice);
 	    }
 	}
 	else
 	{
-	    if (str[0] == '\0')
+	    if (users_to_devoice[0] == '\0')
 		S ("MODE %s -vvvvvvv %s\n", target, chan);
 	    else
-		S ("MODE %s -vvvvvvv %s %s\n", target, chan, str);
+		S ("MODE %s -vvvvvvv %s %s\n", target, chan, users_to_devoice);
 	}
 
 	return result;
@@ -532,16 +532,16 @@ struct chanserv_output *chanserv_devoice(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_die(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char 	 str [STRING_LONG] = {0};
+	char 	 quit_message [STRING_LONG] = {0};
 	long	 unixtime = 0;
 
 	if (!args || !args[0])
 		Snow("QUIT :K\2\2illed (%s (cause I say so!))\n", source);
 	else
 	{
-		if ((db_argstostr (str, args, 0, ' ')) < 1)
+		if ((db_argstostr (quit_message, args, 0, ' ')) < 1)
 			return result;
-		Snow("QUIT :K\2\2illed (%s (%s))\n", source, str);
+		Snow("QUIT :K\2\2illed (%s (%s))\n", source, quit_message);
 	}
 
 	db_sleep (1);
@@ -593,7 +593,7 @@ struct chanserv_output *chanserv_darkbot(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char str [STRING_LONG] = {0};
+	char command [STRING_LONG] = {0};
 
 	if (!args || !args[0])
 	{
@@ -606,10 +606,10 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	    return (result);
 	}
 	
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (command, args, 0, ' ')) < 1)
 		return;
 
-        result = chanserv_show_help(str, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
+        result = chanserv_show_help(command, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
 	return result;
 }
 
@@ -715,8 +715,8 @@ struct chanserv_output *chanserv_joins_show(char *source, char *target, char *cm
 struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char server [STRING_LONG] = {0}, str [STRING_LONG] = {0};
-	long sn = 0;
+	char server [STRING_LONG] = {0}, port_argument [STRING_LONG] = {0};
+	long port = 0;
 
 	if (!args || !args[0])
 		return result;
@@ -724,16 +724,16 @@ struct chanserv_output *chanserv_jump(char *source, char *target, char *cmd, cha
 	strncpy (server, args[0], sizeof (server));
 	args++;
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
-		sn = 6667;
+	if ((db_argstostr (port_argument, args, 0, ' ')) < 1)
+		port = 6667;
 	else
-		sn = atoi(str);
+		port = atoi(port_argument);
 
-	S ("QUIT :Jumping to %s:%d\n", server, sn);
+	S ("QUIT :Jumping to %s:%d\n", server, port);
 	db_sleep (1);
 
 	strncpy (BS, server, sizeof (BS));
-	BP = sn;
+	BP = port;
 
 	prepare_bot ();
 	register_bot ();
@@ -904,11 +904,11 @@ struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, cha
 //#ifndef	WIN32
 struct chanserv_output *chanserv_memory(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	char temp[1024] = { 0 };
+	char command[1024] = { 0 };
 
-	snprintf(temp, sizeof (temp), "ps u -p %d\n", getpid());
+	snprintf(command, sizeof (command), "ps u -p %d\n", getpid());
 	
-	const char *ptr = run_program (temp);
+	const char *ptr = run_program (command);
 	if (ptr == NULL)
 		return chanserv_asprintf(NULL, "Unable to gather data for mem output.\n");
 	else
@@ -992,16 +992,16 @@ struct chanserv_output *chanserv_op(char *source, char *target, char *cmd, char 
 struct chanserv_output *chanserv_os_show(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char temp[1024] = { 0 };
+	char command[1024] = { 0 };
 	char *reply = NULL;	
 
 #ifdef	WIN32
-	snprintf (temp, sizeof (temp), "cmd /c ver\n");
+	snprintf (command, sizeof (command), "cmd /c ver\n");
 #else				
-	snprintf (temp, sizeof (temp), "uname\n");
+	snprintf (command, sizeof (command), "uname\n");
 #endif
 
-	return chanserv_asprintf(NULL, "I am running %s.", run_program(temp));	
+	return chanserv_asprintf(NULL, "I am running %s.", run_program(command));
 }
 
 struct chanserv_output *chanserv_password(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
@@ -1128,27 +1128,27 @@ struct chanserv_output *chanserv_random_quote_2(char *source, char *target, char
 struct chanserv_output *chanserv_random_stuff(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char	str	[STRING_LONG] = {0};
+	char	text_to_add	[STRING_LONG] = {0};
 
 	/* Fill argument buffer, if it's empty we return a message to 
  	 * the user asking for input. */
 	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "What do you want to add?");
 	
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (text_to_add, args, 0, ' ')) < 1)
 	    return result;
 
 	if (invoked == MSG_INVOKE)
 	{
 	    if (check_access (userhost, "#*", 0, source) >= RAND_LEVEL)
 	    {
-		if ((db_argstostr (str, args, 0, ' ')) < 1)
+		if ((db_argstostr (text_to_add, args, 0, ' ')) < 1)
 			return chanserv_asprintf(NULL, "What do you want to add?");
-		add_randomstuff(source, source, str);
+		add_randomstuff(source, source, text_to_add);
 	    }
 	}
 	else
-	    add_randomstuff(source, target, str);
+	    add_randomstuff(source, target, text_to_add);
 
 	return result;
 }
@@ -1162,15 +1162,15 @@ struct chanserv_output *chanserv_random_stuff_list(char *source, char *target, c
 struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char 	str [STRING_LONG] = {0};
+	char 	rawdata [STRING_LONG] = {0};
 
 	if (!args || !args[0])
 		return result;
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (rawdata, args, 0, ' ')) < 1)
 		return result;
 
-	Snow("%s\n", str);
+	Snow("%s\n", rawdata);
 
 	return result;
 }
@@ -1179,15 +1179,15 @@ struct chanserv_output *chanserv_raw(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char temp[1024] = { 0 };
+	char command[1024] = { 0 };
 	char str [STRING_LONG] = {0};
 
 	/* Check for arguments */
 
 	if (!args || !args[0])
 	{
-		snprintf(temp, sizeof (temp), "ls %s/*.rdb | wc\n", RDB_DIR);
-		result = chanserv_asprintf(result, "RDB: %s.", run_program(temp));
+		snprintf(command, sizeof (command), "ls %s/*.rdb | wc\n", RDB_DIR);
+		result = chanserv_asprintf(result, "RDB: %s.", run_program(command));
 	}
 	else
 	{
@@ -1195,8 +1195,8 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 			return result;
 		if (strspn(str, SAFE_LIST) != strlen(str))
 			return chanserv_asprintf(NULL, "Rdb files are made up of letters and or numbers, no other text is accepted.");
-		snprintf(temp, sizeof (temp), "cat %s/%s.rdb | wc -l\n", RDB_DIR, str);
-		result = chanserv_asprintf(result, "%s", run_program(temp));
+		snprintf(command, sizeof (command), "cat %s/%s.rdb | wc -l\n", RDB_DIR, str);
+		result = chanserv_asprintf(result, "%s", run_program(command));
 	}
 
 	return result;
@@ -1206,21 +1206,21 @@ struct chanserv_output *chanserv_rdb(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	long sn2 = 0, sn = 0;
-	char	str [STRING_LONG] = {0};
+	long delay = 0, count = 0;
+	char	rawdata [STRING_LONG] = {0};
 
 	if (!args || !args[0] || !args[1] || !args[2])
 		return result;
-	sn = atoi (args[0]);
-	sn2 = atoi (args[1]);
-	if ((db_argstostr (str, args, 2, ' ')) < 1)
+	count = atoi (args[0]);
+	delay = atoi (args[1]);
+	if ((db_argstostr (rawdata, args, 2, ' ')) < 1)
 		return result;
 
-	while (sn > 0)
+	while (count > 0)
 	{
-		S ("%s\n", str);
-		db_sleep (sn2);
-		sn--;
+		S ("%s\n", rawdata);
+		db_sleep (delay);
+		count--;
 	}
 
 	return result;
@@ -1229,7 +1229,7 @@ struct chanserv_output *chanserv_repeat(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char   topic [STRING_LONG] = {0}, str [STRING_LONG] = {0};
+	char   topic [STRING_LONG] = {0}, text [STRING_LONG] = {0};
 
 	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Replace what?");
@@ -1242,13 +1242,13 @@ struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, 
 	args++;
 
 	/* Make sure there's information to be replaced. */
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (text, args, 0, ' ')) < 1)
 		return chanserv_asprintf(NULL, "What info should replace %s?",
 						topic);
 
 	/* Don't let str go over MAX_DATA_SIZE characters. */
-	if (strlen(str) > MAX_DATA_SIZE)
-		str[MAX_DATA_SIZE] = '\0';
+	if (strlen(text) > MAX_DATA_SIZE)
+		text[MAX_DATA_SIZE] = '\0';
 
 	strlwr(topic);
 
@@ -1258,11 +1258,11 @@ struct chanserv_output *chanserv_replace(char *source, char *target, char *cmd, 
 	/* Replace the data. */
 	delete_url (source, topic, target);
 	if (LOG_ADD_DELETES)
-	    db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, topic, str);
+	    db_log (ADD_DELETES, "[%s] %s!%s REPLACE %s %s\n", date (), source, userhost, topic, text);
 
 	ADDITIONS++;
 
-	db_log (URL2, "%s %s\n", topic, str);
+	db_log (URL2, "%s %s\n", topic, text);
 
 	return chanserv_asprintf(NULL, "%s has been updated.", topic);
 }
@@ -1292,13 +1292,13 @@ struct chanserv_output *chanserv_reserved_2(char *source, char *target, char *cm
 struct chanserv_output *chanserv_restart(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char temp[1024] = { 0 };
+	char command[1024] = { 0 };
 	int ret;
 
 	S("QUIT :Restarting %s ...\n", dbVersion);
 	db_sleep(2);
-	snprintf(temp, sizeof (temp), "%s", DARKBOT_BIN);
-	ret = system(temp);
+	snprintf(command, sizeof (command), "%s", DARKBOT_BIN);
+	ret = system(command);
 	db_sleep(1);
 	exit(0);
 
@@ -1386,31 +1386,31 @@ struct chanserv_output *chanserv_set(char *source, char *target, char *cmd, char
 struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char	str [STRING_LONG] = {0};
+	char	greeting [STRING_LONG] = {0};
 
 	if (!args)
 		return chanserv_asprintf (NULL, "My %s variables are: ^ nick, %% number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & %% times (also, if you make the first char of your %s a \"+\", the %s will be shown as an ACTION).", cmd, cmd, cmd);
 
-	if ((db_argstostr (str, args, 0, ' ')) < 1)
+	if ((db_argstostr (greeting, args, 0, ' ')) < 1)
 		return;
 	
-	update_setinfo (userhost, str, source);
+	update_setinfo (userhost, greeting, source);
 	return (result);
 }
 
 struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char str [STRING_LONG] = {0};
+	char period [STRING_LONG] = {0};
 
 	Sleep_Toggle = 1;
 
 	/* Copy arguments to buffer, if there is one convert to long
 	 * and use it as the sleep time in seconds. */
 
-	if ((db_argstostr (str, args, 0, '\0')) < 1)
+	if ((db_argstostr (period, args, 0, '\0')) < 1)
 		Sleep_Time = SLEEP_TIME;
-	else if ((Sleep_Time = strtol (str, (char **) NULL, 10)) < 1)
+	else if ((Sleep_Time = strtol (period, (char **) NULL, 10)) < 1)
 		Sleep_Time = SLEEP_TIME;
 
 	strncpy (sleep_chan, target, sizeof (sleep_chan));
@@ -1490,7 +1490,7 @@ struct chanserv_output *chanserv_teaseop(char *source, char *target, char *cmd, 
 struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char	str	[STRING_LONG] = {0};
+	char	topic	[STRING_LONG] = {0};
 
 	if (!args || !args[0])
 	    return chanserv_asprintf(NULL, "Tell who?");
@@ -1501,26 +1501,26 @@ struct chanserv_output *chanserv_tell(char *source, char *target, char *cmd, cha
 
 	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
-		if ((db_argstostr (str, args, 2, '+')) < 1)
+		if ((db_argstostr (topic, args, 2, '+')) < 1)
 		    return chanserv_asprintf(NULL, "Tell %s about what?", args[0]);
 	
-		strlwr(str);
+		strlwr(topic);
 		if (invoked == MSG_INVOKE)
-		    result = show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
+		    result = show_url (source, get_multiword_topic (topic), args[0], 1, 0, userhost, 1);
 		else
-		    result = show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
+		    result = show_url (args[0], get_multiword_topic (topic), target, 1, 0, userhost, 1);
 	}
 	else
 	{
-		if ((db_argstostr (str, args, 1, '+')) < 1)
+		if ((db_argstostr (topic, args, 1, '+')) < 1)
 		    return chanserv_asprintf (NULL, "Tell %s about what?", args[0]);
 
-		strlwr(str);
+		strlwr(topic);
 
 		if (invoked == MSG_INVOKE)
-		    result = show_url (source, get_multiword_topic (str), args[0], 1, 0, userhost, 1);
+		    result = show_url (source, get_multiword_topic (topic), args[0], 1, 0, userhost, 1);
 		else
-		    result = show_url (args[0], get_multiword_topic (str), target, 1, 0, userhost, 1);
+		    result = show_url (args[0], get_multiword_topic (topic), target, 1, 0, userhost, 1);
 	}
 
 	return result;
@@ -1642,10 +1642,10 @@ struct chanserv_output *chanserv_up(char *source, char *target, char *cmd, char 
 //#ifndef	WIN32
 struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	char temp[1024] = { 0 };
+	char command[1024] = { 0 };
 
-	snprintf(temp, sizeof (temp), "uptime\n");
-	return chanserv_asprintf(NULL, "Uptime: %s.", run_program(temp));
+	snprintf(command, sizeof (command), "uptime\n");
+	return chanserv_asprintf(NULL, "Uptime: %s.", run_program(command));
 }
 //#endif
 
@@ -1787,7 +1787,7 @@ struct chanserv_output *chanserv_websearch(char *source, char *target, char *cmd
 struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char str [STRING_LONG] = {0};
+	char topic [STRING_LONG] = {0};
 	char *ptr3 = NULL;
 
 	if (!args || !args[0])
@@ -1803,9 +1803,9 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 		memmove (ptr3, ptr3 + 1, strlen (ptr3 + 1) + 1);
 	if (strcasecmp (args[1], "A") == 0 || strcasecmp (args[1], "AN") == 0)
 	{
-		if ((db_argstostr (str, args, 2, ' ')) < 1)
+		if ((db_argstostr (topic, args, 2, ' ')) < 1)
 		    return chanserv_asprintf(NULL, "%s %s %s? Mind rephrasing that?  (Type %cHELP for syntax hints).", cmd, args[0], args[1], *CMDCHAR);
-		result = show_url (source, get_multiword_topic (str), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
+		result = show_url (source, get_multiword_topic (topic), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
 	}
 	else
 		result = show_url (source, get_multiword_topic (args[1]), (invoked == MSG_INVOKE) ? source : target, 1, 0, userhost, 0);
@@ -1816,7 +1816,7 @@ struct chanserv_output *chanserv_where(char *source, char *target, char *cmd, ch
 struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char str	[STRING_LONG] = {0};
+	char topic	[STRING_LONG] = {0};
 
 	if (!args || !args[0])
 		return chanserv_asprintf(NULL, "Whisper to who?");
@@ -1826,10 +1826,10 @@ struct chanserv_output *chanserv_whisper(char *source, char *target, char *cmd, 
 		return result;		/* don't bother telling myself about stuff */
 	if (strcasecmp (args[1], "ABOUT") == 0)
 	{
-		if ((db_argstostr (str, args, 2, ' ')) < 1)
+		if ((db_argstostr (topic, args, 2, ' ')) < 1)
 			return chanserv_asprintf(NULL, "Whisper to %s about what?", args[0]);
-		strlwr(str);
-		result = show_url(source, get_multiword_topic(str), args[0], 1, 0, userhost, 1);
+		strlwr(topic);
+		result = show_url(source, get_multiword_topic(topic), args[0], 1, 0, userhost, 1);
 	}
 	else
 	{
