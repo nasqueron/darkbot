@@ -1420,7 +1420,7 @@ struct chanserv_output *chanserv_sleep(char *source, char *target, char *cmd, ch
 
 	/* If the user has specified a custom length of time to sleep for, send
 	 * a notice reminding the user how long the bot will be asleep, in a
-	 * more readible format.
+	 * more readable format.
 	 */
 	if (Sleep_Time != SLEEP_TIME)
 	{
