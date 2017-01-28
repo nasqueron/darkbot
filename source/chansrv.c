@@ -1655,7 +1655,6 @@ struct chanserv_output *chanserv_uptime(char *source, char *target, char *cmd, c
 struct chanserv_output *chanserv_user_list(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char	str	[STRING_LONG] = {0};
 	int	i = 0;
 	
 	if (!args)
