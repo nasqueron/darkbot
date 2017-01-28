@@ -149,8 +149,6 @@ extern bool SORT;
 extern bool FIND_DUPS;
 extern bool SAVE_DUPS;
 extern bool GENERAL_QUESTIONS;
-extern bool ALLOW_ADD_IN_MSG;
-extern bool ALLOW_DEL_IN_MSG;
 extern bool MSG_RESPONSES;
 
 extern bool LOG_ADD_DELETES;

@@ -200,22 +200,6 @@ Do you want Darkbot to answer questions that match a topic without
 addressing the bot?
 
  
-PARAMATER	ALLOW_ADD_IN_MSG
-DEFAULT		false
-TYPE		Boolean
-
-Turn this on if you want to be able to use the ADD function in private
-message to the bot.
-
- 
-PARAMATER	ALLOW_DEL_IN_MSG
-DEFAULT		false
-TYPE		Boolean
-
-Turn this on if you want to be able to use the DEL function in private
-message to the bot.
-
- 
 PARAMATER	MSG_RESPONSES
 DEFAULT		false
 TYPE		Boolean

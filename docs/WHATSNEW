@@ -4,7 +4,10 @@
     Support: http://darkbot.sourceforge.net
     (order is reverse-chronologic)
     ******************************************************* 
-     
+
+Unreleased:
+
+    - Pruned ALLOW_ADD_IN_MSG and ALLOW_DEL_IN_MSG
 
 Darkbot 8rc4: May 13, 2009
 	- Fixed DIE, NICK, METAR, PART, RANDQ, RANDQ2, RDB, STATS, TAR, 

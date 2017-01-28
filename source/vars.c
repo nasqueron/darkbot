@@ -154,8 +154,6 @@ bool SORT = false;
 bool FIND_DUPS = false;
 bool SAVE_DUPS = true;
 bool GENERAL_QUESTIONS = true;
-//bool ALLOW_ADD_IN_MSG = false;
-//bool ALLOW_DEL_IN_MSG = false;
 bool MSG_RESPONSES = false;
 
 bool LOG_ADD_DELETES = true;
@@ -265,9 +263,6 @@ struct webinfo
 
 struct setup_parameter parameters[] =
 {
-// I managed to eliminate these options when I rewrote chansrv.c.
-//    {ST_BOOLEAN, 3, sizeof(ALLOW_ADD_IN_MSG),       {"ALLOW_ADD_IN_MSG",       NULL, NULL, NULL, NULL}, "allowing ADD command in private",         &ALLOW_ADD_IN_MSG,     NULL},
-//    {ST_BOOLEAN, 3, sizeof(ALLOW_DEL_IN_MSG),       {"ALLOW_DEL_IN_MSG",       NULL, NULL, NULL, NULL}, "allowing DEL command in private",         &ALLOW_DEL_IN_MSG,     NULL},
     {ST_BOOLEAN, 3, sizeof(ANTI_IDLE),              {"ANTI_IDLE",              NULL, NULL, NULL, NULL}, "idling for less than ten minutes",        &ANTI_IDLE,            NULL},
 #ifdef ENABLE_CHANNEL
     {ST_BOOLEAN, 3, sizeof(BITCH_ABOUT_DEOP),       {"BITCH_DEOP",             NULL, NULL, NULL, NULL}, "bitch about deop",                        &BITCH_ABOUT_DEOP,     NULL},
