@@ -10,5 +10,4 @@
 # fitness for a particular purpose.  See the COPYING file for details.
 
 
-rm -rf $HOME/darkbot
 rm -rf build
