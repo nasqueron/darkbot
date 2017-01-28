@@ -366,9 +366,7 @@ struct chanserv_output *chanserv_cpu_show(char *source, char *target, char *cmd,
 struct chanserv_output *chanserv_cycle(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
-	char str [STRING_LONG] = {0};
-	int i = 0;
-	
+
 	/* Check for channel list parameter being specified. */
 	if (!args | !args[0])
 	{
@@ -894,7 +892,6 @@ struct chanserv_output *chanserv_login(char *source, char *target, char *cmd, ch
 
 struct chanserv_output *chanserv_mask(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	int i  = 0;
 	struct chanserv_output *result = NULL;
 
 	if(!args || !args[0])
