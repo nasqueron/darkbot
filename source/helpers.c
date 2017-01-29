@@ -245,10 +245,11 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 	strlwr (uh);
 
 #ifdef ENABLE_ENCRYPT
-	if ((ptr = crypt (pass, salt)) == NULL)
+	ptr = crypt (pass, salt)
+	if (ptr == NULL)
 		return 0;
 #else
-	ptr = (char *)pass;
+	ptr = pass;
 #endif
 
 	while (c)
@@ -259,20 +260,32 @@ verify_pass (char *nick, char *chan, char *uh, char *pass)
 				return 0;		/* no pass set */
 			if (strcmp (c->pass, ptr) == 0)
 			{
-				if (c->chan[0] == '#' && c->chan[1] == '*')
+				if (has_access_for_this_channel (c->chan, chan))
+				{
 					return c->level;
+				}
 
-				if (*chan == '*')
-					return c->level;
-
-				if (strcasecmp (c->chan, chan) == 0)
-					return c->level;
-
+				S ("NOTICE %s :Pass verified but access is only for %s.\n", nick, c->chan);
 				return 0;		/* don't match chan access */
 			}
 		}
 		c = c->next;
 	}
+	return 0;
+}
+
+int
+has_access_for_this_channel (char* config_chan, char* current_chan)
+{
+	if (config_chan[0] == '#' && config_chan[1] == '*')
+		return 1;
+
+	if (*current_chan == '*')
+		return 1;
+
+	if (strcasecmp (config_chan, current_chan) == 0)
+		return 1;
+
 	return 0;
 }
 

@@ -95,6 +95,7 @@ void	info					(const char *, char *),
 	load_helpers				(void),
 	scan_chan_users				(char *, char *, char *), 
 	do_login				(char *, char *);
+int has_access_for_this_channel	(char*, char*);
 long	do_lastcomm				(char *, char *, char *), 
 	setinfo_lastcomm			(char *);
 void	parse					(char *), 
