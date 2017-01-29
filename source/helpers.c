@@ -289,54 +289,6 @@ has_access_for_this_channel (char* config_chan, char* current_chan)
 	return 0;
 }
 
-long
-get_pass (char *data)
-{
-	/* returns 0 for no data */
-	/* returns 1 for just pass */
-	/* returns 2 for pass and data */
-	char b[STRING_SHORT] = { 0 }, b2[STRING_SHORT] =
-	{
-	0}
-	, *temp = NULL;
-	long i = 0;
-
-	strncpy (pass_data, "0", sizeof (pass_data));	/* init */
-	strncpy (pass_pass, "0", sizeof (pass_pass));
-	if (data == NULL)
-		return 0;
-	strncpy (b2, data, sizeof (b2));
-	temp = strtok (data, " ");
-	if (temp == NULL)
-		return -1;
-	strncpy (b, temp, sizeof (b));
-	while (temp != NULL)
-	{
-		i++;
-		strncpy (pass_pass, temp, sizeof (pass_pass));
-		temp = strtok (NULL, " ");
-		if (temp == NULL)
-			break;
-		snprintf (b, sizeof (b), "%s %s", b, temp);
-	}
-	strncpy (b, "", sizeof (b));	/* reinit */
-	temp = strtok (b2, " ");
-	strncpy (b, temp, sizeof (b));
-	while (i > 2)
-	{
-		i--;
-		temp = strtok (NULL, " ");
-		snprintf (b, sizeof (b), "%s %s", b, temp);
-	}
-	if (strcasecmp (b, pass_pass) == 0)
-	{
-		strncpy (pass_data, "0", sizeof (pass_data));
-		return 1;
-	}
-	strncpy (pass_data, b, sizeof (pass_data));
-	return 2;
-}
-
 void
 do_login (char *nick, char *pass)
 {
