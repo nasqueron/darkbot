@@ -336,7 +336,7 @@ do_login (char *nick, char *pass)
 	}
 }
 
-int
+long
 check_access (char *uh, char *chan, int toggle, char *nick)
 {
 	long i = 0, length = 0, A = 0, X = 0, Y = 0;

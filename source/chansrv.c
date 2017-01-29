@@ -40,7 +40,7 @@ struct chanserv_command
 
 
 static void show_output(char *source, char *target, struct chanserv_output *result, enum chanserv_invoke_type input_type, int question);
-struct chanserv_output *chanserv_show_help(char *cmd, int user_level);
+struct chanserv_output *chanserv_show_help(char *cmd, long user_level);
 
 
 struct chanserv_output *chanserv_asprintf(struct chanserv_output *output, const char *format, ...)
@@ -594,6 +594,8 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 {
 	struct chanserv_output *result = NULL;
 	char command [STRING_LONG] = {0};
+	char *chan = NULL;
+	long user_level;
 
 	if (!args || !args[0])
 	{
@@ -609,7 +611,10 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	if ((db_argstostr (command, args, 0, ' ')) < 1)
 		return;
 
-        result = chanserv_show_help(command, check_access(userhost, (invoked == MSG_INVOKE) ? "#*" : target, 0, source));
+	chan = (invoked == MSG_INVOKE) ? "#*" : target;
+	user_level = check_access(userhost, chan, 0, source);
+	result = chanserv_show_help(command, user_level);
+
 	return result;
 }
 
@@ -869,7 +874,7 @@ struct chanserv_output *chanserv_level(char *source, char *target, char *cmd, ch
 		return result;
 	uh = uh_from_nick(args[0], target);
 	if (uh)
-	    result = chanserv_asprintf(result, "%s is level %d in channel %s.", args[0], check_access(uh, target, 0, args[0]), target);
+	    result = chanserv_asprintf(result, "%s is level %ld in channel %s.", args[0], check_access(uh, target, 0, args[0]), target);
 
 	return result;
 }
@@ -1999,9 +2004,10 @@ void chanserv(char *source, char *target, char *buf)
 {
 	struct chanserv_output *result = NULL;
 	char *cmd = NULL, *userhost = NULL, oldbuf[BUFSIZ] = {"NULL"},
-	     *ptr = NULL;
+	     *ptr = NULL, *chan = NULL;
 	int i = 0, j = 0, found = -1, command = 0, wakeup = 0, exempt = 0,
-      	    more_needed = 0, too_many = 0, check_too_many = 0, arg_count = 0;
+	    more_needed = 0, too_many = 0, check_too_many = 0, arg_count = 0,
+	    command_access = 0;
 	enum chanserv_invoke_type input_type = DIRECT_INVOKE;
 	enum chanserv_command_type command_type = NORMAL_COMMAND;
 
@@ -2137,7 +2143,9 @@ void chanserv(char *source, char *target, char *buf)
 		    }
 	    }
 
-	    if (check_access(userhost, (input_type == MSG_INVOKE) ? "#*" : target, 0, source) >= chanserv_commands[found].access)
+		chan = (input_type == MSG_INVOKE) ? "#*" : target;
+		command_access = chanserv_commands[found].access;
+	    if (check_access(userhost, chan, 0, source) >= (long)command_access)
 	    {
 		char **args = NULL;
 		int k = 0;
@@ -2262,7 +2270,8 @@ void chanserv(char *source, char *target, char *buf)
 		}
 		else if ((more_needed == 1) && chanserv_commands[found].syntax)
 		{
-		        result = chanserv_show_help(cmd, check_access(userhost, (input_type == MSG_INVOKE) ? "#*" : target, 0, source));
+			chan = (input_type == MSG_INVOKE) ? "#*" : target;
+			result = chanserv_show_help(cmd, check_access(userhost, chan, 0, source));
 		}
 		else
 		{
@@ -2379,7 +2388,7 @@ static void show_output(char *source, char *target, struct chanserv_output *resu
     chanserv_output_free(result);
 }
 
-struct chanserv_output *chanserv_show_help(char *cmd, int user_level)
+struct chanserv_output *chanserv_show_help(char *cmd, long user_level)
 {
 	struct chanserv_output *result = NULL;
 	char temp[10 * 1024] = { 0 }, cmdchar[2] = "\0\0";

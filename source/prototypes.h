@@ -138,10 +138,10 @@ char	L[524],
 
 int	socketfd, 
 	alarmed,	
-	check_access				(char *, char *, int, char *),
-	match_wild				(const char *, const char *), 
+	match_wild				(const char *, const char *),
 	Send					(void), 
 	get_sendq_count				(long);
+long 	check_access				(char *, char *, int, char *);
 void	check_dbtimers				(void);
 
 void	register_bot				(void);
