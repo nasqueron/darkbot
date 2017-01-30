@@ -17,7 +17,6 @@ void	parse_252				(char *),
 	parse_255				(char *);
 #endif
 
-char    **tokenize				(char *, size_t *);
 size_t	count_lines				(char *);
 void	count_seen				(char *, char *);
 struct chanserv_output *show_seen		(char *, char *, char *);
@@ -102,38 +101,31 @@ void	parse					(char *),
 	add_helper				(const char *, const char *, long, size_t,
 						 const char *, const char *, char);
 
-int	get_connection				(const char *, const char *, int), 
-	readln					(void),
+int	readln					(void),
 	writeln					(const char *);
 
 bool	check_permban				(const char *, const char *, const char *);
 long	cf					(char *, char *, char *), 
-	f_f					(char *), 
-	get_passwd				(char *);
+	f_f					(char *);
 time_t	return_useridle				(const char *, const char *, int);
 void	a_f					(char *), 
 	reset_					(void), 
 	delete_user				(const char *, char *),
 	add_user				(char *, char *, char *, long);
-void	set_fds					(void), 
-	sig_hup					(int), 
+void	sig_hup					(int),
 	sig_segv				(int), 
 	save_setup				(void);
 void	stripline				(char *), 
-	init_bot				(void), 
 	sig_alrm				(int);
 void	parse_server_msg			(fd_set *);
-void	trailing_blanks				(char *),
-	db_log					(const char *, const char *,...),
+void	db_log					(const char *, const char *,...),
 	gs26					(void), 
 	add_s25					(char *, long, char *),
-	add_banned_server			(char *, char *), 
-	S					(const char *,...), 
+	S					(const char *,...),
 	del_sendq				(long), 
 	clear_sendq				(long, long);
 
 char	L[524], 
-	*random_word				(char **),
 	*plural					(size_t);
 
 int	socketfd, 
@@ -171,7 +163,6 @@ struct chanserv_output *web_post_query		(char *trigger, char *source, char *uh, 
 int	add_ignore_user_ram			(char *);
 int	delete_ignore_user_ram			(char *);
 int	check_ignore_user_ram			(char *);
-int	check_exempt				(char *);
 void	call_reserved_1				(char *, char *, char *);
 void	call_reserved_2				(char *, char *, char *);
 size_t	count_char				(const char *, const char);
