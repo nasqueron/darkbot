@@ -1944,7 +1944,7 @@ struct chanserv_command chanserv_commands[] =
     {NORMAL_COMMAND,  0, 1, 0, chanserv_random_quote_2,	{"RANDQUOTE2", "RANDQ2", NULL, NULL, NULL}, "[text]", "Shows a random quote."},
 #endif
 #ifdef ENABLE_RANDOM
-    {NORMAL_COMMAND, RAND_LEVEL, 1, 0, chanserv_random_stuff, {"RANDOMSTUFF", "RANDSTUFF", "RS", NULL, NULL}, "<text>", "Add random stuff to say."},
+    {NORMAL_COMMAND, RAND_LEVEL, 1, 0, chanserv_random_stuff, {"RANDOMSTUFF", "RANDSTUFF", "RS", "ZADD", NULL}, "<text>", "Add random stuff to say."},
     {INFO_COMMAND,    0, 0, 0, chanserv_random_stuff_list,	{"RANDOMSTUFF?", "RANDSTUFF?", NULL, NULL, NULL}, NULL, "Shows time until next random thing is said."},
 #endif
     {DANGER_COMMAND,  3, 1, 0, chanserv_raw,		{"RAW", NULL, NULL, NULL, NULL}, "<raw data>", "Get bot to send raw IRC data."},
