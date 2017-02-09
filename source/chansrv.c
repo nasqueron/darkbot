@@ -1563,15 +1563,9 @@ struct chanserv_output *chanserv_unignore(char *source, char *target, char *cmd,
 struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct 	chanserv_output *result = NULL;
-	time_t	 unixtime = 0, input_t = 0, cur_t = 0;
+	time_t	 delta_t = 0, input_t = 0, cur_t = 0;
 	char	*things = NULL;
 	int	errno;
-
-	/* Check if anything was given as input and only do stuff 
-	 * (in this function, anyway) if so. */
-
-	if (!args || !args[0])
-		return result;
 
 	/* Make sure current time is available while acquiring it. */
 	if ((cur_t = time (NULL)) < 0)
@@ -1580,7 +1574,14 @@ struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd,
 		return (result);
 	}
 
-	/* Convert input value to time_t. We check if the return value is 
+	/* Print current time when no argument is given */
+	if (!args || !args[0])
+	{
+		result = chanserv_asprintf (result, "%ld", cur_t);
+		return result;
+	}
+
+	/* Convert input value to time_t. We check if the return value is
 	 * 0 here, but our main concern is if things is NULL, because that
 	 * would mean the function converted a string value "0", instead
 	 * of returning a failing code. Set errno to 0 first as for a
@@ -1610,26 +1611,26 @@ struct chanserv_output *chanserv_unixtime(char *source, char *target, char *cmd,
 		return (result);
 	}
 
-	unixtime = input_t - cur_t;
+	delta_t = input_t - cur_t;
 
-	if (unixtime > 86400)
+	if (delta_t > 86400)
 		result = chanserv_asprintf(result, "%d day%s, %02d:%02d.",
-		   unixtime / 86400,
-		   plural (unixtime / 86400),
-		   (unixtime / 3600) % 24, 
-		   (unixtime / 60) % 60);
-	else if (unixtime > 3600)
+		   delta_t / 86400,
+		   plural (delta_t / 86400),
+		   (delta_t / 3600) % 24,
+		   (delta_t / 60) % 60);
+	else if (delta_t > 3600)
 		result = chanserv_asprintf(result, "%d hour%s, %d min%s.",
-		   unixtime / 3600,
-		   plural(unixtime / 3600),
-		   (unixtime / 60) % 60, 
-		   plural(unixtime / 60));
+		   delta_t / 3600,
+		   plural(delta_t / 3600),
+		   (delta_t / 60) % 60,
+		   plural(delta_t / 60));
 	else
 		result = chanserv_asprintf(result, "%d minute%s, %d sec%s.",
-		   unixtime / 60,
-		   plural(unixtime / 60), 
-		   unixtime % 60, 
-		   plural(unixtime % 60));
+		   delta_t / 60,
+		   plural(delta_t / 60),
+		   delta_t % 60,
+		   plural(delta_t % 60));
 
 	return result;
 }
