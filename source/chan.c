@@ -88,7 +88,7 @@ struct chanserv_output *do_math (const char *who, char *target, char *math)
 				if (number == 0)
 				{
 					L016 (target, who);
-					return;
+					return NULL;
 				}
 				else
 					result /= number;
@@ -97,14 +97,14 @@ struct chanserv_output *do_math (const char *who, char *target, char *math)
 				if ((long) number == 0)
 				{
 					L016 (target, who);
-					return;
+					return NULL;
 				}
 				else
 					result = (double) ((long) result % (long) number);
 				break;
 			default:
 				L017 (target, who);
-				return;
+				return NULL;
 		}
 	}
 	return chanserv_asprintf(NULL, "%f\n", result);

@@ -48,7 +48,7 @@ struct chanserv_output *get_stats (char *target, char *user)
 				if ((ptr = strchr (temp, '\n')) != NULL)
 					*ptr = '\0';
 				result = chanserv_asprintf(result, "%s has asked %ld questions since %s, %s's last question was asked on %s", user, c->total, temp, user, ctime (&last_time));
-				return;
+				return NULL;
 			}
 		}
 		c = c->next;

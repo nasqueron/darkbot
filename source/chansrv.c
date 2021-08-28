@@ -609,7 +609,7 @@ struct chanserv_output *chanserv_help(char *source, char *target, char *cmd, cha
 	}
 	
 	if ((db_argstostr (command, args, 0, ' ')) < 1)
-		return;
+		return NULL;
 
 	chan = (invoked == MSG_INVOKE) ? "#*" : target;
 	user_level = check_access(userhost, chan, 0, source);
@@ -1397,7 +1397,7 @@ struct chanserv_output *chanserv_setinfo(char *source, char *target, char *cmd, 
 		return chanserv_asprintf (NULL, "My %s variables are: ^ nick, %% number of joins, & Channel, $ user@host. Example: !setinfo ^ has joined & %% times (also, if you make the first char of your %s a \"+\", the %s will be shown as an ACTION).", cmd, cmd, cmd);
 
 	if ((db_argstostr (greeting, args, 0, ' ')) < 1)
-		return;
+		return NULL;
 	
 	update_setinfo (userhost, greeting, source);
 	return (result);
