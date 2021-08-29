@@ -125,12 +125,9 @@ void	db_log					(const char *, const char *,...),
 	del_sendq				(long), 
 	clear_sendq				(long, long);
 
-char	L[524], 
-	*plural					(size_t);
+char	*plural					(size_t);
 
-int	socketfd, 
-	alarmed,	
-	match_wild				(const char *, const char *),
+int match_wild				(const char *, const char *),
 	Send					(void), 
 	get_sendq_count				(long);
 long 	check_access				(char *, char *, int, char *);

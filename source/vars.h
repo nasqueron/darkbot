@@ -370,3 +370,8 @@ extern struct setup_parameter
     void 		*(*func) (struct setup_parameter *parameter, char *ptr);  /* Optional function that can do other things with the value, and veto the change by returning NULL. */
 }
 parameters[];
+
+static char L[524];
+
+static int alarmed;
+static int socketfd;
