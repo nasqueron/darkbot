@@ -144,6 +144,10 @@ char VHOST[STRING_SHORT] = "0";
 char REALNAME[STRING_SHORT] = "http://darkbot.sourceforge.net";
 char privmsg_log[STRING_SHORT] = { 0 };
 
+// SASL nickserv authentication
+char SASL_USER[STRING_SHORT] = "";
+char SASL_PASS[STRING_SHORT] = "";
+
 long CONNECT_WAIT_TIMEOUT = 10;
 bool PERFORM_TIMER = true;
 char DEFAULT_UMODE[STRING_SHORT] = "+i-ds";
@@ -332,6 +336,8 @@ struct setup_parameter parameters[] =
 //    {ST_BOOLEAN, 3, sizeof(RANDQ),                  {"RANDOM_Q",               NULL, NULL, NULL, NULL}, "enable RANDQ command",                    &RANDQ,                NULL},
     {ST_INTEGER, 3, sizeof(RAND_STUFF_TIME),        {"RANDOM_TIME",            NULL, NULL, NULL, NULL}, "seconds between random utterences",       &RAND_STUFF_TIME,      NULL},
 #endif
+    {ST_STRING,  3, sizeof(SASL_USER),              {"SASL_USER",               NULL, NULL, NULL, NULL}, "bot's nickserv username for SASL auth",  SASL_USER,            NULL},
+    {ST_STRING,  3, sizeof(SASL_PASS),              {"SASL_PASS",               NULL, NULL, NULL, NULL}, "bot's nickserv password for SASL auth",  SASL_PASS,            NULL},
     {ST_BOOLEAN, 3, sizeof(SeeN),                   {"SEEN_MODE",              NULL, NULL, NULL, NULL}, "seen mode",                               &SeeN,                 NULL},
     {ST_INTEGER, 3, sizeof(MAX_LASTSEEN),           {"SEEN_TIME",              NULL, NULL, NULL, NULL}, "maximum last seen seconds",               &MAX_LASTSEEN,         NULL},
     {ST_STRING,  3, sizeof(SEEN_REPLY),             {"SEEN_TEXT",              NULL, NULL, NULL, NULL}, "maximum last seen reply",                 SEEN_REPLY,            NULL},
@@ -395,9 +401,11 @@ set_parameter(char *input)
 	    }
 	    if (ptr)
 	    {
-#ifdef	ENABLE_VERBOSE
-		printf("Setting %s = %s\n", result->summary, ptr);
-#endif
+		if (DebuG)
+		{
+			printf("Setting %s = %s\n", result->summary, ptr);
+		}
+
 		switch (result->type)
 		{
 		    case ST_BOOLEAN : 

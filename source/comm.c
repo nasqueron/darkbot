@@ -12,6 +12,7 @@
 #include "defines.h"
 #include "vars.h"
 #include "prototypes.h"
+#include "utils/sasl.h"
 
 /**
  * Delete one or more elements from the sendq
@@ -453,6 +454,20 @@ void
 register_bot (void)
 {
 	get_sendq_count (1);
+
+    // SASL nickserv authentication needs to be done as soon as connected
+    // to the server, before registering with NICK and USER, PASS commands.
+    if (strlen(SASL_USER) > 0 && strlen(SASL_PASS) > 0) {
+        char* sasl_plain_string = build_sasl_plain_string(SASL_USER, SASL_USER, SASL_PASS);
+
+        Snow ("CAP REQ :SASL\n");
+        Snow ("CAP END\n");
+        Snow ("AUTHENTICATE PLAIN\n");
+        Snow ("AUTHENTICATE %s\n", sasl_plain_string);
+
+        free(sasl_plain_string);
+    }
+
 	Snow ("NICK %s\n", Mynick);
 	strlwr (UID);
 	Snow ("USER %s %d %d :%s \2%d\2\n", UID, time (NULL), time (NULL), REALNAME, NUM_HELPER);

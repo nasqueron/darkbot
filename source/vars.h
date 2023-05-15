@@ -139,6 +139,9 @@ extern char VHOST[STRING_SHORT];
 extern char REALNAME[STRING_SHORT];
 extern char privmsg_log[STRING_SHORT];
 
+extern char SASL_USER[STRING_SHORT];
+extern char SASL_PASS[STRING_SHORT];
+
 extern long CONNECT_WAIT_TIMEOUT;
 extern bool PERFORM_TIMER;
 extern char DEFAULT_UMODE[STRING_SHORT];
