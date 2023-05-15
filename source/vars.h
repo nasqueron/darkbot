@@ -371,7 +371,6 @@ extern struct setup_parameter
 }
 parameters[];
 
-static char L[524];
-
-static int alarmed;
-static int socketfd;
+char L[524];
+int alarmed;
+int socketfd;
