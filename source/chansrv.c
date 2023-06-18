@@ -820,11 +820,6 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 }
 #endif
 
-struct chanserv_output *chanserv_language(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
-{
-	return chanserv_asprintf(NULL, "I speak English.");
-}
-
 struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
 	struct chanserv_output *result = NULL;
@@ -1903,7 +1898,6 @@ struct chanserv_command chanserv_commands[] =
 #ifdef ENABLE_CHANNEL
     {DANGER_COMMAND,  3, 1, 0, chanserv_kick,		{"KICK", "WHACK", "K", "NAIL", NULL}, "[#channel] <nick> [reason]", "Kick a user off the channel."},
 #endif
-    {INFO_COMMAND,    0, 0, 0, chanserv_language,		{"LANGUAGE", "LANG", NULL, NULL, NULL}, NULL, "Shows the language that bot is currently speaking."},
     {DANGER_COMMAND,  2, 0, 0, chanserv_leave,		{"LEAVE", "PART", "L", "P", NULL}, "[#channel]", "Get bot to leave the channel."},
     {INFO_COMMAND,    0, 1, 0, chanserv_length,		{"LENGTH", NULL, NULL, NULL, NULL}, "<text>", "Show the length of the text."},
     {INFO_COMMAND,    0, 1, 0, chanserv_level,		{"LEVEL", NULL, NULL, NULL, NULL}, "<nick>", "Show users level."},
