@@ -822,7 +822,7 @@ struct chanserv_output *chanserv_kick(char *source, char *target, char *cmd, cha
 
 struct chanserv_output *chanserv_language(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
 {
-	return chanserv_asprintf(NULL, "I speak English.");
+	return chanserv_asprintf(NULL, I_SPEAK);
 }
 
 struct chanserv_output *chanserv_leave(char *source, char *target, char *cmd, char **args, enum chanserv_invoke_type invoked, char *userhost)
